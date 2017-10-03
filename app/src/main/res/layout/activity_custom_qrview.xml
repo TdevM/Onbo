@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="tdevm.app_ui.utils.CustomQRView">
+
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/zxing_barcode_scanner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:zxing_scanner_layout="@layout/custom_barcode_scanner">
+    </com.journeyapps.barcodescanner.DecoratedBarcodeView>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_arrow_back_white_24dp"
+        app:backgroundTint="@android:color/darker_gray"
+        app:fabSize="mini"
+        android:layout_alignBottom="@+id/switch_flashlight"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton_flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/floatingActionButton_back"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_flash_on_white_24dp" />
+
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton_flash_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/floatingActionButton_back"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+        android:clickable="true"
+        android:visibility="invisible"
+        app:fabSize="mini"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@drawable/ic_flash_off_white_24dp" />
+
+    <Button
+        android:id="@+id/switch_flashlight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/turn_on_flashlight"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        android:onClick="switchFlashlight"/>
+</RelativeLayout>
