@@ -13,10 +13,6 @@ import android.widget.Button;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import tdevm.app_ui.ui.view_pagers.VPagerMain;
 import tdevm.app_ui.utils.CustomQRView;
 import tdevm.app_ui.R;
 public class BottomNavigationHome extends AppCompatActivity {
@@ -86,17 +82,6 @@ public class BottomNavigationHome extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
         transaction.commit();
-
-
-
-        userReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(BottomNavigationHome.this, VPagerMain.class);
-                startActivity(i);
-
-            }
-        });
 
 
     }

@@ -1,6 +1,4 @@
-package tdevm.app_ui.api.models;
-
-import tdevm.app_ui.api.models.Location;
+package tdevm.app_ui.api.models.response;
 
 /**
  * Created by Tridev on 19-08-2017.

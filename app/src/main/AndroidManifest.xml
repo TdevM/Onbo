@@ -32,11 +32,6 @@
         </activity>
 
         <activity
-            android:name=".ui.view_pagers.VPagerMain"
-            android:label="@string/title_activity_vpager_main"
-            android:theme="@style/NoActionBar">
-        </activity>
-        <activity
             android:name=".navigation_fragments_dine_in.DineInHome"
             android:label="@string/title_activity_dine_in_home">
         </activity>

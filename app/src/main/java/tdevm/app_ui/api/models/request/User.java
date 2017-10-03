@@ -1,4 +1,4 @@
-package tdevm.app_ui.api.models;
+package tdevm.app_ui.api.models.request;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
-    @SerializedName(value = "name", alternate = "user_name")
+    @SerializedName("name")
     private String name;
     @SerializedName("email")
     private String email;
@@ -54,17 +54,6 @@ public class User {
         this.password = password;
         this.mobile = mobile;
         this.userGender = userGender;
-    }
-
-    public User(String password, long user_mobile) {
-        this.password = password;
-        this.user_mobile = user_mobile;
-    }
-
-    public User(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
     }
 
     public long getUser_mobile() {

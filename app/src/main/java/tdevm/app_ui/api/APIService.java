@@ -6,7 +6,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import tdevm.app_ui.api.models.OneTimePassword;
-import tdevm.app_ui.api.models.User;
+import tdevm.app_ui.api.models.request.User;
 
 /**
  * Created by Tridev on 04-10-2017.

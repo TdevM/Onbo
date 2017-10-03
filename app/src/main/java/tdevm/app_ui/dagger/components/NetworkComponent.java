@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import retrofit2.Retrofit;
+import tdevm.app_ui.dagger.modules.AppModule;
 import tdevm.app_ui.dagger.modules.NetworkModule;
 
 /**
@@ -13,8 +14,10 @@ import tdevm.app_ui.dagger.modules.NetworkModule;
  */
 
 @Singleton
-@Component(modules = {NetworkModule.class})
+@Component(modules = {NetworkModule.class, AppModule.class})
 public interface NetworkComponent {
+    Retrofit exposeRetrofit();
 
+    Context exposeContext();
 
 }

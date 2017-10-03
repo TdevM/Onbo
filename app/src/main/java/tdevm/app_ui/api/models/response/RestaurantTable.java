@@ -1,4 +1,6 @@
-package tdevm.app_ui.api.models;
+package tdevm.app_ui.api.models.response;
+
+import tdevm.app_ui.api.models.response.Restaurant;
 
 /**
  * Created by Tridev on 19-08-2017.

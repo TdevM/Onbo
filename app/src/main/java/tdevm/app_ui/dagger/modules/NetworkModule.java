@@ -48,14 +48,14 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    public Gson provideGson(){
+    public Gson providesGson(){
         GsonBuilder builder = new GsonBuilder();
         return builder.create();
     }
 
     @Singleton
     @Provides
-    GsonConverterFactory provideGsonConverterFactory() {
+    GsonConverterFactory providesGsonConverterFactory() {
         return GsonConverterFactory.create();
     }
 
@@ -63,7 +63,7 @@ public class NetworkModule {
     @Singleton
     @Provides
     @Named("ok-1")
-    OkHttpClient provideOkHttpClient1(Cache cache) {
+    OkHttpClient providesOkHttpClient1(Cache cache) {
         return new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
@@ -74,7 +74,7 @@ public class NetworkModule {
     @Singleton
     @Provides
     @Named("ok-2")
-    OkHttpClient provideOkHttpClient2(Cache cache) {
+    OkHttpClient providesOkHttpClient2(Cache cache) {
         return new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
@@ -91,13 +91,13 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    RxJava2CallAdapterFactory provideRxJavaCallAdapterFactory() {
+    RxJava2CallAdapterFactory providesRxJavaCallAdapterFactory() {
         return RxJava2CallAdapterFactory.create();
     }
 
     @Singleton
     @Provides
-    Retrofit provideRetrofit(@Named("ok-1") OkHttpClient client, GsonConverterFactory converterFactory, RxJava2CallAdapterFactory adapterFactory) {
+    Retrofit providesRetrofit(@Named("ok-1") OkHttpClient client, GsonConverterFactory converterFactory, RxJava2CallAdapterFactory adapterFactory) {
         return new Retrofit.Builder()
                 .baseUrl(mBaseUrl)
                 .addConverterFactory(converterFactory)
@@ -108,7 +108,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    Context provideContext() {
+    Context providesContext() {
         return mContext;
     }
 }
