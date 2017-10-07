@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
+import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.utils.CustomQRView;
 import tdevm.app_ui.R;
 public class BottomNavigationHome extends AppCompatActivity {
@@ -58,9 +59,9 @@ public class BottomNavigationHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_navigation);
-        rView = (Button) findViewById(R.id.btn_r_view);
-        netReq = (Button) findViewById(R.id.btn_net_req);
-        toolbarMain = (Toolbar)findViewById(R.id.toolbar_main);
+        rView = findViewById(R.id.btn_r_view);
+        netReq = findViewById(R.id.btn_net_req);
+        toolbarMain = findViewById(R.id.toolbar_main);
 
 
         setSupportActionBar(toolbarMain);
@@ -74,6 +75,14 @@ public class BottomNavigationHome extends AppCompatActivity {
             }
         });
 
+        rView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BottomNavigationHome.this, AuthenticationActivity.class);
+                startActivity(intent);
+
+            }
+        });
         userReg = (Button)findViewById(R.id.btn_reg);
         navigation= (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
@@ -82,7 +91,6 @@ public class BottomNavigationHome extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
         transaction.commit();
-
 
     }
 

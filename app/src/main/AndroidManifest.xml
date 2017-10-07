@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/NoActionBar">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".navigation_fragments_home.BottomNavigationHome"
             android:label="@string/title_activity_bottom_navigation"
@@ -30,15 +30,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".navigation_fragments_dine_in.DineInHome"
             android:label="@string/title_activity_dine_in_home">
-        </activity>
 
+        </activity>
         <activity
             android:name=".utils.CustomQRView"
             android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".modules.auth.AuthenticationActivity">
+
         </activity>
     </application>
 
