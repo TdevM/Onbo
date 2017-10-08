@@ -16,10 +16,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="120dp"
+        android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:clickable="false"
         android:orientation="horizontal"
+        app:hintAnimationEnabled="false"
         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
 
