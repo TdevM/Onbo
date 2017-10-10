@@ -15,7 +15,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
+    <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
         <item name="android:textColor">@android:color/holo_orange_dark</item>
     </style>
 

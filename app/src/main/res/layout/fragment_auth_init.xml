@@ -11,13 +11,13 @@
         android:layout_width="wrap_content"
         android:text="@string/lets_get_started"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/et_phone_number"
+        android:layout_above="@+id/et_init_phone_number"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="128dp" />
 
 
     <tdevm.app_ui.widgets.PhoneEditText
-        android:id="@+id/et_phone_number"
+        android:id="@+id/et_init_phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"

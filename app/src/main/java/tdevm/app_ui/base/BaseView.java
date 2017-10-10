@@ -5,4 +5,6 @@ package tdevm.app_ui.base;
  */
 
 public interface BaseView {
+    void showProgressUI();
+    void hideProgressUI();
 }
