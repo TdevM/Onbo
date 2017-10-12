@@ -1,6 +1,7 @@
 package tdevm.app_ui.api;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -17,13 +18,13 @@ public interface APIService {
     Observable<User> registerUser(@Body User user);
 
     @GET("verify/mobile/otp")
-    Observable<String> getMobileOTP(@Header("phone") String phone);
+    Observable<Response<Object>> getMobileOTP(@Header("phone") Long phone);
 
     @POST("verify/mobile/otp")
     Observable<OneTimePassword> verifyMobileOTP(@Body OneTimePassword oneTimePassword);
 
     @POST("user/login")
-    Observable<User> loginUser(@Body User user);
+    Observable<Response<Object>> loginUser(@Body User user);
 
     @GET("user/me")
     Observable<String> fetchUser(@Header("x-auth") String authToken);

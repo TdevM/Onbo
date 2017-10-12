@@ -49,6 +49,7 @@
             android:id="@+id/et_login_password"
             android:layout_width="match_parent"
             android:hint="@string/password"
+            android:inputType="textPassword"
             android:layout_height="match_parent" />
     </android.support.design.widget.TextInputLayout>
 
@@ -63,5 +64,15 @@
         android:layout_below="@+id/textInputLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_login"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp" />
 
 </RelativeLayout>

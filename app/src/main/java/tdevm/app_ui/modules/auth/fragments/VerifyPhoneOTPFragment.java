@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.Unbinder;
 import tdevm.app_ui.R;
 
 /**
@@ -14,6 +15,9 @@ import tdevm.app_ui.R;
  */
 public class VerifyPhoneOTPFragment extends Fragment {
 
+    private static final String PHONE = "PHONE";
+    private Long phoneNumber;
+    Unbinder unbinder;
 
     public VerifyPhoneOTPFragment() {
         // Required empty public constructor
@@ -21,6 +25,14 @@ public class VerifyPhoneOTPFragment extends Fragment {
 
     public static VerifyPhoneOTPFragment newInstance(){
         return new VerifyPhoneOTPFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            phoneNumber = getArguments().getLong(PHONE);
+        }
     }
 
 

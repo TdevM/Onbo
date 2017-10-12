@@ -3,34 +3,62 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.modules.auth.AuthContract;
+import tdevm.app_ui.api.APIService;
+import tdevm.app_ui.dagger.components.ApplicationComponent;
+import tdevm.app_ui.dagger.components.DaggerAPIComponent;
+import tdevm.app_ui.dagger.modules.APIModule;
+import tdevm.app_ui.modules.auth.AuthViewContract;
+import tdevm.app_ui.modules.auth.AuthenticationActivity;
 
-public class AuthInitFragment extends Fragment implements AuthContract.AuthView {
+public class AuthInitFragment extends Fragment implements AuthViewContract.AuthInitView {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
 
-
-    @BindView(R.id.et_init_phone_number)
-    private EditText phoneNumberInit;
-    @BindView(R.id.btn_login_next)
-    private Button btnLoginInit;
-
-
-
+    Unbinder unbinder;
     private AuthInitInteractionListener mListener;
+    protected  AuthInitPresenter authInitPresenter;
+
+    @BindView(R.id.progressBar2)
+    ProgressBar progressBar;
+    @BindView(R.id.et_init_phone_number)
+    EditText phoneNumberInit;
+    @BindView(R.id.btn_login_next)
+    Button btnLoginInit;
+
+    AuthenticationActivity authenticationActivity;
+
+    @Inject
+    APIService apiService;
+    @OnClick(R.id.btn_login_next)
+    public void onButtonClick(){
+        if(TextUtils.isEmpty(phoneNumberInit.getText())){
+            Toast.makeText(getActivity(), "Enter phone number", Toast.LENGTH_SHORT).show();
+        }else {
+            authInitPresenter.sendOTP(Long.parseLong(phoneNumberInit.getText().toString()));
+        }
+    }
 
 
     public AuthInitFragment() {
@@ -41,38 +69,55 @@ public class AuthInitFragment extends Fragment implements AuthContract.AuthView 
         return new AuthInitFragment();
     }
 
+    public void resolveDaggerDependencies(){
+        DaggerAPIComponent.builder()
+                .aPIModule(new APIModule())
+                .applicationComponent(getApplicationComponent())
+                .build().inject(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        resolveDaggerDependencies();
+        authenticationActivity = (AuthenticationActivity) getActivity();
+        authInitPresenter = new AuthInitPresenter(this,apiService);  //Passed in view
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_auth_init, container, false);
-        ButterKnife.bind(this,view);
+
+        unbinder = ButterKnife.bind(this,view);
+        phoneNumberInit.setFilters(new InputFilter[] {new InputFilter.LengthFilter(10)});
+
         return view;
+    }
+
+    protected ApplicationComponent getApplicationComponent() {
+        return ((AppApplication) getActivity().getApplication()).getApplicationComponent();
     }
 
     @Override
     public void showProgressUI() {
-
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgressUI() {
+        progressBar.setVisibility(View.GONE);
 
     }
 
     @Override
-    public void showPasswordInputFragment(Long phone) {
-
+    public void showLoginFragment(Long phone) {
+        authenticationActivity.showLoginFragment(phone);
     }
 
     @Override
-    public void showLoginError() {
-
+    public void showOTPVerificationScreen(Long phone) {
+      authenticationActivity.showOTPVerificationFragment(phone);
     }
 
     @Override
-    public void showRegisterFragment(Long phone) {
+    public void showError() {
 
     }
 
@@ -124,5 +169,11 @@ public class AuthInitFragment extends Fragment implements AuthContract.AuthView 
     public interface AuthInitInteractionListener {
         // TODO: Update argument type and name
         void onAuthInitInteractionListener(Uri uri);
+    }
+
+    @Override
+    public void onDestroyView() {
+        unbinder.unbind();
+        super.onDestroyView();
     }
 }

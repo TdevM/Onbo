@@ -32,6 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetworkModule {
 
+    public static final String SHARED_PREFS = "MyPrefs";
     private String mBaseUrl;
     private Context mContext;
 
@@ -42,8 +43,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    SharedPreferences providesSharedPreferences(Application application) {
-        return PreferenceManager.getDefaultSharedPreferences(application);
+    SharedPreferences providesSharedPreferences() {
+        return mContext.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
     }
 
     @Singleton

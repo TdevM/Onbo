@@ -2,8 +2,10 @@ package tdevm.app_ui;
 
 import android.app.Application;
 
-import tdevm.app_ui.dagger.components.DaggerNetworkComponent;
-import tdevm.app_ui.dagger.components.NetworkComponent;
+import com.squareup.leakcanary.LeakCanary;
+
+import tdevm.app_ui.dagger.components.ApplicationComponent;
+import tdevm.app_ui.dagger.components.DaggerApplicationComponent;
 import tdevm.app_ui.dagger.modules.AppModule;
 import tdevm.app_ui.dagger.modules.NetworkModule;
 
@@ -13,14 +15,20 @@ import tdevm.app_ui.dagger.modules.NetworkModule;
 
 public class AppApplication extends Application {
 
-    NetworkComponent networkComponent;
+    ApplicationComponent applicationComponent;
     @Override
     public void onCreate() {
         super.onCreate();
-        initializeNetworkComponent();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+      initializeApplicationComponent();
     }
-    private void initializeNetworkComponent() {
-        networkComponent = DaggerNetworkComponent
+    private void initializeApplicationComponent() {
+        applicationComponent = DaggerApplicationComponent
                 .builder()
                 .networkModule(new NetworkModule(this, "https://tdevmapi.herokuapp.com/api/v3/"))
                 .appModule(new AppModule(this))
@@ -28,8 +36,8 @@ public class AppApplication extends Application {
 
     }
 
-    public NetworkComponent getNetworkComponent() {
-        return networkComponent;
+    public ApplicationComponent getApplicationComponent(){
+        return  applicationComponent;
     }
 
     @Override

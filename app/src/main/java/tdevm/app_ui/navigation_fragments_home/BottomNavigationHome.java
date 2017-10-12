@@ -10,13 +10,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
+import javax.inject.Inject;
+
+import tdevm.app_ui.AppApplication;
+import tdevm.app_ui.api.models.MySharedPreferences;
+import tdevm.app_ui.dagger.components.ApplicationComponent;
+import tdevm.app_ui.dagger.components.DaggerAPIComponent;
+import tdevm.app_ui.dagger.modules.APIModule;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.utils.CustomQRView;
 import tdevm.app_ui.R;
 public class BottomNavigationHome extends AppCompatActivity {
+
+    @Inject
+    MySharedPreferences mySharedPreferences;
 
     Button rView, netReq, userReg;
     Toolbar toolbarMain;
@@ -63,7 +74,10 @@ public class BottomNavigationHome extends AppCompatActivity {
         netReq = findViewById(R.id.btn_net_req);
         toolbarMain = findViewById(R.id.toolbar_main);
 
-
+        DaggerAPIComponent.builder()
+                .aPIModule(new APIModule())
+                .applicationComponent(getApplicationComponent())
+                .build().inject(this);
         setSupportActionBar(toolbarMain);
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle("Home");
@@ -78,13 +92,17 @@ public class BottomNavigationHome extends AppCompatActivity {
         rView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BottomNavigationHome.this, AuthenticationActivity.class);
-                startActivity(intent);
-
+                Boolean state = mySharedPreferences.getDataBool("LOGIN_STATE");
+                if(state){
+                    Toast.makeText(BottomNavigationHome.this, "Already Logged in", Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent intent = new Intent(BottomNavigationHome.this, AuthenticationActivity.class);
+                    startActivity(intent);
+                }
             }
         });
-        userReg = (Button)findViewById(R.id.btn_reg);
-        navigation= (BottomNavigationView) findViewById(R.id.navigation);
+        userReg = findViewById(R.id.btn_reg);
+        navigation= findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -101,6 +119,9 @@ public class BottomNavigationHome extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+    }
+    protected ApplicationComponent getApplicationComponent() {
+        return ((AppApplication)getApplication()).getApplicationComponent();
     }
 
     @Override
