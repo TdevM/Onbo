@@ -1,7 +1,4 @@
 package tdevm.app_ui.modules.auth.fragments;
-
-
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
@@ -10,8 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -28,12 +24,9 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.APIService;
-import tdevm.app_ui.dagger.components.ApplicationComponent;
-import tdevm.app_ui.dagger.components.DaggerAPIComponent;
-import tdevm.app_ui.dagger.modules.APIModule;
+
 import tdevm.app_ui.modules.auth.AuthViewContract;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
-import android.view.WindowManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,16 +82,8 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
         }
     }
     public void resolveDaggerDependencies(){
-        DaggerAPIComponent.builder()
-                .aPIModule(new APIModule())
-                .applicationComponent(getApplicationComponent())
-                .build().inject(this);
+        ((AppApplication) getActivity().getApplication()).getApiComponent().inject(this);
     }
-    protected ApplicationComponent getApplicationComponent() {
-        return ((AppApplication) getActivity().getApplication()).getApplicationComponent();
-    }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

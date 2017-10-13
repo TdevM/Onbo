@@ -4,8 +4,11 @@ import android.app.Application;
 
 import com.squareup.leakcanary.LeakCanary;
 
+import tdevm.app_ui.dagger.components.APIComponent;
 import tdevm.app_ui.dagger.components.ApplicationComponent;
+import tdevm.app_ui.dagger.components.DaggerAPIComponent;
 import tdevm.app_ui.dagger.components.DaggerApplicationComponent;
+import tdevm.app_ui.dagger.modules.APIModule;
 import tdevm.app_ui.dagger.modules.AppModule;
 import tdevm.app_ui.dagger.modules.NetworkModule;
 
@@ -16,8 +19,11 @@ import tdevm.app_ui.dagger.modules.NetworkModule;
 public class AppApplication extends Application {
 
     ApplicationComponent applicationComponent;
+    APIComponent apiComponent;
     @Override
     public void onCreate() {
+        initializeApplicationComponent();
+        initializeAPIComponent();
         super.onCreate();
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
@@ -25,7 +31,6 @@ public class AppApplication extends Application {
             return;
         }
         LeakCanary.install(this);
-      initializeApplicationComponent();
     }
     private void initializeApplicationComponent() {
         applicationComponent = DaggerApplicationComponent
@@ -34,6 +39,17 @@ public class AppApplication extends Application {
                 .appModule(new AppModule(this))
                 .build();
 
+    }
+    private void initializeAPIComponent(){
+        apiComponent = DaggerAPIComponent
+                .builder()
+                .aPIModule(new APIModule())
+                .applicationComponent(getApplicationComponent())
+                .build();
+    }
+
+    public APIComponent getApiComponent() {
+        return apiComponent;
     }
 
     public ApplicationComponent getApplicationComponent(){

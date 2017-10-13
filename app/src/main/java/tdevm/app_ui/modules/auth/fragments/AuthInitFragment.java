@@ -23,9 +23,7 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.APIService;
-import tdevm.app_ui.dagger.components.ApplicationComponent;
-import tdevm.app_ui.dagger.components.DaggerAPIComponent;
-import tdevm.app_ui.dagger.modules.APIModule;
+
 import tdevm.app_ui.modules.auth.AuthViewContract;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 
@@ -71,10 +69,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     }
 
     public void resolveDaggerDependencies(){
-        DaggerAPIComponent.builder()
-                .aPIModule(new APIModule())
-                .applicationComponent(getApplicationComponent())
-                .build().inject(this);
+        ((AppApplication) getActivity().getApplication()).getApiComponent().inject(this);
     }
 
     @Override
@@ -92,9 +87,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
         return view;
     }
 
-    protected ApplicationComponent getApplicationComponent() {
-        return ((AppApplication) getActivity().getApplication()).getApplicationComponent();
-    }
+
 
     @Override
     public void showProgressUI() {
