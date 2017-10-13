@@ -25,11 +25,16 @@ public interface AuthViewContract {
     }
 
     public interface AuthRegisterView extends BaseView{
-
+        void showRegistrationError();
+        void showRegistrationSuccess();
+        void showDuplicationError(String message);
     }
 
     public interface AuthOTPView extends BaseView{
-
+        void showOTPSentSuccess();
+        void showOTPSentFailure();
+        void showVerificationFailure();
+        void showVerificationSuccess(Long phone);
     }
 
 }

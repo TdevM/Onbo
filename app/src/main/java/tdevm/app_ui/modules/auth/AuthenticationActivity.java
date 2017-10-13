@@ -16,6 +16,7 @@ import tdevm.app_ui.modules.auth.fragments.AuthLoginFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthRegisterFragment;
 import tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment;
 
+//TODO back stack management.
 public class AuthenticationActivity extends AppCompatActivity implements AuthInitFragment.AuthInitInteractionListener{
 
     @Override
@@ -29,7 +30,7 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
         if(fragment == null){
             fragment = new AuthInitFragment();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frame_layout_auth_activity,fragment).commit();
+            fragmentTransaction.replace(R.id.frame_layout_auth_activity,fragment).addToBackStack(null).commit();
         }
     }
 

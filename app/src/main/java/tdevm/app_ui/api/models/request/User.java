@@ -56,6 +56,13 @@ public class User {
         this.userGender = userGender;
     }
 
+    public User(String name, String email, long mobile, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.mobile = mobile;
+    }
+
     public User(String password, long user_mobile) {
         this.password = password;
         this.user_mobile = user_mobile;

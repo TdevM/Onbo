@@ -40,18 +40,20 @@
             android:text="@string/otp_sent_mobile_number"
             android:textSize="20sp" />
 
-        <com.goodiebag.pinview.Pinview
+        <EditText
             android:id="@+id/et_otp_view"
+            style="@style/Widget.AppCompat.EditText"
             android:layout_width="match_parent"
-            android:paddingLeft="30dp"
-            app:pinLength="6"
-            app:pinHeight="30dp"
-            app:pinWidth="30dp"
-            android:paddingStart="30dp"
-            android:paddingEnd="0dp"
-            android:paddingRight="0dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_height="0dp" />
+            android:fontFamily="monospace"
+            android:inputType="number"
+            android:paddingEnd="0dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="0dp"
+            android:paddingStart="30dp"
+            android:textAlignment="gravity"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,6 +93,16 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_otp_view"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout_fragment_verify_otp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="9dp" />
 
 
 </RelativeLayout>

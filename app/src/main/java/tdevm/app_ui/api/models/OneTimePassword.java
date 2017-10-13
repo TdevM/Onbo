@@ -5,27 +5,27 @@ package tdevm.app_ui.api.models;
  */
 
 public class OneTimePassword {
-    String otp;
-    String phone;
+    Long otp;
+    Long phone;
 
-    public OneTimePassword(String otp, String phone) {
+    public OneTimePassword(Long otp, Long phone) {
         this.otp = otp;
         this.phone = phone;
     }
 
-    public String getOtp() {
+    public Long getOtp() {
         return otp;
     }
 
-    public void setOtp(String otp) {
+    public void setOtp(Long otp) {
         this.otp = otp;
     }
 
-    public String getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 }

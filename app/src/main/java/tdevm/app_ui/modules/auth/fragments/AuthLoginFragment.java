@@ -136,6 +136,8 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
 
     @Override
     public void loginSuccess() {
+        //Destroy Auth Activity
+        authenticationActivity.finish();
         Toast.makeText(getActivity(), "Logged in!", Toast.LENGTH_SHORT).show();
         loginPassword.setText("");
     }

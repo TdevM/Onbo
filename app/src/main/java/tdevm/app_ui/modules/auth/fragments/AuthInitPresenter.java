@@ -15,7 +15,7 @@ import tdevm.app_ui.modules.auth.AuthViewContract;
  * Created by Tridev on 12-10-2017.
  */
 
-
+//TODO un-subscribe observer
 public class AuthInitPresenter extends BasePresenter{
 
     public static final String TAG = AuthInitPresenter.class.getSimpleName();
@@ -46,6 +46,7 @@ public class AuthInitPresenter extends BasePresenter{
                         Log.d(TAG,"data: "+response.body());
                         authInitView.showLoginFragment(phone);
                     }else if(response.code() ==200){
+                        Log.d(TAG,response.body().toString());
                         authInitView.showOTPVerificationScreen(phone);
                     }
                 }
@@ -54,6 +55,7 @@ public class AuthInitPresenter extends BasePresenter{
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG,"Error");
+                authInitView.hideProgressUI();
                 authInitView.showError();
             }
 

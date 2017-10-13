@@ -15,13 +15,13 @@ import tdevm.app_ui.api.models.request.User;
 
 public interface APIService {
     @POST("user/register")
-    Observable<User> registerUser(@Body User user);
+    Observable<Response<Object>> registerUser(@Body User user);
 
     @GET("verify/mobile/otp")
     Observable<Response<Object>> getMobileOTP(@Header("phone") Long phone);
 
     @POST("verify/mobile/otp")
-    Observable<OneTimePassword> verifyMobileOTP(@Body OneTimePassword oneTimePassword);
+    Observable<Response<Object>> verifyMobileOTP(@Body OneTimePassword oneTimePassword);
 
     @POST("user/login")
     Observable<Response<Object>> loginUser(@Body User user);
