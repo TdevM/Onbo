@@ -2,9 +2,12 @@ package tdevm.app_ui.modules.auth.fragments;
 
 import android.util.Log;
 
+import org.reactivestreams.Subscription;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
@@ -15,13 +18,13 @@ import tdevm.app_ui.modules.auth.AuthViewContract;
  * Created by Tridev on 12-10-2017.
  */
 
-//TODO un-subscribe observer
+//TODO dispose observer
 public class AuthInitPresenter extends BasePresenter{
 
     public static final String TAG = AuthInitPresenter.class.getSimpleName();
 
     private APIService apiService;
-
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
     private AuthViewContract.AuthInitView authInitView;
 
     public AuthInitPresenter(AuthViewContract.AuthInitView authInitView, APIService apiService) {
@@ -31,9 +34,11 @@ public class AuthInitPresenter extends BasePresenter{
 
     void sendOTP(final Long phone){
         Observable<Response<Object>> objectObservable = apiService.getMobileOTP(phone);
+
         subscribe(objectObservable, new Observer<Response<Object>>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
+                compositeDisposable.add(d);
                 authInitView.showProgressUI();
                 Log.d(TAG, "Subscribed");
             }
@@ -62,10 +67,8 @@ public class AuthInitPresenter extends BasePresenter{
             @Override
             public void onComplete() {
                 Log.d(TAG,"complete");
-
             }
         });
     }
-
 
 }

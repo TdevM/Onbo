@@ -36,6 +36,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     private String mParam1;
     private String mParam2;
 
+    public static final String TAG = AuthInitFragment.class.getSimpleName();
     Unbinder unbinder;
     private AuthInitInteractionListener mListener;
     protected  AuthInitPresenter authInitPresenter;
@@ -175,5 +176,13 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     public void onDestroyView() {
         unbinder.unbind();
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(TAG,"onDestroy Called");
+        authInitPresenter.compositeDisposable.dispose();
+        authInitPresenter.compositeDisposable.clear();
+        super.onDestroy();
     }
 }

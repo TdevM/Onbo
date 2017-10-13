@@ -5,6 +5,7 @@ import android.util.Log;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
@@ -20,9 +21,9 @@ public class VerifyPhoneOTPPresenter extends BasePresenter{
 
     public static final String TAG = VerifyPhoneOTPPresenter.class.getSimpleName();
 
-    APIService apiService;
-    AuthViewContract.AuthOTPView authOTPView;
-
+    private APIService apiService;
+    private AuthViewContract.AuthOTPView authOTPView;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
     public VerifyPhoneOTPPresenter(APIService apiService, AuthViewContract.AuthOTPView authOTPView) {
         this.apiService =apiService;
         this.authOTPView = authOTPView;
@@ -34,6 +35,7 @@ public class VerifyPhoneOTPPresenter extends BasePresenter{
             @Override
             public void onSubscribe(@NonNull Disposable d) {
                  authOTPView.showProgressUI();
+                compositeDisposable.add(d);
             }
 
             @Override
@@ -67,7 +69,7 @@ public class VerifyPhoneOTPPresenter extends BasePresenter{
         subscribe(observable, new Observer<Response<Object>>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-
+              compositeDisposable.add(d);
             }
 
             @Override

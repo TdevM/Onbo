@@ -161,4 +161,11 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
         authenticationActivity.showRegisterFragment(phone);
         Toast.makeText(authenticationActivity, "Verified!", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onDestroy() {
+        verifyPhoneOTPPresenter.compositeDisposable.dispose();
+        verifyPhoneOTPPresenter.compositeDisposable.clear();
+        super.onDestroy();
+    }
 }

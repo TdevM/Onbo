@@ -5,6 +5,7 @@ import android.util.Log;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
@@ -19,10 +20,10 @@ import tdevm.app_ui.modules.auth.AuthViewContract;
 
 public class AuthRegisterPresenter extends BasePresenter {
 
-    AuthViewContract.AuthRegisterView authRegisterView;
-    APIService apiService;
-    MySharedPreferences mySharedPreferences;
-
+    private AuthViewContract.AuthRegisterView authRegisterView;
+    private APIService apiService;
+    private MySharedPreferences mySharedPreferences;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
     public AuthRegisterPresenter(AuthViewContract.AuthRegisterView authRegisterView, APIService apiService, MySharedPreferences mySharedPreferences) {
         this.authRegisterView = authRegisterView;
         this.apiService = apiService;
@@ -34,6 +35,7 @@ public class AuthRegisterPresenter extends BasePresenter {
         subscribe(observable, new Observer<Response<Object>>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
+                compositeDisposable.add(d);
               authRegisterView.showProgressUI();
             }
 

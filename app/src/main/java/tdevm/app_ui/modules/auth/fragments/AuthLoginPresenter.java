@@ -6,6 +6,7 @@ import android.util.Log;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
@@ -24,9 +25,10 @@ public class AuthLoginPresenter extends BasePresenter {
 
 
     //TODO use Dagger here.
-    APIService apiService;
-    AuthViewContract.AuthLoginView authLoginView;
-    MySharedPreferences sharedPreferences;
+    private APIService apiService;
+    private AuthViewContract.AuthLoginView authLoginView;
+    private MySharedPreferences sharedPreferences;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public AuthLoginPresenter(AuthViewContract.AuthLoginView authLoginView, APIService apiService, MySharedPreferences sharedPreferences) {
         this.apiService = apiService;
@@ -40,6 +42,7 @@ public class AuthLoginPresenter extends BasePresenter {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
                 authLoginView.showProgressUI();
+                compositeDisposable.add(d);
                 Log.d(TAG,"Subscribed");
             }
 

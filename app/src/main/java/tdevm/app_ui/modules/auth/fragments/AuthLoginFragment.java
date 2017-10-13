@@ -141,4 +141,11 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
         Toast.makeText(getActivity(), "Logged in!", Toast.LENGTH_SHORT).show();
         loginPassword.setText("");
     }
+
+    @Override
+    public void onDestroy() {
+        authLoginPresenter.compositeDisposable.dispose();
+        authLoginPresenter.compositeDisposable.clear();
+        super.onDestroy();
+    }
 }

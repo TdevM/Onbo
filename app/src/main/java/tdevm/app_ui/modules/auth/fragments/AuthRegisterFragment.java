@@ -142,4 +142,11 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
     public void showDuplicationError(String message) {
         Toast.makeText(authenticationActivity, "Email already registered", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onDestroy() {
+        authRegisterPresenter.compositeDisposable.dispose();
+        authRegisterPresenter.compositeDisposable.clear();
+        super.onDestroy();
+    }
 }

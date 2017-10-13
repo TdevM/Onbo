@@ -8,7 +8,7 @@ import tdevm.app_ui.base.BaseView;
 
 public interface AuthViewContract {
 
-    public interface AuthInitView  extends BaseView {
+    interface AuthInitView  extends BaseView {
         //User registered already
         void showLoginFragment(Long phone);
         //Send OTP to new User.
@@ -18,19 +18,19 @@ public interface AuthViewContract {
 
     }
 
-    public interface AuthLoginView extends BaseView{
+    interface AuthLoginView extends BaseView{
         void showLoginError();
         void loginSuccess();
 
     }
 
-    public interface AuthRegisterView extends BaseView{
+    interface AuthRegisterView extends BaseView{
         void showRegistrationError();
         void showRegistrationSuccess();
         void showDuplicationError(String message);
     }
 
-    public interface AuthOTPView extends BaseView{
+    interface AuthOTPView extends BaseView{
         void showOTPSentSuccess();
         void showOTPSentFailure();
         void showVerificationFailure();

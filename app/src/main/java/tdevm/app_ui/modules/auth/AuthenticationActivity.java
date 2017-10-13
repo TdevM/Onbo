@@ -30,7 +30,7 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
         if(fragment == null){
             fragment = new AuthInitFragment();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frame_layout_auth_activity,fragment).addToBackStack(null).commit();
+            fragmentTransaction.replace(R.id.frame_layout_auth_activity,fragment).commit();
         }
     }
 
@@ -43,7 +43,7 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
         Bundle bundle = new Bundle();
         bundle.putLong("PHONE",phone);
         verifyPhoneOTPFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_auth_activity,verifyPhoneOTPFragment).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_auth_activity,verifyPhoneOTPFragment).commit();
 
     }
 
@@ -52,7 +52,7 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
         Bundle bundle = new Bundle();
         bundle.putLong("PHONE",phone);
         authLoginFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_auth_activity,authLoginFragment).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_auth_activity,authLoginFragment).commit();
 
     }
 
