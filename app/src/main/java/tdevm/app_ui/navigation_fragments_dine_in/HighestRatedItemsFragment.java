@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import tdevm.app_ui.R;
-import tdevm.app_ui.navigation_fragments_home.HomeFragment;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -14,6 +14,7 @@ import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.auth.AuthViewContract;
+import tdevm.app_ui.utils.AuthUtils;
 
 /**
  * Created by Tridev on 12-10-2017.
@@ -28,6 +29,7 @@ public class AuthLoginPresenter extends BasePresenter {
     private APIService apiService;
     private AuthViewContract.AuthLoginView authLoginView;
     private MySharedPreferences sharedPreferences;
+    private AuthUtils authUtils;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public AuthLoginPresenter(AuthViewContract.AuthLoginView authLoginView, APIService apiService, MySharedPreferences sharedPreferences) {
@@ -54,8 +56,8 @@ public class AuthLoginPresenter extends BasePresenter {
                     authLoginView.showLoginError();
                 }else if(response.code() ==200){
                     Log.d(TAG,response.body().toString());
-                    sharedPreferences.putDataString("TOKEN",response.headers().get("X-auth"));
-                    sharedPreferences.putDataBool("LOGIN_STATE",true);
+                    authUtils = new AuthUtils(sharedPreferences);
+                    authUtils.saveAuthTransaction(response.headers().get("X-auth"),phone,true);
                     authLoginView.loginSuccess();
                     authLoginView.hideProgressUI();
                 }

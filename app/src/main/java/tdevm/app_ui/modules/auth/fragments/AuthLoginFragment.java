@@ -1,5 +1,4 @@
 package tdevm.app_ui.modules.auth.fragments;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -26,12 +25,10 @@ import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.modules.auth.AuthViewContract;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 //TODO Create a Base Fragment class
 public class AuthLoginFragment extends Fragment implements AuthViewContract.AuthLoginView {
 
+    public static final String TAG = AuthLoginFragment.class.getSimpleName();
     private static final String PHONE = "PHONE";
     private Long phoneNumber;
     Unbinder unbinder;
@@ -40,7 +37,6 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
     MySharedPreferences mySharedPreferences;
     @Inject
     APIService apiService;
-
 
     private AuthLoginPresenter authLoginPresenter;
     AuthenticationActivity authenticationActivity;
@@ -89,6 +85,8 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         resolveDaggerDependencies();
+        Log.d(TAG,"mySharedPrefs: "+mySharedPreferences);
+        Log.d(TAG,"API Service: "+apiService);
         authenticationActivity = (AuthenticationActivity) getActivity();
         authLoginPresenter  = new AuthLoginPresenter(this,apiService,mySharedPreferences);
         View view = inflater.inflate(R.layout.fragment_auth_login, container, false);

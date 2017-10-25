@@ -18,7 +18,7 @@ import tdevm.app_ui.modules.auth.AuthViewContract;
  * Created by Tridev on 12-10-2017.
  */
 
-//TODO dispose observer
+//TODO use disposableObserver
 public class AuthInitPresenter extends BasePresenter{
 
     public static final String TAG = AuthInitPresenter.class.getSimpleName();

@@ -31,11 +31,12 @@ public class AppApplication extends Application {
             return;
         }
         LeakCanary.install(this);
+
     }
     private void initializeApplicationComponent() {
         applicationComponent = DaggerApplicationComponent
                 .builder()
-                .networkModule(new NetworkModule(this, "https://tdevmapi.herokuapp.com/api/v3/"))
+                .networkModule(new NetworkModule(this, "https://z71.herokuapp.com/api/v3/"))
                 .appModule(new AppModule(this))
                 .build();
 

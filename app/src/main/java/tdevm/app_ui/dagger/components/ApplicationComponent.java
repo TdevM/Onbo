@@ -21,7 +21,6 @@ import tdevm.app_ui.modules.auth.fragments.AuthLoginFragment;
 public interface ApplicationComponent {
 
     Retrofit exposeRetrofit();
-    Context exposeContext();
     SharedPreferences exposeSharedPreferences();
 
 }

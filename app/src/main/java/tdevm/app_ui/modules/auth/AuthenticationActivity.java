@@ -34,16 +34,14 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
         }
     }
 
-    protected ApplicationComponent getApplicationComponent() {
-        return ((AppApplication) getApplication()).getApplicationComponent();
-    }
-
     public void showOTPVerificationFragment(Long phone){
         VerifyPhoneOTPFragment verifyPhoneOTPFragment = VerifyPhoneOTPFragment.newInstance();
         Bundle bundle = new Bundle();
         bundle.putLong("PHONE",phone);
         verifyPhoneOTPFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_auth_activity,verifyPhoneOTPFragment).commit();
+        getSupportFragmentManager().beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .replace(R.id.frame_layout_auth_activity,verifyPhoneOTPFragment).commit();
 
     }
 
@@ -52,7 +50,9 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
         Bundle bundle = new Bundle();
         bundle.putLong("PHONE",phone);
         authLoginFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_auth_activity,authLoginFragment).commit();
+        getSupportFragmentManager().beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .replace(R.id.frame_layout_auth_activity,authLoginFragment).commit();
 
     }
 
@@ -61,7 +61,9 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
         Bundle bundle = new Bundle();
         bundle.putLong("PHONE",phone);
         authRegisterFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_auth_activity,authRegisterFragment).commit();
+        getSupportFragmentManager().beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .replace(R.id.frame_layout_auth_activity,authRegisterFragment).commit();
     }
 
     @Override

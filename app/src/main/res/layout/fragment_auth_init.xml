@@ -9,45 +9,46 @@
     <TextView
         android:id="@+id/text_login_home"
         android:layout_width="wrap_content"
-        android:text="@string/lets_get_started"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/et_init_phone_number"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="128dp" />
+        android:layout_marginTop="204dp"
+        android:text="@string/lets_get_started" />
 
 
     <tdevm.app_ui.widgets.PhoneEditText
         android:id="@+id/et_init_phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:textSize="20sp"
-        android:inputType="phone"
-        android:tag="+91"
-        android:layout_above="@+id/btn_login_next"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="41dp" />
+        android:layout_below="@+id/progressBar2"
+        android:layout_marginTop="31dp"
+        android:gravity="bottom"
+        android:inputType="phone"
+        android:tag="+91"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btn_login_next"
+        style=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="92dp"
-        android:text="@string/auth_next"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/et_init_phone_number"
+        android:layout_marginTop="25dp"
+        android:text="@string/auth_next" />
 
     <ProgressBar
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:layout_alignTop="@+id/text_login_home"
+        android:layout_below="@+id/text_login_home"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="39dp" />
+        android:layout_marginTop="18dp"
+        android:visibility="invisible" />
 
 
 </RelativeLayout>

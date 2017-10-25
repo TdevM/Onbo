@@ -20,6 +20,7 @@ import tdevm.app_ui.modules.auth.AuthViewContract;
 
 public class AuthRegisterPresenter extends BasePresenter {
 
+    public static final String TAG = AuthRegisterPresenter.class.getSimpleName();
     private AuthViewContract.AuthRegisterView authRegisterView;
     private APIService apiService;
     private MySharedPreferences mySharedPreferences;

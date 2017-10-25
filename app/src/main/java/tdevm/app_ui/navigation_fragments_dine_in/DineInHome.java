@@ -8,10 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import tdevm.app_ui.R;
-import tdevm.app_ui.navigation_fragments_home.HomeFragment;
 
 public class DineInHome extends AppCompatActivity {
 

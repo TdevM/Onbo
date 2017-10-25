@@ -28,13 +28,10 @@ import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.modules.auth.AuthViewContract;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-
 //TODO 30 Seconds Resend
 public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract.AuthOTPView{
 
+    public static final String TAG = VerifyPhoneOTPFragment.class.getSimpleName();
     private static final String PHONE = "PHONE";
     private Long phoneNumber;
     Unbinder unbinder;
@@ -88,9 +85,9 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
-        Log.d("FRAGMENT OTP..", "onCreate Called");
+        Log.d(TAG, "onCreate Called");
+        Log.d(TAG,"API Service: " +apiService);
         View view  = inflater.inflate(R.layout.fragment_verify_phone_otp, container, false);
         unbinder = ButterKnife.bind(this,view);
         resolveDaggerDependencies();

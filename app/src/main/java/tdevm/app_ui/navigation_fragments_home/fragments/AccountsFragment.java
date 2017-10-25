@@ -1,4 +1,4 @@
-package tdevm.app_ui.navigation_fragments_home;
+package tdevm.app_ui.navigation_fragments_home.fragments;
 
 
 import android.content.Context;

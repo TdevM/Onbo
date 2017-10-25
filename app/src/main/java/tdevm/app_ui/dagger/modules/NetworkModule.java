@@ -21,6 +21,7 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -63,6 +64,14 @@ public class NetworkModule {
 
     @Singleton
     @Provides
+    HttpLoggingInterceptor providesLoggingInterceptor(){
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return httpLoggingInterceptor;
+    }
+
+    @Singleton
+    @Provides
     @Named("ok-1")
     OkHttpClient providesOkHttpClient1(Cache cache) {
         return new OkHttpClient.Builder()
@@ -75,10 +84,11 @@ public class NetworkModule {
     @Singleton
     @Provides
     @Named("ok-2")
-    OkHttpClient providesOkHttpClient2(Cache cache) {
+    OkHttpClient providesOkHttpClient2(Cache cache, HttpLoggingInterceptor httpLoggingInterceptor) {
         return new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor(httpLoggingInterceptor)
                 .cache(cache)
                 .build();
     }
@@ -98,7 +108,7 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    Retrofit providesRetrofit(@Named("ok-1") OkHttpClient client, GsonConverterFactory converterFactory, RxJava2CallAdapterFactory adapterFactory) {
+    Retrofit providesRetrofit(@Named("ok-2") OkHttpClient client, GsonConverterFactory converterFactory, RxJava2CallAdapterFactory adapterFactory) {
         return new Retrofit.Builder()
                 .baseUrl(mBaseUrl)
                 .addConverterFactory(converterFactory)

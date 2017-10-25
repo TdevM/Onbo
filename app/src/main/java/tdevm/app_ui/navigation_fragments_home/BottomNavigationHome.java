@@ -13,22 +13,30 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import javax.inject.Inject;
 
 import tdevm.app_ui.AppApplication;
+import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.MySharedPreferences;
-import tdevm.app_ui.dagger.components.ApplicationComponent;
-import tdevm.app_ui.dagger.components.DaggerAPIComponent;
-import tdevm.app_ui.dagger.modules.APIModule;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
+import tdevm.app_ui.navigation_fragments_dine_in.DineInHome;
+import tdevm.app_ui.navigation_fragments_home.fragments.AccountsFragment;
+import tdevm.app_ui.navigation_fragments_home.fragments.BookFragment;
+import tdevm.app_ui.navigation_fragments_home.fragments.HomeFragment;
+import tdevm.app_ui.navigation_fragments_home.fragments.NotificationsFragment;
+import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CustomQRView;
 import tdevm.app_ui.R;
-public class BottomNavigationHome extends AppCompatActivity {
+public class BottomNavigationHome extends AppCompatActivity implements NavigationHomeContract.BottomNavigationView {
 
     @Inject
     MySharedPreferences mySharedPreferences;
-
+    @Inject
+    APIService apiService;
+    private BottomNavigationPresenter bottomNavigationPresenter;
+    private AuthUtils authUtils;
     Button rView, netReq, userReg;
     Toolbar toolbarMain;
     BottomNavigationView navigation;
@@ -48,7 +56,6 @@ public class BottomNavigationHome extends AppCompatActivity {
                     fragmentTransaction.commit();
                     break;
                 case R.id.navigation_scanner:
-
                     new IntentIntegrator(BottomNavigationHome.this).setOrientationLocked(false).setCaptureActivity(CustomQRView.class).initiateScan();
                     break;
                 case R.id.navigation_account:
@@ -69,15 +76,13 @@ public class BottomNavigationHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        resolveDaggerDependencies();
         setContentView(R.layout.activity_bottom_navigation);
         rView = findViewById(R.id.btn_r_view);
         netReq = findViewById(R.id.btn_net_req);
+        authUtils = new AuthUtils(mySharedPreferences);
+        bottomNavigationPresenter = new BottomNavigationPresenter(apiService,authUtils,this);
         toolbarMain = findViewById(R.id.toolbar_main);
-
-        DaggerAPIComponent.builder()
-                .aPIModule(new APIModule())
-                .applicationComponent(getApplicationComponent())
-                .build().inject(this);
         setSupportActionBar(toolbarMain);
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle("Home");
@@ -92,8 +97,7 @@ public class BottomNavigationHome extends AppCompatActivity {
         rView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean state = mySharedPreferences.getDataBool("LOGIN_STATE");
-                if(state){
+                if(authUtils.getAuthLoginState()){
                     Toast.makeText(BottomNavigationHome.this, "Already Logged in", Toast.LENGTH_SHORT).show();
                 }else {
                     Intent intent = new Intent(BottomNavigationHome.this, AuthenticationActivity.class);
@@ -114,14 +118,17 @@ public class BottomNavigationHome extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        bottomNavigationPresenter.verifyRestaurantTableVacant(result.getContents());
     }
+
     @Override
     protected void onResume() {
         super.onResume();
 
     }
-    protected ApplicationComponent getApplicationComponent() {
-        return ((AppApplication)getApplication()).getApplicationComponent();
+    public void resolveDaggerDependencies(){
+        ((AppApplication)getApplication()).getApiComponent().inject(this);
     }
 
     @Override
@@ -130,4 +137,21 @@ public class BottomNavigationHome extends AppCompatActivity {
     }
 
 
+    @Override
+    public void showTableOccupiedError() {
+      Toast.makeText(BottomNavigationHome.this,"This table is occupied",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void redirectDineInActivity() {
+        Intent intent = new Intent(BottomNavigationHome.this, DineInHome.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        bottomNavigationPresenter.compositeDisposable.clear();
+        bottomNavigationPresenter.compositeDisposable.dispose();
+        super.onDestroy();
+    }
 }

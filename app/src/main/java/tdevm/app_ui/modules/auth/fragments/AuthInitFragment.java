@@ -3,8 +3,10 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,13 +30,12 @@ import tdevm.app_ui.modules.auth.AuthViewContract;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 
 public class AuthInitFragment extends Fragment implements AuthViewContract.AuthInitView {
-
+    public static final String TAG = AuthInitFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
 
-    public static final String TAG = AuthInitFragment.class.getSimpleName();
     Unbinder unbinder;
     private AuthInitInteractionListener mListener;
     protected  AuthInitPresenter authInitPresenter;
@@ -50,6 +51,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
 
     @Inject
     APIService apiService;
+
     @OnClick(R.id.btn_login_next)
     public void onButtonClick(){
         if(TextUtils.isEmpty(phoneNumberInit.getText())){
@@ -58,6 +60,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
             authInitPresenter.sendOTP(Long.parseLong(phoneNumberInit.getText().toString()));
         }
     }
+
 
 
     public AuthInitFragment() {
@@ -76,6 +79,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         resolveDaggerDependencies();
+        Log.d(TAG,"API Service: "+apiService);
         authenticationActivity = (AuthenticationActivity) getActivity();
         authInitPresenter = new AuthInitPresenter(this,apiService);  //Passed in view
         // Inflate the layout for this fragment
@@ -150,16 +154,6 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface AuthInitInteractionListener {
         // TODO: Update argument type and name
         void onAuthInitInteractionListener(Uri uri);

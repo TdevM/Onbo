@@ -1,9 +1,9 @@
 package tdevm.app_ui.modules.auth.fragments;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,14 +27,21 @@ import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.modules.auth.AuthViewContract;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class AuthRegisterFragment extends Fragment implements AuthViewContract.AuthRegisterView{
 
+    public static final String TAG = AuthRegisterFragment.class.getSimpleName();
 
     private static final String PHONE = "PHONE";
     private Long phoneNumber;
+
+    @Inject
+    MySharedPreferences mySharedPreferences;
+    @Inject
+    APIService apiService;
+
+    Unbinder unbinder;
+    AuthenticationActivity authenticationActivity;
+    AuthRegisterPresenter authRegisterPresenter;
 
     @BindView(R.id.et_sign_up_name)
      EditText editTextName;
@@ -46,7 +53,6 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
      EditText editTextPhone;
     @BindView(R.id.btn_register)
     Button button;
-
     @BindView(R.id.progressBar_sign_up)
     ProgressBar progressBar;
 
@@ -60,15 +66,6 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
         }
     }
 
-
-    Unbinder unbinder;
-    AuthenticationActivity authenticationActivity;
-    AuthRegisterPresenter authRegisterPresenter;
-
-    @Inject
-    MySharedPreferences mySharedPreferences;
-    @Inject
-    APIService apiService;
     public AuthRegisterFragment() {
         // Required empty public constructor
     }
@@ -84,6 +81,7 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             phoneNumber = getArguments().getLong(PHONE);
         }
@@ -92,13 +90,14 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG,"mySharedPrefs: "+mySharedPreferences);
+        Log.d(TAG,"API Service: "+apiService);
         View view = inflater.inflate(R.layout.fragment_auth_register, container, false);
         resolveDaggerDependencies();
         unbinder = ButterKnife.bind(this,view);
         authenticationActivity = (AuthenticationActivity) getActivity();
         authRegisterPresenter = new AuthRegisterPresenter(this,apiService,mySharedPreferences);
         editTextPhone.setText(getString(R.string.otp_sent_mobile_number,String.valueOf(phoneNumber)));
-        // Inflate the layout for this fragment
         return view;
     }
 
