@@ -7,7 +7,8 @@ import tdevm.app_ui.modules.auth.fragments.AuthInitFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthLoginFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthRegisterFragment;
 import tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment;
-import tdevm.app_ui.navigation_fragments_home.BottomNavigationHome;
+import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
+import tdevm.app_ui.root.BottomNavigationHome;
 
 /**
  * Created by Tridev on 04-10-2017.
@@ -21,4 +22,6 @@ public interface APIComponent {
     void inject(VerifyPhoneOTPFragment verifyPhoneOTPFragment);
     void inject(AuthRegisterFragment authRegisterFragment);
     void inject(BottomNavigationHome bottomNavigationHome);
+
+    void inject(DishMenuFragment dishMenuFragment);
 }

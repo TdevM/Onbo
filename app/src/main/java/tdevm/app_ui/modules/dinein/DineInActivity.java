@@ -1,4 +1,4 @@
-package tdevm.app_ui.navigation_fragments_dine_in;
+package tdevm.app_ui.modules.dinein;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,11 +10,15 @@ import android.view.MenuItem;
 import android.view.View;
 
 import tdevm.app_ui.R;
+import tdevm.app_ui.modules.dinein.fragments.CartFragment;
+import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
+import tdevm.app_ui.modules.dinein.fragments.HighestRatedItemsFragment;
 
-public class DineInHome extends AppCompatActivity {
+public class DineInActivity extends AppCompatActivity {
 
     FragmentTransaction fragmentTransaction;
     Toolbar toolbarDineIn;
+    public String RESTAURANT_UUID;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -23,10 +27,12 @@ public class DineInHome extends AppCompatActivity {
             fragmentTransaction = getSupportFragmentManager().beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_dine_in_menu:
-                    fragmentTransaction.replace(R.id.frame_layout_dine_in, new DishMenuFragment());
+                    DishMenuFragment dishMenuFragment = new DishMenuFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("RESTAURANT_UUID", RESTAURANT_UUID);
+                    dishMenuFragment.setArguments(bundle);
+                    fragmentTransaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);
                     fragmentTransaction.commit();
-
-                 //   mTextMessage.setText(R.string.title_menu);
                     return true;
                 case R.id.navigation_favourites:
                     fragmentTransaction.replace(R.id.frame_layout_dine_in, new HighestRatedItemsFragment());
@@ -46,9 +52,8 @@ public class DineInHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dine_in_home);
-        toolbarDineIn = (Toolbar)findViewById(R.id.toolbar_dine_in_home);
-
-
+        toolbarDineIn = findViewById(R.id.toolbar_dine_in_home);
+        RESTAURANT_UUID = getIntent().getStringExtra("RESTAURANT_UUID");
         setSupportActionBar(toolbarDineIn);
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle("Dine in");
@@ -60,14 +65,18 @@ public class DineInHome extends AppCompatActivity {
             }
         });
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout_dine_in, HighestRatedItemsFragment.newInstance());
+        DishMenuFragment dishMenuFragment = new DishMenuFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("RESTAURANT_UUID", RESTAURANT_UUID);
+        dishMenuFragment.setArguments(bundle);
+        transaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);
         transaction.commit();
 
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.navigation_favourites);
 
     }
+
+
 
 }

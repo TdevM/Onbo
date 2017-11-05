@@ -1,4 +1,4 @@
-package tdevm.app_ui.navigation_fragments_home;
+package tdevm.app_ui.root;
 import android.content.Intent;
 
 import android.os.Bundle;
@@ -21,11 +21,11 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
-import tdevm.app_ui.navigation_fragments_dine_in.DineInHome;
-import tdevm.app_ui.navigation_fragments_home.fragments.AccountsFragment;
-import tdevm.app_ui.navigation_fragments_home.fragments.BookFragment;
-import tdevm.app_ui.navigation_fragments_home.fragments.HomeFragment;
-import tdevm.app_ui.navigation_fragments_home.fragments.NotificationsFragment;
+import tdevm.app_ui.modules.dinein.DineInActivity;
+import tdevm.app_ui.root.fragments.AccountsFragment;
+import tdevm.app_ui.root.fragments.BookFragment;
+import tdevm.app_ui.root.fragments.HomeFragment;
+import tdevm.app_ui.root.fragments.NotificationsFragment;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CustomQRView;
 import tdevm.app_ui.R;
@@ -143,8 +143,9 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
     }
 
     @Override
-    public void redirectDineInActivity() {
-        Intent intent = new Intent(BottomNavigationHome.this, DineInHome.class);
+    public void redirectDineInActivity(String restaurantUUID) {
+        Intent intent = new Intent(BottomNavigationHome.this, DineInActivity.class);
+        intent.putExtra("RESTAURANT_UUID",restaurantUUID);
         startActivity(intent);
     }
 

@@ -1,4 +1,4 @@
-package tdevm.app_ui.navigation_fragments_dine_in;
+package tdevm.app_ui.root.fragments;
 
 
 import android.os.Bundle;
@@ -12,15 +12,16 @@ import tdevm.app_ui.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DishMenuFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
 
-    public DishMenuFragment() {
+    public HomeFragment() {
         // Required empty public constructor
     }
 
-    public static DishMenuFragment newInstance(){
-        return new DishMenuFragment();
+
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
     }
 
 
@@ -28,7 +29,7 @@ public class DishMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dish_menu, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
 }

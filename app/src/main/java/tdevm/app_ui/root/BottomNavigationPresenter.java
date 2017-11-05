@@ -1,4 +1,4 @@
-package tdevm.app_ui.navigation_fragments_home;
+package tdevm.app_ui.root;
 
 import android.util.Log;
 
@@ -48,7 +48,7 @@ public class BottomNavigationPresenter extends BasePresenter {
             public void onNext(@NonNull Response<RestaurantTable> restaurantTableResponse) {
                 if(restaurantTableResponse.code() ==200){
                     Log.d(TAG,restaurantTableResponse.body().getRestaurant_table_uuid_shortid());
-                    bottomNavigationView.redirectDineInActivity();
+                    bottomNavigationView.redirectDineInActivity(restaurantTableResponse.body().getRestaurant_uuid());
                 }else if(restaurantTableResponse.code() ==206) {
                     Log.d(TAG,restaurantTableResponse.body().toString());
                     bottomNavigationView.showTableOccupiedError();

@@ -12,6 +12,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 import tdevm.app_ui.api.models.OneTimePassword;
+import tdevm.app_ui.api.models.request.RestaurantOrder;
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.api.models.response.Dish;
@@ -46,4 +47,9 @@ public interface APIService {
     Observable<ArrayList<Dish>> fetchAllDishes(@QueryMap Map<String, String> options);
     @GET("restaurant/dishes")
     Observable<ArrayList<DishesOfCuisine>> fetchDishesByCuisine(@QueryMap Map<String, String> options);
+
+
+    //Orders
+    @POST("m/orders/temp")
+    Observable<Response<Object>> createNewOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
 }

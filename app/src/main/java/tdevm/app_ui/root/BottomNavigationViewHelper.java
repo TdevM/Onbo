@@ -1,4 +1,4 @@
-package tdevm.app_ui.navigation_fragments_home;
+package tdevm.app_ui.root;
 
 /**
  * Created by Tridev on 26-06-2017.

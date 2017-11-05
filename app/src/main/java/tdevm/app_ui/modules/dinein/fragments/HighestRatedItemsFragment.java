@@ -1,4 +1,4 @@
-package tdevm.app_ui.navigation_fragments_dine_in;
+package tdevm.app_ui.modules.dinein.fragments;
 
 
 import android.os.Bundle;
@@ -9,25 +9,23 @@ import android.view.ViewGroup;
 
 import tdevm.app_ui.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class CartFragment extends Fragment {
+public class HighestRatedItemsFragment extends Fragment {
 
 
-    public CartFragment() {
+    public HighestRatedItemsFragment() {
         // Required empty public constructor
     }
 
-    public static CartFragment newInstance(){
-        return new CartFragment();
+    public static HighestRatedItemsFragment newInstance() {
+        return new HighestRatedItemsFragment();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+        return inflater.inflate(R.layout.fragment_highest_rated_items, container, false);
     }
 
 }

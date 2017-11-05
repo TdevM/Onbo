@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="tdevm.app_ui.navigation_fragments_home.fragments.AccountsFragment">
+    tools:context="tdevm.app_ui.root.fragments.AccountsFragment">
 
     <ImageView
         android:id="@+id/image"

@@ -1,4 +1,4 @@
-package tdevm.app_ui.navigation_fragments_home.fragments;
+package tdevm.app_ui.root.fragments;
 
 
 import android.os.Bundle;
@@ -12,24 +12,22 @@ import tdevm.app_ui.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class BookFragment extends Fragment {
 
 
-    public HomeFragment() {
+    public BookFragment() {
         // Required empty public constructor
     }
 
-
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+    public static BookFragment newInstance() {
+        return new BookFragment();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_book, container, false);
     }
 
 }
