@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
+import tdevm.app_ui.modules.dinein.fragments.FragmentSingleCuisineGrid;
 
 /**
  * Created by Tridev on 30-07-2017.
@@ -19,16 +20,17 @@ public class RecycledFragmentPagerAdapter extends FragmentStatePagerAdapter{
 
     private Context context;
     private ArrayList<Cuisine> cuisineList;
-
-    public RecycledFragmentPagerAdapter(FragmentManager fm, Context c, ArrayList<Cuisine> cuisines) {
+    private String RESTAURANT_UUID;
+    public RecycledFragmentPagerAdapter(FragmentManager fm, Context c, ArrayList<Cuisine> cuisines,String restaurantUUID) {
         super(fm);
         this.context = c;
         cuisineList = cuisines;
+        this.RESTAURANT_UUID = restaurantUUID;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return new CartFragment();
+        return  FragmentSingleCuisineGrid.newInstance(RESTAURANT_UUID,cuisineList.get(position).getCuisine_id());
     }
 
     @Override

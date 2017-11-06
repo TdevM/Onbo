@@ -28,9 +28,6 @@ import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledFragmentPagerAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class DishMenuFragment extends Fragment implements DineInContract.DishMenuView {
     public static final String TAG = AuthInitFragment.class.getSimpleName();
     private String RESTAURANT_UUID = "RESTAURANT_UUID";
@@ -97,7 +94,7 @@ public class DishMenuFragment extends Fragment implements DineInContract.DishMen
 
     @Override
     public void onCuisinesFetched(ArrayList<Cuisine> cuisines) {
-      viewPagerDishMenu.setAdapter(new RecycledFragmentPagerAdapter(getChildFragmentManager(),getActivity(),cuisines));
+      viewPagerDishMenu.setAdapter(new RecycledFragmentPagerAdapter(getChildFragmentManager(),getActivity(),cuisines,RESTAURANT_UUID));
     }
 
     @Override

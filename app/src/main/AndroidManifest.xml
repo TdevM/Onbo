@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
 
+
     <application
         android:name=".AppApplication"
         android:allowBackup="true"

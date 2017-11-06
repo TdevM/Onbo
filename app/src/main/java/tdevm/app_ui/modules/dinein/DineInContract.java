@@ -3,6 +3,7 @@ package tdevm.app_ui.modules.dinein;
 import java.util.ArrayList;
 
 import tdevm.app_ui.api.models.response.Cuisine;
+import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.base.BaseView;
 
 /**
@@ -21,6 +22,10 @@ public interface DineInContract {
 
     interface CartView extends BaseView{
 
+    }
+
+    interface SingleCuisineGridView extends BaseView{
+        void onDishesOfCuisinesFetched(ArrayList<DishesOfCuisine> arrayList);
     }
 
 

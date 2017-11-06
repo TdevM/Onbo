@@ -76,7 +76,4 @@ public class DineInActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
-
-
-
 }

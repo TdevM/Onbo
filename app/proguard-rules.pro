@@ -26,3 +26,4 @@
 -keepclassmembers class android.support.design.internal.BottomNavigationMenuView {
     boolean mShiftingMode;
 }
+-keep class com.bumptech.glide.integration.okhttp3.OkHttpGlideModule
