@@ -12,6 +12,7 @@ import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInContract;
+import tdevm.app_ui.utils.AuthUtils;
 
 /**
  * Created by Tridev on 06-11-2017.
@@ -24,13 +25,16 @@ public class DishMenuPresenter extends BasePresenter {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     private DineInContract.DishMenuView dishMenuView;
 
-    public DishMenuPresenter(APIService apiService, DineInContract.DishMenuView dishMenuView) {
+    private AuthUtils authUtils;
+
+    public DishMenuPresenter(APIService apiService, AuthUtils authUtils,DineInContract.DishMenuView dishMenuView) {
         this.apiService = apiService;
+        this.authUtils = authUtils;
         this.dishMenuView = dishMenuView;
     }
 
     public void FetchAllCuisines(Map<String,String> map) {
-        Observable<ArrayList<Cuisine>> fetchCuisines = apiService.fetchCuisines(map);
+        Observable<ArrayList<Cuisine>> fetchCuisines = apiService.fetchCuisines(authUtils.getAuthLoginToken(),map);
         subscribe(fetchCuisines, new Observer<ArrayList<Cuisine>>() {
             @Override
             public void onSubscribe(Disposable d) {

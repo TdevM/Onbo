@@ -42,11 +42,14 @@ public interface APIService {
     @GET("restaurant/table_status")
     Observable<Response<RestaurantTable>> verifyTableVacancy(@Header("x-auth") String authToken, @QueryMap Map<String,String> query);
     @GET("restaurant/cuisines")
-    Observable<ArrayList<Cuisine>> fetchCuisines(@QueryMap Map<String, String> options);
+    Observable<ArrayList<Cuisine>> fetchCuisines(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
     @GET("restaurant/dishes/all")
-    Observable<ArrayList<Dish>> fetchAllDishes(@QueryMap Map<String, String> options);
+    Observable<ArrayList<Dish>> fetchAllDishes(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
     @GET("restaurant/dishes")
-    Observable<ArrayList<DishesOfCuisine>> fetchDishesByCuisine(@QueryMap Map<String, String> options);
+    Observable<ArrayList<DishesOfCuisine>> fetchDishesByCuisine(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
+    @GET("restaurant/dishes/variants")
+    Observable<ArrayList<DishesOfCuisine>> fetchDishVariantsByCuisines(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
+
 
 
     //Orders

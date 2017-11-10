@@ -22,9 +22,12 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.APIService;
+import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.DineInContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledGridAdapter;
+import tdevm.app_ui.modules.dinein.listeners.DishItemClickListener;
+import tdevm.app_ui.utils.AuthUtils;
 
 /**
  * Created by Tridev on 30-07-2017.
@@ -42,7 +45,11 @@ public class FragmentSingleCuisineGrid extends Fragment implements DineInContrac
     Unbinder unbinder;
     @Inject
     APIService apiService;
+    private AuthUtils authUtils;
+    @Inject
+    MySharedPreferences mySharedPreferences;
 
+    RecycledGridAdapter recycledGridAdapter;
     SingleCuisineGridPresenter singleCuisineGridPresenter;
 
     public static FragmentSingleCuisineGrid newInstance(String restaurantUUID, Long mCuisineId) {
@@ -69,7 +76,8 @@ public class FragmentSingleCuisineGrid extends Fragment implements DineInContrac
         Map<String,String> map = new HashMap<>();
         map.put("restaurant_uuid",String.valueOf(getArguments().getString(RESTAURANT_UUID)));
         map.put("cuisine_id",String.valueOf(getArguments().getLong(CUISINE_ID)));
-        singleCuisineGridPresenter = new SingleCuisineGridPresenter(this,apiService,map);
+        authUtils = new AuthUtils(mySharedPreferences);
+        singleCuisineGridPresenter = new SingleCuisineGridPresenter(this,authUtils,apiService,map);
         singleCuisineGridPresenter.fetchDishesByCuisines();
         return view;
     }
@@ -92,7 +100,8 @@ public class FragmentSingleCuisineGrid extends Fragment implements DineInContrac
     @Override
     public void onDishesOfCuisinesFetched(ArrayList<DishesOfCuisine> arrayList) {
         recyclerViewGridSingle.setLayoutManager(mLayoutManager);
-        recyclerViewGridSingle.setAdapter(new RecycledGridAdapter(getActivity(),arrayList));
+        recycledGridAdapter = new RecycledGridAdapter(getActivity(),arrayList);
+        recyclerViewGridSingle.setAdapter(recycledGridAdapter);
     }
 
     @Override

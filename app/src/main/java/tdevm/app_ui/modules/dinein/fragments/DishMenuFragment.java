@@ -22,16 +22,21 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.APIService;
+import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.modules.auth.fragments.AuthInitFragment;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledFragmentPagerAdapter;
+import tdevm.app_ui.utils.AuthUtils;
 
 public class DishMenuFragment extends Fragment implements DineInContract.DishMenuView {
     public static final String TAG = AuthInitFragment.class.getSimpleName();
     private String RESTAURANT_UUID = "RESTAURANT_UUID";
 
+    private AuthUtils authUtils;
+    @Inject
+    MySharedPreferences mySharedPreferences;
     Unbinder unbinder;
     @BindView(R.id.viewpager_dish_menu)
     ViewPager viewPagerDishMenu;
@@ -65,12 +70,12 @@ public class DishMenuFragment extends Fragment implements DineInContract.DishMen
         // Inflate the layout for this fragment
         resolveDaggerDependencies();
         View view =  inflater.inflate(R.layout.fragment_dish_menu, container, false);
-        dishMenuPresenter = new DishMenuPresenter(apiService,this);
+        authUtils = new AuthUtils(mySharedPreferences);
+        dishMenuPresenter = new DishMenuPresenter(apiService,authUtils,this);
 
         unbinder =  ButterKnife.bind(this,view);
         tabLayoutDishMenu.setupWithViewPager(viewPagerDishMenu);
         tabLayoutDishMenu.setOverScrollMode(1);
-
         Map<String,String> map = new HashMap<>();
         map.put("restaurant_uuid",RESTAURANT_UUID);
         dishMenuPresenter.FetchAllCuisines(map);
