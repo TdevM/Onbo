@@ -63,6 +63,32 @@ public class SingleCuisineGridPresenter extends BasePresenter {
         });
     }
 
+    public void fetchVariantsOfADish(Long dishId){
+        map.put("dish_id",String.valueOf(dishId));
+        Observable<ArrayList<DishesOfCuisine>> dishesOfCuisineObservable = apiService.fetchDishVariantsByCuisines(authUtils.getAuthLoginToken(),map);
+        subscribe(dishesOfCuisineObservable, new Observer<ArrayList<DishesOfCuisine>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(ArrayList<DishesOfCuisine> dishesOfCuisines) {
+               singleCuisineGridView.onDishVariantsFetched(dishesOfCuisines);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
     public void addToCart(DishesOfCuisine dishesOfCuisine){
         Log.d(TAG,dishesOfCuisine.getDish_name());
     }

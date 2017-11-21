@@ -102,6 +102,21 @@ public class FragmentSingleCuisineGrid extends Fragment implements DineInContrac
         recyclerViewGridSingle.setLayoutManager(mLayoutManager);
         recycledGridAdapter = new RecycledGridAdapter(getActivity(),arrayList);
         recyclerViewGridSingle.setAdapter(recycledGridAdapter);
+        recycledGridAdapter.setOnDishItemClickListener(new DishItemClickListener() {
+            @Override
+            public void getDishItemQuant(DishesOfCuisine dishesOfCuisine, int oldValue, int newValue) {
+                if(dishesOfCuisine.getIs_customizable()){
+                    singleCuisineGridPresenter.fetchVariantsOfADish(dishesOfCuisine.getDish_id());
+                }else {
+                    singleCuisineGridPresenter.addToCart(dishesOfCuisine);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onDishVariantsFetched(ArrayList<DishesOfCuisine> arrayList) {
+        Log.d(TAG,arrayList.toString());
     }
 
     @Override

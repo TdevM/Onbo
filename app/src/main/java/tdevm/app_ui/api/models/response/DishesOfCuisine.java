@@ -1,11 +1,12 @@
 package tdevm.app_ui.api.models.response;
 
+import android.util.Log;
+
 /**
  * Created by Tridev on 26-08-2017.
  */
 
 public class DishesOfCuisine {
-
 
     private String dish_image_url;
     private Long dish_id;
@@ -17,7 +18,10 @@ public class DishesOfCuisine {
     private Double dish_price;
     private Long cuisine_id;
     private String dish_details;
-
+    private Boolean is_customizable;
+    private Boolean is_parent;
+    private Boolean is_child;
+    private Long parent_id;
 
     public String getDish_image_url() {
         return dish_image_url;
@@ -97,6 +101,38 @@ public class DishesOfCuisine {
 
     public void setDish_details(String dish_details) {
         this.dish_details = dish_details;
+    }
+
+    public Boolean getIs_customizable() {
+        return is_customizable;
+    }
+
+    public void setIs_customizable(Boolean is_customizable) {
+        this.is_customizable = is_customizable;
+    }
+
+    public Boolean getIs_parent() {
+        return is_parent;
+    }
+
+    public void setIs_parent(Boolean is_parent) {
+        this.is_parent = is_parent;
+    }
+
+    public Boolean getIs_child() {
+        return is_child;
+    }
+
+    public void setIs_child(Boolean is_child) {
+        this.is_child = is_child;
+    }
+
+    public Long getParent_id() {
+        return parent_id;
+    }
+
+    public void setParent_id(Long parent_id) {
+        this.parent_id = parent_id;
     }
 
     @Override

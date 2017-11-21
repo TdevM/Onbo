@@ -58,7 +58,7 @@ public class RecycledGridAdapter extends RecyclerView.Adapter<RecycledGridAdapte
             Glide.with(mContext).load(dishArrayList.get(position).getDish_image_url()).into(holder.imageViewCoverArt);
             holder.textView.setText(dishArrayList.get(position).getDish_name());
             holder.textViewPrice.setText(mContext.getString(R.string.rupee_symbol,dishArrayList.get(position).getDish_price().intValue()));
-            //holder.bind(dishArrayList.get(position), dishItemClickListener);
+            holder.bind(dishArrayList.get(position), dishItemClickListener);
     }
 
     @Override
@@ -81,13 +81,13 @@ public class RecycledGridAdapter extends RecyclerView.Adapter<RecycledGridAdapte
 
         }
 
-//        public void bind(final DishesOfCuisine dishesOfCuisine, final DishItemClickListener dishItemClickListener) {
-//            elegantNumberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
-//                @Override
-//                public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
-//                    dishItemClickListener.getDishItemQuant(dishesOfCuisine,oldValue,newValue);
-//                }
-//            });
-//        }
+        public void bind(final DishesOfCuisine dishesOfCuisine, final DishItemClickListener dishItemClickListener) {
+            elegantNumberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+                @Override
+                public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+                    dishItemClickListener.getDishItemQuant(dishesOfCuisine,oldValue,newValue);
+                }
+            });
+        }
     }
 }
