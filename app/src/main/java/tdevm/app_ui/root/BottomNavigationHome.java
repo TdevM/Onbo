@@ -1,6 +1,8 @@
 package tdevm.app_ui.root;
+import android.Manifest;
 import android.content.Intent;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import javax.inject.Inject;
 
@@ -29,6 +32,8 @@ import tdevm.app_ui.root.fragments.NotificationsFragment;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CustomQRView;
 import tdevm.app_ui.R;
+import tdevm.app_ui.utils.SMSListener;
+
 public class BottomNavigationHome extends AppCompatActivity implements NavigationHomeContract.BottomNavigationView {
 
     @Inject
@@ -41,6 +46,9 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
     Toolbar toolbarMain;
     BottomNavigationView navigation;
     FragmentTransaction fragmentTransaction;
+
+    RxPermissions rxPermissions;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -84,27 +92,31 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
         bottomNavigationPresenter = new BottomNavigationPresenter(apiService,authUtils,this);
         toolbarMain = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbarMain);
-        if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle("Home");
-        }
-        toolbarMain.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
+        rxPermissions = new RxPermissions(this);
+
+        rxPermissions.request(Manifest.permission.READ_SMS).subscribe(granted->{
+            if (granted) {
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Permission Required", Toast.LENGTH_SHORT).show();
             }
         });
 
-        rView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(authUtils.getAuthLoginState()){
-                    Toast.makeText(BottomNavigationHome.this, "Already Logged in", Toast.LENGTH_SHORT).show();
-                }else {
-                    Intent intent = new Intent(BottomNavigationHome.this, AuthenticationActivity.class);
-                    startActivity(intent);
-                }
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setTitle("Home");
+        }
+
+        toolbarMain.setNavigationOnClickListener(view-> onBackPressed());
+
+        rView.setOnClickListener(view->{
+            if(authUtils.getAuthLoginState()){
+                Toast.makeText(BottomNavigationHome.this, "Already Logged in", Toast.LENGTH_SHORT).show();
+            }else {
+                Intent intent = new Intent(BottomNavigationHome.this, AuthenticationActivity.class);
+                startActivity(intent);
             }
         });
+
         userReg = findViewById(R.id.btn_reg);
         navigation= findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);

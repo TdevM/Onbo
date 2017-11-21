@@ -33,16 +33,23 @@
         </activity>
         <activity
             android:name=".modules.dinein.DineInActivity"
-            android:label="@string/title_activity_dine_in_home">
+            android:label="@string/title_activity_dine_in_home"
+            android:screenOrientation="portrait">
 
         </activity>
         <activity
             android:name=".utils.CustomQRView"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".modules.auth.AuthenticationActivity">
+        <activity android:name=".modules.auth.AuthenticationActivity"
+            android:screenOrientation="portrait">
 
         </activity>
+        <receiver android:name=".utils.SMSListener">
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -1,4 +1,5 @@
 package tdevm.app_ui.modules.auth.fragments;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
@@ -27,6 +28,7 @@ import tdevm.app_ui.api.APIService;
 
 import tdevm.app_ui.modules.auth.AuthViewContract;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
+import tdevm.app_ui.utils.SMSListener;
 
 //TODO 30 Seconds Resend
 public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract.AuthOTPView{
@@ -51,6 +53,9 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     Button resendOTP;
     @BindView(R.id.progressBar_otp_view)
     ProgressBar progressBarOTP;
+
+    SMSListener smsListener;
+    IntentFilter intentFilter;
 
     @OnClick(R.id.btn_otp_resend_otp)
     public void onButtonClick(){
@@ -85,7 +90,9 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        smsListener = new SMSListener();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
         Log.d(TAG, "onCreate Called");
         Log.d(TAG,"API Service: " +apiService);
         View view  = inflater.inflate(R.layout.fragment_verify_phone_otp, container, false);
@@ -116,6 +123,19 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     public void showProgressUI() {
         progressBarOTP.setVisibility(View.VISIBLE);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().registerReceiver(smsListener, intentFilter);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(smsListener);
     }
 
     @Override
