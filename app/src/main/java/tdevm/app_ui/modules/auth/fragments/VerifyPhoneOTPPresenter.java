@@ -2,6 +2,7 @@ package tdevm.app_ui.modules.auth.fragments;
 
 import android.util.Log;
 
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -95,5 +96,12 @@ public class VerifyPhoneOTPPresenter extends BasePresenter{
             }
         });
 
+    }
+
+    public void parseSMS(String sender, String body, Long phone){
+            String otp = body.replaceAll("\\D", "");
+            if(!otp.isEmpty() && otp.length()>6) {
+                verifyOTP(phone, Long.parseLong(otp));
+            }
     }
 }

@@ -31,7 +31,7 @@ import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.utils.SMSListener;
 
 //TODO 30 Seconds Resend
-public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract.AuthOTPView{
+public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract.AuthOTPView, SMSListener.SMSReceived{
 
     public static final String TAG = VerifyPhoneOTPFragment.class.getSimpleName();
     private static final String PHONE = "PHONE";
@@ -88,6 +88,12 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        SMSListener.setOnSMSReceivedListener(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         smsListener = new SMSListener();
@@ -104,6 +110,7 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
         editTextOTP.setFilters(new InputFilter[] {new InputFilter.LengthFilter(6)});
         return view;
     }
+
 
     public void verifyOTP(){
         if(TextUtils.isEmpty(editTextOTP.getText())){
@@ -169,5 +176,11 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
         verifyPhoneOTPPresenter.compositeDisposable.dispose();
         verifyPhoneOTPPresenter.compositeDisposable.clear();
         super.onDestroy();
+    }
+
+    @Override
+    public void onSMSReceived(String sender, String body) {
+        //Toast.makeText(authenticationActivity, sender+" "+body, Toast.LENGTH_SHORT).show();
+        verifyPhoneOTPPresenter.parseSMS(sender,body,phoneNumber);
     }
 }

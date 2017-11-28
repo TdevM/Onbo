@@ -11,6 +11,7 @@ import tdevm.app_ui.dagger.components.DaggerApplicationComponent;
 import tdevm.app_ui.dagger.modules.APIModule;
 import tdevm.app_ui.dagger.modules.AppModule;
 import tdevm.app_ui.dagger.modules.NetworkModule;
+import tdevm.app_ui.utils.GoogleLocationApiManager;
 
 /**
  * Created by Tridev on 03-10-2017.
@@ -37,7 +38,7 @@ public class AppApplication extends Application {
         applicationComponent = DaggerApplicationComponent
                 .builder()
                 .networkModule(new NetworkModule(this, "https://z71.herokuapp.com/api/v3/"))
-                .appModule(new AppModule(this))
+                .appModule(new AppModule(this,new GoogleLocationApiManager()))
                 .build();
 
     }

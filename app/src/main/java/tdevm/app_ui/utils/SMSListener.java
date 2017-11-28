@@ -14,6 +14,10 @@ import android.widget.Toast;
 
 public class SMSListener extends BroadcastReceiver {
 
+    private static SMSReceived smsReceived;
+    public static void setOnSMSReceivedListener(SMSReceived smsReceivedListener){
+        smsReceived = smsReceivedListener;
+    }
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("Message Listener","lo");
@@ -36,43 +40,50 @@ public class SMSListener extends BroadcastReceiver {
                        Log.d("Exception caught",e.getMessage());
                 }
                 Log.d("Message Received",msg_from+' '+msgBody);
-                Toast.makeText(context, "Intent Detected."+ msg_from+ msgBody, Toast.LENGTH_LONG).show();
+                if(smsReceived!=null){
+                    smsReceived.onSMSReceived(msg_from,msgBody);
+                }
+               // Toast.makeText(context, "Intent Detected."+ msg_from+ msgBody, Toast.LENGTH_LONG).show();
             }
         }
 
 
 
-        final Bundle bundle = intent.getExtras();
+//        final Bundle bundle = intent.getExtras();
+//
+//        try {
+//
+//            if (bundle != null) {
+//
+//                final Object[] pdusObj = (Object[]) bundle.get("pdus");
+//
+//                for (int i = 0; i < pdusObj.length; i++) {
+//
+//                    SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
+//                    String phoneNumber = currentMessage.getDisplayOriginatingAddress();
+//
+//                    String senderNum = phoneNumber;
+//                    String message = currentMessage.getDisplayMessageBody();
+//
+//                    Log.i("SmsReceiver", "senderNum: "+ senderNum + "; message: " + message);
+//
+//
+//                    // Show Alert
+//                    int duration = Toast.LENGTH_LONG;
+//                    Toast toast = Toast.makeText(context,
+//                            "senderNum: "+ senderNum + ", message: " + message, duration);
+//                    toast.show();
+//
+//                } // end for loop
+//            } // bundle is null
+//
+//        } catch (Exception e) {
+//            Log.e("SmsReceiver", "Exception smsReceiver" +e);
+//
+//        }
+    }
 
-        try {
-
-            if (bundle != null) {
-
-                final Object[] pdusObj = (Object[]) bundle.get("pdus");
-
-                for (int i = 0; i < pdusObj.length; i++) {
-
-                    SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
-                    String phoneNumber = currentMessage.getDisplayOriginatingAddress();
-
-                    String senderNum = phoneNumber;
-                    String message = currentMessage.getDisplayMessageBody();
-
-                    Log.i("SmsReceiver", "senderNum: "+ senderNum + "; message: " + message);
-
-
-                    // Show Alert
-                    int duration = Toast.LENGTH_LONG;
-                    Toast toast = Toast.makeText(context,
-                            "senderNum: "+ senderNum + ", message: " + message, duration);
-                    toast.show();
-
-                } // end for loop
-            } // bundle is null
-
-        } catch (Exception e) {
-            Log.e("SmsReceiver", "Exception smsReceiver" +e);
-
-        }
+    public interface SMSReceived{
+        void onSMSReceived(String sender,String body);
     }
 }

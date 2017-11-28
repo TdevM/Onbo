@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -22,5 +24,6 @@ public interface ApplicationComponent {
 
     Retrofit exposeRetrofit();
     SharedPreferences exposeSharedPreferences();
+    GoogleApiClient exposeGoogleApiClient();
 
 }
