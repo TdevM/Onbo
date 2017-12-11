@@ -3,6 +3,8 @@ package tdevm.app_ui.modules.auth.fragments;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -23,21 +25,22 @@ import tdevm.app_ui.utils.AuthUtils;
 public class AuthLoginPresenter extends BasePresenter {
 
     public static final String TAG = AuthInitPresenter.class.getSimpleName();
-
-
-    //TODO use Dagger here.
     private APIService apiService;
     private AuthViewContract.AuthLoginView authLoginView;
     private MySharedPreferences sharedPreferences;
     private AuthUtils authUtils;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    public AuthLoginPresenter(AuthViewContract.AuthLoginView authLoginView, APIService apiService, MySharedPreferences sharedPreferences) {
+    @Inject
+    public AuthLoginPresenter(APIService apiService, MySharedPreferences sharedPreferences,AuthUtils authUtils) {
         this.apiService = apiService;
-        this.authLoginView = authLoginView;
+        this.authUtils = authUtils;
         this.sharedPreferences = sharedPreferences;
     }
 
+    public void setView(AuthViewContract.AuthLoginView view){
+        authLoginView = view;
+    }
     public void loginUser(final Long phone, final String password){
         Observable<Response<Object>> observable = apiService.loginUser(new User(password,phone));
         subscribe(observable, new Observer<Response<Object>>() {
@@ -56,7 +59,6 @@ public class AuthLoginPresenter extends BasePresenter {
                     authLoginView.showLoginError();
                 }else if(response.code() ==200){
                     Log.d(TAG,response.body().toString());
-                    authUtils = new AuthUtils(sharedPreferences);
                     authUtils.saveAuthTransaction(response.headers().get("X-auth"),phone,true);
                     authLoginView.loginSuccess();
                     authLoginView.hideProgressUI();

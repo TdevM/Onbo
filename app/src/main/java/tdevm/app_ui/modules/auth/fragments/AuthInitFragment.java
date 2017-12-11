@@ -38,7 +38,9 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
 
     Unbinder unbinder;
     private AuthInitInteractionListener mListener;
-    protected  AuthInitPresenter authInitPresenter;
+
+    @Inject
+    AuthInitPresenter authInitPresenter;
 
     @BindView(R.id.progressBar2)
     ProgressBar progressBar;
@@ -46,11 +48,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     EditText phoneNumberInit;
     @BindView(R.id.btn_login_next)
     Button btnLoginInit;
-
     AuthenticationActivity authenticationActivity;
-
-    @Inject
-    APIService apiService;
 
     @OnClick(R.id.btn_login_next)
     public void onButtonClick(){
@@ -76,12 +74,16 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+       authInitPresenter.setView(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         resolveDaggerDependencies();
-        Log.d(TAG,"API Service: "+apiService);
         authenticationActivity = (AuthenticationActivity) getActivity();
-        authInitPresenter = new AuthInitPresenter(this,apiService);  //Passed in view
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_auth_init, container, false);
 

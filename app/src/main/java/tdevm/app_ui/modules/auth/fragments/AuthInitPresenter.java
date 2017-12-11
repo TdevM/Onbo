@@ -4,6 +4,8 @@ import android.util.Log;
 
 import org.reactivestreams.Subscription;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -27,8 +29,8 @@ public class AuthInitPresenter extends BasePresenter{
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     private AuthViewContract.AuthInitView authInitView;
 
-    public AuthInitPresenter(AuthViewContract.AuthInitView authInitView, APIService apiService) {
-        this.authInitView = authInitView;
+    @Inject
+    public AuthInitPresenter(APIService apiService) {
         this.apiService = apiService;
     }
 
@@ -71,4 +73,7 @@ public class AuthInitPresenter extends BasePresenter{
         });
     }
 
+    public void setView(AuthInitFragment authInitFragment) {
+        authInitView = authInitFragment;
+    }
 }

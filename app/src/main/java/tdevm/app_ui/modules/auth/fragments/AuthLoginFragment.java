@@ -34,11 +34,7 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
     Unbinder unbinder;
 
     @Inject
-    MySharedPreferences mySharedPreferences;
-    @Inject
-    APIService apiService;
-
-    private AuthLoginPresenter authLoginPresenter;
+    AuthLoginPresenter authLoginPresenter;
     AuthenticationActivity authenticationActivity;
 
     @BindView(R.id.et_login_phone_number)
@@ -69,6 +65,12 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
     }
 
     @Override
+    public void onResume() {
+        authLoginPresenter.setView(this);
+        super.onResume();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -85,10 +87,7 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         resolveDaggerDependencies();
-        Log.d(TAG,"mySharedPrefs: "+mySharedPreferences);
-        Log.d(TAG,"API Service: "+apiService);
         authenticationActivity = (AuthenticationActivity) getActivity();
-        authLoginPresenter  = new AuthLoginPresenter(this,apiService,mySharedPreferences);
         View view = inflater.inflate(R.layout.fragment_auth_login, container, false);
         unbinder = ButterKnife.bind(this,view);
         loginPhone.setText(getString(R.string.otp_sent_mobile_number,String.valueOf(phoneNumber)));

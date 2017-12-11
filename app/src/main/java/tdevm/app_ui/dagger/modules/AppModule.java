@@ -26,6 +26,9 @@ public class AppModule {
         mApplication = application;
         locationApiManager = googleLocationApiManager;
     }
+    public AppModule(Application application) {
+        mApplication = application;
+    }
 
     @Provides
     @Singleton

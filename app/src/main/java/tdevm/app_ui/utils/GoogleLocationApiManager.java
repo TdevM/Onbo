@@ -15,7 +15,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class GoogleLocationApiManager implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private static final String TAG = GoogleLocationApiManager.class.getSimpleName();
+    private GoogleApiClient apiClient;
 
+    public GoogleLocationApiManager(GoogleApiClient apiClient) {
+        this.apiClient = apiClient;
+    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

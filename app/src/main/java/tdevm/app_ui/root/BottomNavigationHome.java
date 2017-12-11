@@ -19,7 +19,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -58,20 +60,11 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
 
     public static final String TAG = BottomNavigationHome.class.getSimpleName();
     @Inject
-    MySharedPreferences mySharedPreferences;
-    @Inject
-    APIService apiService;
-    @Inject
-    GoogleApiClient googleApiClient;
-    LocationRequest locationRequest;
-    Location location;
-    private BottomNavigationPresenter bottomNavigationPresenter;
-    private AuthUtils authUtils;
+    BottomNavigationPresenter bottomNavigationPresenter;
     Button rView, netReq, userReg;
     Toolbar toolbarMain;
     BottomNavigationView navigation;
     FragmentTransaction fragmentTransaction;
-    final static int REQUEST_LOCATION = 199;
     RxPermissions rxPermissions;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -89,7 +82,6 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
                     fragmentTransaction.commit();
                     break;
                 case R.id.navigation_scanner:
-                    //showLocationDialog();
                     new IntentIntegrator(BottomNavigationHome.this).setOrientationLocked(false).setCaptureActivity(CustomQRView.class).initiateScan();
                     break;
                 case R.id.navigation_account:
@@ -112,20 +104,8 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
         super.onCreate(savedInstanceState);
         resolveDaggerDependencies();
         setContentView(R.layout.activity_bottom_navigation);
-        //Log.d(TAG,googleApiClient.toString());
-//        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-//        boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-//
-//
-//        if (!enabled) {
-//            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//            startActivity(intent);
-//        }
-
         rView = findViewById(R.id.btn_r_view);
         netReq = findViewById(R.id.btn_net_req);
-        authUtils = new AuthUtils(mySharedPreferences);
-        bottomNavigationPresenter = new BottomNavigationPresenter(apiService, authUtils, this);
         toolbarMain = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbarMain);
         rxPermissions = new RxPermissions(this);
@@ -146,16 +126,7 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
         }
 
         toolbarMain.setNavigationOnClickListener(view -> onBackPressed());
-
-        rView.setOnClickListener(view -> {
-            if (authUtils.getAuthLoginState()) {
-                Toast.makeText(BottomNavigationHome.this, "Already Logged in", Toast.LENGTH_SHORT).show();
-            } else {
-                Intent intent = new Intent(BottomNavigationHome.this, AuthenticationActivity.class);
-                startActivity(intent);
-            }
-        });
-
+        rView.setOnClickListener(view -> bottomNavigationPresenter.handleUserAuthentication());
         userReg = findViewById(R.id.btn_reg);
         navigation = findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
@@ -170,13 +141,13 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        // bottomNavigationPresenter.verifyRestaurantTableVacant(result.getContents());
+        bottomNavigationPresenter.verifyRestaurantTableVacant(result.getContents());
     }
 
     @Override
     protected void onResume() {
+        bottomNavigationPresenter.setView(this);
         super.onResume();
-
     }
 
     public void resolveDaggerDependencies() {
@@ -202,62 +173,107 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
     }
 
     @Override
+    public void showUserProfile() {
+        Toast.makeText(BottomNavigationHome.this, "Already Logged in", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void redirectAuthActivity() {
+        Intent intent = new Intent(BottomNavigationHome.this, AuthenticationActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onDestroy() {
         bottomNavigationPresenter.compositeDisposable.clear();
         bottomNavigationPresenter.compositeDisposable.dispose();
         super.onDestroy();
     }
 
-    public int isGooglePlayServicesAvailable() {
-        return GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+
+//    private boolean isPlayServicesAvailable() {
+//        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+//        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+//        if (resultCode != ConnectionResult.SUCCESS) {
+//            if(apiAvailability.isUserResolvableError(resultCode)){
+//                apiAvailability.getErrorDialog(this,resultCode,PLAY_SERVICES_RESOLUTION_REQUEST).show();
+//            }else {
+//                Toast.makeText(getApplicationContext(),
+//                        "This device is not supported.", Toast.LENGTH_LONG)
+//                        .show();
+//                finish();
+//            }
+//            return false;
+//        }
+//        return true;
+//    }
+
+
+//    private void createLocationRequest() {
+//        locationRequest = LocationRequest.create();
+//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//        locationRequest.setInterval(30 * 1000);
+//        locationRequest.setFastestInterval(5 * 1000);
+//    }
+
+//    private void showLocationDialog() {
+//        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
+//        builder.setAlwaysShow(true);
+//
+//        Task<LocationSettingsResponse> locationSettingsResponseTask = LocationServices.getSettingsClient(this)
+//                .checkLocationSettings(builder.build());
+//        locationSettingsResponseTask.addOnCompleteListener((Task<LocationSettingsResponse> task) -> {
+//            try {
+//                LocationSettingsResponse response = task.getResult(ApiException.class);
+//                // All location settings are satisfied. The client can initialize location
+//                // requests here.
+//                Log.d(TAG, "Opened");
+//            } catch (ApiException exception) {
+//                switch (exception.getStatusCode()) {
+//                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+//                        // Location settings are not satisfied. But could be fixed by showing the
+//                        // user a dialog.
+//                        Log.d(TAG, "Rejected");
+//                        try {
+//                            // Cast to a resolvable exception.
+//                            ResolvableApiException resolvable = (ResolvableApiException) exception;
+//                            // Show the dialog by calling startResolutionForResult(),
+//                            // and check the locationSettingsResponseTask in onActivityResult().
+//                            resolvable.startResolutionForResult(
+//                                    BottomNavigationHome.this,
+//                                    REQUEST_LOCATION);
+//                        } catch (IntentSender.SendIntentException e) {
+//                            // Ignore the error.
+//                        } catch (ClassCastException e) {
+//                            // Ignore, should be an impossible error.
+//                        }
+//                        break;
+//                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+//                        // Location settings are not satisfied. However, we have no way to fix the
+//                        // settings so we won't show the dialog.
+//                        break;
+//                }
+//            }
+//        });
+//    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        if(isPlayServicesAvailable()){
+//            googleApiClient.connect();
+//        }
     }
 
-    private void createLocationRequest() {
-        //googleApiClient.connect();
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(30 * 1000);
-        locationRequest.setFastestInterval(5 * 1000);
+    @Override
+    public void showProgressUI() {
+
     }
 
-    private void showLocationDialog() {
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
-        builder.setAlwaysShow(true);
+    @Override
+    public void hideProgressUI() {
 
-        Task<LocationSettingsResponse> locationSettingsResponseTask = LocationServices.getSettingsClient(this)
-                .checkLocationSettings(builder.build());
-        locationSettingsResponseTask.addOnCompleteListener((Task<LocationSettingsResponse> task) -> {
-            try {
-                LocationSettingsResponse response = task.getResult(ApiException.class);
-                // All location settings are satisfied. The client can initialize location
-                // requests here.
-                Log.d(TAG, "Opened");
-            } catch (ApiException exception) {
-                switch (exception.getStatusCode()) {
-                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                        // Location settings are not satisfied. But could be fixed by showing the
-                        // user a dialog.
-                        Log.d(TAG, "Rejected");
-                        try {
-                            // Cast to a resolvable exception.
-                            ResolvableApiException resolvable = (ResolvableApiException) exception;
-                            // Show the dialog by calling startResolutionForResult(),
-                            // and check the locationSettingsResponseTask in onActivityResult().
-                            resolvable.startResolutionForResult(
-                                    BottomNavigationHome.this,
-                                    REQUEST_LOCATION);
-                        } catch (IntentSender.SendIntentException e) {
-                            // Ignore the error.
-                        } catch (ClassCastException e) {
-                            // Ignore, should be an impossible error.
-                        }
-                        break;
-                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                        // Location settings are not satisfied. However, we have no way to fix the
-                        // settings so we won't show the dialog.
-                        break;
-                }
-            }
-        });
     }
 }
