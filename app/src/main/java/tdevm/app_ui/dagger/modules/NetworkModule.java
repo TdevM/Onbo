@@ -7,7 +7,6 @@ package tdevm.app_ui.dagger.modules;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,22 +25,20 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@Module
+@Module(includes = AppContextModule.class)
 public class NetworkModule {
 
     public static final String SHARED_PREFS = "MyPrefs";
     private String mBaseUrl;
-    private Context mContext;
 
-    public NetworkModule(Context context, String baseUrl) {
-        mContext = context;
+    public NetworkModule(String baseUrl) {
         mBaseUrl = baseUrl;
     }
 
     @Provides
     @Singleton
-    SharedPreferences providesSharedPreferences() {
-        return mContext.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
+    SharedPreferences providesSharedPreferences(Application application) {
+        return application.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
     }
 
     @Singleton
@@ -113,9 +110,4 @@ public class NetworkModule {
                 .build();
     }
 
-    @Provides
-    @Singleton
-    Context providesContext() {
-        return mContext;
-    }
 }

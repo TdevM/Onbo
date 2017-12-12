@@ -8,8 +8,7 @@ import tdevm.app_ui.dagger.components.APIComponent;
 import tdevm.app_ui.dagger.components.ApplicationComponent;
 import tdevm.app_ui.dagger.components.DaggerAPIComponent;
 import tdevm.app_ui.dagger.components.DaggerApplicationComponent;
-import tdevm.app_ui.dagger.modules.APIModule;
-import tdevm.app_ui.dagger.modules.AppModule;
+import tdevm.app_ui.dagger.modules.AppContextModule;
 import tdevm.app_ui.dagger.modules.NetworkModule;
 
 /**
@@ -36,15 +35,14 @@ public class AppApplication extends Application {
     private void initializeApplicationComponent() {
         applicationComponent = DaggerApplicationComponent
                 .builder()
-                .networkModule(new NetworkModule(this, "https://z71.herokuapp.com/api/v3/"))
-                .appModule(new AppModule(this))
+                .networkModule(new NetworkModule("https://z71.herokuapp.com/api/v3/"))
+                .appContextModule(new AppContextModule(this))
                 .build();
 
     }
     private void initializeAPIComponent(){
         apiComponent = DaggerAPIComponent
                 .builder()
-                .aPIModule(new APIModule())
                 .applicationComponent(getApplicationComponent())
                 .build();
     }
