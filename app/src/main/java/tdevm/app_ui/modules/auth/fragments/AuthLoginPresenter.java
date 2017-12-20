@@ -15,6 +15,7 @@ import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.base.BasePresenter;
+import tdevm.app_ui.modules.auth.AuthPresenterContract;
 import tdevm.app_ui.modules.auth.AuthViewContract;
 import tdevm.app_ui.utils.AuthUtils;
 
@@ -22,14 +23,14 @@ import tdevm.app_ui.utils.AuthUtils;
  * Created by Tridev on 12-10-2017.
  */
 //TODO Save encrypted token to shared prefs.
-public class AuthLoginPresenter extends BasePresenter {
+public class AuthLoginPresenter extends BasePresenter implements AuthPresenterContract.AuthLoginPresenter{
 
     public static final String TAG = AuthInitPresenter.class.getSimpleName();
     private APIService apiService;
     private AuthViewContract.AuthLoginView authLoginView;
     private MySharedPreferences sharedPreferences;
     private AuthUtils authUtils;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
     public AuthLoginPresenter(APIService apiService, MySharedPreferences sharedPreferences,AuthUtils authUtils) {
@@ -38,9 +39,6 @@ public class AuthLoginPresenter extends BasePresenter {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void setView(AuthViewContract.AuthLoginView view){
-        authLoginView = view;
-    }
     public void loginUser(final Long phone, final String password){
         Observable<Response<Object>> observable = apiService.loginUser(new User(password,phone));
         subscribe(observable, new Observer<Response<Object>>() {
@@ -78,5 +76,16 @@ public class AuthLoginPresenter extends BasePresenter {
             }
         });
 
+    }
+
+    @Override
+    public void attachView(AuthViewContract.AuthLoginView view) {
+            authLoginView = view;
+    }
+
+    @Override
+    public void detachView() {
+       compositeDisposable.clear();
+       compositeDisposable.dispose();
     }
 }

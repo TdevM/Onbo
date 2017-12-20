@@ -34,13 +34,10 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
     private static final String PHONE = "PHONE";
     private Long phoneNumber;
 
-    @Inject
-    MySharedPreferences mySharedPreferences;
-    @Inject
-    APIService apiService;
-
     Unbinder unbinder;
     AuthenticationActivity authenticationActivity;
+
+    @Inject
     AuthRegisterPresenter authRegisterPresenter;
 
     @BindView(R.id.et_sign_up_name)
@@ -79,6 +76,12 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
     }
 
     @Override
+    public void onResume() {
+        authRegisterPresenter.attachView(this);
+        super.onResume();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -90,13 +93,10 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG,"mySharedPrefs: "+mySharedPreferences);
-        Log.d(TAG,"API Service: "+apiService);
         View view = inflater.inflate(R.layout.fragment_auth_register, container, false);
         resolveDaggerDependencies();
         unbinder = ButterKnife.bind(this,view);
         authenticationActivity = (AuthenticationActivity) getActivity();
-        authRegisterPresenter = new AuthRegisterPresenter(this,apiService,mySharedPreferences);
         editTextPhone.setText(getString(R.string.otp_sent_mobile_number,String.valueOf(phoneNumber)));
         return view;
     }
@@ -135,8 +135,7 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
 
     @Override
     public void onDestroy() {
-        authRegisterPresenter.compositeDisposable.dispose();
-        authRegisterPresenter.compositeDisposable.clear();
+        authRegisterPresenter.detachView();
         super.onDestroy();
     }
 }

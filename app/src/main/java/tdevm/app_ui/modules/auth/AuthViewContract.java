@@ -13,7 +13,6 @@ public interface AuthViewContract {
         void showLoginFragment(Long phone);
         //Send OTP to new User.
         void showOTPVerificationScreen(Long phone);
-        //Wrong an error message.
         void showError();
 
     }

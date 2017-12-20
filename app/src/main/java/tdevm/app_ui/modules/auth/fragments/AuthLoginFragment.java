@@ -66,7 +66,7 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
 
     @Override
     public void onResume() {
-        authLoginPresenter.setView(this);
+        authLoginPresenter.attachView(this);
         super.onResume();
     }
 
@@ -129,8 +129,7 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
 
     @Override
     public void onDestroy() {
-        authLoginPresenter.compositeDisposable.dispose();
-        authLoginPresenter.compositeDisposable.clear();
+        authLoginPresenter.detachView();
         super.onDestroy();
     }
 }

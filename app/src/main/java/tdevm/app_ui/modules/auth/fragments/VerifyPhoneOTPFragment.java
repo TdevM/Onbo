@@ -37,10 +37,10 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     private static final String PHONE = "PHONE";
     private Long phoneNumber;
     Unbinder unbinder;
-    @Inject
-    APIService apiService;
 
     AuthenticationActivity authenticationActivity;
+
+    @Inject
     VerifyPhoneOTPPresenter verifyPhoneOTPPresenter;
 
     @BindView(R.id.et_otp_view)
@@ -93,20 +93,18 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
         SMSListener.setOnSMSReceivedListener(this);
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         smsListener = new SMSListener();
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
-        Log.d(TAG, "onCreate Called");
-        Log.d(TAG,"API Service: " +apiService);
         View view  = inflater.inflate(R.layout.fragment_verify_phone_otp, container, false);
         unbinder = ButterKnife.bind(this,view);
         resolveDaggerDependencies();
         textViewOTPNumber.setText(getString(R.string.otp_sent_mobile_number,String.valueOf(phoneNumber)));
         authenticationActivity = (AuthenticationActivity) getActivity();
-        verifyPhoneOTPPresenter = new VerifyPhoneOTPPresenter(apiService,this);
         editTextOTP.setFilters(new InputFilter[] {new InputFilter.LengthFilter(6)});
         return view;
     }
@@ -135,6 +133,7 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     @Override
     public void onResume() {
         super.onResume();
+        verifyPhoneOTPPresenter.attachView(this);
         getActivity().registerReceiver(smsListener, intentFilter);
 
     }
@@ -173,8 +172,8 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
 
     @Override
     public void onDestroy() {
-        verifyPhoneOTPPresenter.compositeDisposable.dispose();
-        verifyPhoneOTPPresenter.compositeDisposable.clear();
+        verifyPhoneOTPPresenter.detachView();
+        smsListener.abortBroadcast();
         super.onDestroy();
     }
 

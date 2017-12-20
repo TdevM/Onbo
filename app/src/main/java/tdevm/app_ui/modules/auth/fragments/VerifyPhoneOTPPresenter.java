@@ -3,6 +3,8 @@ package tdevm.app_ui.modules.auth.fragments;
 import android.util.Log;
 
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -12,24 +14,32 @@ import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.OneTimePassword;
 import tdevm.app_ui.base.BasePresenter;
+import tdevm.app_ui.modules.auth.AuthPresenterContract;
 import tdevm.app_ui.modules.auth.AuthViewContract;
 
 /**
  * Created by Tridev on 12-10-2017.
  */
 
-public class VerifyPhoneOTPPresenter extends BasePresenter{
+public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresenterContract.VerifyPhoneOTPPresenter{
 
     public static final String TAG = VerifyPhoneOTPPresenter.class.getSimpleName();
 
     private APIService apiService;
     private AuthViewContract.AuthOTPView authOTPView;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
-    public VerifyPhoneOTPPresenter(APIService apiService, AuthViewContract.AuthOTPView authOTPView) {
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+    @Inject
+    public VerifyPhoneOTPPresenter(APIService apiService) {
         this.apiService =apiService;
-        this.authOTPView = authOTPView;
     }
 
+    @Override
+    public void attachView(AuthViewContract.AuthOTPView view) {
+      authOTPView = view;
+    }
+
+    @Override
     public void resendOTP(final Long phone){
         Observable<Response<Object>> observable = apiService.getMobileOTP(phone);
         subscribe(observable, new Observer<Response<Object>>() {
@@ -64,8 +74,8 @@ public class VerifyPhoneOTPPresenter extends BasePresenter{
     }
 
     // This method will be called in two ways, one by user input, another by a BroadcastReceiver;
-
     public void verifyOTP(final Long phone, Long OTP){
+        Log.d(TAG,phone+OTP.toString());
         Observable<Response<Object>> observable = apiService.verifyMobileOTP(new OneTimePassword(OTP,phone));
         subscribe(observable, new Observer<Response<Object>>() {
             @Override
@@ -99,9 +109,17 @@ public class VerifyPhoneOTPPresenter extends BasePresenter{
     }
 
     public void parseSMS(String sender, String body, Long phone){
-            String otp = body.replaceAll("\\D", "");
-            if(!otp.isEmpty() && otp.length()>6) {
-                verifyOTP(phone, Long.parseLong(otp));
-            }
+        Log.d(TAG,sender+body+phone);
+        String otp = body.replaceAll("\\D", "");
+        Log.d(TAG,"OTP is"+ otp);
+        verifyOTP(phone, Long.parseLong(otp));
+    }
+
+
+
+    @Override
+    public void detachView() {
+        compositeDisposable.clear();
+        compositeDisposable.dispose();
     }
 }

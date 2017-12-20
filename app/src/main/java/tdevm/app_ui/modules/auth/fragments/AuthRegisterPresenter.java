@@ -2,6 +2,8 @@ package tdevm.app_ui.modules.auth.fragments;
 
 import android.util.Log;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -12,25 +14,28 @@ import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.base.BasePresenter;
+import tdevm.app_ui.modules.auth.AuthPresenterContract;
 import tdevm.app_ui.modules.auth.AuthViewContract;
 
 /**
  * Created by Tridev on 12-10-2017.
  */
 
-public class AuthRegisterPresenter extends BasePresenter {
+public class AuthRegisterPresenter extends BasePresenter implements AuthPresenterContract.AuthRegisterPresenter {
 
     public static final String TAG = AuthRegisterPresenter.class.getSimpleName();
     private AuthViewContract.AuthRegisterView authRegisterView;
     private APIService apiService;
     private MySharedPreferences mySharedPreferences;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
-    public AuthRegisterPresenter(AuthViewContract.AuthRegisterView authRegisterView, APIService apiService, MySharedPreferences mySharedPreferences) {
-        this.authRegisterView = authRegisterView;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+    @Inject
+    public AuthRegisterPresenter(APIService apiService, MySharedPreferences mySharedPreferences) {
         this.apiService = apiService;
         this.mySharedPreferences = mySharedPreferences;
     }
 
+    @Override
     public void registerUser(User user){
         Observable<Response<Object>> observable = apiService.registerUser(user);
         subscribe(observable, new Observer<Response<Object>>() {
@@ -64,5 +69,16 @@ public class AuthRegisterPresenter extends BasePresenter {
             }
         });
 
+    }
+
+    @Override
+    public void attachView(AuthViewContract.AuthRegisterView view) {
+        authRegisterView = view;
+    }
+
+    @Override
+    public void detachView() {
+        compositeDisposable.dispose();
+        compositeDisposable.clear();
     }
 }

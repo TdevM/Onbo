@@ -14,6 +14,7 @@ import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.base.BasePresenter;
+import tdevm.app_ui.modules.auth.AuthPresenterContract;
 import tdevm.app_ui.modules.auth.AuthViewContract;
 
 /**
@@ -21,12 +22,12 @@ import tdevm.app_ui.modules.auth.AuthViewContract;
  */
 
 //TODO use disposableObserver
-public class AuthInitPresenter extends BasePresenter{
+public class AuthInitPresenter extends BasePresenter implements AuthPresenterContract.AuthInitPresenter{
 
     public static final String TAG = AuthInitPresenter.class.getSimpleName();
 
     private APIService apiService;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private AuthViewContract.AuthInitView authInitView;
 
     @Inject
@@ -34,7 +35,8 @@ public class AuthInitPresenter extends BasePresenter{
         this.apiService = apiService;
     }
 
-    void sendOTP(final Long phone){
+    @Override
+    public void sendOTP(final Long phone){
         Observable<Response<Object>> objectObservable = apiService.getMobileOTP(phone);
 
         subscribe(objectObservable, new Observer<Response<Object>>() {
@@ -73,7 +75,14 @@ public class AuthInitPresenter extends BasePresenter{
         });
     }
 
-    public void setView(AuthInitFragment authInitFragment) {
-        authInitView = authInitFragment;
+    @Override
+    public void attachView(AuthViewContract.AuthInitView view) {
+        authInitView = view;
+    }
+
+    @Override
+    public void detachView() {
+       compositeDisposable.dispose();
+       compositeDisposable.clear();
     }
 }

@@ -76,7 +76,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     @Override
     public void onResume() {
         super.onResume();
-       authInitPresenter.setView(this);
+       authInitPresenter.attachView(this);
     }
 
     @Override
@@ -170,8 +170,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     @Override
     public void onDestroy() {
         Log.d(TAG,"onDestroy Called");
-        authInitPresenter.compositeDisposable.dispose();
-        authInitPresenter.compositeDisposable.clear();
+        authInitPresenter.detachView();
         super.onDestroy();
     }
 }
