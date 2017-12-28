@@ -9,8 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 
 import tdevm.app_ui.api.models.response.Cuisine;
-import tdevm.app_ui.modules.dinein.fragments.CartFragment;
-import tdevm.app_ui.modules.dinein.fragments.FragmentSingleCuisineGrid;
+import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
 
 /**
  * Created by Tridev on 30-07-2017.
@@ -30,7 +29,7 @@ public class RecycledFragmentPagerAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
-        return  FragmentSingleCuisineGrid.newInstance(RESTAURANT_UUID,cuisineList.get(position).getCuisine_id());
+        return  SingleCuisineGridFragment.newInstance(RESTAURANT_UUID,cuisineList.get(position).getCuisine_id());
     }
 
     @Override

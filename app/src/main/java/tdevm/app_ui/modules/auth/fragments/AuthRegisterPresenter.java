@@ -16,6 +16,7 @@ import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.auth.AuthPresenterContract;
 import tdevm.app_ui.modules.auth.AuthViewContract;
+import tdevm.app_ui.utils.AuthUtils;
 
 /**
  * Created by Tridev on 12-10-2017.
@@ -26,13 +27,14 @@ public class AuthRegisterPresenter extends BasePresenter implements AuthPresente
     public static final String TAG = AuthRegisterPresenter.class.getSimpleName();
     private AuthViewContract.AuthRegisterView authRegisterView;
     private APIService apiService;
-    private MySharedPreferences mySharedPreferences;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private AuthUtils authUtils;
+    private CompositeDisposable compositeDisposable;
 
     @Inject
-    public AuthRegisterPresenter(APIService apiService, MySharedPreferences mySharedPreferences) {
+    public AuthRegisterPresenter(APIService apiService,AuthUtils authUtils) {
         this.apiService = apiService;
-        this.mySharedPreferences = mySharedPreferences;
+        this.authUtils = authUtils;
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -42,7 +44,7 @@ public class AuthRegisterPresenter extends BasePresenter implements AuthPresente
             @Override
             public void onSubscribe(@NonNull Disposable d) {
                 compositeDisposable.add(d);
-              authRegisterView.showProgressUI();
+                authRegisterView.showProgressUI();
             }
 
             @Override
@@ -52,6 +54,7 @@ public class AuthRegisterPresenter extends BasePresenter implements AuthPresente
                     Log.d("RegisterPresenter",response.body().toString());
                 }else if(response.code() ==200){
                     Log.d("RegisterPresenter",response.body().toString());
+                    authUtils.saveAuthTransaction(response.headers().get("X-auth"),user.getMobile(),true);
                     authRegisterView.showRegistrationSuccess();
                 }
 

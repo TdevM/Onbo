@@ -20,22 +20,18 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.APIService;
-import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
-import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledGridAdapter;
 import tdevm.app_ui.modules.dinein.listeners.DishItemClickListener;
-import tdevm.app_ui.utils.AuthUtils;
 
 /**
  * Created by Tridev on 30-07-2017.
  */
 
-public class FragmentSingleCuisineGrid extends Fragment implements DineInViewContract.SingleCuisineGridView{
+public class SingleCuisineGridFragment extends Fragment implements DineInViewContract.SingleCuisineGridView{
 
-    public static final String TAG = FragmentSingleCuisineGrid.class.getSimpleName();
+    public static final String TAG = SingleCuisineGridFragment.class.getSimpleName();
     public static final String CUISINE_ID = "CUISINE_ID";
     public static final String RESTAURANT_UUID = "RESTAURANT_UUID";
 
@@ -50,11 +46,11 @@ public class FragmentSingleCuisineGrid extends Fragment implements DineInViewCon
     @Inject
     SingleCuisineGridPresenter singleCuisineGridPresenter;
 
-    public static FragmentSingleCuisineGrid newInstance(String restaurantUUID, Long mCuisineId) {
+    public static SingleCuisineGridFragment newInstance(String restaurantUUID, Long mCuisineId) {
         Bundle args = new Bundle();
         args.putLong(CUISINE_ID,mCuisineId);
         args.putString(RESTAURANT_UUID,restaurantUUID);
-        FragmentSingleCuisineGrid fragment = new FragmentSingleCuisineGrid();
+        SingleCuisineGridFragment fragment = new SingleCuisineGridFragment();
         fragment.setArguments(args);
         return fragment;
     }

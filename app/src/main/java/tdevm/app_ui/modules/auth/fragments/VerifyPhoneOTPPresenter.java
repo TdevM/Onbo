@@ -27,10 +27,11 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
 
     private APIService apiService;
     private AuthViewContract.AuthOTPView authOTPView;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable;
 
     @Inject
     public VerifyPhoneOTPPresenter(APIService apiService) {
+        compositeDisposable = new CompositeDisposable();
         this.apiService =apiService;
     }
 
@@ -45,7 +46,7 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
         subscribe(observable, new Observer<Response<Object>>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-                 authOTPView.showProgressUI();
+                authOTPView.showProgressUI();
                 compositeDisposable.add(d);
             }
 
@@ -59,7 +60,6 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
                     authOTPView.showOTPSentFailure();
                 }
             }
-
             @Override
             public void onError(@NonNull Throwable e) {
                 authOTPView.showOTPSentFailure();
@@ -74,6 +74,7 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
     }
 
     // This method will be called in two ways, one by user input, another by a BroadcastReceiver;
+    @Override
     public void verifyOTP(final Long phone, Long OTP){
         Log.d(TAG,phone+OTP.toString());
         Observable<Response<Object>> observable = apiService.verifyMobileOTP(new OneTimePassword(OTP,phone));
@@ -108,6 +109,7 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
 
     }
 
+    @Override
     public void parseSMS(String sender, String body, Long phone){
         Log.d(TAG,sender+body+phone);
         String otp = body.replaceAll("\\D", "");

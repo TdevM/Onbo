@@ -8,7 +8,7 @@ import tdevm.app_ui.modules.auth.fragments.AuthLoginFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthRegisterFragment;
 import tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
-import tdevm.app_ui.modules.dinein.fragments.FragmentSingleCuisineGrid;
+import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
 import tdevm.app_ui.root.BottomNavigationHome;
 
 /**
@@ -23,6 +23,6 @@ public interface APIComponent {
     void inject(VerifyPhoneOTPFragment verifyPhoneOTPFragment);
     void inject(AuthRegisterFragment authRegisterFragment);
     void inject(BottomNavigationHome bottomNavigationHome);
-    void inject(FragmentSingleCuisineGrid fragmentSingleCuisineGrid);
+    void inject(SingleCuisineGridFragment singleCuisineGridFragment);
     void inject(DishMenuFragment dishMenuFragment);
 }

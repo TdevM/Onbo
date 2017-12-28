@@ -28,15 +28,14 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
     public static final String TAG = AuthInitPresenter.class.getSimpleName();
     private APIService apiService;
     private AuthViewContract.AuthLoginView authLoginView;
-    private MySharedPreferences sharedPreferences;
     private AuthUtils authUtils;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable;
 
     @Inject
-    public AuthLoginPresenter(APIService apiService, MySharedPreferences sharedPreferences,AuthUtils authUtils) {
+    public AuthLoginPresenter(APIService apiService,AuthUtils authUtils) {
+        compositeDisposable = new CompositeDisposable();
         this.apiService = apiService;
         this.authUtils = authUtils;
-        this.sharedPreferences = sharedPreferences;
     }
 
     public void loginUser(final Long phone, final String password){

@@ -24,7 +24,7 @@ public class DishMenuPresenter extends BasePresenter implements DineInPresenterC
 
     public static final String TAG = DishMenuPresenter.class.getSimpleName();
     private APIService apiService;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable;
     private DineInViewContract.DishMenuView dishMenuView;
 
     private AuthUtils authUtils;
@@ -33,8 +33,10 @@ public class DishMenuPresenter extends BasePresenter implements DineInPresenterC
     public DishMenuPresenter(APIService apiService, AuthUtils authUtils) {
         this.apiService = apiService;
         this.authUtils = authUtils;
+        compositeDisposable = new CompositeDisposable();
     }
 
+    @Override
     public void FetchAllCuisines(Map<String,String> map) {
         Observable<ArrayList<Cuisine>> fetchCuisines = apiService.fetchCuisines(authUtils.getAuthLoginToken(),map);
         subscribe(fetchCuisines, new Observer<ArrayList<Cuisine>>() {

@@ -30,15 +30,17 @@ public class SingleCuisineGridPresenter extends BasePresenter implements DineInP
     public static final String TAG = SingleCuisineGridPresenter.class.getSimpleName();
     private DineInViewContract.SingleCuisineGridView singleCuisineGridView;
     private APIService apiService;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable;
     private AuthUtils authUtils;
 
     @Inject
     public SingleCuisineGridPresenter(AuthUtils authUtils,APIService apiService) {
+        compositeDisposable = new CompositeDisposable();
         this.authUtils = authUtils;
         this.apiService = apiService;
     }
 
+    @Override
     public void fetchDishesByCuisines(Map<String,String> map){
         Observable<ArrayList<DishesOfCuisine>> dishesOfCuisineObservable = apiService.fetchDishesByCuisine(authUtils.getAuthLoginToken(),map);
         subscribe(dishesOfCuisineObservable, new Observer<ArrayList<DishesOfCuisine>>() {
@@ -64,6 +66,7 @@ public class SingleCuisineGridPresenter extends BasePresenter implements DineInP
         });
     }
 
+    @Override
     public void fetchVariantsOfADish(Map<String,String> map){
         Observable<ArrayList<DishesOfCuisine>> dishesOfCuisineObservable = apiService.fetchDishVariantsByCuisines(authUtils.getAuthLoginToken(),map);
         subscribe(dishesOfCuisineObservable, new Observer<ArrayList<DishesOfCuisine>>() {

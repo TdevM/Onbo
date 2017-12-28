@@ -34,6 +34,8 @@ public interface AuthPresenterContract {
         void attachView(AuthViewContract.AuthOTPView view);
         void detachView();
         void resendOTP(final Long phone);
+        void verifyOTP(final Long phone, Long OTP);
+        void parseSMS(String sender, String body, Long phone);
     }
 
 }

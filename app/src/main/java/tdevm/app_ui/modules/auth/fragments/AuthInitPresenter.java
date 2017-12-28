@@ -27,12 +27,13 @@ public class AuthInitPresenter extends BasePresenter implements AuthPresenterCon
     public static final String TAG = AuthInitPresenter.class.getSimpleName();
 
     private APIService apiService;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable;
     private AuthViewContract.AuthInitView authInitView;
 
     @Inject
     public AuthInitPresenter(APIService apiService) {
         this.apiService = apiService;
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
