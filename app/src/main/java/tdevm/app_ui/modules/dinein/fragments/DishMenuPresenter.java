@@ -1,8 +1,9 @@
 package tdevm.app_ui.modules.dinein.fragments;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -11,26 +12,27 @@ import io.reactivex.disposables.Disposable;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.modules.dinein.DineInContract;
+import tdevm.app_ui.modules.dinein.DineInPresenterContract;
+import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.utils.AuthUtils;
 
 /**
  * Created by Tridev on 06-11-2017.
  */
 
-public class DishMenuPresenter extends BasePresenter {
+public class DishMenuPresenter extends BasePresenter implements DineInPresenterContract.DishMenuPresenter{
 
     public static final String TAG = DishMenuPresenter.class.getSimpleName();
     private APIService apiService;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private DineInContract.DishMenuView dishMenuView;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private DineInViewContract.DishMenuView dishMenuView;
 
     private AuthUtils authUtils;
 
-    public DishMenuPresenter(APIService apiService, AuthUtils authUtils,DineInContract.DishMenuView dishMenuView) {
+    @Inject
+    public DishMenuPresenter(APIService apiService, AuthUtils authUtils) {
         this.apiService = apiService;
         this.authUtils = authUtils;
-        this.dishMenuView = dishMenuView;
     }
 
     public void FetchAllCuisines(Map<String,String> map) {
@@ -56,5 +58,16 @@ public class DishMenuPresenter extends BasePresenter {
 
             }
         });
+    }
+
+    @Override
+    public void attachView(DineInViewContract.DishMenuView view) {
+      dishMenuView = view;
+    }
+
+    @Override
+    public void detachView() {
+      compositeDisposable.clear();
+      compositeDisposable.dispose();
     }
 }

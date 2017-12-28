@@ -21,22 +21,19 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.modules.auth.fragments.AuthInitFragment;
-import tdevm.app_ui.modules.dinein.DineInActivity;
-import tdevm.app_ui.modules.dinein.DineInContract;
+import tdevm.app_ui.modules.dinein.DineInPresenterContract;
+import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledFragmentPagerAdapter;
 import tdevm.app_ui.utils.AuthUtils;
 
-public class DishMenuFragment extends Fragment implements DineInContract.DishMenuView {
+public class DishMenuFragment extends Fragment implements DineInViewContract.DishMenuView {
     public static final String TAG = AuthInitFragment.class.getSimpleName();
     private String RESTAURANT_UUID = "RESTAURANT_UUID";
 
-    private AuthUtils authUtils;
-    @Inject
-    MySharedPreferences mySharedPreferences;
+
     Unbinder unbinder;
     @BindView(R.id.viewpager_dish_menu)
     ViewPager viewPagerDishMenu;
@@ -44,8 +41,7 @@ public class DishMenuFragment extends Fragment implements DineInContract.DishMen
     TabLayout tabLayoutDishMenu;
 
     @Inject
-    APIService apiService;
-    private DishMenuPresenter dishMenuPresenter;
+    DishMenuPresenter dishMenuPresenter;
 
 
     public DishMenuFragment() {
@@ -65,13 +61,17 @@ public class DishMenuFragment extends Fragment implements DineInContract.DishMen
     }
 
     @Override
+    public void onResume() {
+        dishMenuPresenter.attachView(this);
+        super.onResume();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         resolveDaggerDependencies();
         View view =  inflater.inflate(R.layout.fragment_dish_menu, container, false);
-        authUtils = new AuthUtils(mySharedPreferences);
-        dishMenuPresenter = new DishMenuPresenter(apiService,authUtils,this);
 
         unbinder =  ButterKnife.bind(this,view);
         tabLayoutDishMenu.setupWithViewPager(viewPagerDishMenu);
@@ -104,8 +104,7 @@ public class DishMenuFragment extends Fragment implements DineInContract.DishMen
 
     @Override
     public void onDestroy() {
-        dishMenuPresenter.compositeDisposable.clear();
-        dishMenuPresenter.compositeDisposable.dispose();
+        dishMenuPresenter.detachView();
         super.onDestroy();
     }
 }

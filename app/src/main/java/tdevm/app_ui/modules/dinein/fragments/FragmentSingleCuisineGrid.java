@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +23,8 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
-import tdevm.app_ui.modules.dinein.DineInContract;
+import tdevm.app_ui.modules.dinein.DineInPresenterContract;
+import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledGridAdapter;
 import tdevm.app_ui.modules.dinein.listeners.DishItemClickListener;
 import tdevm.app_ui.utils.AuthUtils;
@@ -33,7 +33,7 @@ import tdevm.app_ui.utils.AuthUtils;
  * Created by Tridev on 30-07-2017.
  */
 
-public class FragmentSingleCuisineGrid extends Fragment implements DineInContract.SingleCuisineGridView{
+public class FragmentSingleCuisineGrid extends Fragment implements DineInViewContract.SingleCuisineGridView{
 
     public static final String TAG = FragmentSingleCuisineGrid.class.getSimpleName();
     public static final String CUISINE_ID = "CUISINE_ID";
@@ -43,13 +43,11 @@ public class FragmentSingleCuisineGrid extends Fragment implements DineInContrac
     @BindView(R.id.recycler_view_dishes_grid_single)
     RecyclerView recyclerViewGridSingle;
     Unbinder unbinder;
-    @Inject
-    APIService apiService;
-    private AuthUtils authUtils;
-    @Inject
-    MySharedPreferences mySharedPreferences;
+    private Map<String,String> fetchDishesMap;
 
     RecycledGridAdapter recycledGridAdapter;
+
+    @Inject
     SingleCuisineGridPresenter singleCuisineGridPresenter;
 
     public static FragmentSingleCuisineGrid newInstance(String restaurantUUID, Long mCuisineId) {
@@ -67,18 +65,22 @@ public class FragmentSingleCuisineGrid extends Fragment implements DineInContrac
     }
 
     @Override
+    public void onResume() {
+        singleCuisineGridPresenter.attachView(this);
+        super.onResume();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_single_cuisine_grid, container, false);
         resolveDaggerDependencies();
+        View view = inflater.inflate(R.layout.fragment_single_cuisine_grid, container, false);
         unbinder =  ButterKnife.bind(this,view);
         mLayoutManager = new GridLayoutManager(getContext(), 2);
-        Map<String,String> map = new HashMap<>();
-        map.put("restaurant_uuid",String.valueOf(getArguments().getString(RESTAURANT_UUID)));
-        map.put("cuisine_id",String.valueOf(getArguments().getLong(CUISINE_ID)));
-        authUtils = new AuthUtils(mySharedPreferences);
-        singleCuisineGridPresenter = new SingleCuisineGridPresenter(this,authUtils,apiService,map);
-        singleCuisineGridPresenter.fetchDishesByCuisines();
+        fetchDishesMap = new HashMap<>();
+        fetchDishesMap.put("restaurant_uuid",String.valueOf(getArguments().getString(RESTAURANT_UUID)));
+        fetchDishesMap.put("cuisine_id",String.valueOf(getArguments().getLong(CUISINE_ID)));
+        singleCuisineGridPresenter.fetchDishesByCuisines(fetchDishesMap);
         return view;
     }
 
@@ -106,7 +108,8 @@ public class FragmentSingleCuisineGrid extends Fragment implements DineInContrac
             @Override
             public void getDishItemQuant(DishesOfCuisine dishesOfCuisine, int oldValue, int newValue) {
                 if(dishesOfCuisine.getIs_customizable()){
-                    singleCuisineGridPresenter.fetchVariantsOfADish(dishesOfCuisine.getDish_id());
+                    fetchDishesMap.put("dish_id",String.valueOf(dishesOfCuisine.getDish_id()));
+                    singleCuisineGridPresenter.fetchVariantsOfADish(fetchDishesMap);
                 }else {
                     singleCuisineGridPresenter.addToCart(dishesOfCuisine);
                 }
@@ -122,7 +125,6 @@ public class FragmentSingleCuisineGrid extends Fragment implements DineInContrac
     @Override
     public void onDestroy() {
         super.onDestroy();
-        singleCuisineGridPresenter.compositeDisposable.clear();
-        singleCuisineGridPresenter.compositeDisposable.dispose();
+       singleCuisineGridPresenter.detachView();
     }
 }

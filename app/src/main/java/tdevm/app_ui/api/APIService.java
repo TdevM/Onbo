@@ -19,6 +19,7 @@ import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.api.models.response.Dish;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.RestaurantTable;
+import tdevm.app_ui.api.models.response.TempOrder;
 
 /**
  * Created by Tridev on 04-10-2017.
@@ -56,10 +57,8 @@ public interface APIService {
     //Running Orders
     @POST("m/orders/temp")
     Observable<Response<Object>> createNewOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
-
-//    @GET("m/orders/temp")
-//    Observable<ArrayList<TempOrder>> fetchMyRunningOrder(@Header("x-auth") String token, @QueryMap Map<String,String> options);
-
+    @GET("m/orders/temp")
+    Observable<ArrayList<TempOrder>> fetchMyRunningOrder(@Header("x-auth") String token, @QueryMap Map<String,String> options);
     @PATCH("m/orders/temp")
     Observable<Response<Object>> addItemsToOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
 

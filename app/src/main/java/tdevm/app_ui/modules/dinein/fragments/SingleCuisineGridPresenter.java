@@ -1,10 +1,11 @@
 package tdevm.app_ui.modules.dinein.fragments;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -13,32 +14,32 @@ import io.reactivex.disposables.Disposable;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.cart.model.Cart;
 import tdevm.app_ui.api.cart.util.CartHelper;
+import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.modules.dinein.DineInContract;
+import tdevm.app_ui.modules.dinein.DineInPresenterContract;
+import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.utils.AuthUtils;
 
 /**
  * Created by Tridev on 06-11-2017.
  */
 
-public class SingleCuisineGridPresenter extends BasePresenter {
+public class SingleCuisineGridPresenter extends BasePresenter implements DineInPresenterContract.SingleCuisineGridPresenter{
 
     public static final String TAG = SingleCuisineGridPresenter.class.getSimpleName();
-    private DineInContract.SingleCuisineGridView singleCuisineGridView;
+    private DineInViewContract.SingleCuisineGridView singleCuisineGridView;
     private APIService apiService;
-    private Map<String,String> map;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
-    Cart cart = CartHelper.getCart();
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private AuthUtils authUtils;
-    public SingleCuisineGridPresenter(DineInContract.SingleCuisineGridView singleCuisineGridView, AuthUtils authUtils,APIService apiService, Map<String, String> map) {
-        this.singleCuisineGridView = singleCuisineGridView;
+
+    @Inject
+    public SingleCuisineGridPresenter(AuthUtils authUtils,APIService apiService) {
         this.authUtils = authUtils;
         this.apiService = apiService;
-        this.map = map;
     }
 
-    public void fetchDishesByCuisines(){
+    public void fetchDishesByCuisines(Map<String,String> map){
         Observable<ArrayList<DishesOfCuisine>> dishesOfCuisineObservable = apiService.fetchDishesByCuisine(authUtils.getAuthLoginToken(),map);
         subscribe(dishesOfCuisineObservable, new Observer<ArrayList<DishesOfCuisine>>() {
             @Override
@@ -63,8 +64,7 @@ public class SingleCuisineGridPresenter extends BasePresenter {
         });
     }
 
-    public void fetchVariantsOfADish(Long dishId){
-        map.put("dish_id",String.valueOf(dishId));
+    public void fetchVariantsOfADish(Map<String,String> map){
         Observable<ArrayList<DishesOfCuisine>> dishesOfCuisineObservable = apiService.fetchDishVariantsByCuisines(authUtils.getAuthLoginToken(),map);
         subscribe(dishesOfCuisineObservable, new Observer<ArrayList<DishesOfCuisine>>() {
             @Override
@@ -95,5 +95,16 @@ public class SingleCuisineGridPresenter extends BasePresenter {
 
     public void updateCart(){
 
+    }
+
+    @Override
+    public void attachView(DineInViewContract.SingleCuisineGridView view) {
+        singleCuisineGridView = view;
+    }
+
+    @Override
+    public void detachView() {
+      compositeDisposable.clear();
+      compositeDisposable.dispose();
     }
 }

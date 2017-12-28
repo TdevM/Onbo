@@ -7,12 +7,12 @@ import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.base.BaseView;
 
 /**
- * Created by Tridev on 06-11-2017.
+ * Created by Tridev on 28-12-2017.
  */
 
-public interface DineInContract {
+public interface DineInViewContract {
 
-    interface DishMenuView extends BaseView{
+    interface DishMenuView extends BaseView {
         void onCuisinesFetched(ArrayList<Cuisine> arrayList);
     }
 
@@ -24,10 +24,13 @@ public interface DineInContract {
 
     }
 
+    interface DineInActivity extends BaseView{
+
+    }
+
     interface SingleCuisineGridView extends BaseView{
         void onDishesOfCuisinesFetched(ArrayList<DishesOfCuisine> arrayList);
         void onDishVariantsFetched(ArrayList<DishesOfCuisine> arrayList);
     }
-
 
 }
