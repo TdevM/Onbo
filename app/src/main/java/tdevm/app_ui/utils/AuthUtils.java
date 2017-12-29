@@ -10,6 +10,8 @@ public class AuthUtils {
     private static final String AUTH_LOGIN_STATE = "AUTH_LOGIN_STATE ";
     private static final String AUTH_LOGIN_TOKEN = "AUTH_LOGIN_TOKEN";
     private static final String AUTH_LOGIN_PHONE = "AUTH_LOGIN_PHONE";
+    private static final String SCANNED_RESTAURANT_UUID = "SCANNED_RESTAURANT_UUID";
+    private static final String SCANNED_RESTAURANT_TABLE_SHORT_ID = "SCANNED_RESTAURANT_TABLE_SHORT_ID";
 
     private MySharedPreferences sharedPreferences;
     public AuthUtils(MySharedPreferences sharedPreferences) {
@@ -22,6 +24,14 @@ public class AuthUtils {
         sharedPreferences.putDataLong(AUTH_LOGIN_PHONE,phone);
     }
 
+    public void setRestaurant(String restaurantUUID){
+        sharedPreferences.putDataString(SCANNED_RESTAURANT_UUID,restaurantUUID);
+    }
+
+    public void setScannedRestaurantTableShortId(String tableShortId){
+        sharedPreferences.putDataString(SCANNED_RESTAURANT_TABLE_SHORT_ID,tableShortId);
+    }
+
     public Boolean getAuthLoginState(){
         return sharedPreferences.getDataBool(AUTH_LOGIN_STATE);
     }
@@ -32,6 +42,14 @@ public class AuthUtils {
 
     public String getAuthLoginToken(){
         return sharedPreferences.getDataString(AUTH_LOGIN_TOKEN);
+    }
+
+    public String getScannedRestaurantUuid(){
+        return sharedPreferences.getDataString(SCANNED_RESTAURANT_UUID);
+    }
+
+    public String getScannedRestaurantTableShortId(){
+        return sharedPreferences.getDataString(SCANNED_RESTAURANT_TABLE_SHORT_ID);
     }
 }
 

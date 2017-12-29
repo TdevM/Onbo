@@ -24,13 +24,19 @@ public interface DineInViewContract {
 
     }
 
+    interface SingleCuisineGridView extends BaseView{
+        void onDishesOfCuisinesFetched(ArrayList<DishesOfCuisine> arrayList);
+        void onDishVariantsFetched(ArrayList<DishesOfCuisine> arrayList);
+    }
+
     interface DineInActivity extends BaseView{
 
     }
 
-    interface SingleCuisineGridView extends BaseView{
-        void onDishesOfCuisinesFetched(ArrayList<DishesOfCuisine> arrayList);
-        void onDishVariantsFetched(ArrayList<DishesOfCuisine> arrayList);
+    interface PlaceTempOrderView extends BaseView{
+        void onOrderDetailsFetched(String message);
+        void onOrderItemsAdded();
+        void onNewOrderCreated();
     }
 
 }

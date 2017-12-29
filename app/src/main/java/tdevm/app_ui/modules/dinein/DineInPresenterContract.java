@@ -3,8 +3,10 @@ package tdevm.app_ui.modules.dinein;
 import java.util.ArrayList;
 import java.util.Map;
 
+import tdevm.app_ui.api.models.request.RestaurantOrder;
 import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
+import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.base.BasePresenterMVP;
 import tdevm.app_ui.base.BaseView;
 import tdevm.app_ui.modules.auth.AuthViewContract;
@@ -28,4 +30,11 @@ public interface DineInPresenterContract {
         void fetchVariantsOfADish(Map<String,String> map);
     }
 
+    interface PlaceTempOrderPresenter extends BasePresenterMVP<DineInViewContract.PlaceTempOrderView>{
+        void attachView(DineInViewContract.PlaceTempOrderView view);
+        void detachView();
+        void checkCurrentOrderDetails(Map<String,String> map);
+        void addItemsToOrder(ArrayList<TempOrder> arrayList);
+        void createNewOrder();
+    }
 }

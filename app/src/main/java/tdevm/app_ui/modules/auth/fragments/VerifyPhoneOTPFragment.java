@@ -151,29 +151,29 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
 
     @Override
     public void showOTPSentSuccess() {
-        Toast.makeText(authenticationActivity, "OTP Sent!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "OTP Sent!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showOTPSentFailure() {
-        Toast.makeText(authenticationActivity, "Failed to send an OTP!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Failed to send an OTP!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showVerificationFailure() {
-        Toast.makeText(authenticationActivity, "Incorrect OTP!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Incorrect OTP!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showVerificationSuccess(Long phone) {
         authenticationActivity.showRegisterFragment(phone);
-        Toast.makeText(authenticationActivity, "Verified!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Verified!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDestroy() {
         verifyPhoneOTPPresenter.detachView();
-        smsListener.abortBroadcast();
+       // smsListener.abortBroadcast();
         super.onDestroy();
     }
 
