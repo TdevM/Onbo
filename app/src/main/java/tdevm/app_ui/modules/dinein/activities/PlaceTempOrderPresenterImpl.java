@@ -106,7 +106,6 @@ public class PlaceTempOrderPresenterImpl extends BasePresenter implements DineIn
              public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
              }
-
              @Override
              public void onNext(Response<Object> objectResponse) {
                 if(objectResponse.isSuccessful()){
