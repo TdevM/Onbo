@@ -1,8 +1,9 @@
 package tdevm.app_ui.root;
 
-import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,39 +19,60 @@ import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.response.RestaurantTable;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.base.BasePresenterMVP;
-import tdevm.app_ui.base.BaseView;
-import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.utils.AuthUtils;
 
 /**
  * Created by Tridev on 18-10-2017.
  */
 
-public class BottomNavigationPresenter extends BasePresenter{
+public class BottomNavigationPresenter extends BasePresenter implements NavigationHomePresenterContract.BottomNavigationHomePresenter{
     public static final String TAG  = BottomNavigationPresenter.class.getSimpleName();
 
     private APIService apiService;
     private AuthUtils authUtils;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable;
 
-    private NavigationHomeContract.BottomNavigationView bottomNavigationView;
+    private NavigationHomeViewContract.BottomNavigationView bottomNavigationView;
 
     @Inject
     public BottomNavigationPresenter(APIService apiService,AuthUtils authUtils){
         this.authUtils = authUtils;
+        compositeDisposable = new CompositeDisposable();
         this.apiService = apiService;
     }
 
-    public void setView(BottomNavigationHome view) {
-      bottomNavigationView = view;
-    }
 
     public void handleUserAuthentication(){
         if (authUtils.getAuthLoginState()) {
             bottomNavigationView.showUserProfile();
         } else {
             bottomNavigationView.redirectAuthActivity();
+        }
+    }
+
+    public void handleQRContent(String qrContent){
+        try {
+            JSONObject object = new JSONObject(qrContent);
+            String restaurantUUID = object.getString("restaurant_id");
+            String tableNo;
+            try {
+               tableNo = object.getString("table_no");
+               if(tableNo!=null && restaurantUUID!=null){
+                    //T1
+                    String tableShortId = restaurantUUID+'_'+tableNo;
+                    verifyRestaurantTableVacant(tableShortId);
+                    authUtils.saveDineQRTransaction(restaurantUUID,tableShortId);
+                }
+            }catch (JSONException e){
+                //T2
+                if(restaurantUUID!=null) {
+                    authUtils.saveNonDineQRTransaction(restaurantUUID);
+                    Log.d(TAG,"Type 2 valid");
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d(TAG,"Malformed QR content");
         }
     }
 
@@ -89,4 +111,14 @@ public class BottomNavigationPresenter extends BasePresenter{
     }
 
 
+    @Override
+    public void attachView(NavigationHomeViewContract.BottomNavigationView view) {
+        bottomNavigationView = view;
+    }
+
+    @Override
+    public void detachView() {
+      compositeDisposable.clear();
+      compositeDisposable.dispose();
+    }
 }

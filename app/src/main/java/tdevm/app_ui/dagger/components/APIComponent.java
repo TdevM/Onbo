@@ -7,6 +7,7 @@ import tdevm.app_ui.modules.auth.fragments.AuthInitFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthLoginFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthRegisterFragment;
 import tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment;
+import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
 import tdevm.app_ui.root.BottomNavigationHome;
@@ -25,4 +26,5 @@ public interface APIComponent {
     void inject(BottomNavigationHome bottomNavigationHome);
     void inject(SingleCuisineGridFragment singleCuisineGridFragment);
     void inject(DishMenuFragment dishMenuFragment);
+    void inject(DineInActivity dineInActivity);
 }

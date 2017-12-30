@@ -33,6 +33,10 @@ public class MySharedPreferences {
         mSharedPreferences.edit().putString(key,value).apply();
     }
 
+    public boolean contains(String key){
+       return mSharedPreferences.contains(key);
+    }
+
     public int getDataInt(String key) {
         return mSharedPreferences.getInt(key,0);
     }

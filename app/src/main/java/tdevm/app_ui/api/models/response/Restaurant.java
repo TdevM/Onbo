@@ -16,6 +16,15 @@ public class Restaurant {
     private int restaurants_no_of_tables;
     private String restaurants_currency;
     private int location_id;
+    private String restaurant_mode;
+
+    public String getRestaurant_mode() {
+        return restaurant_mode;
+    }
+
+    public void setRestaurant_mode(String restaurant_mode) {
+        this.restaurant_mode = restaurant_mode;
+    }
 
     public String getRestaurant_uuid() {
         return restaurant_uuid;

@@ -9,15 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.model.Cart;
 import tdevm.app_ui.api.models.response.Dish;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.listeners.DishItemClickListener;
+import tdevm.app_ui.widgets.IncDecButton;
 
 
 /**
@@ -38,10 +40,6 @@ public class RecycledGridAdapter extends RecyclerView.Adapter<RecycledGridAdapte
     }
 
 
-    public void updateRecylerAdapterCart( Cart cartItems){
-        cart = cartItems;
-    }
-
     public void setOnDishItemClickListener(DishItemClickListener d){
         this.dishItemClickListener = d;
     }
@@ -49,16 +47,15 @@ public class RecycledGridAdapter extends RecyclerView.Adapter<RecycledGridAdapte
     @Override
     public RecycledGridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view =  LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.gridview_layout, parent, false);
+                .inflate(R.layout.item_single_dish_grid_layout, parent, false);
         return new RecycledGridViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecycledGridViewHolder holder, int position) {
-            Glide.with(mContext).load(dishArrayList.get(position).getDish_image_url()).into(holder.imageViewCoverArt);
-            holder.textView.setText(dishArrayList.get(position).getDish_name());
-            holder.textViewPrice.setText(mContext.getString(R.string.rupee_symbol,dishArrayList.get(position).getDish_price().intValue()));
-            holder.bind(dishArrayList.get(position), dishItemClickListener);
+            Glide.with(mContext).load(dishArrayList.get(position).getDish_image_url()).into(holder.dishImage);
+            holder.dishName.setText(dishArrayList.get(position).getDish_name());
+            holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol,dishArrayList.get(position).getDish_price().intValue()));
     }
 
     @Override
@@ -67,27 +64,15 @@ public class RecycledGridAdapter extends RecyclerView.Adapter<RecycledGridAdapte
     }
 
     public class RecycledGridViewHolder extends RecyclerView.ViewHolder{
-         TextView textView;
-         ImageView imageViewCoverArt;
-         TextView textViewPrice;
-         ElegantNumberButton elegantNumberButton;
+        @BindView(R.id.tv_si_dish_name) TextView dishName;
+        @BindView(R.id.tv_si_dish_price) TextView dishPrice;
+        @BindView(R.id.iv_si_dish_grid) ImageView dishImage;
+        @BindView(R.id.btn_id_item_dish_grid) IncDecButton incDecButton;
         public RecycledGridViewHolder(View itemView) {
             super(itemView);
-
-            textView =  itemView.findViewById(R.id.android_gridview_text);
-            imageViewCoverArt = itemView.findViewById(R.id.android_gridview_image);
-            elegantNumberButton = itemView.findViewById(R.id.elegant_number_button);
-            textViewPrice = itemView.findViewById(R.id.dish_price);
+            ButterKnife.bind(this,itemView);
 
         }
 
-        public void bind(final DishesOfCuisine dishesOfCuisine, final DishItemClickListener dishItemClickListener) {
-            elegantNumberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
-                @Override
-                public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
-                    dishItemClickListener.getDishItemQuant(dishesOfCuisine,oldValue,newValue);
-                }
-            });
-        }
     }
 }

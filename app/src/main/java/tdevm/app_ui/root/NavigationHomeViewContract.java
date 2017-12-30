@@ -6,7 +6,7 @@ import tdevm.app_ui.base.BaseView;
  * Created by Tridev on 18-10-2017.
  */
 
-public interface NavigationHomeContract {
+public interface NavigationHomeViewContract {
 
     interface BottomNavigationView extends BaseView{
         void showTableOccupiedError();

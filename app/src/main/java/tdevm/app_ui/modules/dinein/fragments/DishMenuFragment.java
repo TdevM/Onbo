@@ -31,8 +31,6 @@ import tdevm.app_ui.utils.AuthUtils;
 
 public class DishMenuFragment extends Fragment implements DineInViewContract.DishMenuView {
     public static final String TAG = AuthInitFragment.class.getSimpleName();
-    private String RESTAURANT_UUID = "RESTAURANT_UUID";
-
 
     Unbinder unbinder;
     @BindView(R.id.viewpager_dish_menu)
@@ -42,6 +40,8 @@ public class DishMenuFragment extends Fragment implements DineInViewContract.Dis
 
     @Inject
     DishMenuPresenter dishMenuPresenter;
+    @Inject
+    AuthUtils authUtils;
 
 
     public DishMenuFragment() {
@@ -56,7 +56,6 @@ public class DishMenuFragment extends Fragment implements DineInViewContract.Dis
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            RESTAURANT_UUID = getArguments().getString("RESTAURANT_UUID");
         }
     }
 
@@ -77,7 +76,7 @@ public class DishMenuFragment extends Fragment implements DineInViewContract.Dis
         tabLayoutDishMenu.setupWithViewPager(viewPagerDishMenu);
         tabLayoutDishMenu.setOverScrollMode(1);
         Map<String,String> map = new HashMap<>();
-        map.put("restaurant_uuid",RESTAURANT_UUID);
+        map.put("restaurant_uuid",authUtils.getScannedRestaurantUuid());
         dishMenuPresenter.FetchAllCuisines(map);
         return view;
     }
@@ -99,7 +98,7 @@ public class DishMenuFragment extends Fragment implements DineInViewContract.Dis
 
     @Override
     public void onCuisinesFetched(ArrayList<Cuisine> cuisines) {
-      viewPagerDishMenu.setAdapter(new RecycledFragmentPagerAdapter(getChildFragmentManager(),getActivity(),cuisines,RESTAURANT_UUID));
+      viewPagerDishMenu.setAdapter(new RecycledFragmentPagerAdapter(getChildFragmentManager(),getActivity(),cuisines,authUtils.getScannedRestaurantUuid()));
     }
 
     @Override

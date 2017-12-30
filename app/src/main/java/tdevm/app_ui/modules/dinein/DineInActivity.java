@@ -9,16 +9,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import javax.inject.Inject;
+
+import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
 import tdevm.app_ui.modules.dinein.fragments.HighestRatedItemsFragment;
+import tdevm.app_ui.modules.dinein.fragments.RunningOrderFragment;
+import tdevm.app_ui.root.BottomNavigationViewHelper;
+import tdevm.app_ui.utils.AuthUtils;
 
 public class DineInActivity extends AppCompatActivity {
 
+
     FragmentTransaction fragmentTransaction;
     Toolbar toolbarDineIn;
-    public String RESTAURANT_UUID;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -28,9 +34,6 @@ public class DineInActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_dine_in_menu:
                     DishMenuFragment dishMenuFragment = new DishMenuFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("RESTAURANT_UUID", RESTAURANT_UUID);
-                    dishMenuFragment.setArguments(bundle);
                     fragmentTransaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);
                     fragmentTransaction.commit();
                     return true;
@@ -40,6 +43,10 @@ public class DineInActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_cart:
                     fragmentTransaction.replace(R.id.frame_layout_dine_in, new CartFragment());
+                    fragmentTransaction.commit();
+                    return true;
+                case R.id.navigation_running_order:
+                    fragmentTransaction.replace(R.id.frame_layout_dine_in, new RunningOrderFragment());
                     fragmentTransaction.commit();
                     return true;
             }
@@ -52,8 +59,8 @@ public class DineInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dine_in_home);
+        resolveDaggerDependencies();
         toolbarDineIn = findViewById(R.id.toolbar_dine_in_home);
-        RESTAURANT_UUID = getIntent().getStringExtra("RESTAURANT_UUID");
         setSupportActionBar(toolbarDineIn);
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle("Dine in");
@@ -66,14 +73,17 @@ public class DineInActivity extends AppCompatActivity {
         });
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         DishMenuFragment dishMenuFragment = new DishMenuFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("RESTAURANT_UUID", RESTAURANT_UUID);
-        dishMenuFragment.setArguments(bundle);
         transaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);
         transaction.commit();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
+        BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
+
+    public void resolveDaggerDependencies() {
+        ((AppApplication) getApplication()).getApiComponent().inject(this);
+    }
+
 }

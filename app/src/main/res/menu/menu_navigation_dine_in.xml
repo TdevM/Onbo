@@ -16,5 +16,8 @@
         android:icon="@drawable/ic_add_shopping_cart_black_24dp"
         android:title="@string/title_cart" />
 
-
+    <item
+        android:id="@+id/navigation_running_order"
+        android:icon="@drawable/ic_room_service_black_24dp"
+        android:title="@string/title_running_order" />
 </menu>
