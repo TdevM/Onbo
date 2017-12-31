@@ -45,6 +45,9 @@ public class MySharedPreferences {
         return mSharedPreferences.getBoolean(key,false);
     }
 
+    public void remove(String key){
+        mSharedPreferences.edit().remove(key).apply();
+    }
     public Long getDataLong(String key){
         return mSharedPreferences.getLong(key,Long.valueOf("123456789"));
     }

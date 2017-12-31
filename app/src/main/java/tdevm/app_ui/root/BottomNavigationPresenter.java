@@ -28,6 +28,8 @@ import tdevm.app_ui.utils.AuthUtils;
 public class BottomNavigationPresenter extends BasePresenter implements NavigationHomePresenterContract.BottomNavigationHomePresenter{
     public static final String TAG  = BottomNavigationPresenter.class.getSimpleName();
 
+    private static final String MODE_DINE_IN = "MODE_DINE_IN";
+    private static final String MODE_NON_DINE = "MODE_NON_DINE";
     private APIService apiService;
     private AuthUtils authUtils;
     private CompositeDisposable compositeDisposable;
@@ -59,14 +61,19 @@ public class BottomNavigationPresenter extends BasePresenter implements Navigati
                tableNo = object.getString("table_no");
                if(tableNo!=null && restaurantUUID!=null){
                     //T1
-                    String tableShortId = restaurantUUID+'_'+tableNo;
-                    verifyRestaurantTableVacant(tableShortId);
-                    authUtils.saveDineQRTransaction(restaurantUUID,tableShortId);
+                   String tableShortId = restaurantUUID+'_'+tableNo;
+                   authUtils.saveDineQRTransaction(restaurantUUID,tableShortId,MODE_DINE_IN);
+                   Log.d(TAG,"Saved Restaurant"+ authUtils.getScannedRestaurantUuid());
+                   Log.d(TAG,"Saved Table"+ authUtils.getScannedRestaurantTableShortId());
+                   Log.d(TAG,"Restaurant Mode"+ authUtils.getRestaurantMode());
+                   verifyRestaurantTableVacant(tableShortId);
                 }
             }catch (JSONException e){
                 //T2
                 if(restaurantUUID!=null) {
-                    authUtils.saveNonDineQRTransaction(restaurantUUID);
+                    authUtils.saveNonDineQRTransaction(restaurantUUID,MODE_NON_DINE);
+                    Log.d(TAG,"Saved Restaurant"+authUtils.getScannedRestaurantUuid());
+                    Log.d(TAG,"Restaurant Mode"+ authUtils.getRestaurantMode());
                     Log.d(TAG,"Type 2 valid");
                 }
             }

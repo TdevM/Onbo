@@ -13,6 +13,7 @@ public class AuthUtils {
 
     private static final String SCANNED_RESTAURANT_UUID = "SCANNED_RESTAURANT_UUID";
     private static final String SCANNED_RESTAURANT_TABLE_SHORT_ID = "SCANNED_RESTAURANT_TABLE_SHORT_ID";
+    private static final String RESTAURANT_MODE = "RESTAURANT_MODE";
 
     private MySharedPreferences sharedPreferences;
 
@@ -26,17 +27,23 @@ public class AuthUtils {
         sharedPreferences.putDataLong(AUTH_LOGIN_PHONE, phone);
     }
 
-    public void saveNonDineQRTransaction(String restaurantUUID) {
-        if (!sharedPreferences.contains(SCANNED_RESTAURANT_UUID)) {
+    public void saveNonDineQRTransaction(String restaurantUUID, String restaurantMode) {
+            clearQRTransaction();
             sharedPreferences.putDataString(SCANNED_RESTAURANT_UUID, restaurantUUID);
-        }
+            sharedPreferences.putDataString(RESTAURANT_MODE,restaurantMode);
     }
 
-    public void saveDineQRTransaction(String restaurantUUID, String tableShortID) {
-        if (!sharedPreferences.contains(SCANNED_RESTAURANT_UUID) && !sharedPreferences.contains(SCANNED_RESTAURANT_TABLE_SHORT_ID)) {
+    public void saveDineQRTransaction(String restaurantUUID, String tableShortID,String restaurantMode) {
+            clearQRTransaction();
             sharedPreferences.putDataString(SCANNED_RESTAURANT_UUID, restaurantUUID);
             sharedPreferences.putDataString(SCANNED_RESTAURANT_TABLE_SHORT_ID, tableShortID);
-        }
+            sharedPreferences.putDataString(RESTAURANT_MODE,restaurantMode);
+    }
+    public void clearQRTransaction(){
+           sharedPreferences.remove(SCANNED_RESTAURANT_UUID);
+           sharedPreferences.remove(RESTAURANT_MODE);
+           sharedPreferences.remove(SCANNED_RESTAURANT_TABLE_SHORT_ID);
+
     }
 
     public Boolean getAuthLoginState() {
@@ -53,6 +60,10 @@ public class AuthUtils {
 
     public String getScannedRestaurantUuid() {
         return sharedPreferences.getDataString(SCANNED_RESTAURANT_UUID);
+    }
+
+    public  String getRestaurantMode() {
+        return sharedPreferences.getDataString(RESTAURANT_MODE);
     }
 
     public String getScannedRestaurantTableShortId() {
