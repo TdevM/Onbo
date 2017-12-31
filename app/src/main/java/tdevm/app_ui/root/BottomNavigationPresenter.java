@@ -128,4 +128,12 @@ public class BottomNavigationPresenter extends BasePresenter implements Navigati
       compositeDisposable.clear();
       compositeDisposable.dispose();
     }
+
+    public void verifyUserAuthentication() {
+        if (authUtils.getAuthLoginState()) {
+            bottomNavigationView.startQRScanner();
+        } else {
+            bottomNavigationView.redirectAuthActivity();
+        }
+    }
 }

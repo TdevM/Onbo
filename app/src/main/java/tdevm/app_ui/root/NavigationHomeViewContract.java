@@ -13,5 +13,6 @@ public interface NavigationHomeViewContract {
         void redirectDineInActivity(String restaurantUUID);
         void showUserProfile();
         void redirectAuthActivity();
+        void startQRScanner();
     }
 }

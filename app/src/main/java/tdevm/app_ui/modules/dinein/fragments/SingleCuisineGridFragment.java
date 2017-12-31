@@ -22,14 +22,15 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
-import tdevm.app_ui.modules.dinein.adapters.RecycledGridAdapter;
-import tdevm.app_ui.modules.dinein.listeners.DishItemClickListener;
+import tdevm.app_ui.modules.dinein.adapters.RecycledGridMenuAdapter;
+import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 
 /**
  * Created by Tridev on 30-07-2017.
  */
 
-public class SingleCuisineGridFragment extends Fragment implements DineInViewContract.SingleCuisineGridView{
+public class SingleCuisineGridFragment extends Fragment
+        implements DineInViewContract.SingleCuisineGridView, DishItemClickListener{
 
     public static final String TAG = SingleCuisineGridFragment.class.getSimpleName();
     public static final String CUISINE_ID = "CUISINE_ID";
@@ -41,7 +42,7 @@ public class SingleCuisineGridFragment extends Fragment implements DineInViewCon
     Unbinder unbinder;
     private Map<String,String> fetchDishesMap;
 
-    RecycledGridAdapter recycledGridAdapter;
+    RecycledGridMenuAdapter recycledGridMenuAdapter;
 
     @Inject
     SingleCuisineGridPresenter singleCuisineGridPresenter;
@@ -76,7 +77,11 @@ public class SingleCuisineGridFragment extends Fragment implements DineInViewCon
         fetchDishesMap = new HashMap<>();
         fetchDishesMap.put("restaurant_uuid",String.valueOf(getArguments().getString(RESTAURANT_UUID)));
         fetchDishesMap.put("cuisine_id",String.valueOf(getArguments().getLong(CUISINE_ID)));
+        recyclerViewGridSingle.setLayoutManager(mLayoutManager);
+        recycledGridMenuAdapter = new RecycledGridMenuAdapter(getActivity(),getLayoutInflater());
+        recyclerViewGridSingle.setAdapter(recycledGridMenuAdapter);
         singleCuisineGridPresenter.fetchDishesByCuisines(fetchDishesMap);
+        recycledGridMenuAdapter.setDishItemClickListenerCallback(this);
         return view;
     }
 
@@ -97,20 +102,7 @@ public class SingleCuisineGridFragment extends Fragment implements DineInViewCon
 
     @Override
     public void onDishesOfCuisinesFetched(ArrayList<DishesOfCuisine> arrayList) {
-        recyclerViewGridSingle.setLayoutManager(mLayoutManager);
-        recycledGridAdapter = new RecycledGridAdapter(getActivity(),arrayList);
-        recyclerViewGridSingle.setAdapter(recycledGridAdapter);
-        recycledGridAdapter.setOnDishItemClickListener(new DishItemClickListener() {
-            @Override
-            public void getDishItemQuant(DishesOfCuisine dishesOfCuisine, int oldValue, int newValue) {
-                if(dishesOfCuisine.getIs_customizable()){
-                    fetchDishesMap.put("dish_id",String.valueOf(dishesOfCuisine.getDish_id()));
-                    singleCuisineGridPresenter.fetchVariantsOfADish(fetchDishesMap);
-                }else {
-                    singleCuisineGridPresenter.addToCart(dishesOfCuisine);
-                }
-            }
-        });
+      recycledGridMenuAdapter.onDishesFetched(arrayList);
     }
 
     @Override
@@ -122,5 +114,32 @@ public class SingleCuisineGridFragment extends Fragment implements DineInViewCon
     public void onDestroy() {
         super.onDestroy();
        singleCuisineGridPresenter.detachView();
+    }
+
+    @Override
+    public void onPlusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
+        Log.d(TAG,dishesOfCuisine.getDish_name());
+    }
+
+    @Override
+    public void onMinusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
+        Log.d(TAG,dishesOfCuisine.getDish_name());
+    }
+
+    @Override
+    public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine) {
+        Log.d(TAG,dishesOfCuisine.getDish_name());
+
+    }
+
+    @Override
+    public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, int flag) {
+        Log.d(TAG,dishesOfCuisine.getDish_name());
+
+    }
+
+    @Override
+    public void onCustomizableItemClicked(DishesOfCuisine child, DishesOfCuisine parent, int flag) {
+        Log.d(TAG,child.getDish_name());
     }
 }

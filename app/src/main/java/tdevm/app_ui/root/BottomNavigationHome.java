@@ -1,4 +1,5 @@
 package tdevm.app_ui.root;
+
 import android.Manifest;
 import android.content.Intent;
 
@@ -38,7 +39,6 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
     public static final String TAG = BottomNavigationHome.class.getSimpleName();
     @Inject
     BottomNavigationPresenter bottomNavigationPresenter;
-    Button rView, netReq, userReg;
     Toolbar toolbarMain;
     BottomNavigationView navigation;
     FragmentTransaction fragmentTransaction;
@@ -58,11 +58,10 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
                     fragmentTransaction.commit();
                     break;
                 case R.id.navigation_scanner:
-                    new IntentIntegrator(BottomNavigationHome.this).setOrientationLocked(false).setCaptureActivity(CustomQRView.class).initiateScan();
+                    bottomNavigationPresenter.verifyUserAuthentication();
                     break;
                 case R.id.navigation_account:
-                    fragmentTransaction.replace(R.id.frame_layout, new AccountsFragment());
-                    fragmentTransaction.commit();
+                    bottomNavigationPresenter.handleUserAuthentication();
                     break;
                 case R.id.navigation_notifications:
                     fragmentTransaction.replace(R.id.frame_layout, new NotificationsFragment());
@@ -80,22 +79,16 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
         super.onCreate(savedInstanceState);
         resolveDaggerDependencies();
         setContentView(R.layout.activity_bottom_navigation);
-        rView = findViewById(R.id.btn_r_view);
-        netReq = findViewById(R.id.btn_net_req);
         toolbarMain = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbarMain);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Home");
         }
-
         toolbarMain.setNavigationOnClickListener(view -> onBackPressed());
-        rView.setOnClickListener(view -> bottomNavigationPresenter.handleUserAuthentication());
-        userReg = findViewById(R.id.btn_reg);
         navigation = findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
         transaction.commit();
@@ -105,7 +98,7 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result.getContents()!=null){
+        if (result.getContents() != null) {
             bottomNavigationPresenter.handleQRContent(result.getContents());
         }
     }
@@ -140,8 +133,17 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
 
     @Override
     public void showUserProfile() {
-        Toast.makeText(BottomNavigationHome.this, "Already Logged in", Toast.LENGTH_SHORT).show();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, new AccountsFragment());
+        transaction.commit();
+    }
 
+    @Override
+    public void startQRScanner() {
+        new IntentIntegrator(BottomNavigationHome.this).
+                setOrientationLocked(false).
+                setCaptureActivity(CustomQRView.class).
+                initiateScan();
     }
 
     @Override
