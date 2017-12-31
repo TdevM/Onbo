@@ -78,7 +78,7 @@ public class SingleCuisineGridFragment extends Fragment
         fetchDishesMap.put("restaurant_uuid",String.valueOf(getArguments().getString(RESTAURANT_UUID)));
         fetchDishesMap.put("cuisine_id",String.valueOf(getArguments().getLong(CUISINE_ID)));
         recyclerViewGridSingle.setLayoutManager(mLayoutManager);
-        recycledGridMenuAdapter = new RecycledGridMenuAdapter(getActivity(),getLayoutInflater());
+        recycledGridMenuAdapter = new RecycledGridMenuAdapter(getActivity(),singleCuisineGridPresenter);
         recyclerViewGridSingle.setAdapter(recycledGridMenuAdapter);
         singleCuisineGridPresenter.fetchDishesByCuisines(fetchDishesMap);
         recycledGridMenuAdapter.setDishItemClickListenerCallback(this);
