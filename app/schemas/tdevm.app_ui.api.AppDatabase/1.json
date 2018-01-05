@@ -1,0 +1,245 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "3addf62ed9a9d90f6fd9a536c75b8129",
+    "entities": [
+      {
+        "tableName": "cart_items",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dishId` INTEGER, `quantity` INTEGER NOT NULL, `price` REAL, `isCustomizable` INTEGER, `dish_image_url` TEXT, `dish_id` INTEGER, `dish_visibility` INTEGER, `restaurant_uuid` TEXT, `dish_name` TEXT, `dish_vegetarian` INTEGER, `dish_added_timestamp` TEXT, `dish_price` REAL, `cuisine_id` INTEGER, `dish_details` TEXT, `is_customizable` INTEGER, `is_parent` INTEGER, `is_child` INTEGER, `parent_id` INTEGER, PRIMARY KEY(`dishId`))",
+        "fields": [
+          {
+            "fieldPath": "dishId",
+            "columnName": "dishId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "price",
+            "columnName": "price",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isCustomizable",
+            "columnName": "isCustomizable",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_image_url",
+            "columnName": "dish_image_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_id",
+            "columnName": "dish_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_visibility",
+            "columnName": "dish_visibility",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.restaurant_uuid",
+            "columnName": "restaurant_uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_name",
+            "columnName": "dish_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_vegetarian",
+            "columnName": "dish_vegetarian",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_added_timestamp",
+            "columnName": "dish_added_timestamp",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_price",
+            "columnName": "dish_price",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.cuisine_id",
+            "columnName": "cuisine_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_details",
+            "columnName": "dish_details",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.is_customizable",
+            "columnName": "is_customizable",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.is_parent",
+            "columnName": "is_parent",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.is_child",
+            "columnName": "is_child",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.parent_id",
+            "columnName": "parent_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "dishId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "cart_selections",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dishId` INTEGER, `qty` INTEGER NOT NULL, `dish_image_url` TEXT, `dish_id` INTEGER, `dish_visibility` INTEGER, `restaurant_uuid` TEXT, `dish_name` TEXT, `dish_vegetarian` INTEGER, `dish_added_timestamp` TEXT, `dish_price` REAL, `cuisine_id` INTEGER, `dish_details` TEXT, `is_customizable` INTEGER, `is_parent` INTEGER, `is_child` INTEGER, `parent_id` INTEGER, PRIMARY KEY(`dishId`))",
+        "fields": [
+          {
+            "fieldPath": "dishId",
+            "columnName": "dishId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "qty",
+            "columnName": "qty",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_image_url",
+            "columnName": "dish_image_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_id",
+            "columnName": "dish_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_visibility",
+            "columnName": "dish_visibility",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.restaurant_uuid",
+            "columnName": "restaurant_uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_name",
+            "columnName": "dish_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_vegetarian",
+            "columnName": "dish_vegetarian",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_added_timestamp",
+            "columnName": "dish_added_timestamp",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_price",
+            "columnName": "dish_price",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.cuisine_id",
+            "columnName": "cuisine_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.dish_details",
+            "columnName": "dish_details",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.is_customizable",
+            "columnName": "is_customizable",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.is_parent",
+            "columnName": "is_parent",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.is_child",
+            "columnName": "is_child",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dishesOfCuisine.parent_id",
+            "columnName": "parent_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "dishId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"3addf62ed9a9d90f6fd9a536c75b8129\")"
+    ]
+  }
+}

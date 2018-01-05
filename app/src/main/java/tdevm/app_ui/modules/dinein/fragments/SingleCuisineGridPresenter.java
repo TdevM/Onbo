@@ -12,10 +12,6 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import tdevm.app_ui.api.APIService;
-import tdevm.app_ui.api.cart.model.Cart;
-import tdevm.app_ui.api.cart.util.CartHelper;
-import tdevm.app_ui.api.cart.util.TempCart;
-import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
@@ -25,7 +21,6 @@ import tdevm.app_ui.utils.AuthUtils;
 /**
  * Created by Tridev on 06-11-2017.
  */
-
 public class SingleCuisineGridPresenter extends BasePresenter implements DineInPresenterContract.SingleCuisineGridPresenter{
 
     public static final String TAG = SingleCuisineGridPresenter.class.getSimpleName();
@@ -33,14 +28,10 @@ public class SingleCuisineGridPresenter extends BasePresenter implements DineInP
     private APIService apiService;
     private CompositeDisposable compositeDisposable;
     private AuthUtils authUtils;
-    private Cart finalCart;
-    private Cart tempCart;
 
     @Inject
     public SingleCuisineGridPresenter(AuthUtils authUtils,APIService apiService) {
         compositeDisposable = new CompositeDisposable();
-        finalCart = CartHelper.getCart();
-        tempCart = TempCart.getTempCart();
         this.authUtils = authUtils;
         this.apiService = apiService;
     }
@@ -108,10 +99,5 @@ public class SingleCuisineGridPresenter extends BasePresenter implements DineInP
       compositeDisposable.clear();
       compositeDisposable.dispose();
     }
-
-   public boolean itemSelectionExist(){
-        Log.d(TAG,tempCart.toString());
-        return tempCart.getTotalQuantity()!=0;
-   }
 
 }

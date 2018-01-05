@@ -35,6 +35,7 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.APIService;
 
+import tdevm.app_ui.api.cart.CartItemDao;
 import tdevm.app_ui.modules.auth.AuthViewContract;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 @RuntimePermissions
@@ -50,6 +51,9 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
 
     @Inject
     AuthInitPresenter authInitPresenter;
+
+    @Inject
+    CartItemDao cartItemDao;
 
     @BindView(R.id.progressBar2)
     ProgressBar progressBar;
@@ -97,6 +101,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
         resolveDaggerDependencies();
         authenticationActivity = (AuthenticationActivity) getActivity();
         // Inflate the layout for this fragment
+        Log.d(TAG,String.valueOf(cartItemDao.getTotalItems()));
         View view = inflater.inflate(R.layout.fragment_auth_init, container, false);
 
         unbinder = ButterKnife.bind(this,view);

@@ -2,28 +2,11 @@ package tdevm.app_ui.modules.dinein.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.cart.model.Cart;
-import tdevm.app_ui.api.cart.model.Saleable;
-import tdevm.app_ui.api.cart.util.CartHelper;
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
-import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 
 

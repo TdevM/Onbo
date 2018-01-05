@@ -1,18 +1,18 @@
 package tdevm.app_ui.api.models.response;
 
 
+import android.arch.persistence.room.Embedded;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.math.BigDecimal;
 
-import tdevm.app_ui.api.cart.model.Saleable;
 
 /**
  * Created by Tridev on 26-08-2017.
  */
 
-public class DishesOfCuisine  implements Saleable, Parcelable {
+public class DishesOfCuisine  implements Parcelable {
 
     private String dish_image_url;
     private Long dish_id;
@@ -28,15 +28,7 @@ public class DishesOfCuisine  implements Saleable, Parcelable {
     private Boolean is_parent;
     private Boolean is_child;
     private Long parent_id;
-    private DishesOfCuisine parent_dish;
 
-    public DishesOfCuisine getParent_dish() {
-        return parent_dish;
-    }
-
-    public void setParent_dish(DishesOfCuisine parent_dish) {
-        this.parent_dish = parent_dish;
-    }
 
     public static Creator<DishesOfCuisine> getCREATOR() {
         return CREATOR;
@@ -214,15 +206,6 @@ public class DishesOfCuisine  implements Saleable, Parcelable {
         return "DishesOfCuisine [dish_image_url = "+dish_image_url+", dish_id = "+dish_id+", dish_visibility = "+dish_visibility+", restaurant_uuid = "+restaurant_uuid+", dish_name = "+dish_name+", dish_vegetarian = "+dish_vegetarian+", dish_added_timestamp = "+dish_added_timestamp+", dish_price = "+dish_price+", cuisine_id = "+cuisine_id+", dish_details = "+dish_details+"]";
     }
 
-    @Override
-    public BigDecimal getPrice() {
-        return BigDecimal.valueOf(dish_price);
-    }
-
-    @Override
-    public String getName() {
-        return dish_name;
-    }
 
     @Override
     public boolean equals(Object o) {

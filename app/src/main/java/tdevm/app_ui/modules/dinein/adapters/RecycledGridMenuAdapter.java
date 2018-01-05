@@ -17,7 +17,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.cart.model.Cart;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridPresenter;
@@ -58,14 +57,11 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
 
     @Override
     public void onBindViewHolder(RecycledGridViewHolder holder, int position) {
-        if(singleCuisineGridPresenter.itemSelectionExist()){
 
-        }else {
             Glide.with(mContext).load(dishArrayList.get(position).getDish_image_url()).into(holder.dishImage);
             holder.dishName.setText(dishArrayList.get(position).getDish_name());
             holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol,dishArrayList.get(position).getDish_price().intValue()));
             holder.bind(dishArrayList.get(position), dishItemClickListener);
-        }
 
     }
 
