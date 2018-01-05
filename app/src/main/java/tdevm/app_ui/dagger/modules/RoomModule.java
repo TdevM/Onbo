@@ -10,6 +10,7 @@ import dagger.Provides;
 import tdevm.app_ui.api.AppDatabase;
 import tdevm.app_ui.api.cart.CartItemDao;
 import tdevm.app_ui.api.cart.CartSelectionDao;
+import tdevm.app_ui.utils.CartHelper;
 
 /**
  * Created by Tridev on 05-01-2018.
@@ -34,4 +35,5 @@ public class RoomModule {
     CartSelectionDao cartSelectionDao(AppDatabase appDatabase) {
         return appDatabase.cartSelectionDao();
     }
+
 }

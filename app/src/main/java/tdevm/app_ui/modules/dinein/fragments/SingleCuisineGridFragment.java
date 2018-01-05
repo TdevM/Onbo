@@ -23,14 +23,17 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledGridMenuAdapter;
+import tdevm.app_ui.modules.dinein.bottomsheets.DishVariantsSheet;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
+import tdevm.app_ui.modules.dinein.callbacks.DishVariantSelected;
+import tdevm.app_ui.utils.CartHelper;
 
 /**
  * Created by Tridev on 30-07-2017.
  */
 
 public class SingleCuisineGridFragment extends Fragment
-        implements DineInViewContract.SingleCuisineGridView, DishItemClickListener{
+        implements DineInViewContract.SingleCuisineGridView, DishItemClickListener, DishVariantSelected{
 
     public static final String TAG = SingleCuisineGridFragment.class.getSimpleName();
     public static final String CUISINE_ID = "CUISINE_ID";
@@ -41,11 +44,13 @@ public class SingleCuisineGridFragment extends Fragment
     RecyclerView recyclerViewGridSingle;
     Unbinder unbinder;
     private Map<String,String> fetchDishesMap;
-
+    DishVariantsSheet dishVariantsSheet;
     RecycledGridMenuAdapter recycledGridMenuAdapter;
 
     @Inject
     SingleCuisineGridPresenter singleCuisineGridPresenter;
+    @Inject
+    CartHelper cartHelper;
 
     public static SingleCuisineGridFragment newInstance(String restaurantUUID, Long mCuisineId) {
         Bundle args = new Bundle();
@@ -78,10 +83,12 @@ public class SingleCuisineGridFragment extends Fragment
         fetchDishesMap.put("restaurant_uuid",String.valueOf(getArguments().getString(RESTAURANT_UUID)));
         fetchDishesMap.put("cuisine_id",String.valueOf(getArguments().getLong(CUISINE_ID)));
         recyclerViewGridSingle.setLayoutManager(mLayoutManager);
-        recycledGridMenuAdapter = new RecycledGridMenuAdapter(getActivity(),singleCuisineGridPresenter);
+        recycledGridMenuAdapter = new RecycledGridMenuAdapter(getActivity(),singleCuisineGridPresenter,cartHelper);
         recyclerViewGridSingle.setAdapter(recycledGridMenuAdapter);
         singleCuisineGridPresenter.fetchDishesByCuisines(fetchDishesMap);
         recycledGridMenuAdapter.setDishItemClickListenerCallback(this);
+        dishVariantsSheet = new DishVariantsSheet();
+        dishVariantsSheet.setOnDishVariantSelected(this);
         return view;
     }
 
@@ -106,7 +113,12 @@ public class SingleCuisineGridFragment extends Fragment
     }
 
     @Override
-    public void onDishVariantsFetched(ArrayList<DishesOfCuisine> arrayList) {
+    public void onDishVariantsFetched(ArrayList<DishesOfCuisine> arrayList, DishesOfCuisine variantsFetched) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("DISHES", arrayList);
+        bundle.putParcelable("PARENT_DISH", variantsFetched);
+        dishVariantsSheet.setArguments(bundle);
+        dishVariantsSheet.show(getChildFragmentManager(), getTag());
         Log.d(TAG,arrayList.toString());
     }
 
@@ -118,28 +130,35 @@ public class SingleCuisineGridFragment extends Fragment
 
     @Override
     public void onPlusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
+        singleCuisineGridPresenter.addItemToCart(dishesOfCuisine);
+        recycledGridMenuAdapter.notifyDataSetChanged();
         Log.d(TAG,dishesOfCuisine.getDish_name());
     }
 
     @Override
     public void onMinusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
+        singleCuisineGridPresenter.updateCartItem(dishesOfCuisine);
+        recycledGridMenuAdapter.notifyDataSetChanged();
         Log.d(TAG,dishesOfCuisine.getDish_name());
     }
 
-    @Override
-    public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine) {
-        Log.d(TAG,dishesOfCuisine.getDish_name());
-
-    }
 
     @Override
     public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, int flag) {
+        fetchDishesMap.put("dish_id",dishesOfCuisine.getDish_id().toString());
+        singleCuisineGridPresenter.fetchVariantsOfADish(fetchDishesMap, dishesOfCuisine);
+        recycledGridMenuAdapter.notifyDataSetChanged();
         Log.d(TAG,dishesOfCuisine.getDish_name());
 
     }
 
     @Override
-    public void onCustomizableItemClicked(DishesOfCuisine child, DishesOfCuisine parent, int flag) {
-        Log.d(TAG,child.getDish_name());
+    public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, Long parentDishId, int flag) {
+
+    }
+
+    @Override
+    public void onDishVariantSelected(DishesOfCuisine childDish, DishesOfCuisine parentDish) {
+        //singleCuisineGridPresenter.addCustomizableItemToCart(childDish,parentDish);
     }
 }

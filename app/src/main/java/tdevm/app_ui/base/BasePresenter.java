@@ -1,9 +1,11 @@
 package tdevm.app_ui.base;
 
+import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -42,4 +44,7 @@ public class BasePresenter {
                 .subscribe(observer);
     }
 
+    protected<T> void subscribeFlowable(Flowable<T> flowable, Subscriber<T> subscriber){
+        flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
+    }
 }

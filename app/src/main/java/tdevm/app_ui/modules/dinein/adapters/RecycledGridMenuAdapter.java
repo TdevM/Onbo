@@ -17,9 +17,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.cart.CartSelection;
+import tdevm.app_ui.api.cart.CartSelectionDao;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridPresenter;
+import tdevm.app_ui.utils.CartHelper;
 import tdevm.app_ui.widgets.IncDecButton;
 
 
@@ -33,18 +36,20 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
     private ArrayList<DishesOfCuisine> dishArrayList;
     private DishItemClickListener dishItemClickListener;
     private SingleCuisineGridPresenter singleCuisineGridPresenter;
+    private CartHelper cartHelper;
 
-    public RecycledGridMenuAdapter(Context context,SingleCuisineGridPresenter presenter) {
+    public RecycledGridMenuAdapter(Context context, SingleCuisineGridPresenter presenter, CartHelper helper) {
         this.mContext = context;
         this.singleCuisineGridPresenter = presenter;
+        this.cartHelper = helper;
         dishArrayList = new ArrayList<>();
     }
 
-    public void setDishItemClickListenerCallback(DishItemClickListener dishItemClickListenerCallback){
+    public void setDishItemClickListenerCallback(DishItemClickListener dishItemClickListenerCallback) {
         this.dishItemClickListener = dishItemClickListenerCallback;
     }
 
-    public void onDishesFetched(ArrayList<DishesOfCuisine> dishesOfCuisines){
+    public void onDishesFetched(ArrayList<DishesOfCuisine> dishesOfCuisines) {
         dishArrayList.addAll(dishesOfCuisines);
         notifyDataSetChanged();
     }
@@ -58,11 +63,16 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
     @Override
     public void onBindViewHolder(RecycledGridViewHolder holder, int position) {
 
-            Glide.with(mContext).load(dishArrayList.get(position).getDish_image_url()).into(holder.dishImage);
-            holder.dishName.setText(dishArrayList.get(position).getDish_name());
-            holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol,dishArrayList.get(position).getDish_price().intValue()));
-            holder.bind(dishArrayList.get(position), dishItemClickListener);
+        Glide.with(mContext).load(dishArrayList.get(position).getDish_image_url()).into(holder.dishImage);
+        holder.dishName.setText(dishArrayList.get(position).getDish_name());
+        holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, dishArrayList.get(position).getDish_price().intValue()));
 
+            CartSelection selection = cartHelper.getCartSelectionById(dishArrayList.get(position).getDish_id());
+            if(selection!=null){
+                holder.incDecButton.setNumber(selection.getQty(),true);
+            }
+
+        holder.bind(dishArrayList.get(position), dishItemClickListener);
     }
 
     @Override
@@ -70,14 +80,19 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         return dishArrayList.size();
     }
 
-    public class RecycledGridViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.tv_si_dish_name) TextView dishName;
-        @BindView(R.id.tv_si_dish_price) TextView dishPrice;
-        @BindView(R.id.iv_si_dish_grid) ImageView dishImage;
-        @BindView(R.id.btn_id_item_dish_grid) IncDecButton incDecButton;
+    public class RecycledGridViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_si_dish_name)
+        TextView dishName;
+        @BindView(R.id.tv_si_dish_price)
+        TextView dishPrice;
+        @BindView(R.id.iv_si_dish_grid)
+        ImageView dishImage;
+        @BindView(R.id.btn_id_item_dish_grid)
+        IncDecButton incDecButton;
+
         public RecycledGridViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void bind(final DishesOfCuisine dishesOfCuisine, final DishItemClickListener dishItemClickListener) {
@@ -91,7 +106,6 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
                         }
                     } else {
                         dishItemClickListener.onPlusButtonClicked(dishesOfCuisine, num);
-                        incDecButton.setNumber(num);
                     }
                 }
 
@@ -101,7 +115,6 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
                         dishItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 0);
                     } else {
                         dishItemClickListener.onMinusButtonClicked(dishesOfCuisine, num);
-                        incDecButton.setNumber(num);
                     }
                 }
             });
