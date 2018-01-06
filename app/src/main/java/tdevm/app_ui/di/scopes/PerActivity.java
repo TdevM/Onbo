@@ -1,5 +1,5 @@
 
-package tdevm.app_ui.dagger.scopes;
+package tdevm.app_ui.di.scopes;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

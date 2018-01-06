@@ -59,4 +59,8 @@
     <string name="total">Total</string>
     <string name="add_items">ADD Items</string>
     <string name="finish_order">Finish Order</string>
+    <string name="proceed">Proceed</string>
+    <string name="total_items">Total items</string>
+    <string name="_0">0</string>
+    <string name="to_pay">To Pay</string>
 </resources>

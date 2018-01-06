@@ -1,13 +1,15 @@
-package tdevm.app_ui.dagger.components;
+package tdevm.app_ui.di.components;
 
 import dagger.Component;
-import tdevm.app_ui.dagger.modules.APIModule;
-import tdevm.app_ui.dagger.scopes.PerActivity;
+import tdevm.app_ui.di.modules.APIModule;
+import tdevm.app_ui.di.scopes.PerActivity;
 import tdevm.app_ui.modules.auth.fragments.AuthInitFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthLoginFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthRegisterFragment;
 import tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment;
 import tdevm.app_ui.modules.dinein.DineInActivity;
+import tdevm.app_ui.modules.dinein.activities.PlaceTempOrder;
+import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
 import tdevm.app_ui.root.BottomNavigationHome;
@@ -26,5 +28,7 @@ public interface APIComponent {
     void inject(BottomNavigationHome bottomNavigationHome);
     void inject(SingleCuisineGridFragment singleCuisineGridFragment);
     void inject(DishMenuFragment dishMenuFragment);
+    void inject(CartFragment cartFragment);
     void inject(DineInActivity dineInActivity);
+    void inject(PlaceTempOrder placeTempOrder);
 }

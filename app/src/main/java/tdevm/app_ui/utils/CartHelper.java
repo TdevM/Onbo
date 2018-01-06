@@ -38,28 +38,36 @@ public class CartHelper {
         return cartSelectionDao.getCartSelections();
     }
 
+    public int getCartTotalItems(){
+        return cartItemDao.getTotalItems();
+    }
+
+    public Double getCartTotal(){
+      return cartItemDao.getCartTotal();
+    }
+
     public CartSelection getCartSelectionById(Long dishId) {
         return cartSelectionDao.getCartSelectionById(dishId);
     }
 
     //Mutations
     public void addItemToCart(DishesOfCuisine dishesOfCuisine) {
-        CartItem item  = cartItemDao.getCartItemById(dishesOfCuisine.getDish_id());
-        if(item==null){
-            CartItem cartItem = new CartItem(dishesOfCuisine.getDish_id(),dishesOfCuisine,1,dishesOfCuisine.getDish_price());
+        CartItem item = cartItemDao.getCartItemById(dishesOfCuisine.getDish_id());
+        if (item == null) {
+            CartItem cartItem = new CartItem(dishesOfCuisine.getDish_id(), dishesOfCuisine, 1, dishesOfCuisine.getDish_price());
             cartItemDao.addItemToCart(cartItem);
-        }else if(item.getQuantity()>=1){
-            CartItem cartItem = new CartItem(dishesOfCuisine.getDish_id(),dishesOfCuisine,item.getQuantity()+1,(item.getQuantity()+1)*dishesOfCuisine.getDish_price());
+        } else if (item.getQuantity() >= 1) {
+            CartItem cartItem = new CartItem(dishesOfCuisine.getDish_id(), dishesOfCuisine, item.getQuantity() + 1, (item.getQuantity() + 1) * dishesOfCuisine.getDish_price());
             cartItemDao.updateCartItem(cartItem);
         }
     }
 
     public void updateCartItem(DishesOfCuisine dishesOfCuisine) {
-        CartItem item  = cartItemDao.getCartItemById(dishesOfCuisine.getDish_id());
-        if(item!=null){
-            CartItem cartItem = new CartItem(dishesOfCuisine.getDish_id(),dishesOfCuisine,item.getQuantity()-1,(item.getQuantity()-1)*dishesOfCuisine.getDish_price());
+        CartItem item = cartItemDao.getCartItemById(dishesOfCuisine.getDish_id());
+        if (item != null) {
+            CartItem cartItem = new CartItem(dishesOfCuisine.getDish_id(), dishesOfCuisine, item.getQuantity() - 1, (item.getQuantity() - 1) * dishesOfCuisine.getDish_price());
             cartItemDao.updateCartItem(cartItem);
-            if(item.getQuantity()==1){
+            if (item.getQuantity() == 1) {
                 cartItemDao.deleteItemFromCart(item);
             }
         }
@@ -67,13 +75,14 @@ public class CartHelper {
 
     public void addItemToSelection(DishesOfCuisine dishesOfCuisine) {
         CartSelection i = cartSelectionDao.getCartSelectionById(dishesOfCuisine.getDish_id());
-        if(i==null){
+        if (i == null) {
             CartSelection newSelection = new CartSelection(dishesOfCuisine.getDish_id(), dishesOfCuisine, 1);
             cartSelectionDao.addItemToSelection(newSelection);
-        }else {
+        } else {
             cartSelectionDao.incrementCartSelectionById(dishesOfCuisine.getDish_id());
         }
     }
+
 
     public void updateSelectionItem(DishesOfCuisine dishesOfCuisine) {
         CartSelection i = cartSelectionDao.getCartSelectionById(dishesOfCuisine.getDish_id());
@@ -82,11 +91,24 @@ public class CartHelper {
         }
     }
 
-    public Boolean cartSelectionExist(){
-        return cartSelectionDao.getCartSelections()!=null;
+    public Boolean cartSelectionExist() {
+        if (cartSelectionDao != null) {
+            if (cartSelectionDao.getCartSelections() != null) {
+                return true;
+            }
+
+        }
+        return false;
     }
 
-    public Boolean cartItemsExist(){
-        return cartItemDao.getTotalItems()>0;
+
+    public Boolean cartItemsExist() {
+        if (cartItemDao != null) {
+            int i = cartItemDao.getTotalItems();
+            if (i>0) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -1,19 +1,16 @@
-package tdevm.app_ui.dagger.components;
+package tdevm.app_ui.di.components;
 
 import android.content.SharedPreferences;
-
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
 import retrofit2.Retrofit;
 import tdevm.app_ui.api.cart.CartItemDao;
-import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.cart.CartSelectionDao;
-import tdevm.app_ui.dagger.modules.AppContextModule;
-import tdevm.app_ui.dagger.modules.NetworkModule;
-import tdevm.app_ui.dagger.modules.RoomModule;
+import tdevm.app_ui.di.modules.AppContextModule;
+import tdevm.app_ui.di.modules.NetworkModule;
+import tdevm.app_ui.di.modules.RoomModule;
 
 /**
  * Created by Tridev on 04-10-2017.

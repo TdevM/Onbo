@@ -58,13 +58,16 @@ public class DishVariantsSheet extends BottomSheetDialogFragment {
             radioGroup.addView(btn);
         }
 
-        addCart.setOnClickListener(view -> {
-            int selectedId = radioGroup.getCheckedRadioButtonId();
-            Iterator<DishesOfCuisine> arrayListIterator = dishesOfCuisines.listIterator();
-            while (arrayListIterator.hasNext()){
-                DishesOfCuisine dishesOfCuisine = arrayListIterator.next();
-                if(selectedId == dishesOfCuisine.getDish_id().intValue()){
-                    mDishVariantSelected.onDishVariantSelected(dishesOfCuisine,d);
+        addCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+                Iterator<DishesOfCuisine> arrayListIterator = dishesOfCuisines.listIterator();
+                while (arrayListIterator.hasNext()){
+                    DishesOfCuisine dishesOfCuisine = arrayListIterator.next();
+                    if(selectedId == dishesOfCuisine.getDish_id().intValue()){
+                        mDishVariantSelected.onDishVariantSelected(dishesOfCuisine,d);
+                    }
                 }
             }
         });

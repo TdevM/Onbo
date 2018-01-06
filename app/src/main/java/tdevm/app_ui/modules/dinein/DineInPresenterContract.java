@@ -29,8 +29,10 @@ public interface DineInPresenterContract {
         void fetchDishesByCuisines(Map<String,String> map);
         void fetchVariantsOfADish(Map<String,String> map, DishesOfCuisine variantsToFetch);
         void addItemToCart(DishesOfCuisine dishesOfCuisine);
+        void addItemToSelection(DishesOfCuisine dishesOfCuisine);
         void updateCartItem(DishesOfCuisine dishesOfCuisine);
         void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, int operationFlag);
+        void addDishVariantItemToCart(DishesOfCuisine selectedDish, DishesOfCuisine parentDish);
 
     }
 
@@ -40,5 +42,14 @@ public interface DineInPresenterContract {
         void checkCurrentOrderDetails(Map<String,String> map);
         void addItemsToOrder(ArrayList<TempOrder> arrayList);
         void createNewOrder();
+    }
+
+    interface CartFragmentPresenter extends BasePresenterMVP<DineInViewContract.CartFragmentView>{
+        void attachView(DineInViewContract.CartFragmentView view);
+        void detachView();
+        void fetchCartItems();
+        void addItemToCart(DishesOfCuisine dishesOfCuisine);
+        void updateCartItem(DishesOfCuisine dishesOfCuisine);
+        void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, int operationFlag);
     }
 }

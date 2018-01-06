@@ -100,13 +100,23 @@ public class SingleCuisineGridPresenter extends BasePresenter
     public void addItemToCart(DishesOfCuisine dishesOfCuisine) {
         cartHelper.addItemToCart(dishesOfCuisine);
         cartHelper.addItemToSelection(dishesOfCuisine);
+        singleCuisineGridView.updateAdapter();
         logSelections();
     }
+
+    @Override
+    public void addItemToSelection(DishesOfCuisine dishesOfCuisine) {
+        cartHelper.addItemToSelection(dishesOfCuisine);
+        singleCuisineGridView.updateAdapter();
+        logSelections();
+    }
+
 
     @Override
     public void updateCartItem(DishesOfCuisine dishesOfCuisine) {
       cartHelper.updateCartItem(dishesOfCuisine);
       cartHelper.updateSelectionItem(dishesOfCuisine);
+      singleCuisineGridView.updateAdapter();
       logSelections();
     }
 
@@ -114,6 +124,14 @@ public class SingleCuisineGridPresenter extends BasePresenter
     public void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, int operationFlag) {
 
     }
+
+    @Override
+    public void addDishVariantItemToCart(DishesOfCuisine selectedDish, DishesOfCuisine parentDish) {
+        cartHelper.addItemToCart(selectedDish);
+        cartHelper.addItemToSelection(parentDish);
+        singleCuisineGridView.updateAdapter();
+    }
+
 
     @Override
     public void attachView(DineInViewContract.SingleCuisineGridView view) {
@@ -125,6 +143,7 @@ public class SingleCuisineGridPresenter extends BasePresenter
       compositeDisposable.clear();
       compositeDisposable.dispose();
     }
+
     public void logSelections() {
         Log.d(TAG,"Log Started");
         List<CartSelection> selection = cartHelper.getCartSelections();

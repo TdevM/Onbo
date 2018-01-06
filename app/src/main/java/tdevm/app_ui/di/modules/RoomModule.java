@@ -1,4 +1,4 @@
-package tdevm.app_ui.dagger.modules;
+package tdevm.app_ui.di.modules;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
@@ -10,7 +10,6 @@ import dagger.Provides;
 import tdevm.app_ui.api.AppDatabase;
 import tdevm.app_ui.api.cart.CartItemDao;
 import tdevm.app_ui.api.cart.CartSelectionDao;
-import tdevm.app_ui.utils.CartHelper;
 
 /**
  * Created by Tridev on 05-01-2018.

@@ -4,13 +4,12 @@ import android.app.Application;
 
 import com.squareup.leakcanary.LeakCanary;
 
-import tdevm.app_ui.dagger.components.APIComponent;
-import tdevm.app_ui.dagger.components.ApplicationComponent;
-import tdevm.app_ui.dagger.components.DaggerAPIComponent;
-import tdevm.app_ui.dagger.components.DaggerApplicationComponent;
-import tdevm.app_ui.dagger.modules.AppContextModule;
-import tdevm.app_ui.dagger.modules.NetworkModule;
-import tdevm.app_ui.dagger.modules.RoomModule;
+import tdevm.app_ui.di.components.APIComponent;
+import tdevm.app_ui.di.components.ApplicationComponent;
+import tdevm.app_ui.di.components.DaggerAPIComponent;
+import tdevm.app_ui.di.components.DaggerApplicationComponent;
+import tdevm.app_ui.di.modules.AppContextModule;
+import tdevm.app_ui.di.modules.NetworkModule;
 
 /**
  * Created by Tridev on 03-10-2017.

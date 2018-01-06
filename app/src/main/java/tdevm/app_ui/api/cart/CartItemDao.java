@@ -34,6 +34,6 @@ public interface CartItemDao {
     Double getCartTotal();
 
     @Query("SELECT SUM(quantity) FROM cart_items")
-    Integer getTotalItems();
+    int getTotalItems();
 
 }

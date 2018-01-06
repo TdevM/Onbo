@@ -1,4 +1,4 @@
-package tdevm.app_ui.dagger.modules;
+package tdevm.app_ui.di.modules;
 
 import android.app.Application;
 

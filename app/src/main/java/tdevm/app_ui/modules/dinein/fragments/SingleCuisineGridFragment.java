@@ -123,6 +123,11 @@ public class SingleCuisineGridFragment extends Fragment
     }
 
     @Override
+    public void updateAdapter() {
+        recycledGridMenuAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
        singleCuisineGridPresenter.detachView();
@@ -147,7 +152,6 @@ public class SingleCuisineGridFragment extends Fragment
     public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, int flag) {
         fetchDishesMap.put("dish_id",dishesOfCuisine.getDish_id().toString());
         singleCuisineGridPresenter.fetchVariantsOfADish(fetchDishesMap, dishesOfCuisine);
-        recycledGridMenuAdapter.notifyDataSetChanged();
         Log.d(TAG,dishesOfCuisine.getDish_name());
 
     }
@@ -159,6 +163,7 @@ public class SingleCuisineGridFragment extends Fragment
 
     @Override
     public void onDishVariantSelected(DishesOfCuisine childDish, DishesOfCuisine parentDish) {
-        //singleCuisineGridPresenter.addCustomizableItemToCart(childDish,parentDish);
+        dishVariantsSheet.dismiss();
+        singleCuisineGridPresenter.addDishVariantItemToCart(childDish,parentDish);
     }
 }

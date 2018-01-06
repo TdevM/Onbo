@@ -49,7 +49,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dish"
+                    android:text="Dish"
                     android:id="@+id/textView7" />
 
                 <TextView
@@ -60,7 +60,7 @@
                     android:layout_marginRight="37dp"
                     android:layout_toLeftOf="@+id/textView8"
                     android:layout_toStartOf="@+id/textView8"
-                    android:text="@string/price" />
+                    android:text="Price" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
                     android:layout_marginRight="31dp"
                     android:layout_toLeftOf="@+id/textView2"
                     android:layout_toStartOf="@+id/textView2"
-                    android:text="@string/qty"
+                    android:text="Qty"
                     android:id="@+id/textView8" />
 
                 <TextView
@@ -80,7 +80,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:layout_gravity="end"
-                    android:text="@string/total"
+                    android:text="Total"
                     android:id="@+id/textView2" />
             </RelativeLayout>
         </LinearLayout>
@@ -90,8 +90,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_temp_order"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4.5">
+        android:layout_weight="4.5"
+        android:layout_height="0dp">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -108,7 +108,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/add_items"
+            android:text="ADD Items"
             android:textAllCaps="false" />
 
         <Button
@@ -117,7 +117,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/finish_order"
+            android:text="Finish Order"
             android:textAllCaps="false" />
     </LinearLayout>
 

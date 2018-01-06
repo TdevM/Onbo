@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import javax.inject.Inject;
 
+import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 
@@ -35,6 +36,12 @@ public class PlaceTempOrder extends AppCompatActivity implements DineInViewContr
 
     @Override
     public void hideProgressUI() {
+
+    }
+
+    @Override
+    public void resolveDaggerDependencies() {
+        ((AppApplication)getApplication()).getApiComponent().inject(this);
 
     }
 

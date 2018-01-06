@@ -24,7 +24,7 @@ public class DineInActivity extends AppCompatActivity {
 
 
     FragmentTransaction fragmentTransaction;
-    Toolbar toolbarDineIn;
+    //Toolbar toolbarDineIn;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -60,17 +60,17 @@ public class DineInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dine_in_home);
         resolveDaggerDependencies();
-        toolbarDineIn = findViewById(R.id.toolbar_dine_in_home);
-        setSupportActionBar(toolbarDineIn);
+        //toolbarDineIn = findViewById(R.id.toolbar_dine_in_home);
+        //setSupportActionBar(toolbarDineIn);
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle("Dine in");
         }
-        toolbarDineIn.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+//        toolbarDineIn.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         DishMenuFragment dishMenuFragment = new DishMenuFragment();
         transaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);

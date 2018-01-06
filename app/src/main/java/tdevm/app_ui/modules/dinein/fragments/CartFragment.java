@@ -3,20 +3,52 @@ package tdevm.app_ui.modules.dinein.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.cart.CartItem;
+import tdevm.app_ui.api.models.response.DishesOfCuisine;
+import tdevm.app_ui.modules.dinein.DineInViewContract;
+import tdevm.app_ui.modules.dinein.adapters.CartItemsRecyclerAdapter;
+import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
+import tdevm.app_ui.utils.CartHelper;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements DineInViewContract.CartFragmentView, DishItemClickListener{
 
+
+    @BindView(R.id.recycler_view_cart)
+    RecyclerView recyclerViewCart;
+    @BindView(R.id.btn_order_initiate)
+    Button btnInitiateOrder;
+    @BindView(R.id.tv_total_quantities)
+    TextView tvTotalQuantities;
+    @BindView(R.id.tv_total_bill_amount)
+    TextView tvTotalBillAmt;
+    Unbinder unbinder;
+    RecyclerView.LayoutManager mLayoutManager;
+    @Inject
+    CartHelper cartHelper;
+
+    @Inject
+    CartFragmentPresenterImpl cartFragmentPresenter;
+
+    private CartItemsRecyclerAdapter adapter;
 
     public CartFragment() {
-        // Required empty public constructor
     }
 
     public static CartFragment newInstance(){
@@ -26,8 +58,80 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+        View view;
+        view = inflater.inflate(R.layout.fragment_cart, container, false);
+        unbinder = ButterKnife.bind(this,view);
+        resolveDaggerDependencies();
+        mLayoutManager = new LinearLayoutManager(getContext());
+        adapter = new CartItemsRecyclerAdapter(getActivity(),cartFragmentPresenter,cartHelper);
+        adapter.setOnDishItemClickListener(this);
+        cartFragmentPresenter.attachView(this);
+        cartFragmentPresenter.fetchCartItems();
+        recyclerViewCart.setLayoutManager(mLayoutManager);
+        recyclerViewCart.setAdapter(adapter);
+        return view;
+
     }
 
+    @Override
+    public void resolveDaggerDependencies(){
+        ((AppApplication) getActivity().getApplication()).getApiComponent().inject(this);
+    }
+
+    @Override
+    public void showProgressUI() {
+
+    }
+
+    @Override
+    public void hideProgressUI() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        cartFragmentPresenter.detachView();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPlusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
+
+    }
+
+    @Override
+    public void onMinusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
+
+    }
+
+    @Override
+    public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, int flag) {
+        //calls to presenter
+    }
+
+    @Override
+    public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, Long parentDishId, int flag) {
+
+    }
+
+    @Override
+    public void onCartItemsFetched(List<CartItem> cartItems) {
+        adapter.onCartItemsFetched(cartItems);
+    }
+
+    @Override
+    public void renderEmptyCart() {
+
+    }
+
+    @Override
+    public void updateBottomSheet(int totalItems, Double cartTotal) {
+         tvTotalBillAmt.setText(String.valueOf(getActivity().getApplication().getString(R.string.rupee_symbol, cartTotal.intValue())));
+         tvTotalQuantities.setText(String.valueOf(totalItems));
+    }
+
+    @Override
+    public void updateAdapter() {
+        adapter.notifyDataSetChanged();
+    }
 }
