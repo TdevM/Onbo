@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import tdevm.app_ui.utils.CartHelper;
 
 public class CartFragment extends Fragment implements DineInViewContract.CartFragmentView, DishItemClickListener{
 
+    public static final String TAG = CartFragment.class.getSimpleName();
 
     @BindView(R.id.recycler_view_cart)
     RecyclerView recyclerViewCart;
@@ -96,27 +98,36 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     @Override
     public void onPlusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
-
+       cartFragmentPresenter.addItemToCart(dishesOfCuisine);
+        Log.d(TAG,dishesOfCuisine.getDish_name());
     }
 
     @Override
     public void onMinusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
-
+      cartFragmentPresenter.updateCartItem(dishesOfCuisine);
+        Log.d(TAG,dishesOfCuisine.getDish_name());
     }
 
     @Override
     public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, int flag) {
-        //calls to presenter
+        if(flag==1){
+            cartFragmentPresenter.addItemToCart(dishesOfCuisine);
+            Log.d(TAG,dishesOfCuisine.getDish_name());
+        }else {
+            cartFragmentPresenter.updateCartItem(dishesOfCuisine);
+            Log.d(TAG,dishesOfCuisine.getDish_name());
+        }
     }
 
     @Override
     public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, Long parentDishId, int flag) {
-
+        cartFragmentPresenter.addCustomizableItemToCart(dishesOfCuisine,parentDishId,flag);
     }
 
+
     @Override
-    public void onCartItemsFetched(List<CartItem> cartItems) {
-        adapter.onCartItemsFetched(cartItems);
+    public void injectAdapterWithData() {
+        adapter.fetchCartItems();
     }
 
     @Override
@@ -126,8 +137,10 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     @Override
     public void updateBottomSheet(int totalItems, Double cartTotal) {
-         tvTotalBillAmt.setText(String.valueOf(getActivity().getApplication().getString(R.string.rupee_symbol, cartTotal.intValue())));
-         tvTotalQuantities.setText(String.valueOf(totalItems));
+        if(cartTotal!=null) {
+            tvTotalBillAmt.setText(String.valueOf(getActivity().getApplication().getString(R.string.rupee_symbol, cartTotal.intValue())));
+            tvTotalQuantities.setText(String.valueOf(totalItems));
+        }
     }
 
     @Override

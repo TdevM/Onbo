@@ -36,7 +36,7 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
     @Override
     public void fetchCartItems(){
         if(cartHelper.cartItemsExist()){
-            cartFragmentView.onCartItemsFetched(cartHelper.getCartItems());
+            cartFragmentView.injectAdapterWithData();
             if(cartHelper.getCartTotalItems()>0){
                 cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
             }
@@ -50,6 +50,7 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
         cartHelper.addItemToCart(dishesOfCuisine);
         cartHelper.addItemToSelection(dishesOfCuisine);
         cartFragmentView.updateAdapter();
+        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
         logSelections();
     }
 
@@ -58,12 +59,23 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
         cartHelper.updateCartItem(dishesOfCuisine);
         cartHelper.updateSelectionItem(dishesOfCuisine);
         cartFragmentView.updateAdapter();
+        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
         logSelections();
     }
 
     @Override
-    public void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, int operationFlag) {
-
+    public void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine,Long dishId, int operationFlag) {
+      if(operationFlag==1){
+          cartHelper.addItemToCart(dishesOfCuisine);
+          cartHelper.incrementCartSelectionById(dishId);
+          cartFragmentView.updateAdapter();
+          cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
+      }else if(operationFlag==0){
+          cartHelper.updateCartItem(dishesOfCuisine);
+          cartHelper.decrementCartSelectionById(dishId);
+          cartFragmentView.updateAdapter();
+          cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
+      }
     }
 
     @Override

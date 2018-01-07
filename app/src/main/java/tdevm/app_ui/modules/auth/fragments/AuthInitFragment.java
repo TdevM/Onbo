@@ -1,4 +1,5 @@
 package tdevm.app_ui.modules.auth.fragments;
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -6,10 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,12 +32,8 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.APIService;
-
-import tdevm.app_ui.api.cart.CartItemDao;
 import tdevm.app_ui.modules.auth.AuthViewContract;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
-import tdevm.app_ui.utils.CartHelper;
 
 @RuntimePermissions
 public class AuthInitFragment extends Fragment implements AuthViewContract.AuthInitView {

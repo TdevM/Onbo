@@ -1,30 +1,22 @@
 package tdevm.app_ui.root;
 
-import android.Manifest;
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import javax.inject.Inject;
 
-import permissions.dispatcher.NeedsPermission;
-import permissions.dispatcher.RuntimePermissions;
 import tdevm.app_ui.AppApplication;
+import tdevm.app_ui.R;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.root.fragments.AccountsFragment;
@@ -32,7 +24,6 @@ import tdevm.app_ui.root.fragments.BookFragment;
 import tdevm.app_ui.root.fragments.HomeFragment;
 import tdevm.app_ui.root.fragments.NotificationsFragment;
 import tdevm.app_ui.utils.CustomQRView;
-import tdevm.app_ui.R;
 
 public class BottomNavigationHome extends AppCompatActivity implements NavigationHomeViewContract.BottomNavigationView {
 

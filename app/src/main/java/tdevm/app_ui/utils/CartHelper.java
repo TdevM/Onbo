@@ -83,6 +83,13 @@ public class CartHelper {
         }
     }
 
+    public void incrementCartSelectionById(Long dishId){
+        cartSelectionDao.incrementCartSelectionById(dishId);
+    }
+
+    public void decrementCartSelectionById(Long dishId){
+        cartSelectionDao.decrementCartSelectionById(dishId);
+    }
 
     public void updateSelectionItem(DishesOfCuisine dishesOfCuisine) {
         CartSelection i = cartSelectionDao.getCartSelectionById(dishesOfCuisine.getDish_id());

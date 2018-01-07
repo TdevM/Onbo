@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -136,14 +137,12 @@ public class SingleCuisineGridFragment extends Fragment
     @Override
     public void onPlusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
         singleCuisineGridPresenter.addItemToCart(dishesOfCuisine);
-        recycledGridMenuAdapter.notifyDataSetChanged();
         Log.d(TAG,dishesOfCuisine.getDish_name());
     }
 
     @Override
     public void onMinusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
         singleCuisineGridPresenter.updateCartItem(dishesOfCuisine);
-        recycledGridMenuAdapter.notifyDataSetChanged();
         Log.d(TAG,dishesOfCuisine.getDish_name());
     }
 
@@ -151,7 +150,12 @@ public class SingleCuisineGridFragment extends Fragment
     @Override
     public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, int flag) {
         fetchDishesMap.put("dish_id",dishesOfCuisine.getDish_id().toString());
-        singleCuisineGridPresenter.fetchVariantsOfADish(fetchDishesMap, dishesOfCuisine);
+        if(flag==1){
+            singleCuisineGridPresenter.fetchVariantsOfADish(fetchDishesMap, dishesOfCuisine);
+        }else {
+            //
+            Toast.makeText(getContext(), "Remove this item from cart!", Toast.LENGTH_SHORT).show();
+        }
         Log.d(TAG,dishesOfCuisine.getDish_name());
 
     }

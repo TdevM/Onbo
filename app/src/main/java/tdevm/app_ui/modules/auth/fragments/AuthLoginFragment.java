@@ -1,4 +1,5 @@
 package tdevm.app_ui.modules.auth.fragments;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -19,9 +20,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.APIService;
-import tdevm.app_ui.api.models.MySharedPreferences;
-
 import tdevm.app_ui.modules.auth.AuthViewContract;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 

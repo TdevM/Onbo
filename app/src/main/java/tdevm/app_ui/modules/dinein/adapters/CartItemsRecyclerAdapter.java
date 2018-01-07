@@ -42,7 +42,6 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
     public CartItemsRecyclerAdapter(Context context, CartFragmentPresenterImpl cartFragmentPresenter, CartHelper cartHelper) {
         this.context = context;
         this.cartFragmentPresenter = cartFragmentPresenter;
-        cartItemArrayList = new ArrayList<>();
         this.cartHelper = cartHelper;
     }
 
@@ -50,10 +49,6 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         this.dishItemClickListener = d;
     }
 
-    public void onCartItemsFetched(List<CartItem> cartItems) {
-        cartItemArrayList.addAll(cartItems);
-        notifyDataSetChanged();
-    }
 
     @Override
     public CartItemsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,7 +60,9 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
 
     @Override
     public void onBindViewHolder(CartItemsViewHolder holder, final int position) {
+        cartItemArrayList = new ArrayList<>();
         Log.d("Cart", String.valueOf(cartItemArrayList.size()));
+        cartItemArrayList.addAll(cartHelper.getCartItems());
         Glide.with(context).load(cartItemArrayList.get(position).getDishesOfCuisine().getDish_image_url()).into(holder.dishImage);
         holder.dishName.setText(cartItemArrayList.get(position).getDishesOfCuisine().getDish_name());
         holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice().intValue())));
@@ -75,7 +72,11 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
 
     @Override
     public int getItemCount() {
-        return cartItemArrayList.size();
+        return cartHelper.getCartTotalItems();
+    }
+
+    public void fetchCartItems() {
+
     }
 
 
@@ -109,6 +110,7 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
                         }
                     } else {
                         dishItemClickListener.onPlusButtonClicked(dish, num);
+                        Log.d(TAG,"Click+");
                     }
                 }
 
@@ -122,6 +124,8 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
                         }
                     } else {
                         dishItemClickListener.onMinusButtonClicked(dish, num);
+                        Log.d(TAG,"Click+");
+
                     }
                 }
             });

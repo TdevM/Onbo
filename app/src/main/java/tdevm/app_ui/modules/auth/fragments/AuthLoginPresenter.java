@@ -1,6 +1,5 @@
 package tdevm.app_ui.modules.auth.fragments;
 
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import javax.inject.Inject;
@@ -12,7 +11,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
-import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.auth.AuthPresenterContract;

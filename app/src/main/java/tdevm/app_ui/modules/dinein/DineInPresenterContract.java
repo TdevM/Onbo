@@ -3,13 +3,9 @@ package tdevm.app_ui.modules.dinein;
 import java.util.ArrayList;
 import java.util.Map;
 
-import tdevm.app_ui.api.models.request.RestaurantOrder;
-import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.base.BasePresenterMVP;
-import tdevm.app_ui.base.BaseView;
-import tdevm.app_ui.modules.auth.AuthViewContract;
 
 /**
  * Created by Tridev on 06-11-2017.
@@ -50,6 +46,6 @@ public interface DineInPresenterContract {
         void fetchCartItems();
         void addItemToCart(DishesOfCuisine dishesOfCuisine);
         void updateCartItem(DishesOfCuisine dishesOfCuisine);
-        void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, int operationFlag);
+        void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long parentDishId, int operationFlag);
     }
 }
