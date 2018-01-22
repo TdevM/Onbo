@@ -20,7 +20,6 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
-import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.CartFragmentPresenterImpl;
 import tdevm.app_ui.utils.CartHelper;
 import tdevm.app_ui.widgets.IncDecButton;
@@ -61,8 +60,9 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
     @Override
     public void onBindViewHolder(CartItemsViewHolder holder, final int position) {
         cartItemArrayList = new ArrayList<>();
-        Log.d("Cart", String.valueOf(cartItemArrayList.size()));
-        cartItemArrayList.addAll(cartHelper.getCartItems());
+        Log.d("Cart", String.valueOf(cartHelper.getCartTotalItems()));
+        List<CartItem> cartItems = cartHelper.getCartItems();
+        cartItemArrayList.addAll(cartItems);
         Glide.with(context).load(cartItemArrayList.get(position).getDishesOfCuisine().getDish_image_url()).into(holder.dishImage);
         holder.dishName.setText(cartItemArrayList.get(position).getDishesOfCuisine().getDish_name());
         holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice().intValue())));
@@ -72,7 +72,8 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
 
     @Override
     public int getItemCount() {
-        return cartHelper.getCartTotalItems();
+        List<CartItem> cartItems = cartHelper.getCartItems();
+        return cartItems.size();
     }
 
     public void fetchCartItems() {

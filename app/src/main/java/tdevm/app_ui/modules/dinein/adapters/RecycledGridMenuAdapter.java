@@ -80,6 +80,16 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         return dishArrayList.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     public class RecycledGridViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_si_dish_name)
         TextView dishName;

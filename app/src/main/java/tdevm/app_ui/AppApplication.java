@@ -35,7 +35,7 @@ public class AppApplication extends Application {
     private void initializeApplicationComponent() {
         applicationComponent = DaggerApplicationComponent
                 .builder()
-                .networkModule(new NetworkModule("https://z71.herokuapp.com/api/v3/"))
+                .networkModule(new NetworkModule("https://t71.herokuapp.com/api/v3/"))
                 .appContextModule(new AppContextModule(this))
                 .build();
 
