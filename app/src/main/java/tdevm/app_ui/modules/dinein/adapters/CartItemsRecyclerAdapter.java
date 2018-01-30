@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartItem;
+import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.CartFragmentPresenterImpl;
@@ -59,6 +60,7 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
 
     @Override
     public void onBindViewHolder(CartItemsViewHolder holder, final int position) {
+        Log.d(TAG,"onBindViewHolder");
         cartItemArrayList = new ArrayList<>();
         Log.d("Cart", String.valueOf(cartHelper.getCartTotalItems()));
         List<CartItem> cartItems = cartHelper.getCartItems();
@@ -72,8 +74,31 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
 
     @Override
     public int getItemCount() {
+        int size;
         List<CartItem> cartItems = cartHelper.getCartItems();
-        return cartItems.size();
+        if(cartItems!=null){
+            size = cartItems.size();
+            Log.d(TAG,"SizeE: "+String.valueOf(cartItems.size()));
+        }else {
+            size = 0;
+            Log.d(TAG,"cartItems is null, size is : "+ size);
+        }
+
+        Log.d(TAG,"Log Started");
+        List<CartSelection> selection = cartHelper.getCartSelections();
+        if(selection!=null && cartItems!=null) {
+            for (int i = 0; i < selection.size(); i++) {
+                Log.d(TAG, "Dish selection made:" + selection.get(i).getDishesOfCuisine().getDish_name());
+                Log.d(TAG, "Dish qty added:" + String.valueOf(selection.get(i).getQty()));
+            }
+
+            for (int i = 0; i < cartItems.size(); i++) {
+                Log.d(TAG, "Cart Item:" + cartItems.get(i).getDishesOfCuisine().getDish_name());
+                Log.d(TAG, "Item QTY:" + cartItems.get(i).getQuantity());
+                Log.d(TAG, "Item Total:" + cartItems.get(i).getPrice());
+            }
+        }
+        return size;
     }
 
     public void fetchCartItems() {

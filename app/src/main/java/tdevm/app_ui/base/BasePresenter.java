@@ -8,9 +8,11 @@ import javax.inject.Inject;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -46,5 +48,9 @@ public class BasePresenter {
 
     protected<T> void subscribeFlowable(Flowable<T> flowable, Subscriber<T> subscriber){
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
+    }
+
+    protected<T> void singleSubscribeWith(Single<T> observable, DisposableSingleObserver<T> observer){
+         observable.subscribeWith(observer);
     }
 }

@@ -95,15 +95,17 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
         List<CartSelection> selection = cartHelper.getCartSelections();
         List<CartItem> cartItems = cartHelper.getCartItems();
 
-        for (int i = 0; i < selection.size(); i++) {
-            Log.d(TAG, "Dish selection made:" + selection.get(i).getDishesOfCuisine().getDish_name());
-            Log.d(TAG, "Dish qty added:" + String.valueOf(selection.get(i).getQty()));
-        }
+        if(selection!=null && cartItems!=null) {
+            for (int i = 0; i < selection.size(); i++) {
+                Log.d(TAG, "Dish selection made:" + selection.get(i).getDishesOfCuisine().getDish_name());
+                Log.d(TAG, "Dish qty added:" + String.valueOf(selection.get(i).getQty()));
+            }
 
-        for (int i = 0; i < cartItems.size(); i++) {
-            Log.d(TAG, "Cart Item:" + cartItems.get(i).getDishesOfCuisine().getDish_name());
-            Log.d(TAG, "Item QTY:" + cartItems.get(i).getQuantity());
-            Log.d(TAG,"Item Total:"+ cartItems.get(i).getPrice());
+            for (int i = 0; i < cartItems.size(); i++) {
+                Log.d(TAG, "Cart Item:" + cartItems.get(i).getDishesOfCuisine().getDish_name());
+                Log.d(TAG, "Item QTY:" + cartItems.get(i).getQuantity());
+                Log.d(TAG, "Item Total:" + cartItems.get(i).getPrice());
+            }
         }
     }
 }

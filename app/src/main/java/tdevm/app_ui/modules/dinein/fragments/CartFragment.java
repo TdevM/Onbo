@@ -61,6 +61,8 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view;
+
+
         view = inflater.inflate(R.layout.fragment_cart, container, false);
         unbinder = ButterKnife.bind(this,view);
         resolveDaggerDependencies();
@@ -71,6 +73,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
         cartFragmentPresenter.fetchCartItems();
         recyclerViewCart.setLayoutManager(mLayoutManager);
         recyclerViewCart.setAdapter(adapter);
+        Log.d(TAG,String.valueOf(cartHelper.getCartTotalItems()));
         return view;
 
     }

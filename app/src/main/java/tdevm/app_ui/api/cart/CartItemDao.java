@@ -8,6 +8,11 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+
 /**
  * Created by Tridev on 02-01-2018.
  */
@@ -16,10 +21,10 @@ import java.util.List;
 public interface CartItemDao {
 
     @Query("SELECT * FROM cart_items")
-    List<CartItem> getCartItems();
+    Flowable<List<CartItem>> getCartItems();
 
     @Query("SELECT * FROM cart_items WHERE dishId = :dishId")
-    CartItem getCartItemById(Long dishId);
+    Single<CartItem> getCartItemById(Long dishId);
 
     @Insert
     void addItemToCart(CartItem cartItem);
@@ -31,9 +36,9 @@ public interface CartItemDao {
     void deleteItemFromCart(CartItem item);
 
     @Query("SELECT SUM(price) FROM cart_items")
-    Double getCartTotal();
+    Single<Double> getCartTotal();
 
     @Query("SELECT SUM(quantity) FROM cart_items")
-    int getTotalItems();
+    Single<Integer> getTotalItems();
 
 }

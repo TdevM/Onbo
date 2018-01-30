@@ -52,6 +52,7 @@ dependencies {
         exclude module: "support-v13"
     }
     implementation "android.arch.persistence.room:runtime:1.0.0"
+    implementation "android.arch.persistence.room:rxjava2:1.0.0"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     testCompile "android.arch.persistence.room:testing:1.0.0"
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -81,5 +82,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.0'
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.1.0"
+    annotationProcessor "com.uber.nullaway:nullaway:0.3.2"
+
 
 }
