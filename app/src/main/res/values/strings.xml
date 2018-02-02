@@ -16,6 +16,7 @@
     <string name="didnt_got_otp">Did\'nt got the code?</string>
     <string name="choose_an_option">Choose a dish variation.</string>
     <string name="verify_number">Verify</string>
+    <string name="start_order_t2">Start Order</string>
 
 
     <string name="turn_on_flashlight">Turn on Flashlight</string>
@@ -63,4 +64,5 @@
     <string name="total_items">Total items</string>
     <string name="_0">0</string>
     <string name="to_pay">To Pay</string>
+    <string name="title_activity_non_dine">NonDineActivity</string>
 </resources>

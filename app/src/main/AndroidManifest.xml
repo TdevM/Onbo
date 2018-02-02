@@ -39,13 +39,13 @@
         <activity
             android:name=".modules.dinein.DineInActivity"
             android:label="@string/title_activity_dine_in_home"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".utils.CustomQRView"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".modules.auth.AuthenticationActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity android:name=".modules.dinein.activities.PlaceTempOrder" />
 
         <receiver android:name=".utils.SMSListener">
@@ -54,7 +54,10 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".modules.nondinein.NonDineActivity"></activity>
+        <activity android:name=".modules.nondinein.activities.NonDineRestaurantDetailsActivity" />
+        <activity
+            android:name=".modules.nondinein.activities.NonDineActivity"
+            android:label="@string/title_activity_non_dine"></activity>
     </application>
 
 </manifest>

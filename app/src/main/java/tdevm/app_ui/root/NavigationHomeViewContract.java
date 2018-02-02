@@ -11,6 +11,7 @@ public interface NavigationHomeViewContract {
     interface BottomNavigationView extends BaseView{
         void showTableOccupiedError();
         void redirectDineInActivity(String restaurantUUID);
+        void redirectNonDineActivity();
         void showUserProfile();
         void redirectAuthActivity();
         void startQRScanner();

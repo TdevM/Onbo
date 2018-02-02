@@ -18,6 +18,7 @@ import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.api.models.response.Dish;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
+import tdevm.app_ui.api.models.response.Restaurant;
 import tdevm.app_ui.api.models.response.RestaurantTable;
 import tdevm.app_ui.api.models.response.TempOrder;
 
@@ -41,6 +42,8 @@ public interface APIService {
 
 
     //Restaurant Data
+    @GET("restaurant")
+    Observable<Response<Restaurant>> fetchRestaurantDetails(@QueryMap Map<String,String> query, @Header("x-auth") String authToken);
     @GET("restaurant/table_status")
     Observable<Response<RestaurantTable>> verifyTableVacancy(@Header("x-auth") String authToken, @QueryMap Map<String,String> query);
     @GET("restaurant/cuisines")

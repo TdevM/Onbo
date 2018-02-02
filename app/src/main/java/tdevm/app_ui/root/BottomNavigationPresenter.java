@@ -75,6 +75,7 @@ public class BottomNavigationPresenter extends BasePresenter implements Navigati
                     Log.d(TAG,"Saved Restaurant"+authUtils.getScannedRestaurantUuid());
                     Log.d(TAG,"Restaurant Mode"+ authUtils.getRestaurantMode());
                     Log.d(TAG,"Type 2 valid");
+                    bottomNavigationView.redirectNonDineActivity();
                 }
             }
         } catch (JSONException e) {

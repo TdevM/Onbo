@@ -19,6 +19,7 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.modules.dinein.DineInActivity;
+import tdevm.app_ui.modules.nondinein.activities.NonDineRestaurantDetailsActivity;
 import tdevm.app_ui.root.fragments.AccountsFragment;
 import tdevm.app_ui.root.fragments.BookFragment;
 import tdevm.app_ui.root.fragments.HomeFragment;
@@ -119,6 +120,12 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
     @Override
     public void redirectDineInActivity(String restaurantUUID) {
         Intent intent = new Intent(BottomNavigationHome.this, DineInActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void redirectNonDineActivity() {
+        Intent intent = new Intent(BottomNavigationHome.this,NonDineRestaurantDetailsActivity.class);
         startActivity(intent);
     }
 
