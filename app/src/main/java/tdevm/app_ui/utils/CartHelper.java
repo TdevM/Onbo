@@ -50,51 +50,53 @@ public class CartHelper extends BasePresenter {
     public CartHelper(CartItemDao cartItemDao, CartSelectionDao cartSelectionDao) {
         this.cartItemDao = cartItemDao;
         this.cartSelectionDao = cartSelectionDao;
+        cartItemsList = new ArrayList<>();
         compositeDisposable = new CompositeDisposable();
     }
 
     //Queries
     public List<CartItem> getCartItems() {
-        Flowable<List<CartItem>> cartItems = cartItemDao.getCartItems();
-        Disposable disposable = cartItems.subscribeWith(new DisposableSubscriber<List<CartItem>>() {
-            @Override
-            public void onNext(List<CartItem> cartItems) {
-                cartItemsList = new ArrayList<>(cartItems);
-            }
-
-            @Override
-            public void onError(Throwable t) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-        compositeDisposable.add(disposable);
-        return cartItemsList;
+//        Flowable<List<CartItem>> cartItems = cartItemDao.getCartItems();
+//        Disposable disposable = cartItems.subscribeWith(new DisposableSubscriber<List<CartItem>>() {
+//            @Override
+//            public void onNext(List<CartItem> cartItems) {
+//                cartItemsList = new ArrayList<>(cartItems);
+//            }
+//
+//            @Override
+//            public void onError(Throwable t) {
+//                cartItemsList = new ArrayList<>();
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        });
+//        compositeDisposable.add(disposable);
+        return cartItemDao.getCartItems();
     }
 
     public CartItem getCartItemById(Long dishId) {
-        Single<CartItem> cartItemSingle = cartItemDao.getCartItemById(dishId);
-        cartItemSingle.subscribeWith(new SingleObserver<CartItem>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                compositeDisposable.add(d);
-            }
-
-            @Override
-            public void onSuccess(CartItem cartItem) {
-                item = cartItem;
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.d(TAG, e.getMessage());
-            }
-        });
-        return item;
+//        Single<CartItem> cartItemSingle = cartItemDao.getCartItemById(dishId);
+//        cartItemSingle.subscribeWith(new SingleObserver<CartItem>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//                compositeDisposable.add(d);
+//            }
+//
+//            @Override
+//            public void onSuccess(CartItem cartItem) {
+//                item = cartItem;
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                Log.d(TAG,"getCartItemById" +e.getMessage());
+//            }
+//        });
+        return cartItemDao.getCartItemById(dishId);
     }
 
     public List<CartSelection> getCartSelections() {
@@ -117,6 +119,7 @@ public class CartHelper extends BasePresenter {
             @Override
             public void onError(Throwable e) {
                 cartItemsCount = 0;
+                Log.d(TAG,"getCartTotalItems"+e.getMessage());
             }
         });
         return cartItemsCount;
@@ -132,7 +135,7 @@ public class CartHelper extends BasePresenter {
 
             @Override
             public void onError(Throwable e) {
-
+              Log.d(TAG,"getCartTotal" + e.getMessage());
             }
         });
         return cartTotal;
@@ -209,6 +212,14 @@ public class CartHelper extends BasePresenter {
             }
         }
         return false;
+    }
+
+    public void logCartItems(){
+        for (int i = 0; i < getCartItems().size(); i++) {
+            Log.d(TAG, "Cart Item:" + getCartItems().get(i).getDishesOfCuisine().getDish_name()
+            +"QTY:" + getCartItems().get(i).getQuantity()+
+            "Total:" + getCartItems().get(i).getPrice());
+        }
     }
 
     public void onDestroy() {

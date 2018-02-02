@@ -60,8 +60,8 @@ public class AccountsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view;
         view = inflater.inflate(R.layout.fragment_accounts,container,false);
-        tvName = (TextView)view.findViewById(R.id.tv_display_name);
-        tvPhone = (TextView)view.findViewById(R.id.tv_display_phone);
+        tvName = view.findViewById(R.id.tv_display_name);
+        tvPhone = view.findViewById(R.id.tv_display_phone);
 
         return view;
     }

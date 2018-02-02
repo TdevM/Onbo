@@ -83,26 +83,7 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
             size = 0;
             Log.d(TAG,"cartItems is null, size is : "+ size);
         }
-
-        Log.d(TAG,"Log Started");
-        List<CartSelection> selection = cartHelper.getCartSelections();
-        if(selection!=null && cartItems!=null) {
-            for (int i = 0; i < selection.size(); i++) {
-                Log.d(TAG, "Dish selection made:" + selection.get(i).getDishesOfCuisine().getDish_name());
-                Log.d(TAG, "Dish qty added:" + String.valueOf(selection.get(i).getQty()));
-            }
-
-            for (int i = 0; i < cartItems.size(); i++) {
-                Log.d(TAG, "Cart Item:" + cartItems.get(i).getDishesOfCuisine().getDish_name());
-                Log.d(TAG, "Item QTY:" + cartItems.get(i).getQuantity());
-                Log.d(TAG, "Item Total:" + cartItems.get(i).getPrice());
-            }
-        }
         return size;
-    }
-
-    public void fetchCartItems() {
-
     }
 
 

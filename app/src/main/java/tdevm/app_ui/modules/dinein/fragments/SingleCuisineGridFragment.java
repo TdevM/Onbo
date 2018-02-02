@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -21,6 +22,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.cart.CartItem;
+import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledGridMenuAdapter;
@@ -90,6 +93,7 @@ public class SingleCuisineGridFragment extends Fragment
         recycledGridMenuAdapter.setDishItemClickListenerCallback(this);
         dishVariantsSheet = new DishVariantsSheet();
         dishVariantsSheet.setOnDishVariantSelected(this);
+        logSelections();
         return view;
     }
 
@@ -169,5 +173,10 @@ public class SingleCuisineGridFragment extends Fragment
     public void onDishVariantSelected(DishesOfCuisine childDish, DishesOfCuisine parentDish) {
         dishVariantsSheet.dismiss();
         singleCuisineGridPresenter.addDishVariantItemToCart(childDish,parentDish);
+    }
+
+    public void logSelections() {
+        cartHelper.logCartItems();
+
     }
 }

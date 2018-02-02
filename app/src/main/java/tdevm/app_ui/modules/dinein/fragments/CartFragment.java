@@ -2,6 +2,7 @@ package tdevm.app_ui.modules.dinein.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,12 +24,13 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
+import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.CartItemsRecyclerAdapter;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 import tdevm.app_ui.utils.CartHelper;
 
-public class CartFragment extends Fragment implements DineInViewContract.CartFragmentView, DishItemClickListener{
+public class CartFragment extends Fragment implements DineInViewContract.CartFragmentView, DishItemClickListener {
 
     public static final String TAG = CartFragment.class.getSimpleName();
 
@@ -49,37 +51,48 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     CartFragmentPresenterImpl cartFragmentPresenter;
 
     private CartItemsRecyclerAdapter adapter;
+    DineInActivity activity;
 
     public CartFragment() {
     }
 
-    public static CartFragment newInstance(){
+    public static CartFragment newInstance() {
         return new CartFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        resolveDaggerDependencies();
+        cartFragmentPresenter.attachView(this);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        activity = (DineInActivity)getActivity();
         View view;
-
-
-        view = inflater.inflate(R.layout.fragment_cart, container, false);
-        unbinder = ButterKnife.bind(this,view);
-        resolveDaggerDependencies();
-        mLayoutManager = new LinearLayoutManager(getContext());
-        adapter = new CartItemsRecyclerAdapter(getActivity(),cartFragmentPresenter,cartHelper);
-        adapter.setOnDishItemClickListener(this);
-        cartFragmentPresenter.attachView(this);
-        cartFragmentPresenter.fetchCartItems();
-        recyclerViewCart.setLayoutManager(mLayoutManager);
-        recyclerViewCart.setAdapter(adapter);
-        Log.d(TAG,String.valueOf(cartHelper.getCartTotalItems()));
+        if (cartFragmentPresenter.cartItemsExists()) {
+            view = inflater.inflate(R.layout.fragment_cart, container, false);
+            unbinder = ButterKnife.bind(this, view);
+            mLayoutManager = new LinearLayoutManager(getContext());
+            adapter = new CartItemsRecyclerAdapter(getActivity(), cartFragmentPresenter, cartHelper);
+            adapter.setOnDishItemClickListener(this);
+            recyclerViewCart.setLayoutManager(mLayoutManager);
+            recyclerViewCart.setAdapter(adapter);
+            //TODO Avoid Direct Model Access
+            updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
+            Log.d(TAG, String.valueOf(cartHelper.getCartTotalItems()));
+        } else {
+            view = inflater.inflate(R.layout.fragment_cart_empty, container, false);
+        }
         return view;
 
     }
 
     @Override
-    public void resolveDaggerDependencies(){
+    public void resolveDaggerDependencies() {
         ((AppApplication) getActivity().getApplication()).getApiComponent().inject(this);
     }
 
@@ -101,46 +114,36 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     @Override
     public void onPlusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
-       cartFragmentPresenter.addItemToCart(dishesOfCuisine);
-        Log.d(TAG,dishesOfCuisine.getDish_name());
+        cartFragmentPresenter.addItemToCart(dishesOfCuisine);
+        Log.d(TAG, dishesOfCuisine.getDish_name());
     }
 
     @Override
     public void onMinusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
-      cartFragmentPresenter.updateCartItem(dishesOfCuisine);
-        Log.d(TAG,dishesOfCuisine.getDish_name());
+        cartFragmentPresenter.updateCartItem(dishesOfCuisine);
+        Log.d(TAG, dishesOfCuisine.getDish_name());
     }
 
     @Override
     public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, int flag) {
-        if(flag==1){
+        if (flag == 1) {
             cartFragmentPresenter.addItemToCart(dishesOfCuisine);
-            Log.d(TAG,dishesOfCuisine.getDish_name());
-        }else {
+            Log.d(TAG, dishesOfCuisine.getDish_name());
+        } else {
             cartFragmentPresenter.updateCartItem(dishesOfCuisine);
-            Log.d(TAG,dishesOfCuisine.getDish_name());
+            Log.d(TAG, dishesOfCuisine.getDish_name());
         }
     }
 
     @Override
     public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, Long parentDishId, int flag) {
-        cartFragmentPresenter.addCustomizableItemToCart(dishesOfCuisine,parentDishId,flag);
+        cartFragmentPresenter.addCustomizableItemToCart(dishesOfCuisine, parentDishId, flag);
     }
 
-
-    @Override
-    public void injectAdapterWithData() {
-        adapter.fetchCartItems();
-    }
-
-    @Override
-    public void renderEmptyCart() {
-
-    }
 
     @Override
     public void updateBottomSheet(int totalItems, Double cartTotal) {
-        if(cartTotal!=null) {
+        if (cartTotal != null) {
             tvTotalBillAmt.setText(String.valueOf(getActivity().getApplication().getString(R.string.rupee_symbol, cartTotal.intValue())));
             tvTotalQuantities.setText(String.valueOf(totalItems));
         }
@@ -149,5 +152,10 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     @Override
     public void updateAdapter() {
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showCartEmpty() {
+       activity.showCartEmptyFragment();
     }
 }

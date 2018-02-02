@@ -13,6 +13,11 @@ import tdevm.app_ui.base.BasePresenterMVP;
 
 public interface DineInPresenterContract {
 
+    interface DineInActivityPresenter extends BasePresenterMVP<DineInViewContract.DineInActivity>{
+        void attachView(DineInViewContract.DineInActivity view);
+        void detachView();
+    }
+
     interface DishMenuPresenter extends BasePresenterMVP<DineInViewContract.DishMenuView>{
         void attachView(DineInViewContract.DishMenuView view);
         void detachView();
@@ -43,7 +48,7 @@ public interface DineInPresenterContract {
     interface CartFragmentPresenter extends BasePresenterMVP<DineInViewContract.CartFragmentView>{
         void attachView(DineInViewContract.CartFragmentView view);
         void detachView();
-        void fetchCartItems();
+        boolean cartItemsExists();
         void addItemToCart(DishesOfCuisine dishesOfCuisine);
         void updateCartItem(DishesOfCuisine dishesOfCuisine);
         void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long parentDishId, int operationFlag);

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -20,8 +21,11 @@ import tdevm.app_ui.modules.dinein.fragments.RunningOrderFragment;
 import tdevm.app_ui.root.BottomNavigationViewHelper;
 import tdevm.app_ui.utils.AuthUtils;
 
-public class DineInActivity extends AppCompatActivity {
+public class DineInActivity extends AppCompatActivity implements DineInViewContract.DineInActivity {
 
+
+    @Inject
+    DineInActivityPresenter presenter;
 
     FragmentTransaction fragmentTransaction;
     //Toolbar toolbarDineIn;
@@ -56,13 +60,19 @@ public class DineInActivity extends AppCompatActivity {
     };
 
     @Override
+    protected void onResume() {
+        presenter.attachView(this);
+        super.onResume();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dine_in_home);
         resolveDaggerDependencies();
         //toolbarDineIn = findViewById(R.id.toolbar_dine_in_home);
         //setSupportActionBar(toolbarDineIn);
-        if(getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Dine in");
         }
 //        toolbarDineIn.setNavigationOnClickListener(new View.OnClickListener() {
@@ -82,8 +92,31 @@ public class DineInActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void showProgressUI() {
+
+    }
+
+    public void showCartEmptyFragment(){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        CartFragment cartFragment = new CartFragment();
+        transaction.replace(R.id.frame_layout_dine_in, cartFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void hideProgressUI() {
+
+    }
+
     public void resolveDaggerDependencies() {
         ((AppApplication) getApplication()).getApiComponent().inject(this);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
+    }
 }

@@ -33,15 +33,10 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
         compositeDisposable = new CompositeDisposable();
     }
 
+
     @Override
-    public void fetchCartItems(){
-        if(cartHelper.cartItemsExist()){
-            cartFragmentView.injectAdapterWithData();
-            if(cartHelper.getCartTotalItems()>0){
-                cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
-            }
-        }
-        logSelections();
+    public boolean cartItemsExists() {
+        return cartHelper.cartItemsExist();
     }
 
 
@@ -60,6 +55,9 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
         cartHelper.updateSelectionItem(dishesOfCuisine);
         cartFragmentView.updateAdapter();
         cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
+        if(cartHelper.getCartTotalItems()==0){
+            cartFragmentView.showCartEmpty();
+        }
         logSelections();
     }
 

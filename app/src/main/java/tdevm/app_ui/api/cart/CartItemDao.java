@@ -21,10 +21,10 @@ import io.reactivex.Single;
 public interface CartItemDao {
 
     @Query("SELECT * FROM cart_items")
-    Flowable<List<CartItem>> getCartItems();
+    List<CartItem> getCartItems();
 
     @Query("SELECT * FROM cart_items WHERE dishId = :dishId")
-    Single<CartItem> getCartItemById(Long dishId);
+    CartItem getCartItemById(Long dishId);
 
     @Insert
     void addItemToCart(CartItem cartItem);

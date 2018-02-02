@@ -23,10 +23,10 @@ public interface DineInViewContract {
     }
 
     interface CartFragmentView extends BaseView{
-        void injectAdapterWithData();
-        void renderEmptyCart();
         void updateBottomSheet(int totalItems, Double cartTotal);
         void updateAdapter();
+
+        void showCartEmpty();
     }
 
     interface SingleCuisineGridView extends BaseView{
