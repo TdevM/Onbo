@@ -11,6 +11,10 @@ public interface NavigationHomePresenterContract {
     interface BottomNavigationHomePresenter extends BasePresenterMVP<NavigationHomeViewContract.BottomNavigationView>{
         void attachView(NavigationHomeViewContract.BottomNavigationView view);
         void detachView();
+        void handleUserAuthentication();
+        void clearExistingCart();
+        void handleQRContent(String qrContent);
+        void verifyRestaurantTableVacant(String tableShortId);
     }
 
 }

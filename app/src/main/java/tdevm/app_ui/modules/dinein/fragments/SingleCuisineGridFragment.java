@@ -123,7 +123,9 @@ public class SingleCuisineGridFragment extends Fragment
         bundle.putParcelableArrayList("DISHES", arrayList);
         bundle.putParcelable("PARENT_DISH", variantsFetched);
         dishVariantsSheet.setArguments(bundle);
-        dishVariantsSheet.show(getChildFragmentManager(), getTag());
+        if(!dishVariantsSheet.isAdded()) {
+            dishVariantsSheet.show(getChildFragmentManager(), getTag());
+        }
         Log.d(TAG,arrayList.toString());
     }
 
