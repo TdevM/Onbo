@@ -35,6 +35,9 @@ public interface CartItemDao {
     @Delete
     void deleteItemFromCart(CartItem item);
 
+    @Query("DELETE FROM cart_items")
+    void deleteCartItems();
+
     @Query("SELECT SUM(price) FROM cart_items")
     Single<Double> getCartTotal();
 

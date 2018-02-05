@@ -1,6 +1,7 @@
 package tdevm.app_ui.api.cart;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
@@ -27,8 +28,11 @@ public interface CartSelectionDao {
     @Insert
     void addItemToSelection(CartSelection selection);
 
-    @Insert
+    @Delete
     void deleteItemFromSelection(CartSelection selection);
+
+    @Query("DELETE FROM cart_selections")
+    void deleteCartSelections();
 
     @Query("UPDATE cart_selections SET qty = qty + 1 WHERE dishId = :dishId ")
     void incrementCartSelectionById(Long dishId);

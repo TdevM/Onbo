@@ -214,6 +214,11 @@ public class CartHelper extends BasePresenter {
         return false;
     }
 
+    public void clearCart(){
+        cartItemDao.deleteCartItems();
+        cartSelectionDao.deleteCartSelections();
+    }
+
     public void logCartItems(){
         for (int i = 0; i < getCartItems().size(); i++) {
             Log.d(TAG, "Cart Item:" + getCartItems().get(i).getDishesOfCuisine().getDish_name()

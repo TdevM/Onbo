@@ -49,6 +49,7 @@ public interface DineInPresenterContract {
         void attachView(DineInViewContract.CartFragmentView view);
         void detachView();
         boolean cartItemsExists();
+        void showCartEmpty();
         void addItemToCart(DishesOfCuisine dishesOfCuisine);
         void updateCartItem(DishesOfCuisine dishesOfCuisine);
         void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long parentDishId, int operationFlag);

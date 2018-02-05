@@ -13,6 +13,7 @@ import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
+import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -25,11 +26,14 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
     private CartHelper cartHelper;
     private DineInViewContract.CartFragmentView cartFragmentView;
     private CompositeDisposable compositeDisposable;
-
+    private AuthUtils authUtils;
+    private static final String MODE_DINE_IN = "MODE_DINE_IN";
+    private static final String MODE_NON_DINE = "MODE_NON_DINE";
 
     @Inject
-    public CartFragmentPresenterImpl(CartHelper cartHelper) {
+    public CartFragmentPresenterImpl(CartHelper cartHelper, AuthUtils authUtils) {
         this.cartHelper = cartHelper;
+        this.authUtils = authUtils;
         compositeDisposable = new CompositeDisposable();
     }
 
@@ -56,9 +60,22 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
         cartFragmentView.updateAdapter();
         cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
         if(cartHelper.getCartTotalItems()==0){
-            cartFragmentView.showCartEmpty();
+            showCartEmpty();
         }
         logSelections();
+    }
+
+    @Override
+    public void showCartEmpty(){
+        if(authUtils.getRestaurantMode().equals(MODE_DINE_IN)){
+            cartFragmentView.showDineCartEmpty();
+        }else if(authUtils.getRestaurantMode().equals(MODE_NON_DINE)){
+            cartFragmentView.showNonDineEmptyCart();
+        }
+    }
+
+    public void clearCart(){
+        cartHelper.clearCart();
     }
 
     @Override
