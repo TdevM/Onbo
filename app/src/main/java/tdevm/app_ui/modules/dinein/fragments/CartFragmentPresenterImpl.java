@@ -34,7 +34,7 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
     public CartFragmentPresenterImpl(CartHelper cartHelper, AuthUtils authUtils) {
         this.cartHelper = cartHelper;
         this.authUtils = authUtils;
-        compositeDisposable = new CompositeDisposable();
+        this.compositeDisposable = new CompositeDisposable();
     }
 
 
@@ -100,8 +100,10 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
 
     @Override
     public void detachView() {
-        compositeDisposable.clear();
-        compositeDisposable.dispose();
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable.clear();
+        }
     }
 
 

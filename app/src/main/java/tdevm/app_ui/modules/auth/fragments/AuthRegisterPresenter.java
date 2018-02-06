@@ -34,7 +34,7 @@ public class AuthRegisterPresenter extends BasePresenter implements AuthPresente
     public AuthRegisterPresenter(APIService apiService,AuthUtils authUtils) {
         this.apiService = apiService;
         this.authUtils = authUtils;
-        compositeDisposable = new CompositeDisposable();
+        this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -81,7 +81,9 @@ public class AuthRegisterPresenter extends BasePresenter implements AuthPresente
 
     @Override
     public void detachView() {
-        compositeDisposable.dispose();
-        compositeDisposable.clear();
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable.clear();
+        }
     }
 }

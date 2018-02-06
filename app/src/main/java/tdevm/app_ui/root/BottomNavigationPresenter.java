@@ -42,7 +42,7 @@ public class BottomNavigationPresenter extends BasePresenter implements Navigati
     public BottomNavigationPresenter(APIService apiService, AuthUtils authUtils, CartHelper cartHelper) {
         this.authUtils = authUtils;
         this.cartHelper = cartHelper;
-        compositeDisposable = new CompositeDisposable();
+        this.compositeDisposable = new CompositeDisposable();
         this.apiService = apiService;
     }
 
@@ -142,8 +142,10 @@ public class BottomNavigationPresenter extends BasePresenter implements Navigati
 
     @Override
     public void detachView() {
-        compositeDisposable.clear();
-        compositeDisposable.dispose();
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable.clear();
+        }
     }
 
     public void verifyUserAuthentication() {

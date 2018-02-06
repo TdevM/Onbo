@@ -37,7 +37,7 @@ public class SingleCuisineGridPresenter extends BasePresenter
 
     @Inject
     public SingleCuisineGridPresenter(AuthUtils authUtils, APIService apiService, CartHelper cartHelper) {
-        compositeDisposable = new CompositeDisposable();
+        this.compositeDisposable = new CompositeDisposable();
         this.authUtils = authUtils;
         this.cartHelper = cartHelper;
         this.apiService = apiService;
@@ -140,8 +140,10 @@ public class SingleCuisineGridPresenter extends BasePresenter
 
     @Override
     public void detachView() {
-      compositeDisposable.clear();
-      compositeDisposable.dispose();
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable.clear();
+        }
     }
 
     public void logSelections() {

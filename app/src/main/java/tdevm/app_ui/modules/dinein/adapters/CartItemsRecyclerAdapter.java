@@ -65,7 +65,6 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         Log.d("Cart", String.valueOf(cartHelper.getCartTotalItems()));
         List<CartItem> cartItems = cartHelper.getCartItems();
         cartItemArrayList.addAll(cartItems);
-        Glide.with(context).load(cartItemArrayList.get(position).getDishesOfCuisine().getDish_image_url()).into(holder.dishImage);
         holder.dishName.setText(cartItemArrayList.get(position).getDishesOfCuisine().getDish_name());
         holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice().intValue())));
         holder.incDecButton.setNumber(cartItemArrayList.get(position).getQuantity(), true);
@@ -90,8 +89,7 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
     public class CartItemsViewHolder extends RecyclerView.ViewHolder {
 
 
-        @BindView(R.id.cart_item_image_view)
-        ImageView dishImage;
+
         @BindView(R.id.cart_item_tv_dish_name)
         TextView dishName;
         @BindView(R.id.cart_item_tv_dish_price)

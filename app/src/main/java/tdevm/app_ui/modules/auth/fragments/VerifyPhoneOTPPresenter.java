@@ -31,7 +31,7 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
 
     @Inject
     public VerifyPhoneOTPPresenter(APIService apiService) {
-        compositeDisposable = new CompositeDisposable();
+        this.compositeDisposable = new CompositeDisposable();
         this.apiService =apiService;
     }
 
@@ -121,7 +121,9 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
 
     @Override
     public void detachView() {
-        compositeDisposable.clear();
-        compositeDisposable.dispose();
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable.clear();
+        }
     }
 }

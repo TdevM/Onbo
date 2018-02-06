@@ -4,6 +4,7 @@ package tdevm.app_ui.modules.dinein.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,6 +33,7 @@ import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 import tdevm.app_ui.modules.nondinein.activities.NonDineActivity;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CartHelper;
+import tdevm.app_ui.widgets.ItemOffsetDecoration;
 
 public class CartFragment extends Fragment implements DineInViewContract.CartFragmentView, DishItemClickListener {
 
@@ -92,6 +94,9 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
             mLayoutManager = new LinearLayoutManager(getContext());
             adapter = new CartItemsRecyclerAdapter(getActivity(), cartFragmentPresenter, cartHelper);
             adapter.setOnDishItemClickListener(this);
+            ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getActivity(), R.dimen.recycler_view_item_width);
+//            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL);
+            recyclerViewCart.addItemDecoration(itemDecoration);
             recyclerViewCart.setLayoutManager(mLayoutManager);
             recyclerViewCart.setAdapter(adapter);
             //TODO Avoid Direct Model Access

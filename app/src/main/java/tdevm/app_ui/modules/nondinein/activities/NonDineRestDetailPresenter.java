@@ -38,7 +38,7 @@ public class NonDineRestDetailPresenter extends BasePresenter implements NonDine
     public NonDineRestDetailPresenter(APIService apiService, AuthUtils authUtils, CartHelper cartHelper) {
         this.apiService = apiService;
         this.authUtils = authUtils;
-        compositeDisposable = new CompositeDisposable();
+        this.compositeDisposable = new CompositeDisposable();
         this.cartHelper = cartHelper;
     }
 
@@ -79,7 +79,9 @@ public class NonDineRestDetailPresenter extends BasePresenter implements NonDine
 
     @Override
     public void detachView() {
-      compositeDisposable.clear();
-      compositeDisposable.dispose();
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable.clear();
+        }
     }
 }

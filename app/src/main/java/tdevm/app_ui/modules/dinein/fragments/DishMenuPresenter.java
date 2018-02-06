@@ -33,7 +33,7 @@ public class DishMenuPresenter extends BasePresenter implements DineInPresenterC
     public DishMenuPresenter(APIService apiService, AuthUtils authUtils) {
         this.apiService = apiService;
         this.authUtils = authUtils;
-        compositeDisposable = new CompositeDisposable();
+        this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -69,7 +69,9 @@ public class DishMenuPresenter extends BasePresenter implements DineInPresenterC
 
     @Override
     public void detachView() {
-      compositeDisposable.clear();
-      compositeDisposable.dispose();
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable.clear();
+        }
     }
 }

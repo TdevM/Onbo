@@ -31,7 +31,7 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
 
     @Inject
     public AuthLoginPresenter(APIService apiService,AuthUtils authUtils) {
-        compositeDisposable = new CompositeDisposable();
+        this.compositeDisposable = new CompositeDisposable();
         this.apiService = apiService;
         this.authUtils = authUtils;
     }
@@ -82,7 +82,9 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
 
     @Override
     public void detachView() {
-       compositeDisposable.clear();
-       compositeDisposable.dispose();
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable.clear();
+        }
     }
 }
