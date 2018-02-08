@@ -8,6 +8,7 @@
     tools:context="tdevm.app_ui.modules.dinein.fragments.CartFragment">
 
     <!-- TODO: Update blank fragmlayout_inc_decyout -->
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_cart"
         android:layout_weight="4"
@@ -27,15 +28,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/btn_order_initiate"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:text="@string/proceed" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -83,7 +75,14 @@
                 android:layout_marginEnd="13dp"
                 android:layout_marginRight="13dp"
                 android:text="@string/_0" />
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
+    <Button
+        android:id="@+id/btn_order_initiate"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/proceed" />
 </LinearLayout>

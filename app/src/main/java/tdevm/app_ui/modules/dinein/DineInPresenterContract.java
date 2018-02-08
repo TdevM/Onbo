@@ -54,4 +54,10 @@ public interface DineInPresenterContract {
         void updateCartItem(DishesOfCuisine dishesOfCuisine);
         void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long parentDishId, int operationFlag);
     }
+
+    interface RunningOrderFragmentPresenter extends BasePresenterMVP<DineInViewContract.RunningOrderView>{
+        void fetchTempRunningOrder();
+        void attachView(DineInViewContract.RunningOrderView view);
+        void detachView();
+    }
 }

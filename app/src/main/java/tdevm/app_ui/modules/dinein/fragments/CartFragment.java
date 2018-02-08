@@ -96,7 +96,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
             adapter.setOnDishItemClickListener(this);
             ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getActivity(), R.dimen.recycler_view_item_width);
 //            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL);
-            recyclerViewCart.addItemDecoration(itemDecoration);
+            //recyclerViewCart.addItemDecoration(itemDecoration);
             recyclerViewCart.setLayoutManager(mLayoutManager);
             recyclerViewCart.setAdapter(adapter);
             //TODO Avoid Direct Model Access

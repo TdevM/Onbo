@@ -39,6 +39,11 @@ public interface DineInViewContract {
 
     }
 
+    interface RunningOrderView extends BaseView{
+        void onTempOrderFetched();
+        void showNoRunningOrder();
+    }
+
     interface PlaceTempOrderView extends BaseView{
         void onOrderDetailsFetched(String message);
         void onOrderItemsAdded();
