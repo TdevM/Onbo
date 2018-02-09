@@ -17,7 +17,8 @@
     <string name="choose_an_option">Choose a dish variation.</string>
     <string name="verify_number">Verify</string>
     <string name="start_order_t2">Start Order</string>
-
+    <string name="running_order_id">Order No #%1$s</string>
+    <string name="running_order_table_no">Table No %1$s</string>
 
     <string name="turn_on_flashlight">Turn on Flashlight</string>
     <string name="turn_off_flashlight">Turn off Flashlight</string>

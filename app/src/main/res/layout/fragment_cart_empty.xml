@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFFF"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:background="#FFFF"
+android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_gravity="bottom"
-        android:textColor="#1B4A54"
-        android:layout_marginBottom="31dp"
-        android:text="There's no food here." />
+<TextView
+    android:id="@+id/textView5"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="100dp"
+    android:layout_marginStart="100dp"
+    android:layout_gravity="bottom"
+    android:textColor="#1B4A54"
+    android:layout_marginBottom="31dp"
+    android:text="There's no food here." />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:src="@drawable/cart_empty_i" />
+<ImageView
+    android:id="@+id/imageView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="28dp"
+    android:src="@drawable/cart_empty_i" />
 </FrameLayout>

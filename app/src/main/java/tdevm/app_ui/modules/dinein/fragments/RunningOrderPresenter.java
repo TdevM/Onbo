@@ -1,7 +1,18 @@
 package tdevm.app_ui.modules.dinein.fragments;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
+import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
@@ -20,6 +31,7 @@ public class RunningOrderPresenter extends BasePresenter implements DineInPresen
     private CartHelper cartHelper;
     private APIService apiService;
 
+    @Inject
     public RunningOrderPresenter(AuthUtils authUtils, CartHelper cartHelper, APIService apiService) {
         this.compositeDisposable = new CompositeDisposable();
         this.authUtils = authUtils;
@@ -29,7 +41,33 @@ public class RunningOrderPresenter extends BasePresenter implements DineInPresen
 
 
     public void fetchTempRunningOrder(){
+        Map<String,String> map = new HashMap<>();
+        map.put("restaurant_uuid",authUtils.getScannedRestaurantUuid());
+        Observable<Response<ArrayList<TempOrder>>> observable = apiService.fetchMyRunningOrder(authUtils.getAuthLoginToken(),map);
+        subscribe(observable, new Observer<Response<ArrayList<TempOrder>>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
 
+            @Override
+            public void onNext(Response<ArrayList<TempOrder>> arrayListResponse) {
+                if(arrayListResponse.isSuccessful()){
+                    view.onTempOrderFetched(arrayListResponse.body());
+                }else if(arrayListResponse.code() ==404){
+                    view.showNoRunningOrder();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
 

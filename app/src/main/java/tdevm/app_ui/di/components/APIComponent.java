@@ -11,6 +11,7 @@ import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.activities.PlaceTempOrder;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
+import tdevm.app_ui.modules.dinein.fragments.RunningOrderFragment;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
 import tdevm.app_ui.modules.nondinein.activities.NonDineActivity;
 import tdevm.app_ui.modules.nondinein.activities.NonDineRestaurantDetailsActivity;
@@ -35,4 +36,5 @@ public interface APIComponent {
     void inject(PlaceTempOrder placeTempOrder);
     void inject(NonDineRestaurantDetailsActivity activity);
     void inject(NonDineActivity activity);
+    void inject(RunningOrderFragment fragment);
 }
