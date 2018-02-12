@@ -17,4 +17,9 @@ public interface NavigationHomePresenterContract {
         void verifyRestaurantTableVacant(String tableShortId);
     }
 
+    interface AccountsPresenter extends BasePresenterMVP<NavigationHomeViewContract.AccountsFragmentView>{
+        void detachView();
+        void attachView(NavigationHomeViewContract.AccountsFragmentView view);
+        void fetchUser();
+    }
 }

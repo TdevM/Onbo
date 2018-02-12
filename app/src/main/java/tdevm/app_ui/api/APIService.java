@@ -21,6 +21,7 @@ import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.Restaurant;
 import tdevm.app_ui.api.models.response.RestaurantTable;
 import tdevm.app_ui.api.models.response.TempOrder;
+import tdevm.app_ui.api.models.response.UserApp;
 
 /**
  * Created by Tridev on 04-10-2017.
@@ -38,7 +39,9 @@ public interface APIService {
     @POST("user/login")
     Observable<Response<Object>> loginUser(@Body User user);
     @GET("user/me")
-    Observable<String> fetchUser(@Header("x-auth") String authToken);
+    Observable<Response<UserApp>> fetchUser(@Header("x-auth") String authToken);
+    @GET("user/orders")
+    Observable<Object> fetchOrders(@Header("x-auth") String authToken);
 
 
     //Restaurant Data

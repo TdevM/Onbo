@@ -1,6 +1,7 @@
 package tdevm.app_ui.modules.dinein.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,7 @@ import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
+import tdevm.app_ui.modules.dinein.activities.PlaceTempOrder;
 import tdevm.app_ui.modules.dinein.adapters.CartItemsRecyclerAdapter;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 import tdevm.app_ui.modules.nondinein.activities.NonDineActivity;
@@ -44,7 +46,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     RecyclerView recyclerViewCart;
     @OnClick(R.id.btn_order_initiate)
     void clear(){
-        clearCart();
+        startTempOrderActivity();
     }
     @BindView(R.id.tv_total_quantities)
     TextView tvTotalQuantities;
@@ -126,6 +128,11 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     public void clearCart(){
         cartFragmentPresenter.clearCart();
+    }
+
+    public void startTempOrderActivity(){
+        Intent intent = new Intent(getContext(), PlaceTempOrder.class);
+        startActivity(intent);
     }
 
     @Override

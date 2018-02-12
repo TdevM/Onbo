@@ -1,6 +1,7 @@
 package tdevm.app_ui.modules.dinein.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -9,6 +10,8 @@ import javax.inject.Inject;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
+import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
+import tdevm.app_ui.modules.dinein.fragments.InitializeTempOrderFragment;
 
 
 public class PlaceTempOrder extends AppCompatActivity implements DineInViewContract.PlaceTempOrderView{
@@ -19,6 +22,7 @@ public class PlaceTempOrder extends AppCompatActivity implements DineInViewContr
 
     @Override
     protected void onResume() {
+        resolveDaggerDependencies();
         placeTempOrderPresenter.attachView(this);
         super.onResume();
     }
@@ -27,6 +31,11 @@ public class PlaceTempOrder extends AppCompatActivity implements DineInViewContr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_temp_order);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        InitializeTempOrderFragment fragment = new InitializeTempOrderFragment();
+        transaction.replace(R.id.frame_layout_place_temp_order, fragment);
+        transaction.commit();
+
     }
 
     @Override

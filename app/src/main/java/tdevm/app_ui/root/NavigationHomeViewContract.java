@@ -1,5 +1,6 @@
 package tdevm.app_ui.root;
 
+import tdevm.app_ui.api.models.response.UserApp;
 import tdevm.app_ui.base.BaseView;
 
 /**
@@ -15,5 +16,12 @@ public interface NavigationHomeViewContract {
         void showUserProfile();
         void redirectAuthActivity();
         void startQRScanner();
+    }
+
+    interface AccountsFragmentView extends BaseView{
+        void onUserFetched(UserApp userApp);
+        void showProgressUI();
+        void hideProgressUI();
+        void resolveDaggerDependencies();
     }
 }

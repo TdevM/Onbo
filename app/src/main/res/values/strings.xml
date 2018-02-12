@@ -66,4 +66,5 @@
     <string name="_0">0</string>
     <string name="to_pay">To Pay</string>
     <string name="title_activity_non_dine">NonDineActivity</string>
+    <string name="any_message_you_want_to_send_to_chef">Any message you want to send to chef?</string>
 </resources>

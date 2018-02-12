@@ -13,22 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.UserApp;
+import tdevm.app_ui.root.NavigationHomeViewContract;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccountsFragment extends Fragment {
-
-    TextView tvName;
-    TextView tvPhone;
-    String token;
-
-    public static final String AuthPreferences = "AUTH_PREFERENCE";
-    public static final String loginStatePreference = "LOGIN_STATE";
-    public static final String loginPhonePreference = "LOGIN_PHONE";
-    public static final String loginTokenPreference = "LOGIN_TOKEN";
-
-    SharedPreferences sharedpreferences;
+public class AccountsFragment extends Fragment implements NavigationHomeViewContract.AccountsFragmentView{
 
 
     public AccountsFragment() {
@@ -42,13 +33,6 @@ public class AccountsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         Log.d("AccountsFragment", "onAttach() Called");
-        Bundle bundle = this.getArguments();
-        if(bundle!=null){
-            token = bundle.getString(loginTokenPreference);
-            //Log.d("AccountsFragment", "FromOnAttach(): "+token);
-        }else {
-            Log.d("AccountsFragment", "Bundle is null");
-        }
         super.onAttach(context);
     }
 
@@ -60,8 +44,6 @@ public class AccountsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view;
         view = inflater.inflate(R.layout.fragment_accounts,container,false);
-        tvName = view.findViewById(R.id.tv_display_name);
-        tvPhone = view.findViewById(R.id.tv_display_phone);
 
         return view;
     }
@@ -80,6 +62,27 @@ public class AccountsFragment extends Fragment {
         Log.d("AccountsFragment", "onPause() Called");
 
         super.onPause();
+    }
+
+
+    @Override
+    public void onUserFetched(UserApp userApp) {
+
+    }
+
+    @Override
+    public void showProgressUI() {
+
+    }
+
+    @Override
+    public void hideProgressUI() {
+
+    }
+
+    @Override
+    public void resolveDaggerDependencies() {
+
     }
 
     /**
