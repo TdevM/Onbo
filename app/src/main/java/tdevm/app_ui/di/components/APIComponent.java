@@ -16,6 +16,7 @@ import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
 import tdevm.app_ui.modules.nondinein.activities.NonDineActivity;
 import tdevm.app_ui.modules.nondinein.activities.NonDineRestaurantDetailsActivity;
 import tdevm.app_ui.root.BottomNavigationHome;
+import tdevm.app_ui.root.fragments.AccountsFragment;
 
 /**
  * Created by Tridev on 04-10-2017.
@@ -37,4 +38,6 @@ public interface APIComponent {
     void inject(NonDineRestaurantDetailsActivity activity);
     void inject(NonDineActivity activity);
     void inject(RunningOrderFragment fragment);
+    void inject(AccountsFragment fragment);
+
 }
