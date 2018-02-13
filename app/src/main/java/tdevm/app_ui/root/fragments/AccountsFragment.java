@@ -2,11 +2,13 @@ package tdevm.app_ui.root.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.UserApp;
+import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
 import tdevm.app_ui.root.NavigationHomeViewContract;
 
 /**
@@ -39,6 +42,9 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
     TextView userMobile;
     @BindView(R.id.tv_logged_user_name)
     TextView userName;
+
+    @BindView(R.id.cardView_text_orders)
+    CardView cardView;
 
 
     @Inject
@@ -74,6 +80,10 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
         presenter.fetchUser();
         view = inflater.inflate(R.layout.fragment_accounts,container,false);
         unbinder = ButterKnife.bind(this,view);
+        cardView.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), RestaurantOrdersActivity.class);
+            startActivity(intent);
+        });
         return view;
     }
 

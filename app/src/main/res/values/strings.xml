@@ -75,4 +75,7 @@
     <string name="my_favourites">My Favourites</string>
     <string name="_919560447160">+919560447160</string>
     <string name="tridevtga_gmail_com">tridevtga@gmail.com</string>
+    <string name="title_activity_restaurant_orders">RestaurantOrdersActivity</string>
+    <string name="tab_dine_in">Dine In</string>
+    <string name="tab_non_dine_in">Non Dine</string>
 </resources>
