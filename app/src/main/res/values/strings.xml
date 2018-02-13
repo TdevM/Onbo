@@ -26,7 +26,7 @@
     <string name="symbol_plus_inc_dec">+</string>
     <string name="symbol_minus_inc_dec">-</string>
     <string name="add_inc_dec">ADD</string>
-
+    <string name="user_profile_picture">User Profile Image</string>
     <string name="title_notifications">Notifications</string>
     <string name="phone_number">Phone Number</string>
     <string name="password">Password</string>
@@ -67,4 +67,10 @@
     <string name="to_pay">To Pay</string>
     <string name="title_activity_non_dine">NonDineActivity</string>
     <string name="any_message_you_want_to_send_to_chef">Any message you want to send to chef?</string>
+    <string name="tridev_mishra">Tridev Mishra</string>
+    <string name="logout">LOGOUT</string>
+    <string name="my_reviews">My Reviews</string>
+    <string name="my_orders">My Orders</string>
+    <string name="profile">Profile</string>
+    <string name="my_favourites">My Favourites</string>
 </resources>
