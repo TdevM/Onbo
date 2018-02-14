@@ -136,7 +136,7 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
 
     @Override
     public void onLoggedOut() {
-
+        Toast.makeText(getContext(), "Logged Out!", Toast.LENGTH_SHORT).show();
     }
 
 

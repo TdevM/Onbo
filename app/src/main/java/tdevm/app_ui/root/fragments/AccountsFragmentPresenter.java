@@ -71,7 +71,7 @@ public class AccountsFragmentPresenter extends BasePresenter implements Navigati
 
     @Override
     public void logOutUser() {
-
+      fragmentView.onLoggedOut();
     }
 
     @Override

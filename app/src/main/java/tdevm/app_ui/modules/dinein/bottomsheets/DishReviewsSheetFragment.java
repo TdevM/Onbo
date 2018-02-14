@@ -12,7 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
+import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.modules.dinein.DineInViewContract;
+import tdevm.app_ui.modules.dinein.adapters.DishReviewsAdapter;
 
 /**
  * <p>A fragment that shows a list of items as a modal bottom sheet.</p>
@@ -22,25 +27,41 @@ import tdevm.app_ui.R;
  * </pre>
  * <p>You activity (or fragment) needs to implement {@link DishReviewsSheetFragment.Listener}.</p>
  */
-public class DishReviewsSheetFragment extends BottomSheetDialogFragment {
+public class DishReviewsSheetFragment extends BottomSheetDialogFragment implements DineInViewContract.DishReviewsSheetView{
 
-    // TODO: Customize parameter argument names
+    public static final String TAG = DishReviewsSheetFragment.class.getSimpleName();
     private static final String ARG_ITEM_COUNT = "item_count";
+    private static final String DISH_ID = "dish_id";
     private Listener mListener;
 
-    // TODO: Customize parameters
-    public static DishReviewsSheetFragment newInstance(int itemCount) {
+    @Inject
+    DishReviewsSheetPresenter presenter;
+
+    public static DishReviewsSheetFragment newInstance(int itemCount, Long dishId) {
         final DishReviewsSheetFragment fragment = new DishReviewsSheetFragment();
         final Bundle args = new Bundle();
         args.putInt(ARG_ITEM_COUNT, itemCount);
+        args.putLong(DISH_ID,dishId);
         fragment.setArguments(args);
         return fragment;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.attachView(this);
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        resolveDaggerDependencies();
+        long dishId = getArguments().getLong(DISH_ID);
+        presenter.fetchDishReview(dishId);
+
         return inflater.inflate(R.layout.fragment_dish_reviews_sheet, container, false);
     }
 
@@ -48,7 +69,7 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         final RecyclerView recyclerView = (RecyclerView) view;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new ItemAdapter(getArguments().getInt(ARG_ITEM_COUNT)));
+        recyclerView.setAdapter(new DishReviewsAdapter(getArguments().getInt(ARG_ITEM_COUNT)));
     }
 
     @Override
@@ -68,54 +89,34 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment {
         super.onDetach();
     }
 
+    @Override
+    public void showProgressUI() {
+
+    }
+
+    @Override
+    public void hideProgressUI() {
+
+    }
+
+    @Override
+    public void resolveDaggerDependencies() {
+        ((AppApplication) getActivity().getApplication()).getApiComponent().inject(this);
+
+    }
+
+    @Override
+    public void onDishReviewsFetched() {
+
+    }
+
     public interface Listener {
         void onItemClicked(int position);
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder {
-
-        final TextView text;
-
-        ViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            // TODO: Customize the item layout
-            super(inflater.inflate(R.layout.item_single_dish_review, parent, false));
-            text = (TextView) itemView.findViewById(R.id.text);
-            text.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-                        mListener.onItemClicked(getAdapterPosition());
-                        dismiss();
-                    }
-                }
-            });
-        }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
     }
-
-    private class ItemAdapter extends RecyclerView.Adapter<ViewHolder> {
-
-        private final int mItemCount;
-
-        ItemAdapter(int itemCount) {
-            mItemCount = itemCount;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(LayoutInflater.from(parent.getContext()), parent);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.text.setText(String.valueOf(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return mItemCount;
-        }
-
-    }
-
 }

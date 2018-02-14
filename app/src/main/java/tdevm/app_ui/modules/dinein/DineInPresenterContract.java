@@ -59,4 +59,10 @@ public interface DineInPresenterContract {
         void attachView(DineInViewContract.RunningOrderView view);
         void detachView();
     }
+
+    interface DishReviewSheet extends BasePresenterMVP<DineInViewContract.DishReviewsSheetView>{
+        void attachView(DineInViewContract.DishReviewsSheetView view);
+        void detachView();
+        void fetchDishReview(Long dishId);
+    }
 }

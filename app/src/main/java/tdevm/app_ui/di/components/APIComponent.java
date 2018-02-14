@@ -9,6 +9,7 @@ import tdevm.app_ui.modules.auth.fragments.AuthRegisterFragment;
 import tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.activities.PlaceTempOrder;
+import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
 import tdevm.app_ui.modules.dinein.fragments.RunningOrderFragment;
@@ -39,5 +40,5 @@ public interface APIComponent {
     void inject(NonDineActivity activity);
     void inject(RunningOrderFragment fragment);
     void inject(AccountsFragment fragment);
-
+    void inject(DishReviewsSheetFragment fragment);
 }

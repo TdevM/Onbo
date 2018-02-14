@@ -13,12 +13,16 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 import tdevm.app_ui.api.models.OneTimePassword;
+import tdevm.app_ui.api.models.request.AddDishReview;
+import tdevm.app_ui.api.models.request.AddRestaurantReview;
 import tdevm.app_ui.api.models.request.RestaurantOrder;
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.api.models.response.Dish;
+import tdevm.app_ui.api.models.response.DishReviews;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.Restaurant;
+import tdevm.app_ui.api.models.response.RestaurantReviews;
 import tdevm.app_ui.api.models.response.RestaurantTable;
 import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.api.models.response.UserApp;
@@ -57,6 +61,17 @@ public interface APIService {
     Observable<ArrayList<DishesOfCuisine>> fetchDishesByCuisine(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
     @GET("restaurant/dishes/variants")
     Observable<ArrayList<DishesOfCuisine>> fetchDishVariantsByCuisines(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
+
+
+    //Reviews
+    @GET("dish_reviews")
+    Observable<Response<ArrayList<DishReviews>>> fetchDishReviewsById(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
+    @POST("dish_reviews/add")
+    Observable<Response<Object>> addADishReview(@Header("x-auth") String authToken, @Body AddDishReview dishReview);
+    @GET("restaurant_reviews")
+    Observable<Response<ArrayList<RestaurantReviews>>> fetchRestaurantReviewsById(@Header("x-auth") String authToken, @QueryMap Map<String, String> options);
+    @POST("restaurant_reviews/add")
+    Observable<Response<Object>> addARestaurantReview(@Header("x-auth") String authToken, @Body AddRestaurantReview restaurantReview);
 
 
 

@@ -52,4 +52,8 @@ public interface DineInViewContract {
         void onNewOrderCreated();
     }
 
+    interface DishReviewsSheetView extends BaseView{
+        void onDishReviewsFetched();
+    }
+
 }
