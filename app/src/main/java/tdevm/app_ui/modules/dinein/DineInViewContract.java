@@ -5,6 +5,7 @@ import java.util.List;
 
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.response.Cuisine;
+import tdevm.app_ui.api.models.response.DishReviews;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.base.BaseView;

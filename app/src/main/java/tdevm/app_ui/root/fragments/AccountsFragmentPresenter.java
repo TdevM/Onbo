@@ -70,6 +70,11 @@ public class AccountsFragmentPresenter extends BasePresenter implements Navigati
     }
 
     @Override
+    public void logOutUser() {
+
+    }
+
+    @Override
     public void detachView() {
         if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
             compositeDisposable.dispose();

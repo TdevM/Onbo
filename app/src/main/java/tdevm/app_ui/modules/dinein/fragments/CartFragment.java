@@ -169,6 +169,11 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
         cartFragmentPresenter.addCustomizableItemToCart(dishesOfCuisine, parentDishId, flag);
     }
 
+    @Override
+    public void onDishImageClicked(DishesOfCuisine dishesOfCuisine) {
+
+    }
+
 
     @Override
     public void updateBottomSheet(int totalItems, Double cartTotal) {

@@ -15,11 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
@@ -42,6 +44,10 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
     TextView userMobile;
     @BindView(R.id.tv_logged_user_name)
     TextView userName;
+    @OnClick(R.id.btn_logout_user)
+    void onClick(){
+        presenter.logOutUser();
+    }
 
     @BindView(R.id.cardView_text_orders)
     CardView cardView;
@@ -127,6 +133,12 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
         ((AppApplication) getActivity().getApplication()).getApiComponent().inject(this);
 
     }
+
+    @Override
+    public void onLoggedOut() {
+
+    }
+
 
     /**
      * Interface for handling events from activity

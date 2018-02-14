@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -22,11 +21,11 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.cart.CartItem;
-import tdevm.app_ui.api.cart.CartSelection;
+import tdevm.app_ui.api.models.response.DishReviews;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledGridMenuAdapter;
+import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
 import tdevm.app_ui.modules.dinein.bottomsheets.DishVariantsSheet;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 import tdevm.app_ui.modules.dinein.callbacks.DishVariantSelected;
@@ -37,7 +36,8 @@ import tdevm.app_ui.utils.CartHelper;
  */
 
 public class SingleCuisineGridFragment extends Fragment
-        implements DineInViewContract.SingleCuisineGridView, DishItemClickListener, DishVariantSelected{
+        implements DineInViewContract.SingleCuisineGridView, DishItemClickListener, DishVariantSelected,
+        DishReviewsSheetFragment.Listener{
 
     public static final String TAG = SingleCuisineGridFragment.class.getSimpleName();
     public static final String CUISINE_ID = "CUISINE_ID";
@@ -172,6 +172,13 @@ public class SingleCuisineGridFragment extends Fragment
     }
 
     @Override
+    public void onDishImageClicked(DishesOfCuisine dishesOfCuisine) {
+        //singleCuisineGridPresenter.fetchDishReviews();
+        DishReviewsSheetFragment.newInstance(30).show(getChildFragmentManager(), "dialog");
+    }
+
+
+    @Override
     public void onDishVariantSelected(DishesOfCuisine childDish, DishesOfCuisine parentDish) {
         dishVariantsSheet.dismiss();
         singleCuisineGridPresenter.addDishVariantItemToCart(childDish,parentDish);
@@ -179,6 +186,11 @@ public class SingleCuisineGridFragment extends Fragment
 
     public void logSelections() {
         cartHelper.logCartItems();
+
+    }
+
+    @Override
+    public void onItemClicked(int position) {
 
     }
 }

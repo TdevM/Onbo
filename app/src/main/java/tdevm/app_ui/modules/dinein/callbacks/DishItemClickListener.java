@@ -13,4 +13,6 @@ public interface DishItemClickListener {
     void onMinusButtonClicked(DishesOfCuisine dishesOfCuisine, int num);
     void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine,int flag);       //Customizable dish (Parent) clicked
     void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine,Long parentDishId, int flag);   //Customizable dish (Child) clicked
+
+    void onDishImageClicked(DishesOfCuisine dishesOfCuisine);
 }

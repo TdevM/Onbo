@@ -21,5 +21,7 @@ public interface NavigationHomePresenterContract {
         void detachView();
         void attachView(NavigationHomeViewContract.AccountsFragmentView view);
         void fetchUser();
+
+        void logOutUser();
     }
 }

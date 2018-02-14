@@ -128,6 +128,8 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
                     }
                 }
             });
+            // Open dish reviews
+            dishImage.setOnClickListener(v -> dishItemClickListener.onDishImageClicked(dishesOfCuisine));
         }
 
     }

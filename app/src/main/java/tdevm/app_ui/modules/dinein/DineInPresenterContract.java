@@ -34,7 +34,6 @@ public interface DineInPresenterContract {
         void updateCartItem(DishesOfCuisine dishesOfCuisine);
         void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, int operationFlag);
         void addDishVariantItemToCart(DishesOfCuisine selectedDish, DishesOfCuisine parentDish);
-
     }
 
     interface PlaceTempOrderPresenter extends BasePresenterMVP<DineInViewContract.PlaceTempOrderView>{

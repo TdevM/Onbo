@@ -132,7 +132,6 @@ public class SingleCuisineGridPresenter extends BasePresenter
         singleCuisineGridView.updateAdapter();
     }
 
-
     @Override
     public void attachView(DineInViewContract.SingleCuisineGridView view) {
         singleCuisineGridView = view;
