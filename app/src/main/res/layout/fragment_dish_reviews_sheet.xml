@@ -19,6 +19,7 @@
             app:cardCornerRadius="0dp"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/iv_dismiss_review_card"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
@@ -42,23 +43,22 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/tv_reviews_dish_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="7dp"
                     android:layout_marginStart="7dp"
-                    android:layout_toEndOf="@+id/imageView2"
-                    android:layout_toRightOf="@+id/imageView2"
-                    android:text="Tiramisu"
+                    android:layout_toEndOf="@+id/iv_reviews_veg_non_veg_indicator"
+                    android:layout_toRightOf="@+id/iv_reviews_veg_non_veg_indicator"
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/tv_reviews_dish_rating_average"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textView9"
-                    android:layout_alignBottom="@+id/textView9"
+                    android:layout_alignBaseline="@+id/tv_reviews_dish_name"
+                    android:layout_alignBottom="@+id/tv_reviews_dish_name"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="end"
@@ -68,16 +68,15 @@
                     android:textSize="20sp" />
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/iv_reviews_veg_non_veg_indicator"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_alignTop="@+id/textView9"
+                    android:layout_alignTop="@+id/tv_reviews_dish_name"
                     android:layout_marginLeft="7dp"
                     android:layout_marginStart="7dp"
-                    android:contentDescription="@string/veg_non_veg"
-                    app:srcCompat="@drawable/ic_veg" />
+                    android:contentDescription="@string/veg_non_veg" />
 
             </RelativeLayout>
 
@@ -88,20 +87,20 @@
                 android:layout_weight="4">
 
                 <ImageView
+                    android:id="@+id/iv_reviews_dish_image"
                     android:layout_width="match_parent"
-                    android:contentDescription="@string/dish_image_review"
                     android:layout_height="120dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/tiramisu_image" />
+                    android:contentDescription="@string/dish_image_review"
+                    android:scaleType="centerCrop" />
 
                 <TextView
+                    android:id="@+id/tv_reviews_dish_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:text="@string/tiramisu" />
+                    android:layout_margin="5dp" />
             </RelativeLayout>
         </LinearLayout>
 

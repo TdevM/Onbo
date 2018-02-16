@@ -174,7 +174,7 @@ public class SingleCuisineGridFragment extends Fragment
     @Override
     public void onDishImageClicked(DishesOfCuisine dishesOfCuisine) {
         //singleCuisineGridPresenter.fetchDishReviews();
-        DishReviewsSheetFragment.newInstance(30,dishesOfCuisine.getDish_id()).show(getChildFragmentManager(), "dialog");
+        DishReviewsSheetFragment.newInstance(30,dishesOfCuisine).show(getChildFragmentManager(), "dialog");
     }
 
 

@@ -10,6 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -17,10 +21,12 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.DishReviews;
+import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.DishReviewsAdapter;
 
@@ -28,7 +34,7 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
 
     public static final String TAG = DishReviewsSheetFragment.class.getSimpleName();
     private static final String ARG_ITEM_COUNT = "item_count";
-    private static final String DISH_ID = "dish_id";
+    private static final String DISH = "dish";
     private Listener mListener;
 
     private Unbinder unbinder;
@@ -38,12 +44,24 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
     @BindView(R.id.recycler_view_dish_reviews)
     RecyclerView recyclerView;
     DishReviewsAdapter adapter;
+    @BindView(R.id.iv_dismiss_review_card)
+    ImageView dismissCard;
+    @BindView(R.id.tv_reviews_dish_description)
+    TextView dishDescription;
+    @BindView(R.id.tv_reviews_dish_name)
+    TextView dishName;
+    @BindView(R.id.iv_reviews_dish_image)
+    ImageView dishImage;
+    @BindView(R.id.iv_reviews_veg_non_veg_indicator)
+    ImageView dishVegNonVeg;
+    @BindView(R.id.tv_reviews_dish_rating_average)
+    TextView avgRatingText;
 
-    public static DishReviewsSheetFragment newInstance(int itemCount, Long dishId) {
+    public static DishReviewsSheetFragment newInstance(int itemCount, DishesOfCuisine dishesOfCuisine) {
         final DishReviewsSheetFragment fragment = new DishReviewsSheetFragment();
         final Bundle args = new Bundle();
         args.putInt(ARG_ITEM_COUNT, itemCount);
-        args.putLong(DISH_ID,dishId);
+        args.putParcelable(DISH,dishesOfCuisine);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,11 +81,15 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
         resolveDaggerDependencies();
         View view  = inflater.inflate(R.layout.fragment_dish_reviews_sheet, container, false);
         unbinder = ButterKnife.bind(this,view);
-        long dishId = getArguments().getLong(DISH_ID);
         adapter = new DishReviewsAdapter(getArguments().getInt(ARG_ITEM_COUNT));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        presenter.fetchDishReview(dishId);
+        DishesOfCuisine d = getArguments().getParcelable(DISH);
+        if(d!=null){
+            presenter.fetchDishReview(d.getDish_id());
+            updateDishInfoCard();
+        }
+        dismissCard.setOnClickListener(v -> this.dismiss());
         return view;
     }
 
@@ -107,6 +129,22 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
     @Override
     public void onDishReviewsFetched(ArrayList<DishReviews> body) {
         adapter.onDishReviewsFetched(body);
+    }
+
+    private void updateDishInfoCard() {
+        DishesOfCuisine d = getArguments().getParcelable(DISH);
+        if(d!=null){
+            Glide.with(getContext()).load(d.getDish_image_url()).into(dishImage);
+            dishImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            dishName.setText(d.getDish_name());
+            dishDescription.setText(d.getDish_details());
+            avgRatingText.setText("4.5");
+            if(d.getDish_vegetarian()){
+             dishVegNonVeg.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_veg));
+            } else if (!d.getDish_vegetarian()) {
+                dishVegNonVeg.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_non_veg));
+            }
+        }
     }
 
     public interface Listener {
