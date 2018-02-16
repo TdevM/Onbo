@@ -66,7 +66,11 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         Glide.with(mContext).load(dishArrayList.get(position).getDish_image_url()).into(holder.dishImage);
         holder.dishName.setText(dishArrayList.get(position).getDish_name());
         holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, dishArrayList.get(position).getDish_price().intValue()));
-
+        if(dishArrayList.get(position).getDish_vegetarian()){
+            holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg));
+        }else if(!dishArrayList.get(position).getDish_vegetarian()){
+            holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg));
+        }
             CartSelection selection = cartHelper.getCartSelectionById(dishArrayList.get(position).getDish_id());
             if(selection!=null){
                 holder.incDecButton.setNumber(selection.getQty(),true);
@@ -99,6 +103,8 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         ImageView dishImage;
         @BindView(R.id.btn_id_item_dish_grid)
         IncDecButton incDecButton;
+        @BindView(R.id.iv_veg_non_veg_grid)
+        ImageView vegNonVegIndicator;
 
         public RecycledGridViewHolder(View itemView) {
             super(itemView);

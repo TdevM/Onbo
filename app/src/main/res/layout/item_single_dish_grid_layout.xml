@@ -25,10 +25,11 @@
                 android:id="@+id/iv_si_dish_grid"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/dish"
                 android:scaleType="fitCenter" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
 
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -37,11 +38,13 @@
 
             <TextView
                 android:id="@+id/tv_si_dish_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="7dp"
+                android:layout_above="@+id/tv_si_dish_price"
+                android:layout_toEndOf="@+id/iv_veg_non_veg_grid"
+                android:layout_toRightOf="@+id/iv_veg_non_veg_grid"
+                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
                 android:text="@string/app_name"
                 android:textSize="16sp" />
 
@@ -49,13 +52,27 @@
                 android:id="@+id/tv_si_dish_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="3dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
+                android:layout_toEndOf="@+id/iv_veg_non_veg_grid"
+                android:layout_toRightOf="@+id/iv_veg_non_veg_grid"
                 android:text="dishPrice"
                 android:textSize="13sp" />
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_veg_non_veg_grid"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/tv_si_dish_name"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:contentDescription="@string/veg_non_veg"
+                app:srcCompat="@drawable/ic_veg" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

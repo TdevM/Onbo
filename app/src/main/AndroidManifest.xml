@@ -63,8 +63,7 @@
             android:name=".modules.orders.RestaurantOrdersActivity"
             android:label="@string/title_activity_restaurant_orders"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

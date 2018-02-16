@@ -10,23 +10,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.DishReviews;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.DishReviewsAdapter;
 
-/**
- * <p>A fragment that shows a list of items as a modal bottom sheet.</p>
- * <p>You can show this modal bottom sheet from your activity like this:</p>
- * <pre>
- *     DishReviewsSheetFragment.newInstance(30).show(getSupportFragmentManager(), "dialog");
- * </pre>
- * <p>You activity (or fragment) needs to implement {@link DishReviewsSheetFragment.Listener}.</p>
- */
 public class DishReviewsSheetFragment extends BottomSheetDialogFragment implements DineInViewContract.DishReviewsSheetView{
 
     public static final String TAG = DishReviewsSheetFragment.class.getSimpleName();
@@ -34,8 +31,13 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
     private static final String DISH_ID = "dish_id";
     private Listener mListener;
 
+    private Unbinder unbinder;
     @Inject
     DishReviewsSheetPresenter presenter;
+
+    @BindView(R.id.recycler_view_dish_reviews)
+    RecyclerView recyclerView;
+    DishReviewsAdapter adapter;
 
     public static DishReviewsSheetFragment newInstance(int itemCount, Long dishId) {
         final DishReviewsSheetFragment fragment = new DishReviewsSheetFragment();
@@ -59,17 +61,14 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         resolveDaggerDependencies();
+        View view  = inflater.inflate(R.layout.fragment_dish_reviews_sheet, container, false);
+        unbinder = ButterKnife.bind(this,view);
         long dishId = getArguments().getLong(DISH_ID);
-        presenter.fetchDishReview(dishId);
-
-        return inflater.inflate(R.layout.fragment_dish_reviews_sheet, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        final RecyclerView recyclerView = (RecyclerView) view;
+        adapter = new DishReviewsAdapter(getArguments().getInt(ARG_ITEM_COUNT));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new DishReviewsAdapter(getArguments().getInt(ARG_ITEM_COUNT)));
+        recyclerView.setAdapter(adapter);
+        presenter.fetchDishReview(dishId);
+        return view;
     }
 
     @Override
@@ -106,8 +105,8 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
     }
 
     @Override
-    public void onDishReviewsFetched() {
-
+    public void onDishReviewsFetched(ArrayList<DishReviews> body) {
+        adapter.onDishReviewsFetched(body);
     }
 
     public interface Listener {
@@ -118,5 +117,6 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
+        unbinder.unbind();
     }
 }

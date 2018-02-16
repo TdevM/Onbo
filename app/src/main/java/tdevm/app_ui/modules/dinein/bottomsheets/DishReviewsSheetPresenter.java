@@ -58,6 +58,7 @@ public class DishReviewsSheetPresenter extends BasePresenter implements DineInPr
             public void onNext(Response<ArrayList<DishReviews>> arrayListResponse) {
                 if(arrayListResponse.isSuccessful()){
                     Log.d(TAG,arrayListResponse.body().size()+"Reviews fetched");
+                    sheetView.onDishReviewsFetched(arrayListResponse.body());
                 }
             }
 

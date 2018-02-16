@@ -16,6 +16,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/iv_veg_non_veg_cart"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignBottom="@+id/cart_item_tv_dish_name"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
+                android:contentDescription="@string/veg_non_veg"
+                app:srcCompat="@drawable/ic_veg" />
+
+
             <TextView
                 android:id="@+id/cart_item_tv_dish_price"
                 android:layout_width="wrap_content"
@@ -36,10 +49,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/cart_item_tv_dish_price"
                 android:layout_alignBottom="@+id/cart_item_tv_dish_price"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="46dp"
-                android:layout_marginStart="46dp"
+                android:layout_toEndOf="@+id/iv_veg_non_veg_cart"
+                android:layout_toRightOf="@+id/iv_veg_non_veg_cart"
                 android:text="Spaghetti"
                 android:textSize="18sp" />
 

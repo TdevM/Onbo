@@ -1,12 +1,16 @@
 package tdevm.app_ui.modules.dinein.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.DishReviews;
 import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
 
 /**
@@ -15,11 +19,14 @@ import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
 
 public class DishReviewsAdapter extends RecyclerView.Adapter<DishReviewsAdapter.ViewHolder>{
 
+    public static final String TAG = DishReviewsAdapter.class.getSimpleName();
 
     private final int mItemCount;
+    private ArrayList<DishReviews> reviewsArrayList;
 
     public DishReviewsAdapter(int i) {
         this.mItemCount = i;
+        reviewsArrayList = new ArrayList<>();
     }
 
     @Override
@@ -36,6 +43,12 @@ public class DishReviewsAdapter extends RecyclerView.Adapter<DishReviewsAdapter.
     @Override
     public int getItemCount() {
         return mItemCount;
+    }
+
+    public void onDishReviewsFetched(ArrayList<DishReviews> list) {
+        reviewsArrayList.addAll(list);
+        notifyDataSetChanged();
+        Log.d(TAG,"Adapter dish reviews fetched");
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

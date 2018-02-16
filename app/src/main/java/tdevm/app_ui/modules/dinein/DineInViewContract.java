@@ -1,9 +1,7 @@
 package tdevm.app_ui.modules.dinein;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.api.models.response.DishReviews;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
@@ -53,7 +51,7 @@ public interface DineInViewContract {
     }
 
     interface DishReviewsSheetView extends BaseView{
-        void onDishReviewsFetched();
+        void onDishReviewsFetched(ArrayList<DishReviews> body);
     }
 
 }
