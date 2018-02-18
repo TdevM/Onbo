@@ -12,6 +12,7 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.fragments.InitializeTempOrderFragment;
+import tdevm.app_ui.modules.dinein.fragments.TempOrderFragment;
 
 
 public class TempOrderActivity extends AppCompatActivity implements DineInViewContract.PlaceTempOrderView{
@@ -61,7 +62,7 @@ public class TempOrderActivity extends AppCompatActivity implements DineInViewCo
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         InitializeTempOrderFragment fragment = new InitializeTempOrderFragment();
         fragment.setArguments(bundle);
-        transaction.add(R.id.frame_layout_place_temp_order, fragment);
+        transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();
     }
 
@@ -73,13 +74,14 @@ public class TempOrderActivity extends AppCompatActivity implements DineInViewCo
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         InitializeTempOrderFragment fragment = new InitializeTempOrderFragment();
         fragment.setArguments(bundle);
-        transaction.add(R.id.frame_layout_place_temp_order, fragment);
+        transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();
     }
 
     @Override
     public void createOrder(int guest, String userMessage){
-
+        placeTempOrderPresenter.createNewOrder(guest,userMessage);
+        placeTempOrderPresenter.clearCart();
     }
 
     @Override
@@ -89,12 +91,18 @@ public class TempOrderActivity extends AppCompatActivity implements DineInViewCo
 
     @Override
     public void onOrderItemsAdded() {
-        Toast.makeText(this, "Items added!", Toast.LENGTH_SHORT).show();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        TempOrderFragment fragment = new TempOrderFragment();
+        transaction.replace(R.id.frame_layout_place_temp_order, fragment);
+        transaction.commit();
     }
 
     @Override
     public void onNewOrderCreated() {
-        Toast.makeText(this, "Order placed!", Toast.LENGTH_SHORT).show();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        TempOrderFragment fragment = new TempOrderFragment();
+        transaction.replace(R.id.frame_layout_place_temp_order, fragment);
+        transaction.commit();
     }
 
     @Override

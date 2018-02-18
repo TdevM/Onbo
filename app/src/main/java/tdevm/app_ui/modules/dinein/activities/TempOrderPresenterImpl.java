@@ -130,6 +130,10 @@ public class TempOrderPresenterImpl extends BasePresenter implements DineInPrese
 //         });
     }
 
+    public void clearCart(){
+        cart.clearCart();
+    }
+
 
     @Override
     public void createNewOrder(int guest, String message) {
