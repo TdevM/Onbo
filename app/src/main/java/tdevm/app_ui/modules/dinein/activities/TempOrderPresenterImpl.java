@@ -20,6 +20,7 @@ import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.cart.CartItem;
+import tdevm.app_ui.api.models.request.KOTUserMessage;
 import tdevm.app_ui.api.models.request.RestaurantOrder;
 import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.base.BasePresenter;
@@ -72,14 +73,9 @@ public class TempOrderPresenterImpl extends BasePresenter implements DineInPrese
             public void onNext(Response<ArrayList<TempOrder>> arrayListResponse) {
                 Log.d(TAG,"onNext RAN");
                 if (arrayListResponse.isSuccessful()) {
-                    Log.d(TAG,"Add items to Order RAN");
                     if (arrayListResponse.code() == 200) {
-                        placeTempOrderView.showGetMessage();
+                        placeTempOrderView.showGetMessage(arrayListResponse);
                         Log.d(TAG,"Add items to Order RAN");
-                        if (arrayListResponse.body() != null) {
-                            //Add items to Order
-                            //arrayListResponse.body().get(0).getKot_messages().toString();
-                        }
                     }
                 } else if (!arrayListResponse.isSuccessful() && arrayListResponse.code() == 404) {
                     //Create new Order
@@ -101,33 +97,34 @@ public class TempOrderPresenterImpl extends BasePresenter implements DineInPrese
     }
 
     @Override
-    public void addItemsToOrder(ArrayList<TempOrder> arrayList) {
-//        RestaurantOrder order = new RestaurantOrder(arrayList.get(1).getOrder_id(),convertTOJSON().toString());
-//        Observable<Response<Object>> observable = apiService.addItemsToOrder(authUtils.getAuthLoginToken(),order);
-//         subscribe(observable, new Observer<Response<Object>>() {
-//             @Override
-//             public void onSubscribe(Disposable d) {
-//                compositeDisposable.add(d);
-//             }
-//             @Override
-//             public void onNext(Response<Object> objectResponse) {
-//                if(objectResponse.isSuccessful()){
-//                    if(objectResponse.code()==200){
-//                        placeTempOrderView.onOrderItemsAdded();
-//                    }
-//                }
-//             }
-//
-//             @Override
-//             public void onError(Throwable e) {
-//
-//             }
-//
-//             @Override
-//             public void onComplete() {
-//
-//             }
-//         });
+    public void addItemsToOrder(String userMessage, ArrayList<TempOrder> arrayList) {
+        JSONArray message = updateUserMessage(userMessage,arrayList.get(0).getKot_messages());
+        RestaurantOrder order = new RestaurantOrder(arrayList.get(0).getOrder_id(),message.toString(),convertCartTOJSON().toString());
+        Observable<Response<Object>> observable = apiService.addItemsToTempOrder(authUtils.getAuthLoginToken(),order);
+         subscribe(observable, new Observer<Response<Object>>() {
+             @Override
+             public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+             }
+             @Override
+             public void onNext(Response<Object> objectResponse) {
+                if(objectResponse.isSuccessful()){
+                    if(objectResponse.code()==200){
+                        placeTempOrderView.onOrderItemsAdded();
+                    }
+                }
+             }
+
+             @Override
+             public void onError(Throwable e) {
+
+             }
+
+             @Override
+             public void onComplete() {
+
+             }
+         });
     }
 
     public void clearCart(){
@@ -182,22 +179,32 @@ public class TempOrderPresenterImpl extends BasePresenter implements DineInPrese
         }
         return jArray;
     }
-//
-//    private JSONArray createUserMessage(int kotId, String newMessage, ArrayList<KOTUserMessage> oldMessages){
-//        JSONArray jArray = new JSONArray();
-//            JSONObject jsonObject = new JSONObject();
-//            for (int j = 0; j < 2; j++) {
-//                try {
-//                    jsonObject.put("kot_id", item.getDishesOfCuisine().getDish_id());
-//                    jsonObject.put("kot_message", item.getQuantity());
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            jArray.put(jsonObject);
-//
-//        return jArray;
-//    }
+
+    private JSONArray updateUserMessage(String newMessage, ArrayList<KOTUserMessage> oldMessages){
+        JSONArray jArray = new JSONArray();
+        for(int i=0;i<oldMessages.size();i++){
+            JSONObject jsonObject = new JSONObject();
+            for (int j = 0; j < 2; j++) {
+                try {
+                    jsonObject.put("kot_id", oldMessages.get(i).getKot_id());
+                    jsonObject.put("kot_message", oldMessages.get(i).getKot_message());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            jArray.put(jsonObject);
+        }
+        JSONObject o = new JSONObject();
+            //Add new Message finally
+        try {
+            o.put("kot_id", oldMessages.size()+1);
+            o.put("kot_message", newMessage);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        jArray.put(o);
+        return jArray;
+    }
 
     private JSONArray createNewUserMessage(String newMessage){
         JSONArray jArray = new JSONArray();

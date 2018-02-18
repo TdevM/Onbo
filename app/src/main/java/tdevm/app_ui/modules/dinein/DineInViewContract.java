@@ -2,6 +2,7 @@ package tdevm.app_ui.modules.dinein;
 
 import java.util.ArrayList;
 
+import retrofit2.Response;
 import tdevm.app_ui.api.models.response.Cuisine;
 import tdevm.app_ui.api.models.response.DishReviews;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
@@ -47,7 +48,7 @@ public interface DineInViewContract {
     interface PlaceTempOrderView extends BaseView{
         void onOrderItemsAdded();
         void onNewOrderCreated();
-        void showGetMessage();
+        void showGetMessage(Response<ArrayList<TempOrder>> arrayListResponse);
         void createOrder(int guest, String userMessage);
         void showGetGuestMessage();
         void addItemsToOrder(String userMessage);

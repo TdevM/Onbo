@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import retrofit2.Response;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.fragments.InitializeTempOrderFragment;
 import tdevm.app_ui.modules.dinein.fragments.TempOrderFragment;
@@ -18,6 +21,7 @@ import tdevm.app_ui.modules.dinein.fragments.TempOrderFragment;
 public class TempOrderActivity extends AppCompatActivity implements DineInViewContract.PlaceTempOrderView{
     public static final String TAG = TempOrderActivity.class.getSimpleName();
     public static final String ORDER_RUNNING_STATUS = "ORDER_RUNNING_STATUS";
+    public static ArrayList<TempOrder> tempOrderArrayList;
 
     @Inject
     TempOrderPresenterImpl placeTempOrderPresenter;
@@ -67,8 +71,10 @@ public class TempOrderActivity extends AppCompatActivity implements DineInViewCo
     }
 
     @Override
-    public void showGetMessage(){
+    public void showGetMessage(Response<ArrayList<TempOrder>> arrayListResponse){
         Log.d(TAG,"Running");
+        tempOrderArrayList = new ArrayList<>();
+        tempOrderArrayList.addAll(arrayListResponse.body());
         Bundle bundle = new Bundle();
         bundle.putBoolean(ORDER_RUNNING_STATUS,true);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -86,6 +92,7 @@ public class TempOrderActivity extends AppCompatActivity implements DineInViewCo
 
     @Override
     public void addItemsToOrder(String userMessage){
+        placeTempOrderPresenter.addItemsToOrder(userMessage,tempOrderArrayList);
 
     }
 
@@ -95,6 +102,8 @@ public class TempOrderActivity extends AppCompatActivity implements DineInViewCo
         TempOrderFragment fragment = new TempOrderFragment();
         transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();
+        tempOrderArrayList.clear();
+        placeTempOrderPresenter.clearCart();
     }
 
     @Override
@@ -103,6 +112,7 @@ public class TempOrderActivity extends AppCompatActivity implements DineInViewCo
         TempOrderFragment fragment = new TempOrderFragment();
         transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();
+        placeTempOrderPresenter.clearCart();
     }
 
     @Override

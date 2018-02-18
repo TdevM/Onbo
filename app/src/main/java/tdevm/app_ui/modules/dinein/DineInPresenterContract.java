@@ -40,7 +40,7 @@ public interface DineInPresenterContract {
         void attachView(DineInViewContract.PlaceTempOrderView view);
         void detachView();
         void checkCurrentOrderDetails();
-        void addItemsToOrder(ArrayList<TempOrder> arrayList);
+        void addItemsToOrder(String userMessage, ArrayList<TempOrder> arrayList);
         void createNewOrder(int guest, String message);
     }
 
