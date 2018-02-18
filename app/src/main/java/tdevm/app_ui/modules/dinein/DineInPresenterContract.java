@@ -39,9 +39,9 @@ public interface DineInPresenterContract {
     interface PlaceTempOrderPresenter extends BasePresenterMVP<DineInViewContract.PlaceTempOrderView>{
         void attachView(DineInViewContract.PlaceTempOrderView view);
         void detachView();
-        void checkCurrentOrderDetails(Map<String,String> map);
+        void checkCurrentOrderDetails();
         void addItemsToOrder(ArrayList<TempOrder> arrayList);
-        void createNewOrder();
+        void createNewOrder(int guest, String message);
     }
 
     interface CartFragmentPresenter extends BasePresenterMVP<DineInViewContract.CartFragmentView>{

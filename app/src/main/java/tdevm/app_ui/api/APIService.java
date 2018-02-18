@@ -15,6 +15,7 @@ import retrofit2.http.QueryMap;
 import tdevm.app_ui.api.models.OneTimePassword;
 import tdevm.app_ui.api.models.request.AddDishReview;
 import tdevm.app_ui.api.models.request.AddRestaurantReview;
+import tdevm.app_ui.api.models.request.NonDineOrder;
 import tdevm.app_ui.api.models.request.RestaurantOrder;
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.api.models.response.Cuisine;
@@ -74,13 +75,20 @@ public interface APIService {
     Observable<Response<Object>> addARestaurantReview(@Header("x-auth") String authToken, @Body AddRestaurantReview restaurantReview);
 
 
-
     //Running Orders
     @POST("m/orders/temp")
-    Observable<Response<Object>> createNewOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
+    Observable<Response<Object>> createNewTempOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
     @GET("m/orders/temp")
     Observable<Response<ArrayList<TempOrder>>> fetchMyRunningOrder(@Header("x-auth") String token, @QueryMap Map<String,String> options);
     @PATCH("m/orders/temp")
-    Observable<Response<Object>> addItemsToOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
+    Observable<Response<Object>> addItemsToTempOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
+
+
+
+    //Type2 Orders (Non Dine)
+    @POST("m/orders/t2/unpaid")
+    Observable<Response<Object>> createUnpaidNonDineOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
+    @POST("m/orders/t2")
+    Observable<Response<Object>> createPaidNonDineOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
 
 }

@@ -2,6 +2,8 @@ package tdevm.app_ui.api.models.response;
 
 import java.util.ArrayList;
 
+import tdevm.app_ui.api.models.request.KOTUserMessage;
+
 /**
  * Created by Tridev on 24-11-2017.
  */
@@ -11,6 +13,16 @@ public class TempOrder
     private Boolean kot_completed;
 
     private ArrayList<KOT_items> kot_items;
+
+    private ArrayList<KOTUserMessage> kot_messages;
+
+    public ArrayList<KOTUserMessage> getKot_messages() {
+        return kot_messages;
+    }
+
+    public void setKot_messages(ArrayList<KOTUserMessage> kot_messages) {
+        this.kot_messages = kot_messages;
+    }
 
     private String kot_id;
 

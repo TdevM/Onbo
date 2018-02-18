@@ -17,7 +17,7 @@
         android:text="@string/proceed" />
 
     <EditText
-        android:id="@+id/et_order_message"
+        android:id="@+id/et_temp_order_user_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_temp_order_init"
@@ -25,5 +25,16 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="23dp"
         android:hint="@string/any_message_you_want_to_send_to_chef" />
+
+    <EditText
+        android:id="@+id/et_order_guest_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/et_temp_order_user_message"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="127dp"
+        android:ems="10"
+        android:hint="@string/how_many_guest"
+        android:inputType="numberSigned" />
 
 </RelativeLayout>

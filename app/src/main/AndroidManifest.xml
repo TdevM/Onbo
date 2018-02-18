@@ -47,7 +47,7 @@
         <activity
             android:name=".modules.auth.AuthenticationActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".modules.dinein.activities.PlaceTempOrder" />
+        <activity android:name=".modules.dinein.activities.TempOrderActivity" />
 
         <receiver android:name=".utils.SMSListener">
             <intent-filter android:priority="1000">

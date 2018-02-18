@@ -45,9 +45,12 @@ public interface DineInViewContract {
     }
 
     interface PlaceTempOrderView extends BaseView{
-        void onOrderDetailsFetched(String message);
         void onOrderItemsAdded();
         void onNewOrderCreated();
+        void showGetMessage();
+        void createOrder(int guest, String userMessage);
+        void showGetGuestMessage();
+        void addItemsToOrder(String userMessage);
     }
 
     interface DishReviewsSheetView extends BaseView{

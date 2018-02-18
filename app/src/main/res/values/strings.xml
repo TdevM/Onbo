@@ -82,4 +82,5 @@
     <string name="tiramisu">Tiramisu is a popular coffee-flavoured Italian dessert. It is made of ladyfingers dipped in coffee, layered with a whipped mixture of eggs, sugar, and mascarpone cheese, flavoured with cocoa.</string>
     <string name="dish_image_review">dish_image_review</string>
     <string name="veg_non_veg">veg_non_indicator</string>
+    <string name="how_many_guest">How many guest?</string>
 </resources>
