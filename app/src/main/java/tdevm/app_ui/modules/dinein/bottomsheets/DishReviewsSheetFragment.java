@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -53,7 +54,7 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
     @BindView(R.id.iv_reviews_dish_image)
     ImageView dishImage;
     @BindView(R.id.iv_reviews_veg_non_veg_indicator)
-    ImageView dishVegNonVeg;
+    AppCompatImageView dishVegNonVeg;
     @BindView(R.id.tv_reviews_dish_rating_average)
     TextView avgRatingText;
 
@@ -140,9 +141,9 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
             dishDescription.setText(d.getDish_details());
             avgRatingText.setText("4.5");
             if(d.getDish_vegetarian()){
-             dishVegNonVeg.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_veg));
+             dishVegNonVeg.setImageResource(R.drawable.ic_veg);
             } else if (!d.getDish_vegetarian()) {
-                dishVegNonVeg.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_non_veg));
+                dishVegNonVeg.setImageResource(R.drawable.ic_non_veg);
             }
         }
     }

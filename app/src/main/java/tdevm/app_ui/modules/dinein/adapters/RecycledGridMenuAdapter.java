@@ -1,6 +1,7 @@
 package tdevm.app_ui.modules.dinein.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,9 +68,11 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         holder.dishName.setText(dishArrayList.get(position).getDish_name());
         holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, dishArrayList.get(position).getDish_price().intValue()));
         if(dishArrayList.get(position).getDish_vegetarian()){
-            holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg));
+           holder.vegNonVegIndicator.setImageResource(R.drawable.ic_veg);
+            //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg));
         }else if(!dishArrayList.get(position).getDish_vegetarian()){
-            holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg));
+           holder.vegNonVegIndicator.setImageResource(R.drawable.ic_non_veg);
+            //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg));
         }
             CartSelection selection = cartHelper.getCartSelectionById(dishArrayList.get(position).getDish_id());
             if(selection!=null){
@@ -104,7 +107,7 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         @BindView(R.id.btn_id_item_dish_grid)
         IncDecButton incDecButton;
         @BindView(R.id.iv_veg_non_veg_grid)
-        ImageView vegNonVegIndicator;
+        AppCompatImageView vegNonVegIndicator;
 
         public RecycledGridViewHolder(View itemView) {
             super(itemView);

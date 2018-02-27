@@ -1,6 +1,7 @@
 package tdevm.app_ui.modules.dinein.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,9 +70,9 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice().intValue())));
         holder.incDecButton.setNumber(cartItemArrayList.get(position).getQuantity(), true);
         if(cartItemArrayList.get(position).getDishesOfCuisine().getDish_vegetarian()){
-            holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_veg));
+            holder.vegNonVegIndicator.setImageResource(R.drawable.ic_veg);
         }else if(!cartItemArrayList.get(position).getDishesOfCuisine().getDish_vegetarian()){
-            holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_non_veg));
+            holder.vegNonVegIndicator.setImageResource(R.drawable.ic_non_veg);
         }
         holder.bind(cartItemArrayList.get(position).getDishesOfCuisine(), dishItemClickListener);
     }
@@ -102,7 +103,7 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         @BindView(R.id.cart_item_qty_widget)
         IncDecButton incDecButton;
         @BindView(R.id.iv_veg_non_veg_cart)
-        ImageView vegNonVegIndicator;
+        AppCompatImageView vegNonVegIndicator;
 
         public CartItemsViewHolder(View itemView) {
             super(itemView);

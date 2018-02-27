@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -15,6 +16,10 @@ import tdevm.app_ui.modules.dinein.fragments.HighestRatedItemsFragment;
 import tdevm.app_ui.root.BottomNavigationViewHelper;
 
 public class NonDineActivity extends AppCompatActivity {
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     FragmentTransaction fragmentTransaction;
 

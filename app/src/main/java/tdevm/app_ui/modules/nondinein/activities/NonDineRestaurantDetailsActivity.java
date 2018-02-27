@@ -3,6 +3,7 @@ package tdevm.app_ui.modules.nondinein.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,6 +19,10 @@ import tdevm.app_ui.modules.nondinein.NonDinePresenterContract;
 import tdevm.app_ui.modules.nondinein.NonDineViewContract;
 
 public class NonDineRestaurantDetailsActivity extends AppCompatActivity implements NonDineViewContract.NonDineRestaurantDetailsView {
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     @Inject
     NonDineRestDetailPresenter presenter;
@@ -42,6 +47,7 @@ public class NonDineRestaurantDetailsActivity extends AppCompatActivity implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_non_dine_restaurant_details);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         resolveDaggerDependencies();
         ButterKnife.bind(this);
         presenter.fetchRestaurantDetails();

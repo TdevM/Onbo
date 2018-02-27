@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,9 @@ import tdevm.app_ui.utils.AuthUtils;
 
 public class DineInActivity extends AppCompatActivity implements DineInViewContract.DineInActivity {
 
-
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     @Inject
     DineInActivityPresenter presenter;
 
