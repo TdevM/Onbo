@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/iv_veg_non_veg_cart"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
@@ -25,8 +25,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="2dp"
                 android:layout_marginStart="2dp"
-                android:contentDescription="@string/veg_non_veg"
-                app:srcCompat="@drawable/ic_veg" />
+                android:contentDescription="@string/veg_non_veg" />
 
 
             <TextView

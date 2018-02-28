@@ -22,7 +22,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
@@ -141,9 +140,9 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
             dishDescription.setText(d.getDish_details());
             avgRatingText.setText("4.5");
             if(d.getDish_vegetarian()){
-             dishVegNonVeg.setImageResource(R.drawable.ic_veg);
+             dishVegNonVeg.setImageDrawable(getContext().getResources().getDrawable(R.drawable.veg_symbol));
             } else if (!d.getDish_vegetarian()) {
-                dishVegNonVeg.setImageResource(R.drawable.ic_non_veg);
+                dishVegNonVeg.setImageDrawable(getContext().getResources().getDrawable(R.drawable.non_veg_symbol));
             }
         }
     }

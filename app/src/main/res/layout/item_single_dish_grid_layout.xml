@@ -60,7 +60,7 @@
                 android:text="dishPrice"
                 android:textSize="13sp" />
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/iv_veg_non_veg_grid"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -68,9 +68,9 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/tv_si_dish_name"
                 android:layout_marginLeft="5dp"
+                android:scaleType="fitXY"
                 android:layout_marginStart="5dp"
-                android:contentDescription="@string/veg_non_veg"
-                app:srcCompat="@drawable/ic_veg" />
+                android:contentDescription="@string/veg_non_veg" />
 
         </RelativeLayout>
 

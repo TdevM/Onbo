@@ -7,10 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +16,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartItem;
-import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.CartFragmentPresenterImpl;
@@ -70,9 +66,9 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice().intValue())));
         holder.incDecButton.setNumber(cartItemArrayList.get(position).getQuantity(), true);
         if(cartItemArrayList.get(position).getDishesOfCuisine().getDish_vegetarian()){
-            holder.vegNonVegIndicator.setImageResource(R.drawable.ic_veg);
+            holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
         }else if(!cartItemArrayList.get(position).getDishesOfCuisine().getDish_vegetarian()){
-            holder.vegNonVegIndicator.setImageResource(R.drawable.ic_non_veg);
+            holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.non_veg_symbol));
         }
         holder.bind(cartItemArrayList.get(position).getDishesOfCuisine(), dishItemClickListener);
     }

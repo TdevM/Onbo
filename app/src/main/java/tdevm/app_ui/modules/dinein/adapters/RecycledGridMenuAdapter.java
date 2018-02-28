@@ -13,13 +13,10 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartSelection;
-import tdevm.app_ui.api.cart.CartSelectionDao;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridPresenter;
@@ -68,11 +65,11 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         holder.dishName.setText(dishArrayList.get(position).getDish_name());
         holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, dishArrayList.get(position).getDish_price().intValue()));
         if(dishArrayList.get(position).getDish_vegetarian()){
-           holder.vegNonVegIndicator.setImageResource(R.drawable.ic_veg);
-            //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg));
+          holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.veg_symbol));
+            //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg_indicator));
         }else if(!dishArrayList.get(position).getDish_vegetarian()){
-           holder.vegNonVegIndicator.setImageResource(R.drawable.ic_non_veg);
-            //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg));
+           holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.non_veg_symbol));
+            //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg_indicator));
         }
             CartSelection selection = cartHelper.getCartSelectionById(dishArrayList.get(position).getDish_id());
             if(selection!=null){
