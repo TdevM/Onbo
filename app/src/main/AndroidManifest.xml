@@ -47,7 +47,7 @@
         <activity
             android:name=".modules.auth.AuthenticationActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".modules.dinein.activities.TempOrderActivity" />
+        <activity android:name=".modules.dinein.activities.InitializeOrderActivity" />
 
         <receiver android:name=".utils.SMSListener">
             <intent-filter android:priority="1000">
@@ -63,9 +63,9 @@
             android:name=".modules.orders.RestaurantOrdersActivity"
             android:label="@string/title_activity_restaurant_orders"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".modules.dinein.activities.PaymentsActivity" />
+        <activity android:name=".modules.entry.RestaurantMenuEntryActivity"></activity>
     </application>
 
 </manifest>

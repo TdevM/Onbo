@@ -8,12 +8,13 @@ import tdevm.app_ui.modules.auth.fragments.AuthLoginFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthRegisterFragment;
 import tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment;
 import tdevm.app_ui.modules.dinein.DineInActivity;
-import tdevm.app_ui.modules.dinein.activities.TempOrderActivity;
+import tdevm.app_ui.modules.dinein.activities.InitializeOrderActivity;
 import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
 import tdevm.app_ui.modules.dinein.fragments.RunningOrderFragment;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
+import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
 import tdevm.app_ui.modules.nondinein.activities.NonDineActivity;
 import tdevm.app_ui.modules.nondinein.activities.NonDineRestaurantDetailsActivity;
 import tdevm.app_ui.root.BottomNavigationHome;
@@ -35,10 +36,11 @@ public interface APIComponent {
     void inject(DishMenuFragment dishMenuFragment);
     void inject(CartFragment cartFragment);
     void inject(DineInActivity dineInActivity);
-    void inject(TempOrderActivity tempOrderActivity);
+    void inject(InitializeOrderActivity initializeOrderActivity);
     void inject(NonDineRestaurantDetailsActivity activity);
     void inject(NonDineActivity activity);
     void inject(RunningOrderFragment fragment);
     void inject(AccountsFragment fragment);
     void inject(DishReviewsSheetFragment fragment);
+    void inject(RestaurantMenuEntryActivity activity);
 }

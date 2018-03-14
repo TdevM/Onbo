@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +14,7 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
 import tdevm.app_ui.R;
 
-public class CustomQRView extends Activity implements
+public class CustomQRView extends AppCompatActivity implements
         DecoratedBarcodeView.TorchListener {
 
     private CaptureManager capture;

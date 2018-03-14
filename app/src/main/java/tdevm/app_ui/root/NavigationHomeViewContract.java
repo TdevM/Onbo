@@ -16,6 +16,8 @@ public interface NavigationHomeViewContract {
         void showUserProfile();
         void redirectAuthActivity();
         void startQRScanner();
+
+        void redirectEntryActivity();
     }
 
     interface AccountsFragmentView extends BaseView{

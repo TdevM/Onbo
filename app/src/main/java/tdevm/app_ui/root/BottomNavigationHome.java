@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.zxing.client.android.Intents;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -19,6 +20,7 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.modules.dinein.DineInActivity;
+import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
 import tdevm.app_ui.modules.nondinein.activities.NonDineRestaurantDetailsActivity;
 import tdevm.app_ui.root.fragments.AccountsFragment;
 import tdevm.app_ui.root.fragments.BookFragment;
@@ -140,8 +142,15 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
     public void startQRScanner() {
         new IntentIntegrator(BottomNavigationHome.this).
                 setOrientationLocked(false).
+                setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES).
                 setCaptureActivity(CustomQRView.class).
                 initiateScan();
+    }
+
+    @Override
+    public void redirectEntryActivity() {
+        Intent intent = new Intent(BottomNavigationHome.this, RestaurantMenuEntryActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -156,38 +165,12 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
         super.onDestroy();
     }
 
-
-//    private boolean isPlayServicesAvailable() {
-//        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-//        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-//        if (resultCode != ConnectionResult.SUCCESS) {
-//            if(apiAvailability.isUserResolvableError(resultCode)){
-//                apiAvailability.getErrorDialog(this,resultCode,PLAY_SERVICES_RESOLUTION_REQUEST).show();
-//            }else {
-//                Toast.makeText(getApplicationContext(),
-//                        "This device is not supported.", Toast.LENGTH_LONG)
-//                        .show();
-//                finish();
-//            }
-//            return false;
-//        }
-//        return true;
-//    }
-
-
-//    private void createLocationRequest() {
-//        locationRequest = LocationRequest.create();
-//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//        locationRequest.setInterval(30 * 1000);
-//        locationRequest.setFastestInterval(5 * 1000);
-//    }
-
-
     @Override
     protected void onStart() {
         super.onStart();
 
     }
+
 
     @Override
     public void showProgressUI() {

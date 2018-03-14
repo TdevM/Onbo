@@ -33,9 +33,9 @@ import tdevm.app_ui.utils.CartHelper;
  * Created by Tridev on 29-12-2017.
  */
 
-public class TempOrderPresenterImpl extends BasePresenter implements DineInPresenterContract.PlaceTempOrderPresenter {
+public class InitOrderPresenterImpl extends BasePresenter implements DineInPresenterContract.PlaceTempOrderPresenter {
 
-    public static final String TAG = TempOrderPresenterImpl.class.getSimpleName();
+    public static final String TAG = InitOrderPresenterImpl.class.getSimpleName();
 
     private APIService apiService;
     private AuthUtils authUtils;
@@ -44,7 +44,7 @@ public class TempOrderPresenterImpl extends BasePresenter implements DineInPrese
     private CartHelper cart;
 
     @Inject
-    public TempOrderPresenterImpl(APIService apiService, AuthUtils authUtils, CartHelper cartHelper) {
+    public InitOrderPresenterImpl(APIService apiService, AuthUtils authUtils, CartHelper cartHelper) {
         this.apiService = apiService;
         this.cart = cartHelper;
         this.authUtils = authUtils;

@@ -24,7 +24,7 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
-import tdevm.app_ui.modules.dinein.activities.TempOrderActivity;
+import tdevm.app_ui.modules.dinein.activities.InitializeOrderActivity;
 import tdevm.app_ui.modules.dinein.adapters.CartItemsRecyclerAdapter;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 import tdevm.app_ui.modules.nondinein.activities.NonDineActivity;
@@ -126,7 +126,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     }
 
     public void startTempOrderActivity(){
-        Intent intent = new Intent(getContext(), TempOrderActivity.class);
+        Intent intent = new Intent(getContext(), InitializeOrderActivity.class);
         startActivity(intent);
     }
 

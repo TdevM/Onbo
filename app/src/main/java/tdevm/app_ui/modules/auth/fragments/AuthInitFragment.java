@@ -190,7 +190,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
 
 
     @OnShowRationale({Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS})
-    void showRationaleForPhoneCall(PermissionRequest request) {
+    void showRationaleForSMS(PermissionRequest request) {
         new AlertDialog.Builder(getContext())
                 .setMessage("SEND SMS Permission Needed")
                 .setPositiveButton("OK", (dialog, button) -> request.proceed())

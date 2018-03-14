@@ -150,7 +150,7 @@ public class BottomNavigationPresenter extends BasePresenter implements Navigati
 
     public void verifyUserAuthentication() {
         if (authUtils.getAuthLoginState()) {
-            bottomNavigationView.startQRScanner();
+            bottomNavigationView.redirectEntryActivity();
         } else {
             bottomNavigationView.redirectAuthActivity();
         }

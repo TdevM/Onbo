@@ -14,17 +14,17 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
-import tdevm.app_ui.modules.dinein.fragments.InitializeTempOrderFragment;
+import tdevm.app_ui.modules.dinein.fragments.InitializeOrderFragment;
 import tdevm.app_ui.modules.dinein.fragments.TempOrderFragment;
 
 
-public class TempOrderActivity extends AppCompatActivity implements DineInViewContract.PlaceTempOrderView{
-    public static final String TAG = TempOrderActivity.class.getSimpleName();
+public class InitializeOrderActivity extends AppCompatActivity implements DineInViewContract.PlaceTempOrderView{
+    public static final String TAG = InitializeOrderActivity.class.getSimpleName();
     public static final String ORDER_RUNNING_STATUS = "ORDER_RUNNING_STATUS";
     public static ArrayList<TempOrder> tempOrderArrayList;
 
     @Inject
-    TempOrderPresenterImpl placeTempOrderPresenter;
+    InitOrderPresenterImpl placeTempOrderPresenter;
 
     @Override
     protected void onResume() {
@@ -64,7 +64,7 @@ public class TempOrderActivity extends AppCompatActivity implements DineInViewCo
         Bundle bundle = new Bundle();
         bundle.putBoolean(ORDER_RUNNING_STATUS,false);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        InitializeTempOrderFragment fragment = new InitializeTempOrderFragment();
+        InitializeOrderFragment fragment = new InitializeOrderFragment();
         fragment.setArguments(bundle);
         transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();
@@ -78,7 +78,7 @@ public class TempOrderActivity extends AppCompatActivity implements DineInViewCo
         Bundle bundle = new Bundle();
         bundle.putBoolean(ORDER_RUNNING_STATUS,true);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        InitializeTempOrderFragment fragment = new InitializeTempOrderFragment();
+        InitializeOrderFragment fragment = new InitializeOrderFragment();
         fragment.setArguments(bundle);
         transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();

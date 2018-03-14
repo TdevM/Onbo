@@ -73,17 +73,13 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dine_in_home);
         resolveDaggerDependencies();
-        //toolbarDineIn = findViewById(R.id.toolbar_dine_in_home);
-        //setSupportActionBar(toolbarDineIn);
+        Toolbar toolbar = findViewById(R.id.toolbar_dine_in_activity);
+        toolbar.setTitle(R.string.rest_name);
+        setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Dine in");
         }
-//        toolbarDineIn.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBackPressed();
-//            }
-//        });
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         DishMenuFragment dishMenuFragment = new DishMenuFragment();
         transaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);
