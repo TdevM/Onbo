@@ -91,10 +91,7 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result.getContents() != null) {
-            bottomNavigationPresenter.handleQRContent(result.getContents());
-        }
+
     }
 
 
@@ -115,36 +112,10 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
 
 
     @Override
-    public void showTableOccupiedError() {
-        Toast.makeText(BottomNavigationHome.this, "This table is occupied", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void redirectDineInActivity(String restaurantUUID) {
-        Intent intent = new Intent(BottomNavigationHome.this, DineInActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public void redirectNonDineActivity() {
-        Intent intent = new Intent(BottomNavigationHome.this,NonDineRestaurantDetailsActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
     public void showUserProfile() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, new AccountsFragment());
         transaction.commit();
-    }
-
-    @Override
-    public void startQRScanner() {
-        new IntentIntegrator(BottomNavigationHome.this).
-                setOrientationLocked(false).
-                setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES).
-                setCaptureActivity(CustomQRView.class).
-                initiateScan();
     }
 
     @Override

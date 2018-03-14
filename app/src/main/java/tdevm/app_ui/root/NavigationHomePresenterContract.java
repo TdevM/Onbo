@@ -12,9 +12,7 @@ public interface NavigationHomePresenterContract {
         void attachView(NavigationHomeViewContract.BottomNavigationView view);
         void detachView();
         void handleUserAuthentication();
-        void clearExistingCart();
-        void handleQRContent(String qrContent);
-        void verifyRestaurantTableVacant(String tableShortId);
+
     }
 
     interface AccountsPresenter extends BasePresenterMVP<NavigationHomeViewContract.AccountsFragmentView>{

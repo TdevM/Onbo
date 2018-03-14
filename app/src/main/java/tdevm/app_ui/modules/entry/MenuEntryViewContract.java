@@ -8,7 +8,10 @@ import tdevm.app_ui.base.BaseView;
 
 public interface MenuEntryViewContract {
 
-    interface RestaurantMenuEntryView extends BaseView{
-
+    interface RestaurantMenuEntryView extends BaseView {
+        void redirectDineInActivity();
+        void redirectNonDineActivity();
+        void showTableOccupiedError();
+        void startQRScanner();
     }
 }

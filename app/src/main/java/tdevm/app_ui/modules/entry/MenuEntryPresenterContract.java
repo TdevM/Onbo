@@ -12,5 +12,8 @@ public interface MenuEntryPresenterContract {
     interface RestaurantMenuEntryPresenter extends BasePresenterMVP<MenuEntryViewContract.RestaurantMenuEntryView>{
         void attachView(MenuEntryViewContract.RestaurantMenuEntryView view);
         void detachView();
+        void clearExistingCart();
+        void handleQRContent(String qrContent);
+        void verifyRestaurantTableVacant(String tableShortId);
     }
 }
