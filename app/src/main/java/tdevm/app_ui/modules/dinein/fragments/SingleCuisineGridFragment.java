@@ -22,6 +22,7 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.DishReviews;
+import tdevm.app_ui.api.models.response.DishVariant;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledGridMenuAdapter;
@@ -117,11 +118,10 @@ public class SingleCuisineGridFragment extends Fragment
       recycledGridMenuAdapter.onDishesFetched(arrayList);
     }
 
-    @Override
-    public void onDishVariantsFetched(ArrayList<DishesOfCuisine> arrayList, DishesOfCuisine variantsFetched) {
+    public void showDishVariantsSheet(ArrayList<DishVariant> arrayList, DishesOfCuisine parentDish){
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("DISHES", arrayList);
-        bundle.putParcelable("PARENT_DISH", variantsFetched);
+        bundle.putParcelable("PARENT_DISH", parentDish);
         dishVariantsSheet.setArguments(bundle);
         if(!dishVariantsSheet.isAdded()) {
             dishVariantsSheet.show(getChildFragmentManager(), getTag());
@@ -137,7 +137,7 @@ public class SingleCuisineGridFragment extends Fragment
     @Override
     public void onDestroy() {
         super.onDestroy();
-       singleCuisineGridPresenter.detachView();
+        singleCuisineGridPresenter.detachView();
     }
 
     @Override
@@ -157,7 +157,8 @@ public class SingleCuisineGridFragment extends Fragment
     public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, int flag) {
         fetchDishesMap.put("dish_id",dishesOfCuisine.getDish_id().toString());
         if(flag==1){
-            singleCuisineGridPresenter.fetchVariantsOfADish(fetchDishesMap, dishesOfCuisine);
+            //singleCuisineGridPresenter.fetchVariantsOfADish(fetchDishesMap, dishesOfCuisine);
+            showDishVariantsSheet(dishesOfCuisine.getDish_variants(),dishesOfCuisine);
         }else {
             //
             Toast.makeText(getContext(), "Remove this item from cart!", Toast.LENGTH_SHORT).show();
@@ -181,7 +182,13 @@ public class SingleCuisineGridFragment extends Fragment
     @Override
     public void onDishVariantSelected(DishesOfCuisine childDish, DishesOfCuisine parentDish) {
         dishVariantsSheet.dismiss();
-        singleCuisineGridPresenter.addDishVariantItemToCart(childDish,parentDish);
+
+       // singleCuisineGridPresenter.addDishVariantItemToCart(childDish,parentDish);
+    }
+
+    @Override
+    public void onDishVariantSelected(DishVariant dish, DishesOfCuisine parentDish) {
+        Log.d("Child dish selected",dish.getDishVariantName()+dish.getVariantType()+"  "+parentDish.getDish_name());
     }
 
     public void logSelections() {

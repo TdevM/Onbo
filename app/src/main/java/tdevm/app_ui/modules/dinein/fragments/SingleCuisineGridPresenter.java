@@ -70,33 +70,6 @@ public class SingleCuisineGridPresenter extends BasePresenter
     }
 
     @Override
-    public void fetchVariantsOfADish(Map<String,String> map, DishesOfCuisine variantsToFetch){
-        Observable<ArrayList<DishesOfCuisine>> dishesOfCuisineObservable = apiService.fetchDishVariantsByCuisines(authUtils.getAuthLoginToken(),map);
-        subscribe(dishesOfCuisineObservable, new Observer<ArrayList<DishesOfCuisine>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                compositeDisposable.add(d);
-            }
-
-            @Override
-            public void onNext(ArrayList<DishesOfCuisine> dishesOfCuisines) {
-               singleCuisineGridView.onDishVariantsFetched(dishesOfCuisines,variantsToFetch);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-    }
-
-
-    @Override
     public void addItemToCart(DishesOfCuisine dishesOfCuisine) {
         cartHelper.addItemToCart(dishesOfCuisine);
         cartHelper.addItemToSelection(dishesOfCuisine);

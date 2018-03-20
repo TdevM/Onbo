@@ -28,7 +28,6 @@ public interface DineInPresenterContract {
         void attachView(DineInViewContract.SingleCuisineGridView view);
         void detachView();
         void fetchDishesByCuisines(Map<String,String> map);
-        void fetchVariantsOfADish(Map<String,String> map, DishesOfCuisine variantsToFetch);
         void addItemToCart(DishesOfCuisine dishesOfCuisine);
         void addItemToSelection(DishesOfCuisine dishesOfCuisine);
         void updateCartItem(DishesOfCuisine dishesOfCuisine);

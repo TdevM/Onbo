@@ -112,11 +112,11 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
                 @Override
                 public void onPlusClicked(int num) {
                     if (dish.getIs_customizable()) {
-                        if (dish.getIs_child()) {
-                            dishItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 1);
-                        } else if (dish.getIs_parent()) {
-                            dishItemClickListener.onCustomizableItemClicked(dish, 1);
-                        }
+//                        if (dish.getIs_child()) {
+//                            dishItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 1);
+//                        } else if (dish.getIs_parent()) {
+//                            dishItemClickListener.onCustomizableItemClicked(dish, 1);
+//                        }
                     } else {
                         dishItemClickListener.onPlusButtonClicked(dish, num);
                         Log.d(TAG,"Click+");
@@ -126,11 +126,11 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
                 @Override
                 public void onMinusClicked(int num) {
                     if (dish.getIs_customizable()) {
-                        if (dish.getIs_child()) {
-                            dishItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 0);
-                        } else if (dish.getIs_parent()) {
-                            dishItemClickListener.onCustomizableItemClicked(dish, 0);
-                        }
+//                        if (dish.getIs_child()) {
+//                            dishItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 0);
+//                        } else if (dish.getIs_parent()) {
+//                            dishItemClickListener.onCustomizableItemClicked(dish, 0);
+//                        }
                     } else {
                         dishItemClickListener.onMinusButtonClicked(dish, num);
                         Log.d(TAG,"Click+");

@@ -52,6 +52,7 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.nondinein.activities.NonDineRestaurantDetailsActivity;
+import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CustomQRView;
 
 @RuntimePermissions
@@ -89,7 +90,8 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     FusedLocationProviderClient fusedLocationProviderClient;
     @Inject
     SettingsClient settingsClient;
-
+    @Inject
+    AuthUtils authUtils;
     @Inject
     MenuEntryPresenter presenter;
 
@@ -122,7 +124,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
                 super.onLocationResult(locationResult);
                 mCurrentLocation = locationResult.getLastLocation();
                 if(mCurrentLocation!=null){
-                    startQRScanner();
+                    presenter.handleLocationUpdates(locationResult);
                     Log.d(TAG,"Provider: "+mCurrentLocation.getProvider());
                     Log.d(TAG,"Accuracy: "+String.valueOf(mCurrentLocation.getAccuracy()));
                     Log.d(TAG,"Altitude :"+String.valueOf(mCurrentLocation.getAltitude()));
@@ -154,7 +156,8 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     @Override
     public void hideProgressUI() {
         progressBar.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
+        textView.setVisibility(View.GONE);
+        startLocation.setVisibility(View.VISIBLE);
     }
 
     public void resolveDaggerDependencies() {
@@ -269,6 +272,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
     @Override
     public void showTableOccupiedError() {
+        hideProgressUI();
         Toast.makeText(RestaurantMenuEntryActivity.this, "This table is occupied", Toast.LENGTH_SHORT).show();
     }
 
@@ -307,7 +311,8 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
         Toast.makeText(this, "Never ask again", Toast.LENGTH_SHORT).show();
     }
 
-    private void stopLocationUpdates() {
+    @Override
+    public void stopLocationUpdates() {
         fusedLocationProviderClient.removeLocationUpdates(mLocationCallback)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import tdevm.app_ui.api.AppDatabase;
+import tdevm.app_ui.api.db.AppDatabase;
 import tdevm.app_ui.api.cart.CartItemDao;
 import tdevm.app_ui.api.cart.CartSelectionDao;
 

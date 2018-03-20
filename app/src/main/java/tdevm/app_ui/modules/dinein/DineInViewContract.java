@@ -32,7 +32,6 @@ public interface DineInViewContract {
 
     interface SingleCuisineGridView extends BaseView{
         void onDishesOfCuisinesFetched(ArrayList<DishesOfCuisine> arrayList);
-        void onDishVariantsFetched(ArrayList<DishesOfCuisine> arrayList, DishesOfCuisine variantsOfDish);
         void updateAdapter();
     }
 

@@ -1,6 +1,9 @@
 package tdevm.app_ui.modules.entry;
 
+import android.location.Location;
 import android.util.Log;
+
+import com.google.android.gms.location.LocationResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,7 +50,15 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
         compositeDisposable = new CompositeDisposable();
     }
 
-
+    public void handleLocationUpdates(LocationResult result){
+        if(result!=null){
+            Location mCurrentLocation  = result.getLastLocation();
+            Log.d(TAG,"Provider: "+mCurrentLocation.getProvider());
+           if(mCurrentLocation.getAccuracy()<50.0){
+               view.startQRScanner();
+           }
+        }
+    }
 
     @Override
     public void clearExistingCart() {
