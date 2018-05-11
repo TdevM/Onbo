@@ -3,7 +3,7 @@ package tdevm.app_ui.modules.dinein;
 import java.util.ArrayList;
 
 import retrofit2.Response;
-import tdevm.app_ui.api.models.response.Cuisine;
+import tdevm.app_ui.api.models.response.v2.Cuisine;
 import tdevm.app_ui.api.models.response.DishReviews;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.TempOrder;

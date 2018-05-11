@@ -1,6 +1,6 @@
 package tdevm.app_ui.modules.nondinein;
 
-import tdevm.app_ui.api.models.response.Restaurant;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.base.BaseView;
 
 /**

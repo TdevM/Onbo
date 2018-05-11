@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import tdevm.app_ui.api.models.request.KOTUserMessage;
 import tdevm.app_ui.api.models.request.User;
+import tdevm.app_ui.api.models.response.v2.RestaurantTable;
 
 public class RunningOrder {
 

@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 
-import tdevm.app_ui.api.models.response.Cuisine;
+import tdevm.app_ui.api.models.response.v2.Cuisine;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
 
 /**
@@ -39,7 +39,7 @@ public class RecycledFragmentPagerAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return cuisineList.get(position).getCuisine_type();
+        return cuisineList.get(position).getCuisine_name();
     }
 
     @Override

@@ -1,23 +1,9 @@
 package tdevm.app_ui.root;
 
-import android.util.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
-import tdevm.app_ui.api.models.response.RestaurantTable;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CartHelper;

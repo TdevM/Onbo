@@ -1,4 +1,4 @@
-package tdevm.app_ui.api.models.response;
+package tdevm.app_ui.api.models.response.v2;
 
 /**
  * Created by Tridev on 19-08-2017.
@@ -9,11 +9,19 @@ public class Location {
     private String location_lat;
     private String location_locality;
     private String country_id;
-    private String[] location_phonenumbers;
     private String location_address;
     private String location_zipcode;
     private String location_long;
     private String location_id;
+    private String state_id;
+
+    public String getState_id() {
+        return state_id;
+    }
+
+    public void setState_id(String state_id) {
+        this.state_id = state_id;
+    }
 
     public String getCity_id() {
         return city_id;
@@ -44,14 +52,6 @@ public class Location {
 
     public void setCountry_id(String country_id) {
         this.country_id = country_id;
-    }
-
-    public String[] getLocation_phonenumbers() {
-        return location_phonenumbers;
-    }
-
-    public void setLocation_phonenumbers(String[] location_phonenumbers) {
-        this.location_phonenumbers = location_phonenumbers;
     }
 
     public String getLocation_address() {
@@ -88,6 +88,6 @@ public class Location {
 
     @Override
     public String toString() {
-        return "ClassPojo [city_id = " + city_id + ", location_lat = " + location_lat + ", location_locality = " + location_locality + ", country_id = " + country_id + ", location_phonenumbers = " + location_phonenumbers + ", location_address = " + location_address + ", location_zipcode = " + location_zipcode + ", location_long = " + location_long + ", location_id = " + location_id + "]";
+        return "ClassPojo [city_id = " + city_id + ", location_lat = " + location_lat + ", location_locality = " + location_locality + ", country_id = " + country_id +  ", location_address = " + location_address + ", location_zipcode = " + location_zipcode + ", location_long = " + location_long + ", location_id = " + location_id + "]";
     }
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -18,14 +17,14 @@ import tdevm.app_ui.api.models.request.AddRestaurantReview;
 import tdevm.app_ui.api.models.request.NonDineOrder;
 import tdevm.app_ui.api.models.request.RestaurantOrder;
 import tdevm.app_ui.api.models.request.User;
-import tdevm.app_ui.api.models.response.Cuisine;
+import tdevm.app_ui.api.models.response.v2.Cuisine;
 import tdevm.app_ui.api.models.response.Dish;
 import tdevm.app_ui.api.models.response.DishReviews;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.MergedT1Order;
-import tdevm.app_ui.api.models.response.Restaurant;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.RestaurantReviews;
-import tdevm.app_ui.api.models.response.RestaurantTable;
+import tdevm.app_ui.api.models.response.v2.RestaurantTable;
 import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.api.models.response.UserApp;
 
@@ -51,18 +50,17 @@ public interface APIService {
 
 
     //Restaurant Data
-    @GET("restaurant")
+    @GET("m/restaurant")
     Observable<Response<Restaurant>> fetchRestaurantDetails(@QueryMap Map<String,String> query, @Header("x-auth") String authToken);
-    @GET("restaurant/table_status")
+    @GET("m/restaurant/table_status")
     Observable<Response<RestaurantTable>> verifyTableVacancy(@Header("x-auth") String authToken, @QueryMap Map<String,String> query);
-    @GET("restaurant/cuisines")
+    @GET("m/cuisines")
     Observable<ArrayList<Cuisine>> fetchCuisines(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
-    @GET("restaurant/dishes/all")
-    Observable<ArrayList<Dish>> fetchAllDishes(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
-    @GET("restaurant/dishes")
+    @GET("m/menu_items")
+    Observable<ArrayList<Dish>> fetchAllMenuItems(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
+    @GET("m/menu_items")
     Observable<ArrayList<DishesOfCuisine>> fetchDishesByCuisine(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
-    @GET("restaurant/dishes/variants")
-    Observable<ArrayList<DishesOfCuisine>> fetchDishVariantsByCuisines(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
+
 
 
     //Reviews

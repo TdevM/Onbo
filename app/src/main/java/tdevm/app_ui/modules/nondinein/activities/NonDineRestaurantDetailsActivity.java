@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
-import android.widget.Button;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -14,8 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.response.Restaurant;
-import tdevm.app_ui.modules.nondinein.NonDinePresenterContract;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.modules.nondinein.NonDineViewContract;
 
 public class NonDineRestaurantDetailsActivity extends AppCompatActivity implements NonDineViewContract.NonDineRestaurantDetailsView {

@@ -14,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
-import tdevm.app_ui.api.models.response.Restaurant;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.nondinein.NonDinePresenterContract;
 import tdevm.app_ui.modules.nondinein.NonDineViewContract;

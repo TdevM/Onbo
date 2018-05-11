@@ -20,9 +20,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
-import tdevm.app_ui.api.models.response.RestaurantTable;
+import tdevm.app_ui.api.models.response.v2.RestaurantTable;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CartHelper;
 
@@ -120,7 +119,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
             @Override
             public void onNext(@NonNull Response<RestaurantTable> restaurantTableResponse) {
                 if (restaurantTableResponse.code() == 200) {
-                    Log.d(TAG, restaurantTableResponse.body().getRestaurant_table_uuid_shortid());
+                    Log.d(TAG, restaurantTableResponse.body().getRestaurant_table_id());
                     //Calculate distance.
                     //THEN
                     view.redirectDineInActivity();
