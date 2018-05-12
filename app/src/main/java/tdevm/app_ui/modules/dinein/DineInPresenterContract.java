@@ -27,7 +27,7 @@ public interface DineInPresenterContract {
     interface SingleCuisineGridPresenter extends BasePresenterMVP<DineInViewContract.SingleCuisineGridView>{
         void attachView(DineInViewContract.SingleCuisineGridView view);
         void detachView();
-        void fetchDishesByCuisines(Map<String,String> map);
+        void fetchMenuItemsByCuisine(Map<String,String> map);
         void addItemToCart(DishesOfCuisine dishesOfCuisine);
         void addItemToSelection(DishesOfCuisine dishesOfCuisine);
         void updateCartItem(DishesOfCuisine dishesOfCuisine);

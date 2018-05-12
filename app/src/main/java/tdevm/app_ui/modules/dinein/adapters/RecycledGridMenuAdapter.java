@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
+import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridPresenter;
 import tdevm.app_ui.utils.CartHelper;
@@ -31,7 +32,7 @@ import tdevm.app_ui.widgets.IncDecButton;
 public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMenuAdapter.RecycledGridViewHolder> {
 
     private Context mContext;
-    private ArrayList<DishesOfCuisine> dishArrayList;
+    private ArrayList<MenuItem> dishArrayList;
     private DishItemClickListener dishItemClickListener;
     private SingleCuisineGridPresenter singleCuisineGridPresenter;
     private CartHelper cartHelper;
@@ -47,8 +48,8 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         this.dishItemClickListener = dishItemClickListenerCallback;
     }
 
-    public void onDishesFetched(ArrayList<DishesOfCuisine> dishesOfCuisines) {
-        dishArrayList.addAll(dishesOfCuisines);
+    public void onItemsFetched(ArrayList<tdevm.app_ui.api.models.response.v2.menu.MenuItem> menuItems) {
+        dishArrayList.addAll(menuItems);
         notifyDataSetChanged();
     }
 
@@ -61,22 +62,22 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
     @Override
     public void onBindViewHolder(RecycledGridViewHolder holder, int position) {
 
-        Glide.with(mContext).load(dishArrayList.get(position).getDish_image_url()).into(holder.dishImage);
-        holder.dishName.setText(dishArrayList.get(position).getDish_name());
-        holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, dishArrayList.get(position).getDish_price().intValue()));
-        if(dishArrayList.get(position).getDish_vegetarian()){
+        Glide.with(mContext).load(dishArrayList.get(position).getItemImage()).into(holder.dishImage);
+        holder.dishName.setText(dishArrayList.get(position).getItemName());
+        holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, dishArrayList.get(position).getItemPrice().intValue()));
+        if(dishArrayList.get(position).getIsVeg()){
           holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg_indicator));
-        }else if(!dishArrayList.get(position).getDish_vegetarian()){
+        }else if(!dishArrayList.get(position).getIsVeg()){
            holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.non_veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg_indicator));
         }
-            CartSelection selection = cartHelper.getCartSelectionById(dishArrayList.get(position).getDish_id());
-            if(selection!=null){
-                holder.incDecButton.setNumber(selection.getQty(),true);
-            }
+//            CartSelection selection = cartHelper.getCartSelectionById(dishArrayList.get(position).getDish_id());
+//            if(selection!=null){
+//                holder.incDecButton.setNumber(selection.getQty(),true);
+//            }
 
-        holder.bind(dishArrayList.get(position), dishItemClickListener);
+        //holder.bind(dishArrayList.get(position), dishItemClickListener);
     }
 
     @Override

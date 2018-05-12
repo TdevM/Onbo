@@ -24,6 +24,7 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.DishReviews;
 import tdevm.app_ui.api.models.response.DishVariant;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
+import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledGridMenuAdapter;
 import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
@@ -42,7 +43,7 @@ public class SingleCuisineGridFragment extends Fragment
 
     public static final String TAG = SingleCuisineGridFragment.class.getSimpleName();
     public static final String CUISINE_ID = "CUISINE_ID";
-    public static final String RESTAURANT_UUID = "RESTAURANT_UUID";
+    public static final String RESTAURANT_ID = "RESTAURANT_ID";
 
     private RecyclerView.LayoutManager mLayoutManager;
     @BindView(R.id.recycler_view_dishes_grid_single)
@@ -60,7 +61,7 @@ public class SingleCuisineGridFragment extends Fragment
     public static SingleCuisineGridFragment newInstance(String restaurantUUID, Long mCuisineId) {
         Bundle args = new Bundle();
         args.putLong(CUISINE_ID,mCuisineId);
-        args.putString(RESTAURANT_UUID,restaurantUUID);
+        args.putString(RESTAURANT_ID,restaurantUUID);
         SingleCuisineGridFragment fragment = new SingleCuisineGridFragment();
         fragment.setArguments(args);
         return fragment;
@@ -85,12 +86,12 @@ public class SingleCuisineGridFragment extends Fragment
         unbinder =  ButterKnife.bind(this,view);
         mLayoutManager = new GridLayoutManager(getContext(), 2);
         fetchDishesMap = new HashMap<>();
-        fetchDishesMap.put("restaurant_uuid",String.valueOf(getArguments().getString(RESTAURANT_UUID)));
+        fetchDishesMap.put("restaurant_id",String.valueOf(getArguments().getString(RESTAURANT_ID)));
         fetchDishesMap.put("cuisine_id",String.valueOf(getArguments().getLong(CUISINE_ID)));
         recyclerViewGridSingle.setLayoutManager(mLayoutManager);
         recycledGridMenuAdapter = new RecycledGridMenuAdapter(getActivity(),singleCuisineGridPresenter,cartHelper);
         recyclerViewGridSingle.setAdapter(recycledGridMenuAdapter);
-        singleCuisineGridPresenter.fetchDishesByCuisines(fetchDishesMap);
+        singleCuisineGridPresenter.fetchMenuItemsByCuisine(fetchDishesMap);
         recycledGridMenuAdapter.setDishItemClickListenerCallback(this);
         dishVariantsSheet = new DishVariantsSheet();
         dishVariantsSheet.setOnDishVariantSelected(this);
@@ -113,11 +114,6 @@ public class SingleCuisineGridFragment extends Fragment
     }
 
 
-    @Override
-    public void onDishesOfCuisinesFetched(ArrayList<DishesOfCuisine> arrayList) {
-      recycledGridMenuAdapter.onDishesFetched(arrayList);
-    }
-
     public void showDishVariantsSheet(ArrayList<DishVariant> arrayList, DishesOfCuisine parentDish){
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("DISHES", arrayList);
@@ -127,6 +123,12 @@ public class SingleCuisineGridFragment extends Fragment
             dishVariantsSheet.show(getChildFragmentManager(), getTag());
         }
         Log.d(TAG,arrayList.toString());
+    }
+
+    @Override
+    public void onMenuItemsFetched(ArrayList<MenuItem> arrayList) {
+       // Log.d(TAG,arrayList.get(0).getMenuVariants().get(0).getVariantName());
+        recycledGridMenuAdapter.onItemsFetched(arrayList);
     }
 
     @Override
@@ -192,7 +194,7 @@ public class SingleCuisineGridFragment extends Fragment
     }
 
     public void logSelections() {
-        cartHelper.logCartItems();
+       // cartHelper.logCartItems();
 
     }
 

@@ -1,6 +1,6 @@
 package tdevm.app_ui.api.models.response;
 
-import tdevm.app_ui.api.models.response.v2.Cuisine;
+import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 
 /**
  * Created by Tridev on 23-08-2017.

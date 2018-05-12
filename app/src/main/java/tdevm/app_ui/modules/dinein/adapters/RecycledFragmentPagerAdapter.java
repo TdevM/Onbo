@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 
-import tdevm.app_ui.api.models.response.v2.Cuisine;
+import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
 
 /**
@@ -19,17 +19,17 @@ public class RecycledFragmentPagerAdapter extends FragmentStatePagerAdapter{
 
     private Context context;
     private ArrayList<Cuisine> cuisineList;
-    private String RESTAURANT_UUID;
-    public RecycledFragmentPagerAdapter(FragmentManager fm, Context c, ArrayList<Cuisine> cuisines,String restaurantUUID) {
+    private String RESTAURANT_ID;
+    public RecycledFragmentPagerAdapter(FragmentManager fm, Context c, ArrayList<Cuisine> cuisines,String restaurantID) {
         super(fm);
         this.context = c;
         cuisineList = cuisines;
-        this.RESTAURANT_UUID = restaurantUUID;
+        this.RESTAURANT_ID = restaurantID;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return  SingleCuisineGridFragment.newInstance(RESTAURANT_UUID,cuisineList.get(position).getCuisine_id());
+        return  SingleCuisineGridFragment.newInstance(RESTAURANT_ID,cuisineList.get(position).getCuisine_id());
     }
 
     @Override

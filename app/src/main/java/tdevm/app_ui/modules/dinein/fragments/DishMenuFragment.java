@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.response.v2.Cuisine;
+import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.modules.auth.fragments.AuthInitFragment;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledFragmentPagerAdapter;
@@ -74,7 +74,7 @@ public class DishMenuFragment extends Fragment implements DineInViewContract.Dis
         tabLayoutDishMenu.setupWithViewPager(viewPagerDishMenu);
         tabLayoutDishMenu.setOverScrollMode(1);
         Map<String,String> map = new HashMap<>();
-        map.put("restaurant_uuid",authUtils.getScannedRestaurantUuid());
+        map.put("restaurant_id",authUtils.getScannedRestaurantId());
         dishMenuPresenter.FetchAllCuisines(map);
         return view;
     }
@@ -96,7 +96,7 @@ public class DishMenuFragment extends Fragment implements DineInViewContract.Dis
 
     @Override
     public void onCuisinesFetched(ArrayList<Cuisine> cuisines) {
-      viewPagerDishMenu.setAdapter(new RecycledFragmentPagerAdapter(getChildFragmentManager(),getActivity(),cuisines,authUtils.getScannedRestaurantUuid()));
+      viewPagerDishMenu.setAdapter(new RecycledFragmentPagerAdapter(getChildFragmentManager(),getActivity(),cuisines,authUtils.getScannedRestaurantId()));
     }
 
     @Override

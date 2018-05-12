@@ -14,6 +14,6 @@ public interface MenuEntryPresenterContract {
         void detachView();
         void clearExistingCart();
         void handleQRContent(String qrContent);
-        void verifyRestaurantTableVacant(String tableShortId);
+        void verifyRestaurantTableVacant(String tableShortId, String restaurantUUID);
     }
 }

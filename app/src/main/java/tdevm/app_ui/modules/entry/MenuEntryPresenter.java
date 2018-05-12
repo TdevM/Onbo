@@ -71,24 +71,25 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     public void handleQRContent(String qrContent) {
         try {
             JSONObject object = new JSONObject(qrContent);
-            String restaurantUUID = object.getString("restaurant_id");
+            String restaurantUUID = object.getString("uuid");
+            String restaurantID = object.getString("restaurant_id");
             String tableNo;
             try {
                 tableNo = object.getString("table_no");
                 if (tableNo != null && restaurantUUID != null) {
                     //T1
                     String tableShortId = restaurantUUID + '_' + tableNo;
-                    authUtils.saveDineQRTransaction(restaurantUUID, tableShortId, MODE_DINE_IN);
+                    authUtils.saveDineQRTransaction(restaurantID,restaurantUUID, tableShortId, MODE_DINE_IN);
                     Log.d(TAG, "Saved Restaurant" + authUtils.getScannedRestaurantUuid());
                     Log.d(TAG, "Saved Table" + authUtils.getScannedRestaurantTableShortId());
                     Log.d(TAG, "Restaurant Mode" + authUtils.getRestaurantMode());
-                    verifyRestaurantTableVacant(tableShortId);
+                    verifyRestaurantTableVacant(tableShortId, restaurantID);
                     clearExistingCart();
                 }
             } catch (JSONException e) {
                 //T2
                 if (restaurantUUID != null) {
-                    authUtils.saveNonDineQRTransaction(restaurantUUID, MODE_NON_DINE);
+                    authUtils.saveNonDineQRTransaction(restaurantID,restaurantUUID, MODE_NON_DINE);
                     Log.d(TAG, "Saved Restaurant" + authUtils.getScannedRestaurantUuid());
                     Log.d(TAG, "Restaurant Mode" + authUtils.getRestaurantMode());
                     Log.d(TAG, "Type 2 valid");
@@ -106,9 +107,10 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
 
 
     @Override
-    public void verifyRestaurantTableVacant(String tableShortId) {
+    public void verifyRestaurantTableVacant(String tableShortId, String restaurantID) {
         Map<String, String> getRestData = new HashMap<>();
         getRestData.put("table_id", tableShortId);
+        getRestData.put("restaurant_id",restaurantID);
         Observable<Response<RestaurantTable>> observable = apiService.verifyTableVacancy(authUtils.getAuthLoginToken(), getRestData);
         subscribe(observable, new Observer<Response<RestaurantTable>>() {
             @Override

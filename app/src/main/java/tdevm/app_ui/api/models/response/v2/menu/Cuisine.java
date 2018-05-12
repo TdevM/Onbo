@@ -1,4 +1,4 @@
-package tdevm.app_ui.api.models.response.v2;
+package tdevm.app_ui.api.models.response.v2.menu;
 
 /**
  * Created by Tridev on 23-08-2017.

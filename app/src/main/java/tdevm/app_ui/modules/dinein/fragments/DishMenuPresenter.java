@@ -10,7 +10,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import tdevm.app_ui.api.APIService;
-import tdevm.app_ui.api.models.response.v2.Cuisine;
+import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;

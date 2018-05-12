@@ -16,6 +16,7 @@ import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
+import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
@@ -44,17 +45,17 @@ public class SingleCuisineGridPresenter extends BasePresenter
     }
 
     @Override
-    public void fetchDishesByCuisines(Map<String,String> map){
-        Observable<ArrayList<DishesOfCuisine>> dishesOfCuisineObservable = apiService.fetchDishesByCuisine(authUtils.getAuthLoginToken(),map);
-        subscribe(dishesOfCuisineObservable, new Observer<ArrayList<DishesOfCuisine>>() {
+    public void fetchMenuItemsByCuisine(Map<String,String> map){
+        Observable<ArrayList<MenuItem>> dishesOfCuisineObservable = apiService.fetchMenuItemsByCuisine(authUtils.getAuthLoginToken(),map);
+        subscribe(dishesOfCuisineObservable, new Observer<ArrayList<MenuItem>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
             }
 
             @Override
-            public void onNext(ArrayList<DishesOfCuisine> arrayList) {
-              singleCuisineGridView.onDishesOfCuisinesFetched(arrayList);
+            public void onNext(ArrayList<MenuItem> arrayList) {
+              singleCuisineGridView.onMenuItemsFetched(arrayList);
             }
 
             @Override
