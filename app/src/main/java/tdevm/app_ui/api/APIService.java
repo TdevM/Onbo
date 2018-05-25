@@ -17,16 +17,14 @@ import tdevm.app_ui.api.models.request.AddRestaurantReview;
 import tdevm.app_ui.api.models.request.NonDineOrder;
 import tdevm.app_ui.api.models.request.RestaurantOrder;
 import tdevm.app_ui.api.models.request.User;
-import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
-import tdevm.app_ui.api.models.response.Dish;
 import tdevm.app_ui.api.models.response.DishReviews;
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.MergedT1Order;
-import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.RestaurantReviews;
-import tdevm.app_ui.api.models.response.v2.RestaurantTable;
 import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.api.models.response.UserApp;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
+import tdevm.app_ui.api.models.response.v2.RestaurantTable;
+import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 
 /**

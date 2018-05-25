@@ -68,6 +68,7 @@
         <activity android:name=".modules.entry.RestaurantMenuEntryActivity">
 
         </activity>
+        <activity android:name=".modules.entry.SimpleScannerActivity" />
     </application>
 
 </manifest>

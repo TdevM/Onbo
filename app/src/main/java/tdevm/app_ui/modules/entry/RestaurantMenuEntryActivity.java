@@ -51,6 +51,7 @@ import permissions.dispatcher.RuntimePermissions;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.dinein.DineInActivity;
+import tdevm.app_ui.modules.dinein.callbacks.BarCodeListener;
 import tdevm.app_ui.modules.nondinein.activities.NonDineRestaurantDetailsActivity;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CustomQRView;
@@ -60,7 +61,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     public static final String TAG = RestaurantMenuEntryActivity.class.getSimpleName();
 
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
-
+    private static final int QR_RESULT = 100;
     private LocationRequest mLocationRequest;
     private LocationSettingsRequest mLocationSettingsRequest;
     private LocationCallback mLocationCallback;
@@ -229,17 +230,17 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG,"ON_ACTIVITY_RESULT");
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null) {
-            if(result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-            } else {
-                presenter.handleQRContent(result.getContents());
-                hideProgressUI();
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
+        //IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+//        if(result != null) {
+//            if(result.getContents() == null) {
+//                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+//            } else {
+//                presenter.handleQRContent(result.getContents());
+//                hideProgressUI();
+//            }
+//        } else {
+//            super.onActivityResult(requestCode, resultCode, data);
+//        }
         switch (requestCode) {
             case REQUEST_CHECK_SETTINGS:
                 switch (resultCode) {
@@ -250,6 +251,12 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
                     case Activity.RESULT_CANCELED:
                         Log.i(TAG, "User chose not to make required location settings changes.");
                         break;
+                }
+                break;
+            case QR_RESULT:
+                if(resultCode == Activity.RESULT_OK){
+                    String result = data.getStringExtra("result");
+                    presenter.handleQRContent(result);
                 }
                 break;
         }
@@ -279,11 +286,13 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
     @Override
     public void startQRScanner() {
-        new IntentIntegrator(RestaurantMenuEntryActivity.this).
-                setOrientationLocked(false).
-                setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES).
-                setCaptureActivity(CustomQRView.class).
-                initiateScan();
+//        new IntentIntegrator(RestaurantMenuEntryActivity.this).
+//                setOrientationLocked(false).
+//                setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES).
+//                setCaptureActivity(CustomQRView.class).
+//                initiateScan();
+        Intent intent = new Intent(RestaurantMenuEntryActivity.this,SimpleScannerActivity.class);
+        startActivityForResult(intent,100);
     }
 
     private boolean checkPermissions() {

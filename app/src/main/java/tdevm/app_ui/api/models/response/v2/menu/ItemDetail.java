@@ -1,13 +1,14 @@
 
 package tdevm.app_ui.api.models.response.v2.menu;
 
-import java.io.Serializable;
-import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class ItemDetail implements Serializable, Parcelable
 {
