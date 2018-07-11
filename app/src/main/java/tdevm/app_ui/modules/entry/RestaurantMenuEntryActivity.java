@@ -230,17 +230,17 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG,"ON_ACTIVITY_RESULT");
-        //IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-//        if(result != null) {
-//            if(result.getContents() == null) {
-//                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-//            } else {
-//                presenter.handleQRContent(result.getContents());
-//                hideProgressUI();
-//            }
-//        } else {
-//            super.onActivityResult(requestCode, resultCode, data);
-//        }
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                presenter.handleQRContent(result.getContents());
+                hideProgressUI();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
         switch (requestCode) {
             case REQUEST_CHECK_SETTINGS:
                 switch (resultCode) {
@@ -253,12 +253,12 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
                         break;
                 }
                 break;
-            case QR_RESULT:
-                if(resultCode == Activity.RESULT_OK){
-                    String result = data.getStringExtra("result");
-                    presenter.handleQRContent(result);
-                }
-                break;
+//            case QR_RESULT:
+//                if(resultCode == Activity.RESULT_OK){
+//                    String result = data.getStringExtra("result");
+//                    presenter.handleQRContent(result);
+//                }
+//                break;
         }
     }
 
@@ -286,13 +286,13 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
     @Override
     public void startQRScanner() {
-//        new IntentIntegrator(RestaurantMenuEntryActivity.this).
-//                setOrientationLocked(false).
-//                setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES).
-//                setCaptureActivity(CustomQRView.class).
-//                initiateScan();
-        Intent intent = new Intent(RestaurantMenuEntryActivity.this,SimpleScannerActivity.class);
-        startActivityForResult(intent,100);
+        new IntentIntegrator(RestaurantMenuEntryActivity.this).
+                setOrientationLocked(false).
+                setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES).
+                setCaptureActivity(CustomQRView.class).
+                initiateScan();
+//        Intent intent = new Intent(RestaurantMenuEntryActivity.this,SimpleScannerActivity.class);
+//        startActivityForResult(intent,100);
     }
 
     private boolean checkPermissions() {
