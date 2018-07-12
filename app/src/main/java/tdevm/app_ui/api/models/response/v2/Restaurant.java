@@ -11,7 +11,7 @@ public class Restaurant {
     private Location location;
     private int avg_cost_for_two;
     private String image;
-    private String restaurants_name;
+    private String restaurant_name;
     private String restaurant_uuid;
     private int type_id;
     private int table_count;
@@ -85,12 +85,20 @@ public class Restaurant {
         this.image = image;
     }
 
-    public String getRestaurants_name() {
-        return restaurants_name;
+    public String getRestaurant_name() {
+        return restaurant_name;
     }
 
-    public void setRestaurants_name(String restaurants_name) {
-        this.restaurants_name = restaurants_name;
+    public void setRestaurant_name(String restaurant_name) {
+        this.restaurant_name = restaurant_name;
+    }
+
+    public RestaurantType getRestaurant_type() {
+        return restaurant_type;
+    }
+
+    public void setRestaurant_type(RestaurantType restaurant_type) {
+        this.restaurant_type = restaurant_type;
     }
 
     public String getRestaurant_uuid() {

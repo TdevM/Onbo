@@ -55,7 +55,7 @@ public class NonDineRestDetailPresenter extends BasePresenter implements NonDine
             @Override
             public void onNext(Response<Restaurant> restaurantResponse) {
               view.onRestaurantDetailsFetched(restaurantResponse.body());
-                Log.d(TAG,"Restaurant Details Fetched"+restaurantResponse.body().getRestaurants_name());
+                Log.d(TAG,"Restaurant Details Fetched"+restaurantResponse.body().getRestaurant_name());
             }
 
             @Override

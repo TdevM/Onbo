@@ -55,7 +55,7 @@ public class NonDineRestaurantDetailsActivity extends AppCompatActivity implemen
 
     @Override
     public void onRestaurantDetailsFetched(Restaurant restaurant) {
-        textView.setText(restaurant.getRestaurants_name());
+        textView.setText(restaurant.getRestaurant_name());
     }
 
     @Override

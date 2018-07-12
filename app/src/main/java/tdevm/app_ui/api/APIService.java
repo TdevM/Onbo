@@ -34,18 +34,18 @@ import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 public interface APIService {
 
     //User
-    @POST("user/register")
+    @POST("m/user/register")
     Observable<Response<Object>> registerUser(@Body User user);
     @GET("verify/mobile/otp")
     Observable<Response<Object>> getMobileOTP(@Header("phone") Long phone);
     @POST("verify/mobile/otp")
     Observable<Response<Object>> verifyMobileOTP(@Body OneTimePassword oneTimePassword);
-    @POST("user/login")
+    @POST("m/user/login")
     Observable<Response<Object>> loginUser(@Body User user);
-    @GET("user/me")
+    @GET("m/user/me")
     Observable<Response<UserApp>> fetchUser(@Header("x-auth") String authToken);
-    @GET("user/orders")
-    Observable<Object> fetchOrders(@Header("x-auth") String authToken);
+//    @GET("m/user/orders")
+//    Observable<Object> fetchOrders(@Header("x-auth") String authToken);
 
 
     //Restaurant Data
@@ -63,13 +63,13 @@ public interface APIService {
 
 
     //Reviews
-    @GET("dish_reviews")
+    @GET("m/menu_item/reviews")
     Observable<Response<ArrayList<DishReviews>>> fetchDishReviewsById(@Header("x-auth") String authToken,@QueryMap Map<String, String> options);
-    @POST("dish_reviews/add")
+    @POST("m/menu_item/reviews")
     Observable<Response<Object>> addADishReview(@Header("x-auth") String authToken, @Body AddDishReview dishReview);
-    @GET("restaurant_reviews")
+    @GET("m/restaurant/reviews")
     Observable<Response<ArrayList<RestaurantReviews>>> fetchRestaurantReviewsById(@Header("x-auth") String authToken, @QueryMap Map<String, String> options);
-    @POST("restaurant_reviews/add")
+    @POST("m/restaurant/reviews")
     Observable<Response<Object>> addARestaurantReview(@Header("x-auth") String authToken, @Body AddRestaurantReview restaurantReview);
 
 

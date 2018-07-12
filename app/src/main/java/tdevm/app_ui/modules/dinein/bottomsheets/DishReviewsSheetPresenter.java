@@ -44,7 +44,7 @@ public class DishReviewsSheetPresenter extends BasePresenter implements DineInPr
     }
 
     @Override
-    public void fetchDishReview(Long dishId) {
+    public void fetchMenuItemReview(Long dishId) {
         Map<String,String> map = new HashMap<>();
         map.put("dish_id",String.valueOf(dishId.intValue()));
         Observable<Response<ArrayList<DishReviews>>> responseObservable = apiService.fetchDishReviewsById(authUtils.getAuthLoginToken(),map);

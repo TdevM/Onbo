@@ -9,6 +9,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.DishReviews;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
+import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.DishReviewsAdapter;
 
@@ -57,11 +59,11 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
     @BindView(R.id.tv_reviews_dish_rating_average)
     TextView avgRatingText;
 
-    public static DishReviewsSheetFragment newInstance(int itemCount, DishesOfCuisine dishesOfCuisine) {
+    public static DishReviewsSheetFragment newInstance(int itemCount, MenuItem menuItem) {
         final DishReviewsSheetFragment fragment = new DishReviewsSheetFragment();
         final Bundle args = new Bundle();
         args.putInt(ARG_ITEM_COUNT, itemCount);
-        args.putParcelable(DISH,dishesOfCuisine);
+        args.putParcelable(DISH,menuItem);
         fragment.setArguments(args);
         return fragment;
     }
@@ -84,9 +86,9 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
         adapter = new DishReviewsAdapter(getArguments().getInt(ARG_ITEM_COUNT));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        DishesOfCuisine d = getArguments().getParcelable(DISH);
-        if(d!=null){
-            presenter.fetchDishReview(d.getDish_id());
+        MenuItem item = getArguments().getParcelable(DISH);
+        if(item!=null){
+            presenter.fetchMenuItemReview(Long.parseLong(item.getItemId()));
             updateDishInfoCard();
         }
         dismissCard.setOnClickListener(v -> this.dismiss());
@@ -132,16 +134,16 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
     }
 
     private void updateDishInfoCard() {
-        DishesOfCuisine d = getArguments().getParcelable(DISH);
-        if(d!=null){
-            Glide.with(getContext()).load(d.getDish_image_url()).into(dishImage);
+        MenuItem menuItem = getArguments().getParcelable(DISH);
+        if(menuItem!=null){
+            Glide.with(getContext()).load(menuItem.getItemImage()).into(dishImage);
             dishImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            dishName.setText(d.getDish_name());
-            dishDescription.setText(d.getDish_details());
+            dishName.setText(menuItem.getItemName());
+            dishDescription.setText(menuItem.getDescription());
             avgRatingText.setText("4.5");
-            if(d.getDish_vegetarian()){
+            if(menuItem.getIsVeg()){
              dishVegNonVeg.setImageDrawable(getContext().getResources().getDrawable(R.drawable.veg_symbol));
-            } else if (!d.getDish_vegetarian()) {
+            } else if (!menuItem.getIsVeg()) {
                 dishVegNonVeg.setImageDrawable(getContext().getResources().getDrawable(R.drawable.non_veg_symbol));
             }
         }

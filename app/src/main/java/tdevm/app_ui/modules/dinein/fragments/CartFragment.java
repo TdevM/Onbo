@@ -22,6 +22,7 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
+import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.activities.InitializeOrderActivity;
@@ -165,7 +166,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     }
 
     @Override
-    public void onDishImageClicked(DishesOfCuisine dishesOfCuisine) {
+    public void onDishImageClicked(MenuItem menuItem) {
 
     }
 

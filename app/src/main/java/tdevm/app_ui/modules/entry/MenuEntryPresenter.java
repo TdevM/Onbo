@@ -83,7 +83,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
                     Log.d(TAG, "Saved Restaurant" + authUtils.getScannedRestaurantUuid());
                     Log.d(TAG, "Saved Table" + authUtils.getScannedRestaurantTableShortId());
                     Log.d(TAG, "Restaurant Mode" + authUtils.getRestaurantMode());
-                    verifyRestaurantTableVacant(tableShortId, restaurantID);
+                    verifyRestaurantTableVacant(tableShortId, restaurantUUID);
                     clearExistingCart();
                 }
             } catch (JSONException e) {
@@ -107,10 +107,10 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
 
 
     @Override
-    public void verifyRestaurantTableVacant(String tableShortId, String restaurantID) {
+    public void verifyRestaurantTableVacant(String tableShortId, String restaurantUUID) {
         Map<String, String> getRestData = new HashMap<>();
-        getRestData.put("table_id", tableShortId);
-        getRestData.put("restaurant_id",restaurantID);
+        getRestData.put("short_id", tableShortId);
+        getRestData.put("restaurant_uuid",restaurantUUID);
         Observable<Response<RestaurantTable>> observable = apiService.verifyTableVacancy(authUtils.getAuthLoginToken(), getRestData);
         subscribe(observable, new Observer<Response<RestaurantTable>>() {
             @Override

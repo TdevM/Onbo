@@ -48,7 +48,7 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         this.dishItemClickListener = dishItemClickListenerCallback;
     }
 
-    public void onItemsFetched(ArrayList<tdevm.app_ui.api.models.response.v2.menu.MenuItem> menuItems) {
+    public void onItemsFetched(ArrayList<MenuItem> menuItems) {
         dishArrayList.addAll(menuItems);
         notifyDataSetChanged();
     }
@@ -65,11 +65,11 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         Glide.with(mContext).load(dishArrayList.get(position).getItemImage()).into(holder.dishImage);
         holder.dishName.setText(dishArrayList.get(position).getItemName());
         holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, dishArrayList.get(position).getItemPrice().intValue()));
-        if(dishArrayList.get(position).getIsVeg()){
-          holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.veg_symbol));
+        if (dishArrayList.get(position).getIsVeg()) {
+            holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg_indicator));
-        }else if(!dishArrayList.get(position).getIsVeg()){
-           holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.non_veg_symbol));
+        } else if (!dishArrayList.get(position).getIsVeg()) {
+            holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.non_veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg_indicator));
         }
 //            CartSelection selection = cartHelper.getCartSelectionById(dishArrayList.get(position).getDish_id());
@@ -77,7 +77,7 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
 //                holder.incDecButton.setNumber(selection.getQty(),true);
 //            }
 
-        //holder.bind(dishArrayList.get(position), dishItemClickListener);
+        holder.bind(dishArrayList.get(position), dishItemClickListener);
     }
 
     @Override
@@ -112,31 +112,31 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final DishesOfCuisine dishesOfCuisine, final DishItemClickListener dishItemClickListener) {
+        public void bind(final MenuItem menuItem, final DishItemClickListener dishItemClickListener) {
             incDecButton.setOnButtonsClickedListener(new IncDecButton.OnButtonsClickedListener() {
                 @Override
                 public void onPlusClicked(int num) {
-                    if (dishesOfCuisine.getIs_customizable()) {
-                        dishItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 1);
-                        if (incDecButton.getNumber() == 0) {
-                            incDecButton.setNumber(0, true);
-                        }
-                    } else {
-                        dishItemClickListener.onPlusButtonClicked(dishesOfCuisine, num);
-                    }
+//                    if (dishesOfCuisine.getIs_customizable()) {
+//                        dishItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 1);
+//                        if (incDecButton.getNumber() == 0) {
+//                            incDecButton.setNumber(0, true);
+//                        }
+//                    } else {
+//                        dishItemClickListener.onPlusButtonClicked(dishesOfCuisine, num);
+//                    }
                 }
 
                 @Override
                 public void onMinusClicked(int num) {
-                    if (dishesOfCuisine.getIs_customizable()) {
-                        dishItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 0);
-                    } else {
-                        dishItemClickListener.onMinusButtonClicked(dishesOfCuisine, num);
-                    }
+//                    if (dishesOfCuisine.getIs_customizable()) {
+//                        dishItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 0);
+//                    } else {
+//                        dishItemClickListener.onMinusButtonClicked(dishesOfCuisine, num);
+//                    }
                 }
             });
             // Open dish reviews
-            dishImage.setOnClickListener(v -> dishItemClickListener.onDishImageClicked(dishesOfCuisine));
+            dishImage.setOnClickListener(v -> dishItemClickListener.onDishImageClicked(menuItem));
         }
 
     }
