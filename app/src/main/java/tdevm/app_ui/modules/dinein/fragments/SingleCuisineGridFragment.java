@@ -144,13 +144,15 @@ public class SingleCuisineGridFragment extends Fragment
 
     @Override
     public void onPlusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
-        singleCuisineGridPresenter.addItemToCart(dishesOfCuisine);
+        //singleCuisineGridPresenter.addItemToCart(dishesOfCuisine);
+        Toast.makeText(getActivity(), "Plus", Toast.LENGTH_SHORT).show();
         Log.d(TAG,dishesOfCuisine.getDish_name());
     }
 
     @Override
     public void onMinusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
-        singleCuisineGridPresenter.updateCartItem(dishesOfCuisine);
+        //singleCuisineGridPresenter.updateCartItem(dishesOfCuisine);
+        Toast.makeText(getActivity(), "Minus", Toast.LENGTH_SHORT).show();
         Log.d(TAG,dishesOfCuisine.getDish_name());
     }
 
