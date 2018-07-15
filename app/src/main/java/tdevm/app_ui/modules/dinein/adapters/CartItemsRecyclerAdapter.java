@@ -118,7 +118,7 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
 //                            dishItemClickListener.onCustomizableItemClicked(dish, 1);
 //                        }
                     } else {
-                        dishItemClickListener.onPlusButtonClicked(dish, num);
+                       // dishItemClickListener.onPlusButtonClicked(dish, num);
                         Log.d(TAG,"Click+");
                     }
                 }
@@ -132,7 +132,7 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
 //                            dishItemClickListener.onCustomizableItemClicked(dish, 0);
 //                        }
                     } else {
-                        dishItemClickListener.onMinusButtonClicked(dish, num);
+                      //  dishItemClickListener.onMinusButtonClicked(dish, num);
                         Log.d(TAG,"Click+");
 
                     }

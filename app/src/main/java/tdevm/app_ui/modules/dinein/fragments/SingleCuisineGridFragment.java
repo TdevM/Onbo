@@ -21,7 +21,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.response.DishReviews;
 import tdevm.app_ui.api.models.response.DishVariant;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
@@ -143,17 +142,17 @@ public class SingleCuisineGridFragment extends Fragment
     }
 
     @Override
-    public void onPlusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
+    public void onPlusButtonClicked(MenuItem menuItem, int num) {
         //singleCuisineGridPresenter.addItemToCart(dishesOfCuisine);
         Toast.makeText(getActivity(), "Plus", Toast.LENGTH_SHORT).show();
-        Log.d(TAG,dishesOfCuisine.getDish_name());
+        Log.d(TAG,menuItem.getItemName());
     }
 
     @Override
-    public void onMinusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
+    public void onMinusButtonClicked(MenuItem menuItem, int num) {
         //singleCuisineGridPresenter.updateCartItem(dishesOfCuisine);
         Toast.makeText(getActivity(), "Minus", Toast.LENGTH_SHORT).show();
-        Log.d(TAG,dishesOfCuisine.getDish_name());
+        Log.d(TAG,menuItem.getItemName());
     }
 
 
@@ -179,6 +178,7 @@ public class SingleCuisineGridFragment extends Fragment
     @Override
     public void onDishImageClicked(MenuItem menuItem) {
         DishReviewsSheetFragment.newInstance(30,menuItem).show(getChildFragmentManager(), "dialog");
+        //HeaderRecycler.newInstance().show(getChildFragmentManager(),"dialog");
     }
 
 

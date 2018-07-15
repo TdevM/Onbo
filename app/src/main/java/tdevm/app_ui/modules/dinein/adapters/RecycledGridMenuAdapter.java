@@ -116,6 +116,7 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
             incDecButton.setOnButtonsClickedListener(new IncDecButton.OnButtonsClickedListener() {
                 @Override
                 public void onPlusClicked(int num) {
+                    dishItemClickListener.onPlusButtonClicked(menuItem,num);
 //                    if (dishesOfCuisine.getIs_customizable()) {
 //                        dishItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 1);
 //                        if (incDecButton.getNumber() == 0) {
@@ -128,6 +129,7 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
 
                 @Override
                 public void onMinusClicked(int num) {
+                    dishItemClickListener.onMinusButtonClicked(menuItem,num);
 //                    if (dishesOfCuisine.getIs_customizable()) {
 //                        dishItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 0);
 //                    } else {

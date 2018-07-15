@@ -137,16 +137,18 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
         super.onDestroy();
     }
 
+
+
     @Override
-    public void onPlusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
-        cartFragmentPresenter.addItemToCart(dishesOfCuisine);
-        Log.d(TAG, dishesOfCuisine.getDish_name());
+    public void onPlusButtonClicked(MenuItem menuItem, int num) {
+        //cartFragmentPresenter.addItemToCart(menuItem);
+        Log.d(TAG, menuItem.getItemName());
     }
 
     @Override
-    public void onMinusButtonClicked(DishesOfCuisine dishesOfCuisine, int num) {
-        cartFragmentPresenter.updateCartItem(dishesOfCuisine);
-        Log.d(TAG, dishesOfCuisine.getDish_name());
+    public void onMinusButtonClicked(MenuItem menuItem, int num) {
+        //cartFragmentPresenter.updateCartItem(dishesOfCuisine);
+       // Log.d(TAG, dishesOfCuisine.getDish_name());
     }
 
     @Override
