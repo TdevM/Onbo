@@ -178,10 +178,14 @@ public class SingleCuisineGridFragment extends Fragment
 
     @Override
     public void onDishImageClicked(MenuItem menuItem) {
-        //DishReviewsSheetFragment.newInstance(30,menuItem).show(getChildFragmentManager(), "dialog");
-        HeaderRecycler.newInstance().show(getChildFragmentManager(),"dialog");
+        DishReviewsSheetFragment.newInstance(30,menuItem).show(getChildFragmentManager(), "dialog");
+
     }
 
+    @Override
+    public void onCustomizableItemClicked(MenuItem menuItem) {
+        HeaderRecycler.newInstance(menuItem).show(getChildFragmentManager(),"dialog");
+    }
 
 
     @Override

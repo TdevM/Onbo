@@ -125,6 +125,10 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
 //                    } else {
 //                        dishItemClickListener.onPlusButtonClicked(dishesOfCuisine, num);
 //                    }
+
+                    if(menuItem.getCustomizable()){
+                        dishItemClickListener.onCustomizableItemClicked(menuItem);
+                    }
                 }
 
                 @Override
@@ -135,6 +139,9 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
 //                    } else {
 //                        dishItemClickListener.onMinusButtonClicked(dishesOfCuisine, num);
 //                    }
+                    if(menuItem.getCustomizable()){
+                        dishItemClickListener.onCustomizableItemClicked(menuItem);
+                    }
                 }
             });
             // Open dish reviews

@@ -17,4 +17,5 @@ public interface DishItemClickListener {
 
 
     void onDishImageClicked(MenuItem menuItem);
+    void onCustomizableItemClicked(MenuItem menuItem);
 }

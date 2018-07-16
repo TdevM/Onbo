@@ -78,13 +78,14 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
     @OnClick(R.id.btn_fetch_location)
     void fetchLocation(){
-        locationRequestMade = true;
-        if(checkPermissions()){
-            startLocationUpdates();
-            showProgressUI();
-        }else if(!checkPermissions()){
-            RestaurantMenuEntryActivityPermissionsDispatcher.requestLocationUpdatesWithPermissionCheck(this);
-        }
+//        locationRequestMade = true;
+//        if(checkPermissions()){
+//            startLocationUpdates();
+//            showProgressUI();
+//        }else if(!checkPermissions()){
+//            RestaurantMenuEntryActivityPermissionsDispatcher.requestLocationUpdatesWithPermissionCheck(this);
+//        }
+        startQRScanner();
     }
 
     @Inject

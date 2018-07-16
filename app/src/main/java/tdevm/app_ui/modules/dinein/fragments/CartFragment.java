@@ -172,6 +172,11 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     }
 
+    @Override
+    public void onCustomizableItemClicked(MenuItem menuItem) {
+
+    }
+
 
     @Override
     public void updateBottomSheet(int totalItems, Double cartTotal) {

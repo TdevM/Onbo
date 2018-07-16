@@ -57,7 +57,7 @@ public class DishReviewsAdapter extends RecyclerView.Adapter<DishReviewsAdapter.
         ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             // TODO: Customize the item layout
             super(inflater.inflate(R.layout.item_single_dish_review, parent, false));
-            text = (TextView) itemView.findViewById(R.id.text);
+            text =  itemView.findViewById(R.id.text_single_dish_review);
 
         }
 

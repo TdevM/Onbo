@@ -3,14 +3,15 @@ package tdevm.app_ui.api.models.response.v2.menu;
 
 import java.io.Serializable;
 import java.util.List;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MenuItem implements Serializable, Parcelable
-{
+public class MenuItem implements Serializable, Parcelable {
 
     @SerializedName("item_id")
     @Expose
@@ -64,7 +65,7 @@ public class MenuItem implements Serializable, Parcelable
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public MenuItem createFromParcel(Parcel in) {
             return new MenuItem(in);
@@ -74,8 +75,7 @@ public class MenuItem implements Serializable, Parcelable
             return (new MenuItem[size]);
         }
 
-    }
-    ;
+    };
     private final static long serialVersionUID = -685315480136505563L;
 
     protected MenuItem(Parcel in) {
@@ -248,7 +248,7 @@ public class MenuItem implements Serializable, Parcelable
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }

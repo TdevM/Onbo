@@ -54,6 +54,7 @@ dependencies {
         exclude module: "support-v13"
     }
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0'
+    implementation 'com.xwray:groupie:2.1.0'
     implementation 'android.arch.persistence.room:runtime:1.1.0'
     implementation 'android.arch.persistence.room:rxjava2:1.1.0'
     annotationProcessor "android.arch.persistence.room:compiler:1.1.0"
