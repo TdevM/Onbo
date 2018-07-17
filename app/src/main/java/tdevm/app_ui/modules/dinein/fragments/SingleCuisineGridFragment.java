@@ -30,7 +30,7 @@ import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
 import tdevm.app_ui.modules.dinein.bottomsheets.DishVariantsSheet;
 import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
 import tdevm.app_ui.modules.dinein.callbacks.DishVariantSelected;
-import tdevm.app_ui.modules.section_r_view.HeaderRecycler;
+import tdevm.app_ui.modules.section_r_view.MenuItemCustomizationSheet;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -184,7 +184,7 @@ public class SingleCuisineGridFragment extends Fragment
 
     @Override
     public void onCustomizableItemClicked(MenuItem menuItem) {
-        HeaderRecycler.newInstance(menuItem).show(getChildFragmentManager(),"dialog");
+        MenuItemCustomizationSheet.newInstance(menuItem).show(getChildFragmentManager(),"dialog");
     }
 
 

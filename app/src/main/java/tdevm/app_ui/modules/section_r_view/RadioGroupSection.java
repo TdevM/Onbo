@@ -3,14 +3,16 @@ package tdevm.app_ui.modules.section_r_view;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.menu.MenuVariant;
@@ -27,10 +29,13 @@ public class RadioGroupSection extends StatelessSection {
     String title;
     Context context;
     List<MenuVariant> menuVariants;
+    SectionedRecyclerViewAdapter adapter;
+    ArrayList<Integer> radioGroupState;
 
-    public RadioGroupSection(SectionParameters sectionParameters, List<MenuVariant> menuVariants, Context context, String title) {
+    public RadioGroupSection(SectionParameters sectionParameters, List<MenuVariant> menuVariants, Context context, String title, SectionedRecyclerViewAdapter adapter) {
         super(sectionParameters);
         this.title = title;
+        this.adapter =adapter;
         this.context = context;
         this.menuVariants = menuVariants;
     }
@@ -48,15 +53,45 @@ public class RadioGroupSection extends StatelessSection {
 
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
-       MyItemViewHolder itemHolder = (MyItemViewHolder) holder;
-       itemHolder.tvItem.setText(menuVariants.get(position).getVariantName());
+        MyItemViewHolder itemHolder = (MyItemViewHolder) holder;
+        itemHolder.tvItem.setText(menuVariants.get(position).getVariantName());
         for (int i = 0; i < menuVariants.get(position).getMenuVOptions().size(); i++) {
             RadioButton btn = new RadioButton(context);
-            btn.setId(Integer.parseInt(menuVariants.get(position).getMenuVOptions().get(i).getItemId()));
-           // btn.setText(dishesOfCuisines.get(i).getDish_name() + "  " + getContext().getString(R.string.rupee_symbol,dishesOfCuisines.get(i).getDish_price().intValue()));
+            btn.setId(Integer.parseInt(menuVariants.get(position).getMenuVOptions().get(i).getOptionId()));
             btn.setText(menuVariants.get(position).getMenuVOptions().get(i).getOptionName());
             itemHolder.group.addView(btn);
         }
+        if(menuVariants.get(position).getMenuVOptions().size()>0){
+            itemHolder.group.check(Integer.parseInt(menuVariants.get(position).getMenuVOptions().get(0).getOptionId()));
+        }
+
+//        itemHolder.rootView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (v.getId() == R.id.rg_variant_instance) {
+//                    Toast.makeText(context,
+//                            String.format("Clicked on position #%s of Section %s",
+//                                    adapter.getPositionInSection(itemHolder.getAdapterPosition()),
+//                                    title),
+//                            Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+           itemHolder.group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+               @Override
+               public void onCheckedChanged(RadioGroup g, int checkedId) {
+                                       Toast.makeText(context,
+                            String.format("Clicked on position #%s of Section %s",
+                                    adapter.getPositionInSection(itemHolder.getAdapterPosition()),
+                                    title),
+                            Toast.LENGTH_SHORT).show();
+//                   itemHolder.group.clearCheck();
+                   itemHolder.group.check(checkedId);
+
+
+               }
+           });
+
 
     }
 
@@ -64,9 +99,11 @@ public class RadioGroupSection extends StatelessSection {
     class MyItemViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvItem;
         RadioGroup group;
+        private final View rootView;
 
         public MyItemViewHolder(View itemView) {
             super(itemView);
+            rootView = itemView;
             tvItem = itemView.findViewById(R.id.text_single_variant_name);
             group = itemView.findViewById(R.id.rg_variant_instance);
 
