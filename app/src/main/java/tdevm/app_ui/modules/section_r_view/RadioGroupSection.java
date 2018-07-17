@@ -9,12 +9,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.api.models.response.v2.menu.MenuVariant;
 
 public class RadioGroupSection extends StatelessSection {
@@ -30,14 +32,15 @@ public class RadioGroupSection extends StatelessSection {
     Context context;
     List<MenuVariant> menuVariants;
     SectionedRecyclerViewAdapter adapter;
-    ArrayList<Integer> radioGroupState;
+    List<MenuVOption> radioGroupState;
 
     public RadioGroupSection(SectionParameters sectionParameters, List<MenuVariant> menuVariants, Context context, String title, SectionedRecyclerViewAdapter adapter) {
         super(sectionParameters);
         this.title = title;
-        this.adapter =adapter;
+        this.adapter = adapter;
         this.context = context;
         this.menuVariants = menuVariants;
+        radioGroupState = new ArrayList<>();
     }
 
 
@@ -61,36 +64,30 @@ public class RadioGroupSection extends StatelessSection {
             btn.setText(menuVariants.get(position).getMenuVOptions().get(i).getOptionName());
             itemHolder.group.addView(btn);
         }
-        if(menuVariants.get(position).getMenuVOptions().size()>0){
+        if (menuVariants.get(position).getMenuVOptions().size() > 0) {
             itemHolder.group.check(Integer.parseInt(menuVariants.get(position).getMenuVOptions().get(0).getOptionId()));
+            radioGroupState.add(position, menuVariants.get(position).getMenuVOptions().get(0));
         }
 
-//        itemHolder.rootView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (v.getId() == R.id.rg_variant_instance) {
-//                    Toast.makeText(context,
-//                            String.format("Clicked on position #%s of Section %s",
-//                                    adapter.getPositionInSection(itemHolder.getAdapterPosition()),
-//                                    title),
-//                            Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-           itemHolder.group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-               @Override
-               public void onCheckedChanged(RadioGroup g, int checkedId) {
-                                       Toast.makeText(context,
-                            String.format("Clicked on position #%s of Section %s",
-                                    adapter.getPositionInSection(itemHolder.getAdapterPosition()),
-                                    title),
-                            Toast.LENGTH_SHORT).show();
-//                   itemHolder.group.clearCheck();
-                   itemHolder.group.check(checkedId);
+        itemHolder.group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup g, int checkedId) {
+
+                Iterator<MenuVOption> arrayListIterator = menuVariants.get(position).getMenuVOptions().listIterator();
+                while (arrayListIterator.hasNext()) {
+                    MenuVOption option = arrayListIterator.next();
+                    //Toast.makeText(context, option.getOptionName(), Toast.LENGTH_SHORT).show();
+                    if (checkedId == Integer.parseInt(option.getOptionId())) {
+
+                        radioGroupState.remove(position);
+                        radioGroupState.add(position, option);
+
+                    }
+                }
 
 
-               }
-           });
+            }
+        });
 
 
     }

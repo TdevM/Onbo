@@ -2,17 +2,23 @@ package tdevm.app_ui.modules.section_r_view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
 import tdevm.app_ui.api.models.response.v2.menu.MenuAddOnGroup;
+import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 
 public class CheckboxGroupSection extends StatelessSection {
 
@@ -26,12 +32,15 @@ public class CheckboxGroupSection extends StatelessSection {
     private List<MenuAddOnGroup> menuAddOnGroups;
     Context context;
     String title;
+    List<MenuAddOn> checkboxGroupState;
+
 
     public CheckboxGroupSection(SectionParameters sectionParameters, List<MenuAddOnGroup> menuAddOnGroups, Context context, String title) {
         super(sectionParameters);
-        this.context =context;
+        this.context = context;
         this.title = title;
         this.menuAddOnGroups = menuAddOnGroups;
+        this.checkboxGroupState = new ArrayList<>();
     }
 
     @Override
@@ -50,16 +59,43 @@ public class CheckboxGroupSection extends StatelessSection {
 
         // bind your view here
         itemHolder.tvItem.setText(menuAddOnGroups.get(position).getGroupName());
-        if(menuAddOnGroups.get(position).getMenuAddOns().size()>0) {
+        if (menuAddOnGroups.get(position).getMenuAddOns().size() > 0) {
             for (int i = 0; i < menuAddOnGroups.get(position).getMenuAddOns().size(); i++) {
                 CheckBox cb = new CheckBox(context);
                 cb.setText(menuAddOnGroups.get(position).getMenuAddOns().get(i).getAddOnName());
                 cb.setId(Integer.parseInt(menuAddOnGroups.get(position).getMenuAddOns().get(i).getAddOnId()));
                 itemHolder.ll.addView(cb);
+                cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Iterator<MenuAddOn> arrayListIterator = menuAddOnGroups.get(position).getMenuAddOns().listIterator();
+                        while (arrayListIterator.hasNext()) {
+                            MenuAddOn addOn = arrayListIterator.next();
+                            //Toast.makeText(context, option.getOptionName(), Toast.LENGTH_SHORT).show();
+                            if (buttonView.getId() == Integer.parseInt(addOn.getAddOnId())) {
+                                if (isChecked) {
+                                    checkboxGroupState.add(addOn);
+                                } else if (!isChecked) {
+                                    if (checkboxGroupState.contains(addOn)) {
+                                        checkboxGroupState.remove(addOn);
+                                    }
+                                }
+                            //    Log.d("List iterator", addOn.getAddOnName());
+                            }
+                        }
+                        // checkboxGroupState.add()
+                    //    Log.d("Checkbox group", String.valueOf(buttonView.getId()));
+                    }
+                });
+
             }
+
         }
+//
+
 
     }
+
 
     class MyItemViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvItem;

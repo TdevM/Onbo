@@ -9,20 +9,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
+import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 
 public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
 
     private SectionedRecyclerViewAdapter sectionAdapter;
     private MenuItem menuItem;
+    private Button button;
 
     public MenuItemCustomizationSheet() {
         // Required empty public constructor
     }
+
+
 
 
     public static MenuItemCustomizationSheet newInstance(MenuItem menuItem) {
@@ -43,6 +49,8 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Bundle bundle = getArguments();
+        View view = inflater.inflate(R.layout.fragment_menu_customization_sheet, container, false);
+        button = view.findViewById(R.id.btn_variant_add_to_cart);
         menuItem = bundle.getParcelable("options");
         Log.d("TAG___________________", menuItem.getItemName());
         sectionAdapter = new SectionedRecyclerViewAdapter();
@@ -63,11 +71,24 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
 
         sectionAdapter.addSection(section);
         sectionAdapter.addSection(section2);
-        View view = inflater.inflate(R.layout.fragment_menu_customization_sheet, container, false);
+
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_header_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(sectionAdapter);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                for(MenuVOption option: section.radioGroupState){
+                    Log.d("RadioGroup State",option.getOptionName());
+                }
+                for (MenuAddOn addOn: section2.checkboxGroupState){
+                     Log.d("Checkbox State", addOn.getAddOnName());
+                }
+            }
+        });
         return view;
     }
 
