@@ -29,8 +29,6 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
     }
 
 
-
-
     public static MenuItemCustomizationSheet newInstance(MenuItem menuItem) {
         MenuItemCustomizationSheet fragment = new MenuItemCustomizationSheet();
         Bundle args = new Bundle();
@@ -62,11 +60,17 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
                 .headerResourceId(R.layout.section_ex1_header)
                 .build(), menuItem.getMenuAddOnGroups(), getContext(), "Customize your dish");
 
+        VariantExtraSection section1 = new VariantExtraSection(SectionParameters
+                .builder()
+                .itemResourceId(R.layout.item_single_variant_group_instance)
+                .headerResourceId(R.layout.section_ex1_header)
+                .build(), menuItem.getMenuVariants().get(0).getMenuVOptions().get(0), getContext(), "", sectionAdapter);
+
         RadioGroupSection section = new RadioGroupSection(SectionParameters
                 .builder()
                 .itemResourceId(R.layout.item_single_variant_group_instance)
                 .headerResourceId(R.layout.section_ex1_header)
-                .build(), menuItem.getMenuVariants(), getContext(), "Choose",sectionAdapter);
+                .build(), menuItem.getMenuVariants(), getContext(), "Choose", sectionAdapter);
 
 
         sectionAdapter.addSection(section);
@@ -81,11 +85,11 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
 
-                for(MenuVOption option: section.radioGroupState){
-                    Log.d("RadioGroup State",option.getOptionName());
+                for (MenuVOption option : section.radioGroupState) {
+                    Log.d("RadioGroup State", option.getOptionName());
                 }
-                for (MenuAddOn addOn: section2.checkboxGroupState){
-                     Log.d("Checkbox State", addOn.getAddOnName());
+                for (MenuAddOn addOn : section2.checkboxGroupState) {
+                    Log.d("Checkbox State", addOn.getAddOnName());
                 }
             }
         });

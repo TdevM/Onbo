@@ -62,7 +62,7 @@ public class CheckboxGroupSection extends StatelessSection {
         if (menuAddOnGroups.get(position).getMenuAddOns().size() > 0) {
             for (int i = 0; i < menuAddOnGroups.get(position).getMenuAddOns().size(); i++) {
                 CheckBox cb = new CheckBox(context);
-                cb.setText(menuAddOnGroups.get(position).getMenuAddOns().get(i).getAddOnName());
+                cb.setText(menuAddOnGroups.get(position).getMenuAddOns().get(i).getAddOnName() + "   " + String.valueOf( menuAddOnGroups.get(position).getMenuAddOns().get(i).getPrice()));
                 cb.setId(Integer.parseInt(menuAddOnGroups.get(position).getMenuAddOns().get(i).getAddOnId()));
                 itemHolder.ll.addView(cb);
                 cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -80,11 +80,11 @@ public class CheckboxGroupSection extends StatelessSection {
                                         checkboxGroupState.remove(addOn);
                                     }
                                 }
-                            //    Log.d("List iterator", addOn.getAddOnName());
+                                //    Log.d("List iterator", addOn.getAddOnName());
                             }
                         }
                         // checkboxGroupState.add()
-                    //    Log.d("Checkbox group", String.valueOf(buttonView.getId()));
+                        //    Log.d("Checkbox group", String.valueOf(buttonView.getId()));
                     }
                 });
 
