@@ -1,8 +1,7 @@
-package tdevm.app_ui.modules.section_r_view;
+package tdevm.app_ui.modules.dinein.bottomsheets.section_r_view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -18,7 +17,6 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
 import tdevm.app_ui.api.models.response.v2.menu.MenuAddOnGroup;
-import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 
 public class CheckboxGroupSection extends StatelessSection {
 

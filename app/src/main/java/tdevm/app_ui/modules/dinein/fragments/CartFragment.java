@@ -21,29 +21,29 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.activities.InitializeOrderActivity;
 import tdevm.app_ui.modules.dinein.adapters.CartItemsRecyclerAdapter;
-import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
+import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.nondinein.activities.NonDineActivity;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CartHelper;
-import tdevm.app_ui.widgets.ItemOffsetDecoration;
 
-public class CartFragment extends Fragment implements DineInViewContract.CartFragmentView, DishItemClickListener {
+public class CartFragment extends Fragment implements DineInViewContract.CartFragmentView, MenuItemClickListener {
 
     public static final String TAG = CartFragment.class.getSimpleName();
     private static final String MODE_DINE_IN = "MODE_DINE_IN";
     private static final String MODE_NON_DINE = "MODE_NON_DINE";
     @BindView(R.id.recycler_view_cart)
     RecyclerView recyclerViewCart;
+
     @OnClick(R.id.btn_order_initiate)
-    void clear(){
+    void clear() {
         startTempOrderActivity();
     }
+
     @BindView(R.id.tv_total_quantities)
     TextView tvTotalQuantities;
     @BindView(R.id.tv_total_bill_amount)
@@ -80,10 +80,10 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(authUtils.getRestaurantMode().equals(MODE_DINE_IN)){
-            activity = (DineInActivity)getActivity();
-        }else if(authUtils.getRestaurantMode().equals(MODE_NON_DINE)){
-            nonDineActivity = (NonDineActivity)getActivity();
+        if (authUtils.getRestaurantMode().equals(MODE_DINE_IN)) {
+            activity = (DineInActivity) getActivity();
+        } else if (authUtils.getRestaurantMode().equals(MODE_NON_DINE)) {
+            nonDineActivity = (NonDineActivity) getActivity();
         }
         View view;
         if (cartFragmentPresenter.cartItemsExists()) {
@@ -92,13 +92,10 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
             mLayoutManager = new LinearLayoutManager(getContext());
             adapter = new CartItemsRecyclerAdapter(getActivity(), cartFragmentPresenter, cartHelper);
             adapter.setOnDishItemClickListener(this);
-            ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getActivity(), R.dimen.recycler_view_item_width);
-//            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL);
-            //recyclerViewCart.addItemDecoration(itemDecoration);
             recyclerViewCart.setLayoutManager(mLayoutManager);
             recyclerViewCart.setAdapter(adapter);
             //TODO Avoid Direct Model Access
-            updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
+            updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
             Log.d(TAG, String.valueOf(cartHelper.getCartTotalItems()));
         } else {
             view = inflater.inflate(R.layout.fragment_cart_empty, container, false);
@@ -122,11 +119,11 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     }
 
-    public void clearCart(){
+    public void clearCart() {
         cartFragmentPresenter.clearCart();
     }
 
-    public void startTempOrderActivity(){
+    public void startTempOrderActivity() {
         Intent intent = new Intent(getContext(), InitializeOrderActivity.class);
         startActivity(intent);
     }
@@ -138,7 +135,6 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     }
 
 
-
     @Override
     public void onPlusButtonClicked(MenuItem menuItem, int num) {
         //cartFragmentPresenter.addItemToCart(menuItem);
@@ -148,27 +144,11 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     @Override
     public void onMinusButtonClicked(MenuItem menuItem, int num) {
         //cartFragmentPresenter.updateCartItem(dishesOfCuisine);
-       // Log.d(TAG, dishesOfCuisine.getDish_name());
+        // Log.d(TAG, dishesOfCuisine.getDish_name());
     }
 
     @Override
-    public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, int flag) {
-        if (flag == 1) {
-            cartFragmentPresenter.addItemToCart(dishesOfCuisine);
-            Log.d(TAG, dishesOfCuisine.getDish_name());
-        } else {
-            cartFragmentPresenter.updateCartItem(dishesOfCuisine);
-            Log.d(TAG, dishesOfCuisine.getDish_name());
-        }
-    }
-
-    @Override
-    public void onCustomizableItemClicked(DishesOfCuisine dishesOfCuisine, Long parentDishId, int flag) {
-        cartFragmentPresenter.addCustomizableItemToCart(dishesOfCuisine, parentDishId, flag);
-    }
-
-    @Override
-    public void onDishImageClicked(MenuItem menuItem) {
+    public void onItemImageClicked(MenuItem menuItem) {
 
     }
 
@@ -198,6 +178,6 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     @Override
     public void showDineCartEmpty() {
-       activity.showCartEmptyFragment();
+        activity.showCartEmptyFragment();
     }
 }

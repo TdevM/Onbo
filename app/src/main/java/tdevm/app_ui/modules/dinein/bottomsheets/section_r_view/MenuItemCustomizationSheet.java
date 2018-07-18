@@ -1,8 +1,9 @@
-package tdevm.app_ui.modules.section_r_view;
+package tdevm.app_ui.modules.dinein.bottomsheets.section_r_view;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,12 +18,14 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
+import tdevm.app_ui.modules.dinein.callbacks.MenuItemOptionsSelected;
 
 public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
 
     private SectionedRecyclerViewAdapter sectionAdapter;
     private MenuItem menuItem;
     private Button button;
+    private MenuItemOptionsSelected menuItemOptionsSelected;
 
     public MenuItemCustomizationSheet() {
         // Required empty public constructor
@@ -60,11 +63,6 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
                 .headerResourceId(R.layout.section_ex1_header)
                 .build(), menuItem.getMenuAddOnGroups(), getContext(), "Customize your dish");
 
-        VariantExtraSection section1 = new VariantExtraSection(SectionParameters
-                .builder()
-                .itemResourceId(R.layout.item_single_variant_group_instance)
-                .headerResourceId(R.layout.section_ex1_header)
-                .build(), menuItem.getMenuVariants().get(0).getMenuVOptions().get(0), getContext(), "", sectionAdapter);
 
         RadioGroupSection section = new RadioGroupSection(SectionParameters
                 .builder()
@@ -91,6 +89,7 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
                 for (MenuAddOn addOn : section2.checkboxGroupState) {
                     Log.d("Checkbox State", addOn.getAddOnName());
                 }
+                menuItemOptionsSelected.onOptionsSelected(menuItem, section.radioGroupState, section2.checkboxGroupState);
             }
         });
         return view;
@@ -100,13 +99,20 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        super.onAttach(context);
+        final Fragment parent = getParentFragment();
+        if (parent != null) {
+            menuItemOptionsSelected = (MenuItemOptionsSelected) parent;
+        } else {
+            menuItemOptionsSelected = (MenuItemOptionsSelected) context;
+        }
 
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-
+        menuItemOptionsSelected = null;
     }
 
 

@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
-import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
+import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.CartFragmentPresenterImpl;
 import tdevm.app_ui.utils.CartHelper;
 import tdevm.app_ui.widgets.IncDecButton;
@@ -32,7 +32,7 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
     public static final String TAG = CartItemsRecyclerAdapter.class.getSimpleName();
     private Context context;
     private List<CartItem> cartItemArrayList;
-    private DishItemClickListener dishItemClickListener;
+    private MenuItemClickListener menuItemClickListener;
     private CartHelper cartHelper;
     private CartFragmentPresenterImpl cartFragmentPresenter;
 
@@ -42,8 +42,8 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         this.cartHelper = cartHelper;
     }
 
-    public void setOnDishItemClickListener(DishItemClickListener d) {
-        this.dishItemClickListener = d;
+    public void setOnDishItemClickListener(MenuItemClickListener d) {
+        this.menuItemClickListener = d;
     }
 
 
@@ -70,7 +70,7 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         }else if(!cartItemArrayList.get(position).getDishesOfCuisine().getDish_vegetarian()){
             holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.non_veg_symbol));
         }
-        holder.bind(cartItemArrayList.get(position).getDishesOfCuisine(), dishItemClickListener);
+        holder.bind(cartItemArrayList.get(position).getDishesOfCuisine(), menuItemClickListener);
     }
 
     @Override
@@ -107,18 +107,18 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         }
 
 
-        public void bind(final DishesOfCuisine dish, final DishItemClickListener dishItemClickListener) {
+        public void bind(final DishesOfCuisine dish, final MenuItemClickListener menuItemClickListener) {
             incDecButton.setOnButtonsClickedListener(new IncDecButton.OnButtonsClickedListener() {
                 @Override
                 public void onPlusClicked(int num) {
                     if (dish.getIs_customizable()) {
 //                        if (dish.getIs_child()) {
-//                            dishItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 1);
+//                            menuItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 1);
 //                        } else if (dish.getIs_parent()) {
-//                            dishItemClickListener.onCustomizableItemClicked(dish, 1);
+//                            menuItemClickListener.onCustomizableItemClicked(dish, 1);
 //                        }
                     } else {
-                       // dishItemClickListener.onPlusButtonClicked(dish, num);
+                       // menuItemClickListener.onPlusButtonClicked(dish, num);
                         Log.d(TAG,"Click+");
                     }
                 }
@@ -127,12 +127,12 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
                 public void onMinusClicked(int num) {
                     if (dish.getIs_customizable()) {
 //                        if (dish.getIs_child()) {
-//                            dishItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 0);
+//                            menuItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 0);
 //                        } else if (dish.getIs_parent()) {
-//                            dishItemClickListener.onCustomizableItemClicked(dish, 0);
+//                            menuItemClickListener.onCustomizableItemClicked(dish, 0);
 //                        }
                     } else {
-                      //  dishItemClickListener.onMinusButtonClicked(dish, num);
+                      //  menuItemClickListener.onMinusButtonClicked(dish, num);
                         Log.d(TAG,"Click+");
 
                     }

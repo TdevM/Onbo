@@ -16,10 +16,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.cart.CartSelection;
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
-import tdevm.app_ui.modules.dinein.callbacks.DishItemClickListener;
+import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridPresenter;
 import tdevm.app_ui.utils.CartHelper;
 import tdevm.app_ui.widgets.IncDecButton;
@@ -33,7 +31,7 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
 
     private Context mContext;
     private ArrayList<MenuItem> dishArrayList;
-    private DishItemClickListener dishItemClickListener;
+    private MenuItemClickListener menuItemClickListener;
     private SingleCuisineGridPresenter singleCuisineGridPresenter;
     private CartHelper cartHelper;
 
@@ -44,8 +42,8 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         dishArrayList = new ArrayList<>();
     }
 
-    public void setDishItemClickListenerCallback(DishItemClickListener dishItemClickListenerCallback) {
-        this.dishItemClickListener = dishItemClickListenerCallback;
+    public void setDishItemClickListenerCallback(MenuItemClickListener menuItemClickListenerCallback) {
+        this.menuItemClickListener = menuItemClickListenerCallback;
     }
 
     public void onItemsFetched(ArrayList<MenuItem> menuItems) {
@@ -77,7 +75,7 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
 //                holder.incDecButton.setNumber(selection.getQty(),true);
 //            }
 
-        holder.bind(dishArrayList.get(position), dishItemClickListener);
+        holder.bind(dishArrayList.get(position), menuItemClickListener);
     }
 
     @Override
@@ -112,40 +110,40 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final MenuItem menuItem, final DishItemClickListener dishItemClickListener) {
+        public void bind(final MenuItem menuItem, final MenuItemClickListener menuItemClickListener) {
             incDecButton.setOnButtonsClickedListener(new IncDecButton.OnButtonsClickedListener() {
                 @Override
                 public void onPlusClicked(int num) {
-                    dishItemClickListener.onPlusButtonClicked(menuItem,num);
+                    menuItemClickListener.onPlusButtonClicked(menuItem,num);
 //                    if (dishesOfCuisine.getIs_customizable()) {
-//                        dishItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 1);
+//                        menuItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 1);
 //                        if (incDecButton.getNumber() == 0) {
 //                            incDecButton.setNumber(0, true);
 //                        }
 //                    } else {
-//                        dishItemClickListener.onPlusButtonClicked(dishesOfCuisine, num);
+//                        menuItemClickListener.onPlusButtonClicked(dishesOfCuisine, num);
 //                    }
 
                     if(menuItem.getCustomizable()){
-                        dishItemClickListener.onCustomizableItemClicked(menuItem);
+                        menuItemClickListener.onCustomizableItemClicked(menuItem);
                     }
                 }
 
                 @Override
                 public void onMinusClicked(int num) {
-                    dishItemClickListener.onMinusButtonClicked(menuItem,num);
+                    menuItemClickListener.onMinusButtonClicked(menuItem,num);
 //                    if (dishesOfCuisine.getIs_customizable()) {
-//                        dishItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 0);
+//                        menuItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 0);
 //                    } else {
-//                        dishItemClickListener.onMinusButtonClicked(dishesOfCuisine, num);
+//                        menuItemClickListener.onMinusButtonClicked(dishesOfCuisine, num);
 //                    }
                     if(menuItem.getCustomizable()){
-                        dishItemClickListener.onCustomizableItemClicked(menuItem);
+                        menuItemClickListener.onCustomizableItemClicked(menuItem);
                     }
                 }
             });
             // Open dish reviews
-            dishImage.setOnClickListener(v -> dishItemClickListener.onDishImageClicked(menuItem));
+            dishImage.setOnClickListener(v -> menuItemClickListener.onItemImageClicked(menuItem));
         }
 
     }

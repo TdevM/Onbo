@@ -1,4 +1,4 @@
-package tdevm.app_ui.modules.section_r_view;
+package tdevm.app_ui.modules.dinein.bottomsheets.section_r_view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;

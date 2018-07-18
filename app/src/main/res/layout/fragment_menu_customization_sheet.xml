@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="7"
-    tools:context=".modules.section_r_view.MenuItemCustomizationSheet">
+    tools:context=".modules.dinein.bottomsheets.section_r_view.MenuItemCustomizationSheet">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -18,7 +18,7 @@
         android:clipToPadding="false"
         android:paddingBottom="@dimen/list_item_spacing_half"
         android:paddingTop="@dimen/list_item_spacing_half"
-        tools:context="tdevm.app_ui.modules.section_r_view.MenuItemCustomizationSheet"
+        tools:context=".modules.dinein.bottomsheets.section_r_view.MenuItemCustomizationSheet"
         tools:listitem="@layout/item_single_dish_review" />
 
 
