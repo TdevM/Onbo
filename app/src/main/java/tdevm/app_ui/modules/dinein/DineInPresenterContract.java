@@ -32,8 +32,6 @@ public interface DineInPresenterContract {
         void addItemToCart(MenuItem menuItem, String itemHash);
         void addItemToSelection(MenuItem menuItem);
         void updateCartItem(MenuItem menuItem, String itemHash);
-//        void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, int operationFlag);
-//        void addDishVariantItemToCart(DishesOfCuisine selectedDish, DishesOfCuisine parentDish);
     }
 
     interface PlaceTempOrderPresenter extends BasePresenterMVP<DineInViewContract.PlaceTempOrderView>{
@@ -49,8 +47,8 @@ public interface DineInPresenterContract {
         void detachView();
         boolean cartItemsExists();
         void showCartEmpty();
-        void addItemToCart(DishesOfCuisine dishesOfCuisine);
-        void updateCartItem(DishesOfCuisine dishesOfCuisine);
+        void addItemToCart(MenuItem menuItem, String itemHash);
+        void updateCartItem(MenuItem menuItem, String itemHash);
         void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long parentDishId, int operationFlag);
     }
 

@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.cart.CartSelection;
+import tdevm.app_ui.api.models.cart.MenuItem;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
@@ -20,7 +21,7 @@ import tdevm.app_ui.utils.CartHelper;
  * Created by Tridev on 06-01-2018.
  */
 
-public class CartFragmentPresenterImpl extends BasePresenter{
+public class CartFragmentPresenterImpl extends BasePresenter implements DineInPresenterContract.CartFragmentPresenter {
 
     public static final String TAG = CartFragmentPresenterImpl.class.getSimpleName();
     private CartHelper cartHelper;
@@ -38,81 +39,81 @@ public class CartFragmentPresenterImpl extends BasePresenter{
     }
 
 
-//    @Override
-//    public boolean cartItemsExists() {
-//        return cartHelper.cartItemsExist();
-//    }
+    @Override
+    public boolean cartItemsExists() {
+        return cartHelper.cartItemsExist();
+    }
 
 
-//    @Override
-//    public void addItemToCart(DishesOfCuisine dishesOfCuisine) {
+    @Override
+    public void addItemToCart(MenuItem menuItem, String itemHash) {
 //        cartHelper.addItemToCart(dishesOfCuisine);
 //        cartHelper.addItemToSelection(dishesOfCuisine);
 //        cartFragmentView.updateAdapter();
 //        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
-//        logSelections();
-//    }
+        logSelections();
+    }
 
-//    @Override
-//    public void updateCartItem(DishesOfCuisine dishesOfCuisine) {
+    @Override
+    public void updateCartItem(MenuItem menuItem, String itemHash) {
 //        cartHelper.updateCartItem(dishesOfCuisine);
 //        cartHelper.updateSelectionItem(dishesOfCuisine);
-//        cartFragmentView.updateAdapter();
-//        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
-//        if(cartHelper.getCartTotalItems()==0){
-//            showCartEmpty();
-//        }
-//        logSelections();
-//    }
+        cartFragmentView.updateAdapter();
+        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
+        if (cartHelper.getCartTotalItems() == 0) {
+            showCartEmpty();
+        }
+        logSelections();
+    }
 
-//    @Override
-//    public void showCartEmpty(){
-//        if(authUtils.getRestaurantMode().equals(MODE_DINE_IN)){
-//            cartFragmentView.showDineCartEmpty();
-//        }else if(authUtils.getRestaurantMode().equals(MODE_NON_DINE)){
-//            cartFragmentView.showNonDineEmptyCart();
-//        }
-//    }
+    @Override
+    public void showCartEmpty() {
+        if (authUtils.getRestaurantMode().equals(MODE_DINE_IN)) {
+            cartFragmentView.showDineCartEmpty();
+        } else if (authUtils.getRestaurantMode().equals(MODE_NON_DINE)) {
+            cartFragmentView.showNonDineEmptyCart();
+        }
+    }
 
-    public void clearCart(){
+    public void clearCart() {
         cartHelper.clearCart();
     }
 
-//    @Override
-//    public void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine,Long dishId, int operationFlag) {
-//      if(operationFlag==1){
+    @Override
+    public void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long dishId, int operationFlag) {
+        if (operationFlag == 1) {
 //          cartHelper.addItemToCart(dishesOfCuisine);
 //          cartHelper.incrementCartSelectionById(dishId);
 //          cartFragmentView.updateAdapter();
 //          cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
-//      }else if(operationFlag==0){
+        } else if (operationFlag == 0) {
 //          cartHelper.updateCartItem(dishesOfCuisine);
 //          cartHelper.decrementCartSelectionById(dishId);
 //          cartFragmentView.updateAdapter();
-//          cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
-//      }
-//    }
+            cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
+        }
+    }
 
-//    @Override
-//    public void attachView(DineInViewContract.CartFragmentView view) {
-//        cartFragmentView = view;
-//    }
-//
-//    @Override
-//    public void detachView() {
-//        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
-//            compositeDisposable.dispose();
-//            compositeDisposable.clear();
-//        }
-//    }
+    @Override
+    public void attachView(DineInViewContract.CartFragmentView view) {
+        cartFragmentView = view;
+    }
+
+    @Override
+    public void detachView() {
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable.clear();
+        }
+    }
 
 
     public void logSelections() {
-        Log.d(TAG,"Log Started");
+        Log.d(TAG, "Log Started");
         List<CartSelection> selection = cartHelper.getCartSelections();
         List<CartItem> cartItems = cartHelper.getCartItems();
 
-        if(selection!=null && cartItems!=null) {
+        if (selection != null && cartItems != null) {
             for (int i = 0; i < selection.size(); i++) {
 //                Log.d(TAG, "Dish selection made:" + selection.get(i).getDishesOfCuisine().getDish_name());
 //                Log.d(TAG, "Dish qty added:" + String.valueOf(selection.get(i).getQty()));

@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartItem;
+import tdevm.app_ui.api.models.cart.MenuItem;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.CartFragmentPresenterImpl;
@@ -62,15 +63,15 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         Log.d("Cart", String.valueOf(cartHelper.getCartTotalItems()));
         List<CartItem> cartItems = cartHelper.getCartItems();
         cartItemArrayList.addAll(cartItems);
-//        holder.dishName.setText(cartItemArrayList.get(position).getDishesOfCuisine().getDish_name());
-//        holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice().intValue())));
-//        holder.incDecButton.setNumber(cartItemArrayList.get(position).getQuantity(), true);
-//        if(cartItemArrayList.get(position).getDishesOfCuisine().getDish_vegetarian()){
-//            holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
-//        }else if(!cartItemArrayList.get(position).getDishesOfCuisine().getDish_vegetarian()){
-//            holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.non_veg_symbol));
-//        }
-//        holder.bind(cartItemArrayList.get(position).getDishesOfCuisine(), menuItemClickListener);
+        holder.dishName.setText(cartItemArrayList.get(position).getMenuItem().getItemName());
+        holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getMenuItem().getItemPrice())));
+        holder.incDecButton.setNumber(cartItemArrayList.get(position).getQuantity(), true);
+        if(cartItemArrayList.get(position).getMenuItem().getVeg()){
+            holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
+        }else if(!cartItemArrayList.get(position).getMenuItem().getVeg()){
+            holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.non_veg_symbol));
+        }
+        holder.bind(cartItemArrayList.get(position).getMenuItem(),cartItemArrayList.get(position).getItem_hash(), menuItemClickListener);
     }
 
     @Override
@@ -107,35 +108,35 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         }
 
 
-        public void bind(final DishesOfCuisine dish, final MenuItemClickListener menuItemClickListener) {
+        public void bind(final MenuItem menuItem, String itemHash, final MenuItemClickListener menuItemClickListener) {
             incDecButton.setOnButtonsClickedListener(new IncDecButton.OnButtonsClickedListener() {
                 @Override
                 public void onPlusClicked(int num) {
-                    if (dish.getIs_customizable()) {
-//                        if (dish.getIs_child()) {
-//                            menuItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 1);
-//                        } else if (dish.getIs_parent()) {
-//                            menuItemClickListener.onCustomizableItemClicked(dish, 1);
-//                        }
-                    } else {
-                       // menuItemClickListener.onPlusButtonClicked(dish, num);
-                        Log.d(TAG,"Click+");
-                    }
+//                    if (dish.getIs_customizable()) {
+////                        if (dish.getIs_child()) {
+////                            menuItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 1);
+////                        } else if (dish.getIs_parent()) {
+////                            menuItemClickListener.onCustomizableItemClicked(dish, 1);
+////                        }
+//                    } else {
+//                       // menuItemClickListener.onPlusButtonClicked(dish, num);
+//                        Log.d(TAG,"Click+");
+//                    }
                 }
 
                 @Override
                 public void onMinusClicked(int num) {
-                    if (dish.getIs_customizable()) {
-//                        if (dish.getIs_child()) {
-//                            menuItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 0);
-//                        } else if (dish.getIs_parent()) {
-//                            menuItemClickListener.onCustomizableItemClicked(dish, 0);
-//                        }
-                    } else {
-                      //  menuItemClickListener.onMinusButtonClicked(dish, num);
-                        Log.d(TAG,"Click+");
-
-                    }
+//                    if (dish.getIs_customizable()) {
+////                        if (dish.getIs_child()) {
+////                            menuItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 0);
+////                        } else if (dish.getIs_parent()) {
+////                            menuItemClickListener.onCustomizableItemClicked(dish, 0);
+////                        }
+//                    } else {
+//                      //  menuItemClickListener.onMinusButtonClicked(dish, num);
+//                        Log.d(TAG,"Click+");
+//
+//                    }
                 }
             });
         }

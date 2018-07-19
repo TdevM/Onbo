@@ -73,7 +73,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resolveDaggerDependencies();
-      //  cartFragmentPresenter.attachView(this);
+       cartFragmentPresenter.attachView(this);
 
     }
 
@@ -87,20 +87,20 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
         }
         View view;
         view = inflater.inflate(R.layout.fragment_cart_empty, container, false);
-//        if (cartFragmentPresenter.cartItemsExists()) {
-//            view = inflater.inflate(R.layout.fragment_cart, container, false);
-//            unbinder = ButterKnife.bind(this, view);
-//            mLayoutManager = new LinearLayoutManager(getContext());
-//            adapter = new CartItemsRecyclerAdapter(getActivity(), cartFragmentPresenter, cartHelper);
-//            adapter.setOnDishItemClickListener(this);
-//            recyclerViewCart.setLayoutManager(mLayoutManager);
-//            recyclerViewCart.setAdapter(adapter);
-//            //TODO Avoid Direct Model Access
-//            updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
-//            Log.d(TAG, String.valueOf(cartHelper.getCartTotalItems()));
-//        } else {
-//
-//        }
+        if (cartFragmentPresenter.cartItemsExists()) {
+            view = inflater.inflate(R.layout.fragment_cart, container, false);
+            unbinder = ButterKnife.bind(this, view);
+            mLayoutManager = new LinearLayoutManager(getContext());
+            adapter = new CartItemsRecyclerAdapter(getActivity(), cartFragmentPresenter, cartHelper);
+            adapter.setOnDishItemClickListener(this);
+            recyclerViewCart.setLayoutManager(mLayoutManager);
+            recyclerViewCart.setAdapter(adapter);
+            //TODO Avoid Direct Model Access
+            updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
+            Log.d(TAG, String.valueOf(cartHelper.getCartTotalItems()));
+        } else {
+
+        }
         return view;
 
     }
@@ -131,7 +131,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     @Override
     public void onDestroy() {
-        //cartFragmentPresenter.detachView();
+        cartFragmentPresenter.detachView();
         super.onDestroy();
     }
 
@@ -162,12 +162,11 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
 
     @Override
-    public void updateBottomSheet(int totalItems, Double cartTotal) {
-        if (cartTotal != null) {
-            tvTotalBillAmt.setText(String.valueOf(getActivity().getApplication().getString(R.string.rupee_symbol, cartTotal.intValue())));
+    public void updateBottomSheet(int totalItems, int cartTotal) {
+         //   tvTotalBillAmt.setText(String.valueOf(getActivity().getApplication().getString(R.string.rupee_symbol, cartTotal.intValue())));
             tvTotalQuantities.setText(String.valueOf(totalItems));
-        }
     }
+
 
     @Override
     public void updateAdapter() {
