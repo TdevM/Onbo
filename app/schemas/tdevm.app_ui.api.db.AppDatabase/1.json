@@ -2,15 +2,21 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "05d7fca6a407f768dc788b78e8e8d45d",
+    "identityHash": "0044656d0687801a0c502d85b095401e",
     "entities": [
       {
         "tableName": "cart_items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dishId` INTEGER, `quantity` INTEGER NOT NULL, `price` REAL, `isCustomizable` INTEGER, `dish_image_url` TEXT, `dish_id` INTEGER, `dish_visibility` INTEGER, `restaurant_uuid` TEXT, `dish_name` TEXT, `dish_vegetarian` INTEGER, `dish_added_timestamp` TEXT, `dish_price` REAL, `cuisine_id` INTEGER, `dish_details` TEXT, `is_customizable` INTEGER, `is_deleted` INTEGER, `dish_variants` TEXT, PRIMARY KEY(`dishId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`item_hash` TEXT NOT NULL, `cartItemId` INTEGER, `quantity` INTEGER NOT NULL, `price` INTEGER NOT NULL, `isCustomizable` INTEGER, `itemId` TEXT, `itemName` TEXT, `description` TEXT, `itemPrice` INTEGER, `itemImage` TEXT, `isVeg` INTEGER, `restaurantId` TEXT, `cuisineId` TEXT, `customizable` INTEGER, `menuVariantOptions` TEXT, `menuAddOns` TEXT, PRIMARY KEY(`item_hash`))",
         "fields": [
           {
-            "fieldPath": "dishId",
-            "columnName": "dishId",
+            "fieldPath": "item_hash",
+            "columnName": "item_hash",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cartItemId",
+            "columnName": "cartItemId",
             "affinity": "INTEGER",
             "notNull": false
           },
@@ -23,8 +29,8 @@
           {
             "fieldPath": "price",
             "columnName": "price",
-            "affinity": "REAL",
-            "notNull": false
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "isCustomizable",
@@ -33,87 +39,75 @@
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_image_url",
-            "columnName": "dish_image_url",
+            "fieldPath": "menuItem.itemId",
+            "columnName": "itemId",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_id",
-            "columnName": "dish_id",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "dishesOfCuisine.dish_visibility",
-            "columnName": "dish_visibility",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "dishesOfCuisine.restaurant_uuid",
-            "columnName": "restaurant_uuid",
+            "fieldPath": "menuItem.itemName",
+            "columnName": "itemName",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_name",
-            "columnName": "dish_name",
+            "fieldPath": "menuItem.description",
+            "columnName": "description",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_vegetarian",
-            "columnName": "dish_vegetarian",
+            "fieldPath": "menuItem.itemPrice",
+            "columnName": "itemPrice",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_added_timestamp",
-            "columnName": "dish_added_timestamp",
+            "fieldPath": "menuItem.itemImage",
+            "columnName": "itemImage",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_price",
-            "columnName": "dish_price",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "dishesOfCuisine.cuisine_id",
-            "columnName": "cuisine_id",
+            "fieldPath": "menuItem.isVeg",
+            "columnName": "isVeg",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_details",
-            "columnName": "dish_details",
+            "fieldPath": "menuItem.restaurantId",
+            "columnName": "restaurantId",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.is_customizable",
-            "columnName": "is_customizable",
+            "fieldPath": "menuItem.cuisineId",
+            "columnName": "cuisineId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "menuItem.customizable",
+            "columnName": "customizable",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.is_deleted",
-            "columnName": "is_deleted",
-            "affinity": "INTEGER",
+            "fieldPath": "menuItem.menuVariantOptions",
+            "columnName": "menuVariantOptions",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_variants",
-            "columnName": "dish_variants",
+            "fieldPath": "menuItem.menuAddOns",
+            "columnName": "menuAddOns",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "dishId"
+            "item_hash"
           ],
           "autoGenerate": false
         },
@@ -122,11 +116,11 @@
       },
       {
         "tableName": "cart_selections",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dishId` INTEGER, `qty` INTEGER NOT NULL, `dish_image_url` TEXT, `dish_id` INTEGER, `dish_visibility` INTEGER, `restaurant_uuid` TEXT, `dish_name` TEXT, `dish_vegetarian` INTEGER, `dish_added_timestamp` TEXT, `dish_price` REAL, `cuisine_id` INTEGER, `dish_details` TEXT, `is_customizable` INTEGER, `is_deleted` INTEGER, `dish_variants` TEXT, PRIMARY KEY(`dishId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`selectionItemId` INTEGER, `qty` INTEGER NOT NULL, `itemId` TEXT, `itemName` TEXT, `description` TEXT, `itemPrice` INTEGER, `itemImage` TEXT, `isVeg` INTEGER, `restaurantId` TEXT, `cuisineId` TEXT, `customizable` INTEGER, `menuVariantOptions` TEXT, `menuAddOns` TEXT, PRIMARY KEY(`selectionItemId`))",
         "fields": [
           {
-            "fieldPath": "dishId",
-            "columnName": "dishId",
+            "fieldPath": "selectionItemId",
+            "columnName": "selectionItemId",
             "affinity": "INTEGER",
             "notNull": false
           },
@@ -137,87 +131,75 @@
             "notNull": true
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_image_url",
-            "columnName": "dish_image_url",
+            "fieldPath": "menuItem.itemId",
+            "columnName": "itemId",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_id",
-            "columnName": "dish_id",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "dishesOfCuisine.dish_visibility",
-            "columnName": "dish_visibility",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "dishesOfCuisine.restaurant_uuid",
-            "columnName": "restaurant_uuid",
+            "fieldPath": "menuItem.itemName",
+            "columnName": "itemName",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_name",
-            "columnName": "dish_name",
+            "fieldPath": "menuItem.description",
+            "columnName": "description",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_vegetarian",
-            "columnName": "dish_vegetarian",
+            "fieldPath": "menuItem.itemPrice",
+            "columnName": "itemPrice",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_added_timestamp",
-            "columnName": "dish_added_timestamp",
+            "fieldPath": "menuItem.itemImage",
+            "columnName": "itemImage",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_price",
-            "columnName": "dish_price",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "dishesOfCuisine.cuisine_id",
-            "columnName": "cuisine_id",
+            "fieldPath": "menuItem.isVeg",
+            "columnName": "isVeg",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_details",
-            "columnName": "dish_details",
+            "fieldPath": "menuItem.restaurantId",
+            "columnName": "restaurantId",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.is_customizable",
-            "columnName": "is_customizable",
+            "fieldPath": "menuItem.cuisineId",
+            "columnName": "cuisineId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "menuItem.customizable",
+            "columnName": "customizable",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.is_deleted",
-            "columnName": "is_deleted",
-            "affinity": "INTEGER",
+            "fieldPath": "menuItem.menuVariantOptions",
+            "columnName": "menuVariantOptions",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "dishesOfCuisine.dish_variants",
-            "columnName": "dish_variants",
+            "fieldPath": "menuItem.menuAddOns",
+            "columnName": "menuAddOns",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "dishId"
+            "selectionItemId"
           ],
           "autoGenerate": false
         },
@@ -227,7 +209,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"05d7fca6a407f768dc788b78e8e8d45d\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0044656d0687801a0c502d85b095401e\")"
     ]
   }
 }

@@ -27,7 +27,7 @@ import tdevm.app_ui.utils.CartHelper;
  * Created by Tridev on 06-11-2017.
  */
 public class SingleCuisineGridPresenter extends BasePresenter
-        implements DineInPresenterContract.SingleCuisineGridPresenter{
+        implements DineInPresenterContract.SingleCuisineGridPresenter {
 
     public static final String TAG = SingleCuisineGridPresenter.class.getSimpleName();
     private DineInViewContract.SingleCuisineGridView singleCuisineGridView;
@@ -45,8 +45,8 @@ public class SingleCuisineGridPresenter extends BasePresenter
     }
 
     @Override
-    public void fetchMenuItemsByCuisine(Map<String,String> map){
-        Observable<ArrayList<MenuItem>> dishesOfCuisineObservable = apiService.fetchMenuItemsByCuisine(authUtils.getAuthLoginToken(),map);
+    public void fetchMenuItemsByCuisine(Map<String, String> map) {
+        Observable<ArrayList<MenuItem>> dishesOfCuisineObservable = apiService.fetchMenuItemsByCuisine(authUtils.getAuthLoginToken(), map);
         subscribe(dishesOfCuisineObservable, new Observer<ArrayList<MenuItem>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -55,7 +55,7 @@ public class SingleCuisineGridPresenter extends BasePresenter
 
             @Override
             public void onNext(ArrayList<MenuItem> arrayList) {
-              singleCuisineGridView.onMenuItemsFetched(arrayList);
+                singleCuisineGridView.onMenuItemsFetched(arrayList);
             }
 
             @Override
@@ -71,40 +71,61 @@ public class SingleCuisineGridPresenter extends BasePresenter
     }
 
     @Override
-    public void addItemToCart(DishesOfCuisine dishesOfCuisine) {
-        cartHelper.addItemToCart(dishesOfCuisine);
-        cartHelper.addItemToSelection(dishesOfCuisine);
+    public void addItemToCart(tdevm.app_ui.api.models.cart.MenuItem menuItem, String itemHash) {
+        cartHelper.addItemToCart(menuItem, itemHash);
+        cartHelper.addItemToSelection(menuItem);
         singleCuisineGridView.updateAdapter();
         logSelections();
     }
 
     @Override
-    public void addItemToSelection(DishesOfCuisine dishesOfCuisine) {
-        cartHelper.addItemToSelection(dishesOfCuisine);
+    public void addItemToSelection(tdevm.app_ui.api.models.cart.MenuItem menuItem) {
+        cartHelper.addItemToSelection(menuItem);
         singleCuisineGridView.updateAdapter();
-        logSelections();
-    }
-
-
-    @Override
-    public void updateCartItem(DishesOfCuisine dishesOfCuisine) {
-      cartHelper.updateCartItem(dishesOfCuisine);
-      cartHelper.updateSelectionItem(dishesOfCuisine);
-      singleCuisineGridView.updateAdapter();
-      logSelections();
+       // logSelections();
     }
 
     @Override
-    public void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, int operationFlag) {
+    public void updateCartItem(tdevm.app_ui.api.models.cart.MenuItem menuItem, String itemHash) {
 
     }
 
-    @Override
-    public void addDishVariantItemToCart(DishesOfCuisine selectedDish, DishesOfCuisine parentDish) {
-        cartHelper.addItemToCart(selectedDish);
-        cartHelper.addItemToSelection(parentDish);
-        singleCuisineGridView.updateAdapter();
-    }
+
+//    @Override
+//    public void addItemToCart(DishesOfCuisine dishesOfCuisine) {
+////        cartHelper.addItemToCart(dishesOfCuisine);
+////        cartHelper.addItemToSelection(dishesOfCuisine);
+////        singleCuisineGridView.updateAdapter();
+////        logSelections();
+//    }
+//
+//    @Override
+//    public void addItemToSelection(DishesOfCuisine dishesOfCuisine) {
+////        cartHelper.addItemToSelection(dishesOfCuisine);
+////        singleCuisineGridView.updateAdapter();
+////        logSelections();
+//    }
+//
+//
+//    @Override
+//    public void updateCartItem(DishesOfCuisine dishesOfCuisine) {
+////      cartHelper.updateCartItem(dishesOfCuisine);
+////      cartHelper.updateSelectionItem(dishesOfCuisine);
+////      singleCuisineGridView.updateAdapter();
+////      logSelections();
+//    }
+//
+//    @Override
+//    public void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, int operationFlag) {
+//
+//    }
+//
+//    @Override
+//    public void addDishVariantItemToCart(DishesOfCuisine selectedDish, DishesOfCuisine parentDish) {
+////        cartHelper.addItemToCart(selectedDish);
+////        cartHelper.addItemToSelection(parentDish);
+////        singleCuisineGridView.updateAdapter();
+//    }
 
     @Override
     public void attachView(DineInViewContract.SingleCuisineGridView view) {
@@ -120,18 +141,18 @@ public class SingleCuisineGridPresenter extends BasePresenter
     }
 
     public void logSelections() {
-        Log.d(TAG,"Log Started");
+        Log.d(TAG, "Log Started");
         List<CartSelection> selection = cartHelper.getCartSelections();
         List<CartItem> cartItems = cartHelper.getCartItems();
 
-        if(selection!=null && cartItems!=null) {
+        if (selection != null && cartItems != null) {
             for (int i = 0; i < selection.size(); i++) {
-                Log.d(TAG, "Dish selection made:" + selection.get(i).getDishesOfCuisine().getDish_name());
-                Log.d(TAG, "Dish qty added:" + String.valueOf(selection.get(i).getQty()));
+                Log.d(TAG, "Item selection made:" + selection.get(i).getMenuItem().getItemName());
+                Log.d(TAG, "Item qty added:" + String.valueOf(selection.get(i).getQty()));
             }
 
             for (int i = 0; i < cartItems.size(); i++) {
-                Log.d(TAG, "Cart Item:" + cartItems.get(i).getDishesOfCuisine().getDish_name());
+                Log.d(TAG, "Cart Item:" + cartItems.get(i).getMenuItem().getItemName());
                 Log.d(TAG, "Item QTY:" + cartItems.get(i).getQuantity());
                 Log.d(TAG, "Item Total:" + cartItems.get(i).getPrice());
             }

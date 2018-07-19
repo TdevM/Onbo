@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridPresenter;
@@ -70,10 +71,10 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
             holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.non_veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg_indicator));
         }
-//            CartSelection selection = cartHelper.getCartSelectionById(dishArrayList.get(position).getDish_id());
-//            if(selection!=null){
-//                holder.incDecButton.setNumber(selection.getQty(),true);
-//            }
+            CartSelection selection = cartHelper.getCartSelectionById(Long.parseLong(dishArrayList.get(position).getItemId()));
+            if(selection!=null){
+                holder.incDecButton.setNumber(selection.getQty(),true);
+            }
 
         holder.bind(dishArrayList.get(position), menuItemClickListener);
     }
@@ -114,31 +115,25 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
             incDecButton.setOnButtonsClickedListener(new IncDecButton.OnButtonsClickedListener() {
                 @Override
                 public void onPlusClicked(int num) {
-                    menuItemClickListener.onPlusButtonClicked(menuItem,num);
-//                    if (dishesOfCuisine.getIs_customizable()) {
-//                        menuItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 1);
-//                        if (incDecButton.getNumber() == 0) {
-//                            incDecButton.setNumber(0, true);
-//                        }
-//                    } else {
-//                        menuItemClickListener.onPlusButtonClicked(dishesOfCuisine, num);
-//                    }
 
-                    if(menuItem.getCustomizable()){
-                        menuItemClickListener.onCustomizableItemClicked(menuItem);
+                    if (menuItem.getCustomizable()) {
+                        menuItemClickListener.onCustomizableItemClicked(menuItem, 1);
+                        if (incDecButton.getNumber() == 0) {
+                            incDecButton.setNumber(0, true);
+                        }
+                    } else {
+                        menuItemClickListener.onPlusButtonClicked(menuItem, num);
                     }
                 }
 
                 @Override
                 public void onMinusClicked(int num) {
-                    menuItemClickListener.onMinusButtonClicked(menuItem,num);
-//                    if (dishesOfCuisine.getIs_customizable()) {
-//                        menuItemClickListener.onCustomizableItemClicked(dishesOfCuisine, 0);
-//                    } else {
-//                        menuItemClickListener.onMinusButtonClicked(dishesOfCuisine, num);
-//                    }
-                    if(menuItem.getCustomizable()){
-                        menuItemClickListener.onCustomizableItemClicked(menuItem);
+                    menuItemClickListener.onMinusButtonClicked(menuItem, num);
+
+                    if (menuItem.getCustomizable()) {
+                        menuItemClickListener.onCustomizableItemClicked(menuItem, 0);
+                    } else {
+                        menuItemClickListener.onMinusButtonClicked(menuItem, num);
                     }
                 }
             });

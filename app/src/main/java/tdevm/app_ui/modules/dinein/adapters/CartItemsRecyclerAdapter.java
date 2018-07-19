@@ -62,15 +62,15 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         Log.d("Cart", String.valueOf(cartHelper.getCartTotalItems()));
         List<CartItem> cartItems = cartHelper.getCartItems();
         cartItemArrayList.addAll(cartItems);
-        holder.dishName.setText(cartItemArrayList.get(position).getDishesOfCuisine().getDish_name());
-        holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice().intValue())));
-        holder.incDecButton.setNumber(cartItemArrayList.get(position).getQuantity(), true);
-        if(cartItemArrayList.get(position).getDishesOfCuisine().getDish_vegetarian()){
-            holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
-        }else if(!cartItemArrayList.get(position).getDishesOfCuisine().getDish_vegetarian()){
-            holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.non_veg_symbol));
-        }
-        holder.bind(cartItemArrayList.get(position).getDishesOfCuisine(), menuItemClickListener);
+//        holder.dishName.setText(cartItemArrayList.get(position).getDishesOfCuisine().getDish_name());
+//        holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice().intValue())));
+//        holder.incDecButton.setNumber(cartItemArrayList.get(position).getQuantity(), true);
+//        if(cartItemArrayList.get(position).getDishesOfCuisine().getDish_vegetarian()){
+//            holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
+//        }else if(!cartItemArrayList.get(position).getDishesOfCuisine().getDish_vegetarian()){
+//            holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.non_veg_symbol));
+//        }
+//        holder.bind(cartItemArrayList.get(position).getDishesOfCuisine(), menuItemClickListener);
     }
 
     @Override

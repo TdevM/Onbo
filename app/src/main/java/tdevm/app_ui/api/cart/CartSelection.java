@@ -7,6 +7,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
+import tdevm.app_ui.api.models.cart.MenuItem;
 
 
 /**
@@ -16,9 +17,9 @@ import tdevm.app_ui.api.models.response.DishesOfCuisine;
 public class CartSelection  {
 
     @PrimaryKey
-    private Long dishId;
+    private Long selectionItemId;
     @Embedded
-    private DishesOfCuisine dishesOfCuisine;
+    private MenuItem menuItem;
     @ColumnInfo(name = "qty")
     private int qty;
 
@@ -28,37 +29,26 @@ public class CartSelection  {
     }
 
     @Ignore
-    public CartSelection(Long dishId, DishesOfCuisine dishesOfCuisine, int qty) {
-        this.dishId = dishId;
-        this.dishesOfCuisine = dishesOfCuisine;
+    public CartSelection(Long selectionItemId, MenuItem menuItem, int qty) {
+        this.selectionItemId = selectionItemId;
+        this.menuItem = menuItem;
         this.qty = qty;
     }
 
-    @Ignore
-    public CartSelection(Long dishId, DishesOfCuisine dishesOfCuisine) {
-        this.dishId = dishId;
-        this.dishesOfCuisine = dishesOfCuisine;
+    public Long getSelectionItemId() {
+        return selectionItemId;
     }
 
-    @Ignore
-    public CartSelection(DishesOfCuisine dishesOfCuisine) {
-        this.dishesOfCuisine = dishesOfCuisine;
+    public void setSelectionItemId(Long selectionItemId) {
+        this.selectionItemId = selectionItemId;
     }
 
-    public DishesOfCuisine getDishesOfCuisine() {
-        return dishesOfCuisine;
+    public MenuItem getMenuItem() {
+        return menuItem;
     }
 
-    public void setDishesOfCuisine(DishesOfCuisine dishesOfCuisine) {
-        this.dishesOfCuisine = dishesOfCuisine;
-    }
-
-    public Long getDishId() {
-        return dishId;
-    }
-
-    public void setDishId(Long dishId) {
-        this.dishId = dishId;
+    public void setMenuItem(MenuItem menuItem) {
+        this.menuItem = menuItem;
     }
 
     public int getQty() {

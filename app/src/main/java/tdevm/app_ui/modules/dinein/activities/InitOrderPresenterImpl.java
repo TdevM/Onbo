@@ -98,33 +98,33 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
 
     @Override
     public void addItemsToOrder(String userMessage, ArrayList<TempOrder> arrayList) {
-        JSONArray message = updateUserMessage(userMessage,arrayList.get(0).getKot_messages());
-        RestaurantOrder order = new RestaurantOrder(arrayList.get(0).getOrder_id(),message.toString(),convertCartTOJSON().toString());
-        Observable<Response<Object>> observable = apiService.addItemsToTempOrder(authUtils.getAuthLoginToken(),order);
-         subscribe(observable, new Observer<Response<Object>>() {
-             @Override
-             public void onSubscribe(Disposable d) {
-                compositeDisposable.add(d);
-             }
-             @Override
-             public void onNext(Response<Object> objectResponse) {
-                if(objectResponse.isSuccessful()){
-                    if(objectResponse.code()==200){
-                        placeTempOrderView.onOrderItemsAdded();
-                    }
-                }
-             }
-
-             @Override
-             public void onError(Throwable e) {
-
-             }
-
-             @Override
-             public void onComplete() {
-
-             }
-         });
+      //  JSONArray message = updateUserMessage(userMessage,arrayList.get(0).getKot_messages());
+//        RestaurantOrder order = new RestaurantOrder(arrayList.get(0).getOrder_id(),message.toString(),convertCartTOJSON().toString());
+//        Observable<Response<Object>> observable = apiService.addItemsToTempOrder(authUtils.getAuthLoginToken(),order);
+//         subscribe(observable, new Observer<Response<Object>>() {
+//             @Override
+//             public void onSubscribe(Disposable d) {
+//                compositeDisposable.add(d);
+//             }
+//             @Override
+//             public void onNext(Response<Object> objectResponse) {
+//                if(objectResponse.isSuccessful()){
+//                    if(objectResponse.code()==200){
+//                        placeTempOrderView.onOrderItemsAdded();
+//                    }
+//                }
+//             }
+//
+//             @Override
+//             public void onError(Throwable e) {
+//
+//             }
+//
+//             @Override
+//             public void onComplete() {
+//
+//             }
+//         });
     }
 
     public void clearCart(){
@@ -134,93 +134,93 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
 
     @Override
     public void createNewOrder(int guest, String message) {
-        JSONArray array = createNewUserMessage(message);
-        RestaurantOrder order = new RestaurantOrder(authUtils.getScannedRestaurantUuid(),authUtils.getScannedRestaurantTableShortId(),array.toString(),convertCartTOJSON().toString(),guest);
-        Observable<Response<Object>> observable = apiService.createNewTempOrder(authUtils.getAuthLoginToken(),order);
-        subscribe(observable, new Observer<Response<Object>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                compositeDisposable.add(d);
-            }
-
-            @Override
-            public void onNext(Response<Object> objectResponse) {
-               if(objectResponse.isSuccessful()){
-                   placeTempOrderView.onNewOrderCreated();
-               }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+//        JSONArray array = createNewUserMessage(message);
+//        RestaurantOrder order = new RestaurantOrder(authUtils.getScannedRestaurantUuid(),authUtils.getScannedRestaurantTableShortId(),array.toString(),convertCartTOJSON().toString(),guest);
+//        Observable<Response<Object>> observable = apiService.createNewTempOrder(authUtils.getAuthLoginToken(),order);
+//        subscribe(observable, new Observer<Response<Object>>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//                compositeDisposable.add(d);
+//            }
+//
+//            @Override
+//            public void onNext(Response<Object> objectResponse) {
+//               if(objectResponse.isSuccessful()){
+//                   placeTempOrderView.onNewOrderCreated();
+//               }
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        });
     }
 
-    private JSONArray convertCartTOJSON(){
-        List<CartItem> cartItems = cart.getCartItems();
-        JSONArray jArray = new JSONArray();
-        for (CartItem item: cartItems) {
-            JSONObject jsonObject = new JSONObject();
-            for (int j = 0; j < 2; j++) {
-                try {
-                    jsonObject.put("dish_id", item.getDishesOfCuisine().getDish_id());
-                    jsonObject.put("dish_quantity", item.getQuantity());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            jArray.put(jsonObject);
-        }
-        return jArray;
-    }
-
-    private JSONArray updateUserMessage(String newMessage, ArrayList<KOTUserMessage> oldMessages){
-        JSONArray jArray = new JSONArray();
-        for(int i=0;i<oldMessages.size();i++){
-            JSONObject jsonObject = new JSONObject();
-            for (int j = 0; j < 2; j++) {
-                try {
-                    jsonObject.put("kot_id", oldMessages.get(i).getKot_id());
-                    jsonObject.put("kot_message", oldMessages.get(i).getKot_message());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            jArray.put(jsonObject);
-        }
-        JSONObject o = new JSONObject();
-            //Add new Message finally
-        try {
-            o.put("kot_id", oldMessages.size()+1);
-            o.put("kot_message", newMessage);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        jArray.put(o);
-        return jArray;
-    }
-
-    private JSONArray createNewUserMessage(String newMessage){
-        JSONArray jArray = new JSONArray();
-        JSONObject jsonObject = new JSONObject();
-        for (int j = 0; j < 2; j++) {
-            try {
-                jsonObject.put("kot_id", 1);
-                jsonObject.put("kot_message", newMessage);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        jArray.put(jsonObject);
-
-        return jArray;
-    }
+//    private JSONArray convertCartTOJSON(){
+//        List<CartItem> cartItems = cart.getCartItems();
+//        JSONArray jArray = new JSONArray();
+//        for (CartItem item: cartItems) {
+//            JSONObject jsonObject = new JSONObject();
+//            for (int j = 0; j < 2; j++) {
+//                try {
+//                    jsonObject.put("dish_id", item.getDishesOfCuisine().getDish_id());
+//                    jsonObject.put("dish_quantity", item.getQuantity());
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            jArray.put(jsonObject);
+//        }
+//        return jArray;
+//    }
+//
+//    private JSONArray updateUserMessage(String newMessage, ArrayList<KOTUserMessage> oldMessages){
+//        JSONArray jArray = new JSONArray();
+//        for(int i=0;i<oldMessages.size();i++){
+//            JSONObject jsonObject = new JSONObject();
+//            for (int j = 0; j < 2; j++) {
+//                try {
+//                    jsonObject.put("kot_id", oldMessages.get(i).getKot_id());
+//                    jsonObject.put("kot_message", oldMessages.get(i).getKot_message());
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            jArray.put(jsonObject);
+//        }
+//        JSONObject o = new JSONObject();
+//            //Add new Message finally
+//        try {
+//            o.put("kot_id", oldMessages.size()+1);
+//            o.put("kot_message", newMessage);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        jArray.put(o);
+//        return jArray;
+//    }
+//
+//    private JSONArray createNewUserMessage(String newMessage){
+//        JSONArray jArray = new JSONArray();
+//        JSONObject jsonObject = new JSONObject();
+//        for (int j = 0; j < 2; j++) {
+//            try {
+//                jsonObject.put("kot_id", 1);
+//                jsonObject.put("kot_message", newMessage);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        jArray.put(jsonObject);
+//
+//        return jArray;
+ //   }
 
     @Override
     public void detachView() {

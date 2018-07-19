@@ -13,5 +13,5 @@ public interface MenuItemClickListener {
     void onPlusButtonClicked(MenuItem menuItem, int num);
     void onMinusButtonClicked(MenuItem menuItem, int num);
     void onItemImageClicked(MenuItem menuItem);
-    void onCustomizableItemClicked(MenuItem menuItem);
+    void onCustomizableItemClicked(MenuItem menuItem, int flag);
 }

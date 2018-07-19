@@ -23,8 +23,8 @@ public interface CartItemDao {
     @Query("SELECT * FROM cart_items")
     List<CartItem> getCartItems();
 
-    @Query("SELECT * FROM cart_items WHERE dishId = :dishId")
-    CartItem getCartItemById(Long dishId);
+    @Query("SELECT * FROM cart_items WHERE item_hash = :itemHash")
+    CartItem getCartItemById(String itemHash);
 
     @Insert
     void addItemToCart(CartItem cartItem);
@@ -39,7 +39,7 @@ public interface CartItemDao {
     void deleteCartItems();
 
     @Query("SELECT SUM(price) FROM cart_items")
-    Single<Double> getCartTotal();
+    Single<Integer> getCartTotal();
 
     @Query("SELECT SUM(quantity) FROM cart_items")
     Single<Integer> getTotalItems();

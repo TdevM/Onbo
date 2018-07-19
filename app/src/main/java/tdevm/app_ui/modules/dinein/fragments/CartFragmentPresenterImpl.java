@@ -20,7 +20,7 @@ import tdevm.app_ui.utils.CartHelper;
  * Created by Tridev on 06-01-2018.
  */
 
-public class CartFragmentPresenterImpl extends BasePresenter implements DineInPresenterContract.CartFragmentPresenter{
+public class CartFragmentPresenterImpl extends BasePresenter{
 
     public static final String TAG = CartFragmentPresenterImpl.class.getSimpleName();
     private CartHelper cartHelper;
@@ -38,73 +38,73 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
     }
 
 
-    @Override
-    public boolean cartItemsExists() {
-        return cartHelper.cartItemsExist();
-    }
+//    @Override
+//    public boolean cartItemsExists() {
+//        return cartHelper.cartItemsExist();
+//    }
 
 
-    @Override
-    public void addItemToCart(DishesOfCuisine dishesOfCuisine) {
-        cartHelper.addItemToCart(dishesOfCuisine);
-        cartHelper.addItemToSelection(dishesOfCuisine);
-        cartFragmentView.updateAdapter();
-        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
-        logSelections();
-    }
+//    @Override
+//    public void addItemToCart(DishesOfCuisine dishesOfCuisine) {
+//        cartHelper.addItemToCart(dishesOfCuisine);
+//        cartHelper.addItemToSelection(dishesOfCuisine);
+//        cartFragmentView.updateAdapter();
+//        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
+//        logSelections();
+//    }
 
-    @Override
-    public void updateCartItem(DishesOfCuisine dishesOfCuisine) {
-        cartHelper.updateCartItem(dishesOfCuisine);
-        cartHelper.updateSelectionItem(dishesOfCuisine);
-        cartFragmentView.updateAdapter();
-        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
-        if(cartHelper.getCartTotalItems()==0){
-            showCartEmpty();
-        }
-        logSelections();
-    }
+//    @Override
+//    public void updateCartItem(DishesOfCuisine dishesOfCuisine) {
+//        cartHelper.updateCartItem(dishesOfCuisine);
+//        cartHelper.updateSelectionItem(dishesOfCuisine);
+//        cartFragmentView.updateAdapter();
+//        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
+//        if(cartHelper.getCartTotalItems()==0){
+//            showCartEmpty();
+//        }
+//        logSelections();
+//    }
 
-    @Override
-    public void showCartEmpty(){
-        if(authUtils.getRestaurantMode().equals(MODE_DINE_IN)){
-            cartFragmentView.showDineCartEmpty();
-        }else if(authUtils.getRestaurantMode().equals(MODE_NON_DINE)){
-            cartFragmentView.showNonDineEmptyCart();
-        }
-    }
+//    @Override
+//    public void showCartEmpty(){
+//        if(authUtils.getRestaurantMode().equals(MODE_DINE_IN)){
+//            cartFragmentView.showDineCartEmpty();
+//        }else if(authUtils.getRestaurantMode().equals(MODE_NON_DINE)){
+//            cartFragmentView.showNonDineEmptyCart();
+//        }
+//    }
 
     public void clearCart(){
         cartHelper.clearCart();
     }
 
-    @Override
-    public void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine,Long dishId, int operationFlag) {
-      if(operationFlag==1){
-          cartHelper.addItemToCart(dishesOfCuisine);
-          cartHelper.incrementCartSelectionById(dishId);
-          cartFragmentView.updateAdapter();
-          cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
-      }else if(operationFlag==0){
-          cartHelper.updateCartItem(dishesOfCuisine);
-          cartHelper.decrementCartSelectionById(dishId);
-          cartFragmentView.updateAdapter();
-          cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
-      }
-    }
+//    @Override
+//    public void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine,Long dishId, int operationFlag) {
+//      if(operationFlag==1){
+//          cartHelper.addItemToCart(dishesOfCuisine);
+//          cartHelper.incrementCartSelectionById(dishId);
+//          cartFragmentView.updateAdapter();
+//          cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
+//      }else if(operationFlag==0){
+//          cartHelper.updateCartItem(dishesOfCuisine);
+//          cartHelper.decrementCartSelectionById(dishId);
+//          cartFragmentView.updateAdapter();
+//          cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
+//      }
+//    }
 
-    @Override
-    public void attachView(DineInViewContract.CartFragmentView view) {
-        cartFragmentView = view;
-    }
-
-    @Override
-    public void detachView() {
-        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
-            compositeDisposable.dispose();
-            compositeDisposable.clear();
-        }
-    }
+//    @Override
+//    public void attachView(DineInViewContract.CartFragmentView view) {
+//        cartFragmentView = view;
+//    }
+//
+//    @Override
+//    public void detachView() {
+//        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+//            compositeDisposable.dispose();
+//            compositeDisposable.clear();
+//        }
+//    }
 
 
     public void logSelections() {
@@ -114,14 +114,14 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
 
         if(selection!=null && cartItems!=null) {
             for (int i = 0; i < selection.size(); i++) {
-                Log.d(TAG, "Dish selection made:" + selection.get(i).getDishesOfCuisine().getDish_name());
-                Log.d(TAG, "Dish qty added:" + String.valueOf(selection.get(i).getQty()));
+//                Log.d(TAG, "Dish selection made:" + selection.get(i).getDishesOfCuisine().getDish_name());
+//                Log.d(TAG, "Dish qty added:" + String.valueOf(selection.get(i).getQty()));
             }
 
             for (int i = 0; i < cartItems.size(); i++) {
-                Log.d(TAG, "Cart Item:" + cartItems.get(i).getDishesOfCuisine().getDish_name());
-                Log.d(TAG, "Item QTY:" + cartItems.get(i).getQuantity());
-                Log.d(TAG, "Item Total:" + cartItems.get(i).getPrice());
+//                Log.d(TAG, "Cart Item:" + cartItems.get(i).getDishesOfCuisine().getDish_name());
+//                Log.d(TAG, "Item QTY:" + cartItems.get(i).getQuantity());
+//                Log.d(TAG, "Item Total:" + cartItems.get(i).getPrice());
             }
         }
     }

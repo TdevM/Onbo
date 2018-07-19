@@ -5,7 +5,10 @@ import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
+
+import tdevm.app_ui.api.models.cart.MenuItem;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 
 
@@ -17,14 +20,23 @@ import tdevm.app_ui.api.models.response.DishesOfCuisine;
 public class CartItem {
 
     @PrimaryKey
-    private Long dishId;
+    @NonNull
+    private String item_hash;
+    private Long cartItemId;
     @Embedded
-    private DishesOfCuisine dishesOfCuisine;
+    private MenuItem menuItem;
     private int quantity;
-    private Double price;
+    private int price;
     private Boolean isCustomizable;
 
 
+    public Long getCartItemId() {
+        return cartItemId;
+    }
+
+    public void setCartItemId(Long cartItemId) {
+        this.cartItemId = cartItemId;
+    }
 
     public CartItem() {
     }
@@ -39,27 +51,37 @@ public class CartItem {
 
 
     @Ignore
-    public CartItem(Long dishId, DishesOfCuisine dishesOfCuisine, int quantity, Double price) {
-        this.dishId = dishId;
-        this.dishesOfCuisine = dishesOfCuisine;
+    public CartItem(String item_hash, MenuItem menuItem, int quantity, int price, Boolean isCustomizable) {
+        this.item_hash = item_hash;
+        this.menuItem = menuItem;
+        this.quantity = quantity;
+        this.price = price;
+        this.isCustomizable = isCustomizable;
+    }
+
+    @Ignore
+    public CartItem(@NonNull String item_hash, Long cartItemId, MenuItem menuItem, int quantity, int price) {
+        this.item_hash = item_hash;
+        this.cartItemId = cartItemId;
+        this.menuItem = menuItem;
         this.quantity = quantity;
         this.price = price;
     }
 
-    public Long getDishId() {
-        return dishId;
+    public String getItem_hash() {
+        return item_hash;
     }
 
-    public void setDishId(Long dishId) {
-        this.dishId = dishId;
+    public void setItem_hash(String item_hash) {
+        this.item_hash = item_hash;
     }
 
-    public DishesOfCuisine getDishesOfCuisine() {
-        return dishesOfCuisine;
+    public MenuItem getMenuItem() {
+        return menuItem;
     }
 
-    public void setDishesOfCuisine(DishesOfCuisine dishesOfCuisine) {
-        this.dishesOfCuisine = dishesOfCuisine;
+    public void setMenuItem(MenuItem menuItem) {
+        this.menuItem = menuItem;
     }
 
     public int getQuantity() {
@@ -70,12 +92,11 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public Double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
-
 }

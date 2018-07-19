@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -22,15 +23,16 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.RecycledGridMenuAdapter;
 import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
+import tdevm.app_ui.modules.dinein.bottomsheets.section_r_view.MenuItemCustomizationSheet;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemOptionsSelected;
-import tdevm.app_ui.modules.dinein.bottomsheets.section_r_view.MenuItemCustomizationSheet;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -128,8 +130,15 @@ public class SingleCuisineGridFragment extends Fragment
 
     @Override
     public void onPlusButtonClicked(MenuItem menuItem, int num) {
-        //singleCuisineGridPresenter.addItemToCart(dishesOfCuisine);
-        Toast.makeText(getActivity(), "Plus", Toast.LENGTH_SHORT).show();
+
+        List<MenuAddOn> menuAddOns = new ArrayList<>();
+        List<MenuVOption> menuVOptions = new ArrayList<>();
+        tdevm.app_ui.api.models.cart.MenuItem item = createCartMenuItemFromMenuItem(menuItem, menuVOptions, menuAddOns);
+        String itemHash = generateItemHash(item);
+        singleCuisineGridPresenter.addItemToCart(item, itemHash);
+        //Toast.makeText(getActivity(), "Plus", Toast.LENGTH_SHORT).show();
+        Log.d(TAG,"Created cart menu item"+ item.getItemName());
+        Log.d(TAG,generateItemHash(item));
         Log.d(TAG, menuItem.getItemName());
     }
 
@@ -146,21 +155,103 @@ public class SingleCuisineGridFragment extends Fragment
 
     }
 
-
     @Override
-    public void onCustomizableItemClicked(MenuItem menuItem) {
+    public void onCustomizableItemClicked(MenuItem menuItem, int flag) {
         MenuItemCustomizationSheet.newInstance(menuItem).show(getChildFragmentManager(), "dialog");
     }
 
 
+
+
     public void logSelections() {
-        // cartHelper.logCartItems();
+        cartHelper.logCartItems();
+    }
+
+
+    public tdevm.app_ui.api.models.cart.MenuItem createCartMenuItemFromMenuItem(MenuItem item, List<MenuVOption> menuVOptions, List<MenuAddOn> menuAddOns) {
+        return new tdevm.app_ui.api.models.cart.MenuItem(
+                item.getItemId(),
+                item.getItemName(),
+                item.getDescription(),
+                item.getItemPrice(),
+                item.getItemImage(),
+                item.getIsVeg(),
+                item.getRestaurantId(),
+                item.getCuisineId(),
+                item.getCustomizable(),
+                menuVOptions,
+                menuAddOns
+        );
 
     }
 
+    public String generateItemHash(tdevm.app_ui.api.models.cart.MenuItem cartMenuItem) {
+        String itemHash = cartMenuItem.getItemId();
+        StringBuilder sb = new StringBuilder();
+        sb.append(itemHash);
+        List<MenuAddOn> menuAddOns = cartMenuItem.getMenuAddOns();
+        List<MenuVOption> menuVOptions = cartMenuItem.getMenuVariantOptions();
+        Iterator<MenuVOption> menuVOptionIterator;
+        Iterator<MenuAddOn> menuAddOnIterator;
+        if (menuVOptions != null) {
+            menuVOptionIterator = menuVOptions.listIterator();
+            while (menuVOptionIterator.hasNext()) {
+                MenuVOption option = menuVOptionIterator.next();
+                sb.append("_");
+                sb.append(option.getOptionId());
+            }
+            if (menuAddOns != null) {
+                menuAddOnIterator = menuAddOns.listIterator();
+                while (menuAddOnIterator.hasNext()) {
+                    MenuAddOn addOn = menuAddOnIterator.next();
+                    sb.append("_");
+                    sb.append(addOn.getAddOnId());
+                }
+            }
+
+        }
+
+        return sb.toString();
+    }
+
+    public String generateItemHashSimple(tdevm.app_ui.api.models.cart.MenuItem cartMenuItem) {
+        String itemHash = cartMenuItem.getItemId();
+        List<MenuAddOn> menuAddOns = cartMenuItem.getMenuAddOns();
+        List<MenuVOption> menuVOptions = cartMenuItem.getMenuVariantOptions();
+        Iterator<MenuVOption> menuVOptionIterator;
+        Iterator<MenuAddOn> menuAddOnIterator;
+        if (menuVOptions != null) {
+            menuVOptionIterator = menuVOptions.listIterator();
+            while (menuVOptionIterator.hasNext()) {
+                MenuVOption option = menuVOptionIterator.next();
+                itemHash = itemHash+"_";
+                itemHash = itemHash+option.getOptionId();
+               // sb.append();
+            }
+            if (menuAddOns != null) {
+                menuAddOnIterator = menuAddOns.listIterator();
+                while (menuAddOnIterator.hasNext()) {
+                    MenuAddOn addOn = menuAddOnIterator.next();
+                    itemHash = itemHash+"_";
+                    itemHash = itemHash+addOn.getAddOnId();
+                   // sb.append("_");
+                    //sb.append(addOn.getAddOnId());
+                }
+            }
+
+        }
+
+        return itemHash;
+    }
 
     @Override
     public void onOptionsSelected(MenuItem menuItem, List<MenuVOption> variantOptions, List<MenuAddOn> addOns) {
         Log.d(TAG, menuItem.getItemName() + "onOptionsSelected");
+        tdevm.app_ui.api.models.cart.MenuItem item = createCartMenuItemFromMenuItem(menuItem, variantOptions, addOns);
+        Log.d(TAG,"Created cart menu item with options"+ item.getItemName());
+        Log.d(TAG,generateItemHash(item));
+        Log.d(TAG, menuItem.getItemName());
+        String itemHash = generateItemHash(item);
+        singleCuisineGridPresenter.addItemToCart(item, itemHash);
     }
 }

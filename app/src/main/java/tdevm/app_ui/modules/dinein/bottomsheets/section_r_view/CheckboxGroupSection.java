@@ -20,17 +20,11 @@ import tdevm.app_ui.api.models.response.v2.menu.MenuAddOnGroup;
 
 public class CheckboxGroupSection extends StatelessSection {
 
-
-    /**
-     * Create a stateless Section object based on {@link SectionParameters}.
-     *
-     * @param sectionParameters section parameters
-     */
-
     private List<MenuAddOnGroup> menuAddOnGroups;
     Context context;
     String title;
     List<MenuAddOn> checkboxGroupState;
+    MenuAddOnGroup addOnGroupSelected;
 
 
     public CheckboxGroupSection(SectionParameters sectionParameters, List<MenuAddOnGroup> menuAddOnGroups, Context context, String title) {
@@ -60,7 +54,7 @@ public class CheckboxGroupSection extends StatelessSection {
         if (menuAddOnGroups.get(position).getMenuAddOns().size() > 0) {
             for (int i = 0; i < menuAddOnGroups.get(position).getMenuAddOns().size(); i++) {
                 CheckBox cb = new CheckBox(context);
-                cb.setText(menuAddOnGroups.get(position).getMenuAddOns().get(i).getAddOnName() + "   " + String.valueOf( menuAddOnGroups.get(position).getMenuAddOns().get(i).getPrice()));
+                cb.setText(menuAddOnGroups.get(position).getMenuAddOns().get(i).getAddOnName() + "   " + String.valueOf(menuAddOnGroups.get(position).getMenuAddOns().get(i).getPrice()));
                 cb.setId(Integer.parseInt(menuAddOnGroups.get(position).getMenuAddOns().get(i).getAddOnId()));
                 itemHolder.ll.addView(cb);
                 cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -73,6 +67,8 @@ public class CheckboxGroupSection extends StatelessSection {
                             if (buttonView.getId() == Integer.parseInt(addOn.getAddOnId())) {
                                 if (isChecked) {
                                     checkboxGroupState.add(addOn);
+                                    addOnGroupSelected = new MenuAddOnGroup();
+                                    //addOnGroupSelected.setGroupId();
                                 } else if (!isChecked) {
                                     if (checkboxGroupState.contains(addOn)) {
                                         checkboxGroupState.remove(addOn);
@@ -91,6 +87,14 @@ public class CheckboxGroupSection extends StatelessSection {
         }
 //
 
+
+    }
+
+    public void setGroupItems(MenuAddOnGroup group, MenuAddOn addOn) {
+
+    }
+
+    public void removeGroupItems(){
 
     }
 

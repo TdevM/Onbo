@@ -79,6 +79,7 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(sectionAdapter);
 
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,11 +91,15 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
                     Log.d("Checkbox State", addOn.getAddOnName());
                 }
                 menuItemOptionsSelected.onOptionsSelected(menuItem, section.radioGroupState, section2.checkboxGroupState);
+                dismissSheet();
             }
         });
         return view;
     }
 
+    public void dismissSheet(){
+        this.dismiss();
+    }
 
     @Override
     public void onAttach(Context context) {

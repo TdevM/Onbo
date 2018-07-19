@@ -3,6 +3,7 @@ package tdevm.app_ui.modules.dinein;
 import java.util.ArrayList;
 import java.util.Map;
 
+import tdevm.app_ui.api.models.cart.MenuItem;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.base.BasePresenterMVP;
@@ -28,11 +29,11 @@ public interface DineInPresenterContract {
         void attachView(DineInViewContract.SingleCuisineGridView view);
         void detachView();
         void fetchMenuItemsByCuisine(Map<String,String> map);
-        void addItemToCart(DishesOfCuisine dishesOfCuisine);
-        void addItemToSelection(DishesOfCuisine dishesOfCuisine);
-        void updateCartItem(DishesOfCuisine dishesOfCuisine);
-        void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, int operationFlag);
-        void addDishVariantItemToCart(DishesOfCuisine selectedDish, DishesOfCuisine parentDish);
+        void addItemToCart(MenuItem menuItem, String itemHash);
+        void addItemToSelection(MenuItem menuItem);
+        void updateCartItem(MenuItem menuItem, String itemHash);
+//        void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, int operationFlag);
+//        void addDishVariantItemToCart(DishesOfCuisine selectedDish, DishesOfCuisine parentDish);
     }
 
     interface PlaceTempOrderPresenter extends BasePresenterMVP<DineInViewContract.PlaceTempOrderView>{

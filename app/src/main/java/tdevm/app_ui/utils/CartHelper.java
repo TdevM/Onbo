@@ -2,30 +2,21 @@ package tdevm.app_ui.utils;
 
 import android.util.Log;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subscribers.DisposableSubscriber;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.cart.CartItemDao;
 import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.cart.CartSelectionDao;
+import tdevm.app_ui.api.models.cart.MenuItem;
 import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.base.BasePresenter;
 
@@ -43,7 +34,7 @@ public class CartHelper extends BasePresenter {
     //
     private CartItem item;
     private List<CartItem> cartItemsList;
-    private Double cartTotal;
+    private Integer cartTotal;
     private Integer cartItemsCount;
 
     @Inject
@@ -78,7 +69,7 @@ public class CartHelper extends BasePresenter {
         return cartItemDao.getCartItems();
     }
 
-    public CartItem getCartItemById(Long dishId) {
+    public CartItem getCartItemById(String itemHash) {
 //        Single<CartItem> cartItemSingle = cartItemDao.getCartItemById(dishId);
 //        cartItemSingle.subscribeWith(new SingleObserver<CartItem>() {
 //            @Override
@@ -96,7 +87,7 @@ public class CartHelper extends BasePresenter {
 //                Log.d(TAG,"getCartItemById" +e.getMessage());
 //            }
 //        });
-        return cartItemDao.getCartItemById(dishId);
+        return cartItemDao.getCartItemById(itemHash);
     }
 
     public List<CartSelection> getCartSelections() {
@@ -119,23 +110,23 @@ public class CartHelper extends BasePresenter {
             @Override
             public void onError(Throwable e) {
                 cartItemsCount = 0;
-                Log.d(TAG,"getCartTotalItems"+e.getMessage());
+                Log.d(TAG, "getCartTotalItems" + e.getMessage());
             }
         });
         return cartItemsCount;
     }
 
-    public Double getCartTotal() {
-        Single<Double> single = cartItemDao.getCartTotal();
-        single.subscribeWith(new DisposableSingleObserver<Double>() {
+    public Integer getCartTotal() {
+        Single<Integer> single = cartItemDao.getCartTotal();
+        single.subscribeWith(new DisposableSingleObserver<Integer>() {
             @Override
-            public void onSuccess(Double aDouble) {
-                cartTotal = aDouble;
+            public void onSuccess(Integer integer) {
+                cartTotal = integer;
             }
 
             @Override
             public void onError(Throwable e) {
-              Log.d(TAG,"getCartTotal" + e.getMessage());
+                Log.d(TAG, "getCartTotal" + e.getMessage());
             }
         });
         return cartTotal;
@@ -146,21 +137,21 @@ public class CartHelper extends BasePresenter {
     }
 
     //Mutations
-    public void addItemToCart(DishesOfCuisine dishesOfCuisine) {
-        CartItem item = getCartItemById(dishesOfCuisine.getDish_id());
+    public void addItemToCart(MenuItem menuItem, String itemHash) {
+        CartItem item = getCartItemById(itemHash);
         if (item == null) {
-            CartItem cartItem = new CartItem(dishesOfCuisine.getDish_id(), dishesOfCuisine, 1, dishesOfCuisine.getDish_price());
+            CartItem cartItem = new CartItem(itemHash, menuItem, 1, menuItem.getItemPrice(), menuItem.getCustomizable());
             cartItemDao.addItemToCart(cartItem);
         } else if (item.getQuantity() >= 1) {
-            CartItem cartItem = new CartItem(dishesOfCuisine.getDish_id(), dishesOfCuisine, item.getQuantity() + 1, (item.getQuantity() + 1) * dishesOfCuisine.getDish_price());
+            CartItem cartItem = new CartItem(itemHash, Long.parseLong(menuItem.getItemId()), menuItem, item.getQuantity() + 1, (item.getQuantity() + 1) * item.getPrice());
             cartItemDao.updateCartItem(cartItem);
         }
     }
 
-    public void updateCartItem(DishesOfCuisine dishesOfCuisine) {
-        CartItem item = getCartItemById(dishesOfCuisine.getDish_id());
+    public void updateCartItem(MenuItem menuItem, String itemHash) {
+        CartItem item = getCartItemById(itemHash);
         if (item != null) {
-            CartItem cartItem = new CartItem(dishesOfCuisine.getDish_id(), dishesOfCuisine, item.getQuantity() - 1, (item.getQuantity() - 1) * dishesOfCuisine.getDish_price());
+            CartItem cartItem = new CartItem(itemHash, Long.parseLong(menuItem.getItemId()), menuItem, item.getQuantity() - 1, (item.getQuantity() - 1) * item.getPrice());
             cartItemDao.updateCartItem(cartItem);
             if (item.getQuantity() == 1) {
                 cartItemDao.deleteItemFromCart(item);
@@ -168,30 +159,31 @@ public class CartHelper extends BasePresenter {
         }
     }
 
-    public void addItemToSelection(DishesOfCuisine dishesOfCuisine) {
-        CartSelection i = cartSelectionDao.getCartSelectionById(dishesOfCuisine.getDish_id());
+    public void addItemToSelection(MenuItem menuItem) {
+        CartSelection i = cartSelectionDao.getCartSelectionById(Long.parseLong(menuItem.getItemId()));
         if (i == null) {
-            CartSelection newSelection = new CartSelection(dishesOfCuisine.getDish_id(), dishesOfCuisine, 1);
+            CartSelection newSelection = new CartSelection(Long.parseLong(menuItem.getItemId()), menuItem, 1);
             cartSelectionDao.addItemToSelection(newSelection);
         } else {
-            cartSelectionDao.incrementCartSelectionById(dishesOfCuisine.getDish_id());
+            cartSelectionDao.incrementCartSelectionById(Long.parseLong(menuItem.getItemId()));
         }
     }
 
-    public void incrementCartSelectionById(Long dishId) {
-        cartSelectionDao.incrementCartSelectionById(dishId);
-    }
-
-    public void decrementCartSelectionById(Long dishId) {
-        cartSelectionDao.decrementCartSelectionById(dishId);
-    }
-
-    public void updateSelectionItem(DishesOfCuisine dishesOfCuisine) {
-        CartSelection i = cartSelectionDao.getCartSelectionById(dishesOfCuisine.getDish_id());
+    public void updateSelectionItem(MenuItem menuItem) {
+        CartSelection i = cartSelectionDao.getCartSelectionById(Long.parseLong(menuItem.getItemId()));
         if (i != null) {
-            cartSelectionDao.decrementCartSelectionById(dishesOfCuisine.getDish_id());
+            cartSelectionDao.decrementCartSelectionById(Long.parseLong(menuItem.getItemId()));
         }
     }
+
+    public void incrementCartSelectionById(Long itemId) {
+        cartSelectionDao.incrementCartSelectionById(itemId);
+    }
+
+    public void decrementCartSelectionById(Long itemId) {
+        cartSelectionDao.decrementCartSelectionById(itemId);
+    }
+
 
     public Boolean cartSelectionExist() {
         if (cartSelectionDao != null) {
@@ -214,16 +206,16 @@ public class CartHelper extends BasePresenter {
         return false;
     }
 
-    public void clearCart(){
+    public void clearCart() {
         cartItemDao.deleteCartItems();
         cartSelectionDao.deleteCartSelections();
     }
 
-    public void logCartItems(){
+    public void logCartItems() {
         for (int i = 0; i < getCartItems().size(); i++) {
-            Log.d(TAG, "Cart Item:" + getCartItems().get(i).getDishesOfCuisine().getDish_name()
-            +"QTY:" + getCartItems().get(i).getQuantity()+
-            "Total:" + getCartItems().get(i).getPrice());
+            Log.d(TAG, "Cart Item:" + getCartItems().get(i).getMenuItem().getItemName()
+                    + "QTY:" + getCartItems().get(i).getQuantity() +
+                    "Total:" + getCartItems().get(i).getPrice());
         }
     }
 
