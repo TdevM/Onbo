@@ -19,24 +19,16 @@ import tdevm.app_ui.api.models.response.DishesOfCuisine;
 @Entity(tableName = "cart_items")
 public class CartItem {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
+    private Long id;
     private String item_hash;
-    private Long cartItemId;
     @Embedded
     private MenuItem menuItem;
     private int quantity;
     private int price;
     private Boolean isCustomizable;
 
-
-    public Long getCartItemId() {
-        return cartItemId;
-    }
-
-    public void setCartItemId(Long cartItemId) {
-        this.cartItemId = cartItemId;
-    }
 
     public CartItem() {
     }
@@ -51,7 +43,25 @@ public class CartItem {
 
 
     @Ignore
-    public CartItem(String item_hash, MenuItem menuItem, int quantity, int price, Boolean isCustomizable) {
+    public CartItem(@NonNull String item_hash,MenuItem menuItem, int quantity, int price, Boolean isCustomizable) {
+        this.menuItem = menuItem;
+        this.item_hash = item_hash;
+        this.quantity = quantity;
+        this.price = price;
+        this.isCustomizable = isCustomizable;
+    }
+
+    @Ignore
+    public CartItem(@NonNull String item_hash, MenuItem menuItem, int quantity, int price) {
+        this.menuItem = menuItem;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+
+    @Ignore
+    public CartItem(@NonNull Long id, String item_hash, MenuItem menuItem, int quantity, int price, Boolean isCustomizable) {
+        this.id = id;
         this.item_hash = item_hash;
         this.menuItem = menuItem;
         this.quantity = quantity;
@@ -59,13 +69,13 @@ public class CartItem {
         this.isCustomizable = isCustomizable;
     }
 
-    @Ignore
-    public CartItem(@NonNull String item_hash, Long cartItemId, MenuItem menuItem, int quantity, int price) {
-        this.item_hash = item_hash;
-        this.cartItemId = cartItemId;
-        this.menuItem = menuItem;
-        this.quantity = quantity;
-        this.price = price;
+    @NonNull
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(@NonNull Long id) {
+        this.id = id;
     }
 
     public String getItem_hash() {

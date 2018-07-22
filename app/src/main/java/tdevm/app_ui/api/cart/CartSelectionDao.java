@@ -19,7 +19,7 @@ public interface CartSelectionDao {
     List<CartSelection> getCartSelections();
 
 
-    @Query("SELECT * FROM cart_selections WHERE itemId = :itemId")
+    @Query("SELECT * FROM cart_selections WHERE selectionItemId = :itemId")
     CartSelection getCartSelectionById(Long itemId);
 
     @Update
@@ -34,9 +34,9 @@ public interface CartSelectionDao {
     @Query("DELETE FROM cart_selections")
     void deleteCartSelections();
 
-    @Query("UPDATE cart_selections SET qty = qty + 1 WHERE itemId = :itemId ")
+    @Query("UPDATE cart_selections SET qty = qty + 1 WHERE selectionItemId = :itemId ")
     void incrementCartSelectionById(Long itemId);
 
-    @Query("UPDATE cart_selections SET qty = qty - 1 WHERE itemId = :itemId")
+    @Query("UPDATE cart_selections SET qty = qty - 1 WHERE selectionItemId = :itemId")
     void decrementCartSelectionById(Long itemId);
 }

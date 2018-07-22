@@ -20,7 +20,7 @@ public class SMSListener extends BroadcastReceiver {
     }
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("Message Listener","lo");
+        Log.d("Message DishReviewsSheetListener","lo");
         if(intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")){
             Bundle bundle = intent.getExtras();           //---get the SMS message passed in---
             SmsMessage[] msgs = null;

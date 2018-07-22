@@ -87,7 +87,7 @@ public class CartHelper extends BasePresenter {
 //                Log.d(TAG,"getCartItemById" +e.getMessage());
 //            }
 //        });
-        return cartItemDao.getCartItemById(itemHash);
+        return cartItemDao.getCartItemByHash(itemHash);
     }
 
     public List<CartSelection> getCartSelections() {
@@ -137,21 +137,24 @@ public class CartHelper extends BasePresenter {
     }
 
     //Mutations
-    public void addItemToCart(MenuItem menuItem, String itemHash) {
+    public void addItemToCart(MenuItem menuItem, int itemPrice, String itemHash) {
         CartItem item = getCartItemById(itemHash);
         if (item == null) {
-            CartItem cartItem = new CartItem(itemHash, menuItem, 1, menuItem.getItemPrice(), menuItem.getCustomizable());
+            Log.d(TAG, "ITEM WAS NULL");
+            CartItem cartItem = new CartItem(itemHash, menuItem, 1, itemPrice, menuItem.getCustomizable());
             cartItemDao.addItemToCart(cartItem);
         } else if (item.getQuantity() >= 1) {
-            CartItem cartItem = new CartItem(itemHash, Long.parseLong(menuItem.getItemId()), menuItem, item.getQuantity() + 1, (item.getQuantity() + 1) * item.getPrice());
+            Log.d(TAG, item.getItem_hash());
+            Log.d(TAG, "ITEM WAS NOTTTT NULL");
+            CartItem cartItem = new CartItem(item.getId(), itemHash, menuItem, item.getQuantity() + 1, (item.getQuantity() + 1) * itemPrice, menuItem.getCustomizable());
             cartItemDao.updateCartItem(cartItem);
         }
     }
 
-    public void updateCartItem(MenuItem menuItem, String itemHash) {
+    public void updateCartItem(MenuItem menuItem, int itemPrice, String itemHash) {
         CartItem item = getCartItemById(itemHash);
         if (item != null) {
-            CartItem cartItem = new CartItem(itemHash, Long.parseLong(menuItem.getItemId()), menuItem, item.getQuantity() - 1, (item.getQuantity() - 1) * item.getPrice());
+            CartItem cartItem = new CartItem(itemHash, menuItem, item.getQuantity() - 1, (item.getQuantity() - 1) * itemPrice);
             cartItemDao.updateCartItem(cartItem);
             if (item.getQuantity() == 1) {
                 cartItemDao.deleteItemFromCart(item);
@@ -159,13 +162,13 @@ public class CartHelper extends BasePresenter {
         }
     }
 
-    public void addItemToSelection(MenuItem menuItem) {
-        CartSelection i = cartSelectionDao.getCartSelectionById(Long.parseLong(menuItem.getItemId()));
+    public void addItemToSelection(String itemId) {
+        CartSelection i = cartSelectionDao.getCartSelectionById(Long.parseLong(itemId));
         if (i == null) {
-            CartSelection newSelection = new CartSelection(Long.parseLong(menuItem.getItemId()), menuItem, 1);
+            CartSelection newSelection = new CartSelection(Long.parseLong(itemId), 1);
             cartSelectionDao.addItemToSelection(newSelection);
         } else {
-            cartSelectionDao.incrementCartSelectionById(Long.parseLong(menuItem.getItemId()));
+            cartSelectionDao.incrementCartSelectionById(Long.parseLong(itemId));
         }
     }
 

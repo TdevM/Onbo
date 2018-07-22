@@ -125,8 +125,8 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
                     //Calculate distance.
                     //THEN
                     view.redirectDineInActivity();
-                } else if (restaurantTableResponse.code() == 206) {
-                    Log.d(TAG, restaurantTableResponse.body().toString());
+                } else if (restaurantTableResponse.code() == 400) {
+                    //Log.d(TAG, restaurantTableResponse.body().toString());
                     view.showTableOccupiedError();
                 }
             }

@@ -18,8 +18,6 @@ public class CartSelection  {
 
     @PrimaryKey
     private Long selectionItemId;
-    @Embedded
-    private MenuItem menuItem;
     @ColumnInfo(name = "qty")
     private int qty;
 
@@ -29,9 +27,8 @@ public class CartSelection  {
     }
 
     @Ignore
-    public CartSelection(Long selectionItemId, MenuItem menuItem, int qty) {
+    public CartSelection(Long selectionItemId, int qty) {
         this.selectionItemId = selectionItemId;
-        this.menuItem = menuItem;
         this.qty = qty;
     }
 
@@ -43,13 +40,6 @@ public class CartSelection  {
         this.selectionItemId = selectionItemId;
     }
 
-    public MenuItem getMenuItem() {
-        return menuItem;
-    }
-
-    public void setMenuItem(MenuItem menuItem) {
-        this.menuItem = menuItem;
-    }
 
     public int getQty() {
         return qty;

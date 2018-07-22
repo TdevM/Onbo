@@ -2,22 +2,22 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0044656d0687801a0c502d85b095401e",
+    "identityHash": "0626b0f89dcd2c23f8373edc11235e0b",
     "entities": [
       {
         "tableName": "cart_items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`item_hash` TEXT NOT NULL, `cartItemId` INTEGER, `quantity` INTEGER NOT NULL, `price` INTEGER NOT NULL, `isCustomizable` INTEGER, `itemId` TEXT, `itemName` TEXT, `description` TEXT, `itemPrice` INTEGER, `itemImage` TEXT, `isVeg` INTEGER, `restaurantId` TEXT, `cuisineId` TEXT, `customizable` INTEGER, `menuVariantOptions` TEXT, `menuAddOns` TEXT, PRIMARY KEY(`item_hash`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `item_hash` TEXT, `quantity` INTEGER NOT NULL, `price` INTEGER NOT NULL, `isCustomizable` INTEGER, `itemId` TEXT, `itemName` TEXT, `description` TEXT, `itemPrice` INTEGER, `itemImage` TEXT, `isVeg` INTEGER, `restaurantId` TEXT, `cuisineId` TEXT, `customizable` INTEGER, `menuVariantOptions` TEXT, `menuAddOns` TEXT)",
         "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "item_hash",
             "columnName": "item_hash",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "cartItemId",
-            "columnName": "cartItemId",
-            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -107,16 +107,16 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "item_hash"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "cart_selections",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`selectionItemId` INTEGER, `qty` INTEGER NOT NULL, `itemId` TEXT, `itemName` TEXT, `description` TEXT, `itemPrice` INTEGER, `itemImage` TEXT, `isVeg` INTEGER, `restaurantId` TEXT, `cuisineId` TEXT, `customizable` INTEGER, `menuVariantOptions` TEXT, `menuAddOns` TEXT, PRIMARY KEY(`selectionItemId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`selectionItemId` INTEGER, `qty` INTEGER NOT NULL, PRIMARY KEY(`selectionItemId`))",
         "fields": [
           {
             "fieldPath": "selectionItemId",
@@ -129,72 +129,6 @@
             "columnName": "qty",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "menuItem.itemId",
-            "columnName": "itemId",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "menuItem.itemName",
-            "columnName": "itemName",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "menuItem.description",
-            "columnName": "description",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "menuItem.itemPrice",
-            "columnName": "itemPrice",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "menuItem.itemImage",
-            "columnName": "itemImage",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "menuItem.isVeg",
-            "columnName": "isVeg",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "menuItem.restaurantId",
-            "columnName": "restaurantId",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "menuItem.cuisineId",
-            "columnName": "cuisineId",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "menuItem.customizable",
-            "columnName": "customizable",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "menuItem.menuVariantOptions",
-            "columnName": "menuVariantOptions",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "menuItem.menuAddOns",
-            "columnName": "menuAddOns",
-            "affinity": "TEXT",
-            "notNull": false
           }
         ],
         "primaryKey": {
@@ -209,7 +143,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0044656d0687801a0c502d85b095401e\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0626b0f89dcd2c23f8373edc11235e0b\")"
     ]
   }
 }

@@ -63,7 +63,7 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
 
         Glide.with(mContext).load(dishArrayList.get(position).getItemImage()).into(holder.dishImage);
         holder.dishName.setText(dishArrayList.get(position).getItemName());
-        holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, dishArrayList.get(position).getItemPrice().intValue()));
+        holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, dishArrayList.get(position).getItemPrice()*0.01));
         if (dishArrayList.get(position).getIsVeg()) {
             holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg_indicator));

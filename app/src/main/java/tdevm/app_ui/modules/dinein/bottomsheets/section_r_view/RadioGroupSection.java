@@ -60,7 +60,7 @@ public class RadioGroupSection extends StatelessSection {
         for (int i = 0; i < menuVariants.get(position).getMenuVOptions().size(); i++) {
             RadioButton btn = new RadioButton(context);
             btn.setId(Integer.parseInt(menuVariants.get(position).getMenuVOptions().get(i).getOptionId()));
-            btn.setText(menuVariants.get(position).getMenuVOptions().get(i).getOptionName()+ "   "+ String.valueOf(menuVariants.get(position).getMenuVOptions().get(i).getPrice()));
+            btn.setText(menuVariants.get(position).getMenuVOptions().get(i).getOptionName()+ "   "+ String.valueOf(menuVariants.get(position).getMenuVOptions().get(i).getPrice()*0.01));
             itemHolder.group.addView(btn);
         }
         if (menuVariants.get(position).getMenuVOptions().size() > 0) {

@@ -64,7 +64,7 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         List<CartItem> cartItems = cartHelper.getCartItems();
         cartItemArrayList.addAll(cartItems);
         holder.dishName.setText(cartItemArrayList.get(position).getMenuItem().getItemName());
-        holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getMenuItem().getItemPrice())));
+        holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice()*0.01)));
         holder.incDecButton.setNumber(cartItemArrayList.get(position).getQuantity(), true);
         if(cartItemArrayList.get(position).getMenuItem().getVeg()){
             holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));

@@ -14,53 +14,75 @@ import tdevm.app_ui.base.BasePresenterMVP;
 
 public interface DineInPresenterContract {
 
-    interface DineInActivityPresenter extends BasePresenterMVP<DineInViewContract.DineInActivity>{
+    interface DineInActivityPresenter extends BasePresenterMVP<DineInViewContract.DineInActivity> {
         void attachView(DineInViewContract.DineInActivity view);
+
         void detachView();
     }
 
-    interface DishMenuPresenter extends BasePresenterMVP<DineInViewContract.DishMenuView>{
+    interface DishMenuPresenter extends BasePresenterMVP<DineInViewContract.DishMenuView> {
         void attachView(DineInViewContract.DishMenuView view);
+
         void detachView();
-        void FetchAllCuisines(Map<String,String> map);
+
+        void FetchAllCuisines(Map<String, String> map);
     }
 
-    interface SingleCuisineGridPresenter extends BasePresenterMVP<DineInViewContract.SingleCuisineGridView>{
+    interface SingleCuisineGridPresenter extends BasePresenterMVP<DineInViewContract.SingleCuisineGridView> {
         void attachView(DineInViewContract.SingleCuisineGridView view);
+
         void detachView();
-        void fetchMenuItemsByCuisine(Map<String,String> map);
-        void addItemToCart(MenuItem menuItem, String itemHash);
+
+        void fetchMenuItemsByCuisine(Map<String, String> map);
+
+        void addItemToCart(MenuItem menuItem, int itemTotal, String  itemHash);
+
         void addItemToSelection(MenuItem menuItem);
-        void updateCartItem(MenuItem menuItem, String itemHash);
+
+        void updateCartItem(MenuItem menuItem, int itemTotal, String itemHash);
     }
 
-    interface PlaceTempOrderPresenter extends BasePresenterMVP<DineInViewContract.PlaceTempOrderView>{
+    interface PlaceTempOrderPresenter extends BasePresenterMVP<DineInViewContract.PlaceTempOrderView> {
         void attachView(DineInViewContract.PlaceTempOrderView view);
+
         void detachView();
+
         void checkCurrentOrderDetails();
+
         void addItemsToOrder(String userMessage, ArrayList<TempOrder> arrayList);
+
         void createNewOrder(int guest, String message);
     }
 
-    interface CartFragmentPresenter extends BasePresenterMVP<DineInViewContract.CartFragmentView>{
+    interface CartFragmentPresenter extends BasePresenterMVP<DineInViewContract.CartFragmentView> {
         void attachView(DineInViewContract.CartFragmentView view);
+
         void detachView();
+
         boolean cartItemsExists();
+
         void showCartEmpty();
+
         void addItemToCart(MenuItem menuItem, String itemHash);
+
         void updateCartItem(MenuItem menuItem, String itemHash);
+
         void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long parentDishId, int operationFlag);
     }
 
-    interface RunningOrderFragmentPresenter extends BasePresenterMVP<DineInViewContract.RunningOrderView>{
+    interface RunningOrderFragmentPresenter extends BasePresenterMVP<DineInViewContract.RunningOrderView> {
         void fetchTempRunningOrder();
+
         void attachView(DineInViewContract.RunningOrderView view);
+
         void detachView();
     }
 
-    interface DishReviewSheet extends BasePresenterMVP<DineInViewContract.DishReviewsSheetView>{
+    interface DishReviewSheet extends BasePresenterMVP<DineInViewContract.DishReviewsSheetView> {
         void attachView(DineInViewContract.DishReviewsSheetView view);
+
         void detachView();
+
         void fetchMenuItemReview(Long dishId);
     }
 }

@@ -7,7 +7,7 @@
     <string name="title_scanner">Scan</string>
     <string name="title_account">Account</string>
     <string name="add">ADD</string>
-    <string name="rupee_symbol">₹ %1$d</string>
+    <string name="rupee_symbol">₹ %1$s</string>
     <string name="title_menu">Menu</string>
     <string name="title_cart">Cart</string>
     <string name="title_favourites">Favourites</string>

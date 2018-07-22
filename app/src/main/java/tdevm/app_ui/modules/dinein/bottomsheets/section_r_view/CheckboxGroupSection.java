@@ -54,7 +54,7 @@ public class CheckboxGroupSection extends StatelessSection {
         if (menuAddOnGroups.get(position).getMenuAddOns().size() > 0) {
             for (int i = 0; i < menuAddOnGroups.get(position).getMenuAddOns().size(); i++) {
                 CheckBox cb = new CheckBox(context);
-                cb.setText(menuAddOnGroups.get(position).getMenuAddOns().get(i).getAddOnName() + "   " + String.valueOf(menuAddOnGroups.get(position).getMenuAddOns().get(i).getPrice()));
+                cb.setText(menuAddOnGroups.get(position).getMenuAddOns().get(i).getAddOnName() + "   " + String.valueOf(menuAddOnGroups.get(position).getMenuAddOns().get(i).getPrice()*0.01));
                 cb.setId(Integer.parseInt(menuAddOnGroups.get(position).getMenuAddOns().get(i).getAddOnId()));
                 itemHolder.ll.addView(cb);
                 cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

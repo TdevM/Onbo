@@ -71,22 +71,22 @@ public class SingleCuisineGridPresenter extends BasePresenter
     }
 
     @Override
-    public void addItemToCart(tdevm.app_ui.api.models.cart.MenuItem menuItem, String itemHash) {
-        cartHelper.addItemToCart(menuItem, itemHash);
-        cartHelper.addItemToSelection(menuItem);
+    public void addItemToCart(tdevm.app_ui.api.models.cart.MenuItem menuItem, int itemTotal, String itemHash) {
+        cartHelper.addItemToCart(menuItem, itemTotal, itemHash);
+        cartHelper.addItemToSelection(menuItem.getItemId());
         singleCuisineGridView.updateAdapter();
         logSelections();
     }
 
     @Override
     public void addItemToSelection(tdevm.app_ui.api.models.cart.MenuItem menuItem) {
-        cartHelper.addItemToSelection(menuItem);
+        cartHelper.addItemToSelection(menuItem.getItemId());
         singleCuisineGridView.updateAdapter();
-       // logSelections();
+        // logSelections();
     }
 
     @Override
-    public void updateCartItem(tdevm.app_ui.api.models.cart.MenuItem menuItem, String itemHash) {
+    public void updateCartItem(tdevm.app_ui.api.models.cart.MenuItem menuItem, int itemTotal, String itemHash) {
 
     }
 
@@ -147,14 +147,14 @@ public class SingleCuisineGridPresenter extends BasePresenter
 
         if (selection != null && cartItems != null) {
             for (int i = 0; i < selection.size(); i++) {
-                Log.d(TAG, "Item selection made:" + selection.get(i).getMenuItem().getItemName());
-                Log.d(TAG, "Item qty added:" + String.valueOf(selection.get(i).getQty()));
+                Log.d(TAG, "Item selection id:" + String.valueOf(selection.get(i).getSelectionItemId()));
+                Log.d(TAG, "Item selection qty added:" + String.valueOf(selection.get(i).getQty()));
             }
 
             for (int i = 0; i < cartItems.size(); i++) {
                 Log.d(TAG, "Cart Item:" + cartItems.get(i).getMenuItem().getItemName());
-                Log.d(TAG, "Item QTY:" + cartItems.get(i).getQuantity());
-                Log.d(TAG, "Item Total:" + cartItems.get(i).getPrice());
+                Log.d(TAG, "Cart Item QTY:" + cartItems.get(i).getQuantity());
+                Log.d(TAG, "Cart Item Total:" + cartItems.get(i).getPrice());
             }
         }
     }

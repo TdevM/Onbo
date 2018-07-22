@@ -8,9 +8,6 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
-import io.reactivex.Maybe;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
@@ -24,7 +21,7 @@ public interface CartItemDao {
     List<CartItem> getCartItems();
 
     @Query("SELECT * FROM cart_items WHERE item_hash = :itemHash")
-    CartItem getCartItemById(String itemHash);
+    CartItem getCartItemByHash(String itemHash);
 
     @Insert
     void addItemToCart(CartItem cartItem);

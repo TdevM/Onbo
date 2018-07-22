@@ -104,7 +104,6 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        super.onAttach(context);
         final Fragment parent = getParentFragment();
         if (parent != null) {
             menuItemOptionsSelected = (MenuItemOptionsSelected) parent;

@@ -9,7 +9,6 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -27,7 +26,6 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.DishReviews;
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.DishReviewsAdapter;
@@ -37,7 +35,7 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
     public static final String TAG = DishReviewsSheetFragment.class.getSimpleName();
     private static final String ARG_ITEM_COUNT = "item_count";
     private static final String DISH = "dish";
-    private Listener mListener;
+    private DishReviewsSheetListener mDishReviewsSheetListener;
 
     private Unbinder unbinder;
     @Inject
@@ -100,15 +98,15 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
         super.onAttach(context);
         final Fragment parent = getParentFragment();
         if (parent != null) {
-            mListener = (Listener) parent;
+            mDishReviewsSheetListener = (DishReviewsSheetListener) parent;
         } else {
-            mListener = (Listener) context;
+            mDishReviewsSheetListener = (DishReviewsSheetListener) context;
         }
     }
 
     @Override
     public void onDetach() {
-        mListener = null;
+        mDishReviewsSheetListener = null;
         super.onDetach();
     }
 
@@ -149,7 +147,7 @@ public class DishReviewsSheetFragment extends BottomSheetDialogFragment implemen
         }
     }
 
-    public interface Listener {
+    public interface DishReviewsSheetListener {
         void onItemClicked(int position);
     }
 
