@@ -19,12 +19,12 @@ import tdevm.app_ui.R;
 public class RunningOrderItemsAdapter extends RecyclerView.Adapter<RunningOrderItemsAdapter.RunningItemsViewHolder> {
 
     private Context context;
-    private ArrayList<KOT_items> kot_items;
+    //private ArrayList<KOT_items> kot_items;
 
-    public RunningOrderItemsAdapter(Context context, ArrayList<KOT_items> kot_items) {
-        this.context = context;
-        this.kot_items = kot_items;
-    }
+//    public RunningOrderItemsAdapter(Context context, ArrayList<KOT_items> kot_items) {
+//        this.context = context;
+//        this.kot_items = kot_items;
+//    }
 
     @Override
     public RunningItemsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,17 +35,18 @@ public class RunningOrderItemsAdapter extends RecyclerView.Adapter<RunningOrderI
 
     @Override
     public void onBindViewHolder(RunningItemsViewHolder holder, int position) {
-         holder.dishName.setText(kot_items.get(position).getDish().getDish_name());
-         holder.dishPrice.setText(context.getString(R.string.rupee_symbol,kot_items.get(position).getDish().getDish_price().intValue()));
-         holder.dishQty.setText(kot_items.get(position).getDish_quantity());
-         int quantity = Integer.parseInt(kot_items.get(position).getDish_quantity());
-         Double price = kot_items.get(position).getDish().getDish_price();
-         holder.dishTotal.setText(context.getString(R.string.rupee_symbol,quantity*price.intValue()));
+//         holder.dishName.setText(kot_items.get(position).getDish().getDish_name());
+//         holder.dishPrice.setText(context.getString(R.string.rupee_symbol,kot_items.get(position).getDish().getDish_price().intValue()));
+//         holder.dishQty.setText(kot_items.get(position).getDish_quantity());
+//         int quantity = Integer.parseInt(kot_items.get(position).getDish_quantity());
+//         Double price = kot_items.get(position).getDish().getDish_price();
+//         holder.dishTotal.setText(context.getString(R.string.rupee_symbol,quantity*price.intValue()));
     }
 
     @Override
     public int getItemCount() {
-        return kot_items.size();
+       // return kot_items.size();
+        return 0;
     }
 
     public class RunningItemsViewHolder extends RecyclerView.ViewHolder{

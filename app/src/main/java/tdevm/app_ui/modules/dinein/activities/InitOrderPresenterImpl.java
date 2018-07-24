@@ -20,6 +20,8 @@ import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.cart.CartItem;
+import tdevm.app_ui.api.models.request.RestaurantOrder;
+import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
@@ -58,16 +60,17 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
     public void checkCurrentOrderDetails() {
         Log.d(TAG, "Checking order...");
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_uuid", authUtils.getScannedRestaurantUuid());
-        Observable<Response<ArrayList<TempOrder>>> observable = apiService.fetchMyRunningOrder(authUtils.getAuthLoginToken(), map);
-        subscribe(observable, new Observer<Response<ArrayList<TempOrder>>>() {
+        map.put("restaurant_id", authUtils.getScannedRestaurantId());
+        Log.d(TAG,convertCartTOJSON().toString());
+        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(authUtils.getAuthLoginToken(), map);
+        subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
             }
 
             @Override
-            public void onNext(Response<ArrayList<TempOrder>> arrayListResponse) {
+            public void onNext(Response<TOrder> arrayListResponse) {
                 Log.d(TAG, "onNext RAN");
                 if (arrayListResponse.isSuccessful()) {
                     if (arrayListResponse.code() == 200) {
@@ -94,34 +97,34 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
     }
 
     @Override
-    public void addItemsToOrder(String userMessage, ArrayList<TempOrder> arrayList) {
-        //  JSONArray message = updateUserMessage(userMessage,arrayList.get(0).getKot_messages());
-//        RestaurantOrder order = new RestaurantOrder(arrayList.get(0).getOrder_id(),message.toString(),convertCartTOJSON().toString());
-//        Observable<Response<Object>> observable = apiService.addItemsToTempOrder(authUtils.getAuthLoginToken(),order);
-//         subscribe(observable, new Observer<Response<Object>>() {
-//             @Override
-//             public void onSubscribe(Disposable d) {
-//                compositeDisposable.add(d);
-//             }
-//             @Override
-//             public void onNext(Response<Object> objectResponse) {
-//                if(objectResponse.isSuccessful()){
-//                    if(objectResponse.code()==200){
-//                        placeTempOrderView.onOrderItemsAdded();
-//                    }
-//                }
-//             }
-//
-//             @Override
-//             public void onError(Throwable e) {
-//
-//             }
-//
-//             @Override
-//             public void onComplete() {
-//
-//             }
-//         });
+    public void addItemsToOrder(String userMessage, TOrder tOrder) {
+        RestaurantOrder order = new RestaurantOrder(authUtils.getScannedRestaurantId(), tOrder.getOrderId(), userMessage, convertCartTOJSON().toString());
+        Observable<Response<TOrder>> observable = apiService.addItemsToTempOrder(authUtils.getAuthLoginToken(), order);
+        subscribe(observable, new Observer<Response<TOrder>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(Response<TOrder> objectResponse) {
+                if (objectResponse.isSuccessful()) {
+                    if (objectResponse.code() == 200) {
+                        placeTempOrderView.onOrderItemsAdded();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     public void clearCart() {
@@ -131,32 +134,31 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
 
     @Override
     public void createNewOrder(int guest, String message) {
-//        JSONArray array = createNewUserMessage(message);
-//        RestaurantOrder order = new RestaurantOrder(authUtils.getScannedRestaurantUuid(),authUtils.getScannedRestaurantTableShortId(),array.toString(),convertCartTOJSON().toString(),guest);
-//        Observable<Response<Object>> observable = apiService.createNewTempOrder(authUtils.getAuthLoginToken(),order);
-//        subscribe(observable, new Observer<Response<Object>>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//                compositeDisposable.add(d);
-//            }
-//
-//            @Override
-//            public void onNext(Response<Object> objectResponse) {
-//               if(objectResponse.isSuccessful()){
-//                   placeTempOrderView.onNewOrderCreated();
-//               }
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
+        RestaurantOrder order = new RestaurantOrder(authUtils.getScannedRestaurantId(), authUtils.getFetchedRestaurantTableId(), message, convertCartTOJSON().toString(), guest);
+        Observable<Response<TOrder>> observable = apiService.createNewTempOrder(authUtils.getAuthLoginToken(), order);
+        subscribe(observable, new Observer<Response<TOrder>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(Response<TOrder> objectResponse) {
+                if (objectResponse.isSuccessful()) {
+                    placeTempOrderView.onNewOrderCreated();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     public JSONArray convertCartTOJSON() {
@@ -166,6 +168,7 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
             JSONObject rootObject = new JSONObject();
             JSONArray variants = new JSONArray();
             JSONArray addOns = new JSONArray();
+            JSONArray vExtra = new JSONArray();
             for (int j = 0; j < 2; j++) {
                 try {
                     rootObject.put("item_id", cartItems.get(i).getMenuItem().getItemId());
@@ -190,6 +193,7 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
             }
             try {
                 rootObject.put("order_variants", variants);
+                rootObject.put("variants_extras",vExtra);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -207,6 +211,7 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
             }
             try {
                 rootObject.put("order_add_ons", addOns);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -29,7 +29,7 @@ import tdevm.app_ui.utils.CartHelper;
  * Created by Tridev on 14-03-2018.
  */
 
-public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresenterContract.RestaurantMenuEntryPresenter{
+public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresenterContract.RestaurantMenuEntryPresenter {
 
     public static final String TAG = MenuEntryPresenter.class.getSimpleName();
 
@@ -49,13 +49,13 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
         compositeDisposable = new CompositeDisposable();
     }
 
-    public void handleLocationUpdates(LocationResult result){
-        if(result!=null){
-            Location mCurrentLocation  = result.getLastLocation();
-            Log.d(TAG,"Provider: "+mCurrentLocation.getProvider());
-           if(mCurrentLocation.getAccuracy()<50.0){
-               view.startQRScanner();
-           }
+    public void handleLocationUpdates(LocationResult result) {
+        if (result != null) {
+            Location mCurrentLocation = result.getLastLocation();
+            Log.d(TAG, "Provider: " + mCurrentLocation.getProvider());
+            if (mCurrentLocation.getAccuracy() < 50.0) {
+                view.startQRScanner();
+            }
         }
     }
 
@@ -79,7 +79,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
                 if (tableNo != null && restaurantUUID != null) {
                     //T1
                     String tableShortId = restaurantUUID + '_' + tableNo;
-                    authUtils.saveDineQRTransaction(restaurantID,restaurantUUID, tableShortId, MODE_DINE_IN);
+                    authUtils.saveDineQRTransaction(restaurantID, restaurantUUID, tableShortId, MODE_DINE_IN);
                     Log.d(TAG, "Saved Restaurant" + authUtils.getScannedRestaurantUuid());
                     Log.d(TAG, "Saved Table" + authUtils.getScannedRestaurantTableShortId());
                     Log.d(TAG, "Restaurant Mode" + authUtils.getRestaurantMode());
@@ -89,7 +89,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
             } catch (JSONException e) {
                 //T2
                 if (restaurantUUID != null) {
-                    authUtils.saveNonDineQRTransaction(restaurantID,restaurantUUID, MODE_NON_DINE);
+                    authUtils.saveNonDineQRTransaction(restaurantID, restaurantUUID, MODE_NON_DINE);
                     Log.d(TAG, "Saved Restaurant" + authUtils.getScannedRestaurantUuid());
                     Log.d(TAG, "Restaurant Mode" + authUtils.getRestaurantMode());
                     Log.d(TAG, "Type 2 valid");
@@ -110,7 +110,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     public void verifyRestaurantTableVacant(String tableShortId, String restaurantUUID) {
         Map<String, String> getRestData = new HashMap<>();
         getRestData.put("short_id", tableShortId);
-        getRestData.put("restaurant_uuid",restaurantUUID);
+        getRestData.put("restaurant_uuid", restaurantUUID);
         Observable<Response<RestaurantTable>> observable = apiService.verifyTableVacancy(authUtils.getAuthLoginToken(), getRestData);
         subscribe(observable, new Observer<Response<RestaurantTable>>() {
             @Override
@@ -121,7 +121,10 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
             @Override
             public void onNext(@NonNull Response<RestaurantTable> restaurantTableResponse) {
                 if (restaurantTableResponse.code() == 200) {
-                    Log.d(TAG, restaurantTableResponse.body().getRestaurant_table_id());
+                    if (restaurantTableResponse.body() != null) {
+                        Log.d(TAG, restaurantTableResponse.body().getRestaurant_table_id());
+                        authUtils.saveFetchedRestaurantTableId(restaurantTableResponse.body().getRestaurant_table_id());
+                    }
                     //Calculate distance.
                     //THEN
                     view.redirectDineInActivity();

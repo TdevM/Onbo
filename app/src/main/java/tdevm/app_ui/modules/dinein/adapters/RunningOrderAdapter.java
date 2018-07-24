@@ -25,18 +25,18 @@ import tdevm.app_ui.R;
 public class RunningOrderAdapter extends RecyclerView.Adapter<RunningOrderAdapter.RunningAdapterViewHolder> {
     public static final String TAG = RunningOrderAdapter.class.getCanonicalName();
     private Context context;
-    private ArrayList<TempOrder> tempOrderArrayList;
+    //private ArrayList<TempOrder> tempOrderArrayList;
 
     public RunningOrderAdapter(Context context) {
         this.context = context;
-        tempOrderArrayList = new ArrayList<>();
+      //  tempOrderArrayList = new ArrayList<>();
     }
 
-    public void onTempOrderFetched(ArrayList<TempOrder> tempOrders){
-        tempOrderArrayList.addAll(tempOrders);
-        Log.d(TAG,"Temp Order adapter updated");
-        notifyDataSetChanged();
-    }
+//    public void onTempOrderFetched(ArrayList<TempOrder> tempOrders){
+//        tempOrderArrayList.addAll(tempOrders);
+//        Log.d(TAG,"Temp Order adapter updated");
+//        notifyDataSetChanged();
+//    }
 
     @Override
     public RunningAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,24 +47,25 @@ public class RunningOrderAdapter extends RecyclerView.Adapter<RunningOrderAdapte
 
     @Override
     public void onBindViewHolder(RunningAdapterViewHolder holder, int position) {
-        holder.kotNo.setText(tempOrderArrayList.get(position).getKot_id());
-        Timestamp timestamp = new Timestamp(Long.parseLong(tempOrderArrayList.get(position).getKot_timestamp()));
-        Date date = new Date(timestamp.getTime());
-        Log.d("Date",date.toString());
-        SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss a", Locale.UK);
-        holder.kotTime.setText(ft.format(date));
-        if(tempOrderArrayList.get(position).getKot_completed()){
-            holder.kotStatus.setText("Items Prepared");
-        }
+      //  holder.kotNo.setText(tempOrderArrayList.get(position).getKot_id());
+        //Timestamp timestamp = new Timestamp(Long.parseLong(tempOrderArrayList.get(position).getKot_timestamp()));
+       // Date date = new Date(timestamp.getTime());
+//        Log.d("Date",date.toString());
+//        SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss a", Locale.UK);
+//        holder.kotTime.setText(ft.format(date));
+       // if(tempOrderArrayList.get(position).getKot_completed()){
+      //      holder.kotStatus.setText("Items Prepared");
+      //  }
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
-        RunningOrderItemsAdapter adapter = new RunningOrderItemsAdapter(context,tempOrderArrayList.get(position).getKot_items());
-        holder.recyclerViewInnerDishItems.setLayoutManager(mLayoutManager);
-        holder.recyclerViewInnerDishItems.setAdapter(adapter);
+       // RunningOrderItemsAdapter adapter = new RunningOrderItemsAdapter(context,tempOrderArrayList.get(position).getKot_items());
+     //   holder.recyclerViewInnerDishItems.setLayoutManager(mLayoutManager);
+      //  holder.recyclerViewInnerDishItems.setAdapter(adapter);
     }
 
     @Override
     public int getItemCount() {
-        return tempOrderArrayList.size();
+        //return tempOrderArrayList.size();
+        return 0;
     }
 
     public class RunningAdapterViewHolder extends RecyclerView.ViewHolder{

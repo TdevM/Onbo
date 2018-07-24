@@ -19,31 +19,6 @@ import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 public class Converters {
 
     @TypeConverter
-    public String fromDishVariantList(ArrayList<DishVariant> dishVariants) {
-        if (dishVariants == null) {
-            return (null);
-        }
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<DishVariant>>() {
-        }.getType();
-        String json = gson.toJson(dishVariants, type);
-        return json;
-    }
-
-    @TypeConverter
-    public ArrayList<DishVariant> toDishVariantList(String string) {
-        if (string == null) {
-            return (null);
-        }
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<DishVariant>>() {
-        }.getType();
-        ArrayList<DishVariant> dishVariants = gson.fromJson(string, type);
-        return dishVariants;
-    }
-
-
-    @TypeConverter
     public String fromMenuAddOnList(List<MenuAddOn> menuAddOns){
         if (menuAddOns == null) {
             return (null);

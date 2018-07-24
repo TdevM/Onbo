@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import tdevm.app_ui.api.models.cart.MenuItem;
+import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.base.BasePresenterMVP;
 
 /**
@@ -47,7 +48,7 @@ public interface DineInPresenterContract {
 
         void checkCurrentOrderDetails();
 
-        void addItemsToOrder(String userMessage, ArrayList<TempOrder> arrayList);
+        void addItemsToOrder(String userMessage, TOrder tOrder);
 
         void createNewOrder(int guest, String message);
     }
@@ -65,7 +66,7 @@ public interface DineInPresenterContract {
 
         void updateCartItem(MenuItem menuItem, String itemHash);
 
-        void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long parentDishId, int operationFlag);
+       // void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long parentDishId, int operationFlag);
     }
 
     interface RunningOrderFragmentPresenter extends BasePresenterMVP<DineInViewContract.RunningOrderView> {

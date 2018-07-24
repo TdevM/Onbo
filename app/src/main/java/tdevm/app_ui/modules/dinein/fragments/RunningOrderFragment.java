@@ -91,19 +91,19 @@ public class RunningOrderFragment extends Fragment implements DineInViewContract
     }
 
 
-    @Override
-    public void onTempOrderFetched(ArrayList<TempOrder> tempOrder) {
-        runningOrderAdapter.onTempOrderFetched(tempOrder);
-        Log.d(TAG, "Temp order size:" + String.valueOf(tempOrder.size()));
-        Log.d(TAG, "Table no" + String.valueOf(tempOrder.get(0).getTable_no()));
-        tempOrderId.setText(getActivity().getString(R.string.running_order_id,tempOrder.get(0).getOrder_id()));
-        tableNo.setText(getActivity().getString(R.string.running_order_table_no,tempOrder.get(0).getTable_no()));
-    }
-
-    @Override
-    public void showNoRunningOrder() {
-        frameLayout.setVisibility(View.VISIBLE);
-    }
+//    @Override
+//    public void onTempOrderFetched(ArrayList<TempOrder> tempOrder) {
+//        runningOrderAdapter.onTempOrderFetched(tempOrder);
+//        Log.d(TAG, "Temp order size:" + String.valueOf(tempOrder.size()));
+//        Log.d(TAG, "Table no" + String.valueOf(tempOrder.get(0).getTable_no()));
+//        tempOrderId.setText(getActivity().getString(R.string.running_order_id,tempOrder.get(0).getOrder_id()));
+//        tableNo.setText(getActivity().getString(R.string.running_order_table_no,tempOrder.get(0).getTable_no()));
+//    }
+//
+//    @Override
+//    public void showNoRunningOrder() {
+//        frameLayout.setVisibility(View.VISIBLE);
+//    }
 
     @Override
     public void onDestroy() {

@@ -6,6 +6,7 @@ import retrofit2.Response;
 import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.api.models.response.v2.reviews.DishReviews;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
+import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.base.BaseView;
 
 /**
@@ -39,14 +40,14 @@ public interface DineInViewContract {
     }
 
     interface RunningOrderView extends BaseView{
-        void onTempOrderFetched(ArrayList<TempOrder> tempOrder);
-        void showNoRunningOrder();
+//        void onTempOrderFetched(ArrayList<TempOrder> tempOrder);
+//        void showNoRunningOrder();
     }
 
     interface PlaceTempOrderView extends BaseView{
         void onOrderItemsAdded();
         void onNewOrderCreated();
-        void showGetMessage(Response<ArrayList<TempOrder>> arrayListResponse);
+        void showGetMessage(Response<TOrder> arrayListResponse);
         void createOrder(int guest, String userMessage);
         void showGetGuestMessage();
         void addItemsToOrder(String userMessage);

@@ -78,20 +78,20 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
         cartHelper.clearCart();
     }
 
-    @Override
-    public void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long dishId, int operationFlag) {
-        if (operationFlag == 1) {
-//          cartHelper.addItemToCart(dishesOfCuisine);
-//          cartHelper.incrementCartSelectionById(dishId);
-//          cartFragmentView.updateAdapter();
-//          cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
-        } else if (operationFlag == 0) {
-//          cartHelper.updateCartItem(dishesOfCuisine);
-//          cartHelper.decrementCartSelectionById(dishId);
-//          cartFragmentView.updateAdapter();
-            cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
-        }
-    }
+//    @Override
+//    public void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long dishId, int operationFlag) {
+//        if (operationFlag == 1) {
+////          cartHelper.addItemToCart(dishesOfCuisine);
+////          cartHelper.incrementCartSelectionById(dishId);
+////          cartFragmentView.updateAdapter();
+////          cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
+//        } else if (operationFlag == 0) {
+////          cartHelper.updateCartItem(dishesOfCuisine);
+////          cartHelper.decrementCartSelectionById(dishId);
+////          cartFragmentView.updateAdapter();
+//            cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
+//        }
+//    }
 
     @Override
     public void attachView(DineInViewContract.CartFragmentView view) {

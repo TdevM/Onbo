@@ -12,6 +12,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
+import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
@@ -41,20 +42,20 @@ public class RunningOrderPresenter extends BasePresenter implements DineInPresen
 
     public void fetchTempRunningOrder(){
         Map<String,String> map = new HashMap<>();
-        map.put("restaurant_uuid",authUtils.getScannedRestaurantUuid());
-        Observable<Response<ArrayList<TempOrder>>> observable = apiService.fetchMyRunningOrder(authUtils.getAuthLoginToken(),map);
-        subscribe(observable, new Observer<Response<ArrayList<TempOrder>>>() {
+        map.put("restaurant_id",authUtils.getScannedRestaurantId());
+        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(authUtils.getAuthLoginToken(),map);
+        subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
             }
 
             @Override
-            public void onNext(Response<ArrayList<TempOrder>> arrayListResponse) {
+            public void onNext(Response<TOrder> arrayListResponse) {
                 if(arrayListResponse.isSuccessful()){
-                    view.onTempOrderFetched(arrayListResponse.body());
+                   // view.onTempOrderFetched(arrayListResponse.body());
                 }else if(arrayListResponse.code() ==404){
-                    view.showNoRunningOrder();
+                  //  view.showNoRunningOrder();
                 }
             }
 
