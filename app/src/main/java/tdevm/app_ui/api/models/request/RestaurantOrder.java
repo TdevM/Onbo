@@ -8,71 +8,50 @@ import org.json.JSONArray;
 
 public class RestaurantOrder {
 
-    private String restaurant_uuid;
-    private String restaurant_table_shortid;
-    private String temp_table_order_id;
+    private String restaurant_id;
+    private String table_id;
+    private String t_order_id;
     private String user_message;
-    private String updated_user_message;
-    private String dishes_quantities;
+    private String order_items;
     private int guest_count;
 
-    public RestaurantOrder(String restaurant_uuid, String restaurant_table_shortid, String user_message, String dishes_quantities,int guest_count) {
-        this.guest_count = guest_count;
-        this.restaurant_uuid = restaurant_uuid;
-        this.restaurant_table_shortid = restaurant_table_shortid;
+    public RestaurantOrder(String restaurant_id, String table_id, String user_message, String order_items, int guest_count) {
+        this.restaurant_id = restaurant_id;
+        this.table_id = table_id;
         this.user_message = user_message;
-        this.dishes_quantities = dishes_quantities;
-    }
-
-    public RestaurantOrder(String temp_table_order_id, String updated_user_message, String dishes_quantities) {
-        this.temp_table_order_id = temp_table_order_id;
-        this.updated_user_message = updated_user_message;
-        this.dishes_quantities = dishes_quantities;
-    }
-
-    public RestaurantOrder(String temp_table_order_id, String dishes_quantities) {
-        this.temp_table_order_id = temp_table_order_id;
-        this.dishes_quantities = dishes_quantities;
-    }
-
-    public String getRestaurant_uuid() {
-        return restaurant_uuid;
-    }
-
-    public void setRestaurant_uuid(String restaurant_uuid) {
-        this.restaurant_uuid = restaurant_uuid;
-    }
-
-    public String getRestaurant_table_shortid() {
-        return restaurant_table_shortid;
-    }
-
-    public void setRestaurant_table_shortid(String restaurant_table_shortid) {
-        this.restaurant_table_shortid = restaurant_table_shortid;
-    }
-
-    public String getTemp_table_order_id() {
-        return temp_table_order_id;
-    }
-
-    public void setTemp_table_order_id(String temp_table_order_id) {
-        this.temp_table_order_id = temp_table_order_id;
-    }
-
-    public String getUpdated_user_message() {
-        return updated_user_message;
-    }
-
-    public void setUpdated_user_message(String updated_user_message) {
-        this.updated_user_message = updated_user_message;
-    }
-
-    public int getGuest_count() {
-        return guest_count;
-    }
-
-    public void setGuest_count(int guest_count) {
+        this.order_items = order_items;
         this.guest_count = guest_count;
+    }
+
+    public RestaurantOrder(String restaurant_id, String t_order_id, String user_message, String order_items) {
+        this.restaurant_id = restaurant_id;
+        this.t_order_id = t_order_id;
+        this.user_message = user_message;
+        this.order_items = order_items;
+    }
+
+    public String getRestaurant_id() {
+        return restaurant_id;
+    }
+
+    public void setRestaurant_id(String restaurant_id) {
+        this.restaurant_id = restaurant_id;
+    }
+
+    public String getTable_id() {
+        return table_id;
+    }
+
+    public void setTable_id(String table_id) {
+        this.table_id = table_id;
+    }
+
+    public String getT_order_id() {
+        return t_order_id;
+    }
+
+    public void setT_order_id(String t_order_id) {
+        this.t_order_id = t_order_id;
     }
 
     public String getUser_message() {
@@ -83,11 +62,19 @@ public class RestaurantOrder {
         this.user_message = user_message;
     }
 
-    public String getDishes_quantities() {
-        return dishes_quantities;
+    public String getOrder_items() {
+        return order_items;
     }
 
-    public void setDishes_quantities(String dishes_quantities) {
-        this.dishes_quantities = dishes_quantities;
+    public void setOrder_items(String order_items) {
+        this.order_items = order_items;
+    }
+
+    public int getGuest_count() {
+        return guest_count;
+    }
+
+    public void setGuest_count(int guest_count) {
+        this.guest_count = guest_count;
     }
 }

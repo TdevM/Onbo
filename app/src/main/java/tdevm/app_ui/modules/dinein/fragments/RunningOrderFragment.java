@@ -21,7 +21,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.RunningOrderAdapter;
 

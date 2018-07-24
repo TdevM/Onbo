@@ -10,7 +10,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.models.cart.MenuItem;
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
@@ -115,14 +114,14 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
 
         if (selection != null && cartItems != null) {
             for (int i = 0; i < selection.size(); i++) {
-//                Log.d(TAG, "Dish selection made:" + selection.get(i).getDishesOfCuisine().getDish_name());
-//                Log.d(TAG, "Dish qty added:" + String.valueOf(selection.get(i).getQty()));
+                Log.d(TAG, "Dish selection made:" + String.valueOf(selection.get(i).getQty()));
+                Log.d(TAG, "Dish qty added:" + String.valueOf(selection.get(i).getSelectionItemId()));
             }
 
             for (int i = 0; i < cartItems.size(); i++) {
-//                Log.d(TAG, "Cart Item:" + cartItems.get(i).getDishesOfCuisine().getDish_name());
-//                Log.d(TAG, "Item QTY:" + cartItems.get(i).getQuantity());
-//                Log.d(TAG, "Item Total:" + cartItems.get(i).getPrice());
+                Log.d(TAG, "Cart Item:" + cartItems.get(i).getMenuItem().getItemName());
+                Log.d(TAG, "Item QTY:" + cartItems.get(i).getQuantity());
+                Log.d(TAG, "Item Total:" + cartItems.get(i).getPrice());
             }
         }
     }

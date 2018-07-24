@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 import retrofit2.Response;
 import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
-import tdevm.app_ui.api.models.response.DishReviews;
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
-import tdevm.app_ui.api.models.response.TempOrder;
+import tdevm.app_ui.api.models.response.v2.reviews.DishReviews;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.base.BaseView;
 

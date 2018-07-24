@@ -17,7 +17,6 @@ import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.cart.MenuItem;
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.CartFragmentPresenterImpl;
 import tdevm.app_ui.utils.CartHelper;

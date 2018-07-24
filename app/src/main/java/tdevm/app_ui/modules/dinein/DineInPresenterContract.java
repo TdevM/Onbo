@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import tdevm.app_ui.api.models.cart.MenuItem;
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
-import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.base.BasePresenterMVP;
 
 /**

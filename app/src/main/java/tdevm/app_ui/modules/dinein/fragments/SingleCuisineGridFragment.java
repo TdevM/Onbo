@@ -130,6 +130,7 @@ public class SingleCuisineGridFragment extends Fragment
     public void onDestroy() {
         super.onDestroy();
         singleCuisineGridPresenter.detachView();
+        cartHelper.onDestroy();
     }
 
     @Override
@@ -214,7 +215,7 @@ public class SingleCuisineGridFragment extends Fragment
 
         }
 
-        return new ItemHash(sb.toString(),itemPrice);
+        return new ItemHash(sb.toString(), itemPrice);
     }
 
     public int generateItemHashArray(tdevm.app_ui.api.models.cart.MenuItem cartMenuItem) {
@@ -230,7 +231,7 @@ public class SingleCuisineGridFragment extends Fragment
         Log.d(TAG, "ADDED TO CART: " + menuItem.getItemName());
         ItemHash object = generateItemHash(item);
         Log.d(TAG, "ITEM_HASH: " + object.getItemHash());
-        singleCuisineGridPresenter.addItemToCart(item, object.getItemPrice(),object.getItemHash());
+        singleCuisineGridPresenter.addItemToCart(item, object.getItemPrice(), object.getItemHash());
     }
 
     @Override

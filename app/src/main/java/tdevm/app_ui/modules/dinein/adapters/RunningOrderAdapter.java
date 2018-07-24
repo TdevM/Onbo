@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.response.TempOrder;
 
 
 /**

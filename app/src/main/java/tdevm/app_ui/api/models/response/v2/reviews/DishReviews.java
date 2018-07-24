@@ -1,4 +1,4 @@
-package tdevm.app_ui.api.models.response;
+package tdevm.app_ui.api.models.response.v2.reviews;
 
 import tdevm.app_ui.api.models.request.User;
 

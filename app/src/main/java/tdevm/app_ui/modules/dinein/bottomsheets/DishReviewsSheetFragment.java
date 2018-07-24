@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.response.DishReviews;
+import tdevm.app_ui.api.models.response.v2.reviews.DishReviews;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.DishReviewsAdapter;

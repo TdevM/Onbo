@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.response.KOT_items;
 
 
 /**

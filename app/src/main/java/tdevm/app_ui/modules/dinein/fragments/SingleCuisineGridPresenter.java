@@ -15,7 +15,6 @@ import io.reactivex.disposables.Disposable;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.cart.CartSelection;
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
@@ -91,42 +90,6 @@ public class SingleCuisineGridPresenter extends BasePresenter
     }
 
 
-//    @Override
-//    public void addItemToCart(DishesOfCuisine dishesOfCuisine) {
-////        cartHelper.addItemToCart(dishesOfCuisine);
-////        cartHelper.addItemToSelection(dishesOfCuisine);
-////        singleCuisineGridView.updateAdapter();
-////        logSelections();
-//    }
-//
-//    @Override
-//    public void addItemToSelection(DishesOfCuisine dishesOfCuisine) {
-////        cartHelper.addItemToSelection(dishesOfCuisine);
-////        singleCuisineGridView.updateAdapter();
-////        logSelections();
-//    }
-//
-//
-//    @Override
-//    public void updateCartItem(DishesOfCuisine dishesOfCuisine) {
-////      cartHelper.updateCartItem(dishesOfCuisine);
-////      cartHelper.updateSelectionItem(dishesOfCuisine);
-////      singleCuisineGridView.updateAdapter();
-////      logSelections();
-//    }
-//
-//    @Override
-//    public void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, int operationFlag) {
-//
-//    }
-//
-//    @Override
-//    public void addDishVariantItemToCart(DishesOfCuisine selectedDish, DishesOfCuisine parentDish) {
-////        cartHelper.addItemToCart(selectedDish);
-////        cartHelper.addItemToSelection(parentDish);
-////        singleCuisineGridView.updateAdapter();
-//    }
-
     @Override
     public void attachView(DineInViewContract.SingleCuisineGridView view) {
         singleCuisineGridView = view;
@@ -138,6 +101,7 @@ public class SingleCuisineGridPresenter extends BasePresenter
             compositeDisposable.dispose();
             compositeDisposable.clear();
         }
+        cartHelper.onDestroy();
     }
 
     public void logSelections() {

@@ -17,7 +17,6 @@ import tdevm.app_ui.api.cart.CartItemDao;
 import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.cart.CartSelectionDao;
 import tdevm.app_ui.api.models.cart.MenuItem;
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.base.BasePresenter;
 
 /**
@@ -51,12 +50,14 @@ public class CartHelper extends BasePresenter {
 //        Disposable disposable = cartItems.subscribeWith(new DisposableSubscriber<List<CartItem>>() {
 //            @Override
 //            public void onNext(List<CartItem> cartItems) {
-//                cartItemsList = new ArrayList<>(cartItems);
+//               // cartItemsList = new ArrayList<>();
+//                Log.d(TAG,"GET CART ITEMS RAN");
+//                cartItemsList.addAll(cartItems);
 //            }
 //
 //            @Override
 //            public void onError(Throwable t) {
-//                cartItemsList = new ArrayList<>();
+//                //cartItemsList = new ArrayList<>();
 //
 //            }
 //
@@ -70,7 +71,7 @@ public class CartHelper extends BasePresenter {
     }
 
     public CartItem getCartItemById(String itemHash) {
-//        Single<CartItem> cartItemSingle = cartItemDao.getCartItemById(dishId);
+//        Single<CartItem> cartItemSingle = cartItemDao.getCartItemByHash(itemHash);
 //        cartItemSingle.subscribeWith(new SingleObserver<CartItem>() {
 //            @Override
 //            public void onSubscribe(Disposable d) {
@@ -80,6 +81,7 @@ public class CartHelper extends BasePresenter {
 //            @Override
 //            public void onSuccess(CartItem cartItem) {
 //                item = cartItem;
+//                Log.d(TAG,"GET CART ITEM BY ID RAN");
 //            }
 //
 //            @Override
@@ -105,6 +107,7 @@ public class CartHelper extends BasePresenter {
             @Override
             public void onSuccess(Integer integer) {
                 cartItemsCount = integer;
+                Log.d(TAG,"GET CART ITEM TOTAL RAN");
             }
 
             @Override

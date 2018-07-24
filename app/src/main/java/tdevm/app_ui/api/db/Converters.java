@@ -9,8 +9,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import tdevm.app_ui.api.models.response.Dish;
-import tdevm.app_ui.api.models.response.DishVariant;
 import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
 import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 

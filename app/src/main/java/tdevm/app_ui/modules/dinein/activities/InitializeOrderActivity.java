@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import retrofit2.Response;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.fragments.InitializeOrderFragment;
 import tdevm.app_ui.modules.dinein.fragments.TempOrderFragment;
@@ -38,6 +37,7 @@ public class InitializeOrderActivity extends AppCompatActivity implements DineIn
         super.onCreate(savedInstanceState);
         resolveDaggerDependencies();
         placeTempOrderPresenter.checkCurrentOrderDetails();
+        Log.d(TAG, placeTempOrderPresenter.convertCartTOJSON().toString());
         Log.d(TAG,"Temp Order onCreate");
         setContentView(R.layout.activity_place_temp_order);
     }

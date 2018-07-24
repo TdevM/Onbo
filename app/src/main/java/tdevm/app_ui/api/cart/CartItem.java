@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 
 
 import tdevm.app_ui.api.models.cart.MenuItem;
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
 
 
 /**

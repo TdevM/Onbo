@@ -17,15 +17,15 @@ import tdevm.app_ui.api.models.request.AddRestaurantReview;
 import tdevm.app_ui.api.models.request.NonDineOrder;
 import tdevm.app_ui.api.models.request.RestaurantOrder;
 import tdevm.app_ui.api.models.request.User;
-import tdevm.app_ui.api.models.response.DishReviews;
-import tdevm.app_ui.api.models.response.MergedT1Order;
-import tdevm.app_ui.api.models.response.RestaurantReviews;
-import tdevm.app_ui.api.models.response.TempOrder;
+import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
+import tdevm.app_ui.api.models.response.v2.reviews.DishReviews;
+import tdevm.app_ui.api.models.response.v2.reviews.RestaurantReviews;
 import tdevm.app_ui.api.models.response.UserApp;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.RestaurantTable;
 import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
+import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 
 /**
  * Created by Tridev on 04-10-2017.
@@ -74,14 +74,14 @@ public interface APIService {
 
 
     //Running Orders
-    @POST("m/orders/temp")
-    Observable<Response<Object>> createNewTempOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
-    @GET("m/orders/temp")
-    Observable<Response<ArrayList<TempOrder>>> fetchMyRunningOrder(@Header("x-auth") String token, @QueryMap Map<String,String> options);
-    @PATCH("m/orders/temp")
-    Observable<Response<Object>> addItemsToTempOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
-    @GET("m/orders/temp/merged")
-    Observable<Response<MergedT1Order>> fetchMergedOrder(@Header("x-auth") String token,@QueryMap Map<String,String> options);
+    @POST("m/t/orders")
+    Observable<Response<TOrder>> createNewTempOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
+    @GET("m/t/orders")
+    Observable<Response<TOrder>> fetchMyRunningOrder(@Header("x-auth") String token, @QueryMap Map<String,String> options);
+    @PATCH("m/t/orders/kot")
+    Observable<Response<TOrder>> addItemsToTempOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
+    @GET("m/t/orders/merge")
+    Observable<Response<MergedOrder>> fetchMergedOrder(@Header("x-auth") String token, @QueryMap Map<String,String> options);
 
 
     //Type2 Orders (Non Dine)

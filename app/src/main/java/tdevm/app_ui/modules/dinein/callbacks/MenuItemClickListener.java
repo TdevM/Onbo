@@ -1,9 +1,6 @@
 package tdevm.app_ui.modules.dinein.callbacks;
 
 
-import org.json.JSONException;
-
-import tdevm.app_ui.api.models.response.DishesOfCuisine;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 
 /**

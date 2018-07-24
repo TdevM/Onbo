@@ -3,15 +3,13 @@ package tdevm.app_ui.modules.dinein.adapters;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.response.DishReviews;
-import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
+import tdevm.app_ui.api.models.response.v2.reviews.DishReviews;
 
 /**
  * Created by Tridev on 14-02-2018.

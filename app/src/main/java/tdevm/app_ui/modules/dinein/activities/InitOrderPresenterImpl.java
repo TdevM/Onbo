@@ -20,9 +20,6 @@ import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.cart.CartItem;
-import tdevm.app_ui.api.models.request.KOTUserMessage;
-import tdevm.app_ui.api.models.request.RestaurantOrder;
-import tdevm.app_ui.api.models.response.TempOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
@@ -48,7 +45,7 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
         this.apiService = apiService;
         this.cart = cartHelper;
         this.authUtils = authUtils;
-        this.compositeDisposable  = new CompositeDisposable();
+        this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -59,10 +56,10 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
 
     @Override
     public void checkCurrentOrderDetails() {
-        Log.d(TAG,"Checking order...");
+        Log.d(TAG, "Checking order...");
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_uuid",authUtils.getScannedRestaurantUuid());
-        Observable<Response<ArrayList<TempOrder>>> observable = apiService.fetchMyRunningOrder(authUtils.getAuthLoginToken(),map);
+        map.put("restaurant_uuid", authUtils.getScannedRestaurantUuid());
+        Observable<Response<ArrayList<TempOrder>>> observable = apiService.fetchMyRunningOrder(authUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<ArrayList<TempOrder>>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -71,15 +68,15 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
 
             @Override
             public void onNext(Response<ArrayList<TempOrder>> arrayListResponse) {
-                Log.d(TAG,"onNext RAN");
+                Log.d(TAG, "onNext RAN");
                 if (arrayListResponse.isSuccessful()) {
                     if (arrayListResponse.code() == 200) {
                         placeTempOrderView.showGetMessage(arrayListResponse);
-                        Log.d(TAG,"Add items to Order RAN");
+                        Log.d(TAG, "Add items to Order RAN");
                     }
                 } else if (!arrayListResponse.isSuccessful() && arrayListResponse.code() == 404) {
                     //Create new Order
-                    Log.d(TAG,"Create Order RAN");
+                    Log.d(TAG, "Create Order RAN");
                     placeTempOrderView.showGetGuestMessage();
                 }
             }
@@ -98,7 +95,7 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
 
     @Override
     public void addItemsToOrder(String userMessage, ArrayList<TempOrder> arrayList) {
-      //  JSONArray message = updateUserMessage(userMessage,arrayList.get(0).getKot_messages());
+        //  JSONArray message = updateUserMessage(userMessage,arrayList.get(0).getKot_messages());
 //        RestaurantOrder order = new RestaurantOrder(arrayList.get(0).getOrder_id(),message.toString(),convertCartTOJSON().toString());
 //        Observable<Response<Object>> observable = apiService.addItemsToTempOrder(authUtils.getAuthLoginToken(),order);
 //         subscribe(observable, new Observer<Response<Object>>() {
@@ -127,7 +124,7 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
 //         });
     }
 
-    public void clearCart(){
+    public void clearCart() {
         cart.clearCart();
     }
 
@@ -162,65 +159,62 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
 //        });
     }
 
-//    private JSONArray convertCartTOJSON(){
-//        List<CartItem> cartItems = cart.getCartItems();
-//        JSONArray jArray = new JSONArray();
-//        for (CartItem item: cartItems) {
-//            JSONObject jsonObject = new JSONObject();
-//            for (int j = 0; j < 2; j++) {
-//                try {
-//                    jsonObject.put("dish_id", item.getDishesOfCuisine().getDish_id());
-//                    jsonObject.put("dish_quantity", item.getQuantity());
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            jArray.put(jsonObject);
-//        }
-//        return jArray;
-//    }
-//
-//    private JSONArray updateUserMessage(String newMessage, ArrayList<KOTUserMessage> oldMessages){
-//        JSONArray jArray = new JSONArray();
-//        for(int i=0;i<oldMessages.size();i++){
-//            JSONObject jsonObject = new JSONObject();
-//            for (int j = 0; j < 2; j++) {
-//                try {
-//                    jsonObject.put("kot_id", oldMessages.get(i).getKot_id());
-//                    jsonObject.put("kot_message", oldMessages.get(i).getKot_message());
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            jArray.put(jsonObject);
-//        }
-//        JSONObject o = new JSONObject();
-//            //Add new Message finally
-//        try {
-//            o.put("kot_id", oldMessages.size()+1);
-//            o.put("kot_message", newMessage);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        jArray.put(o);
-//        return jArray;
-//    }
-//
-//    private JSONArray createNewUserMessage(String newMessage){
-//        JSONArray jArray = new JSONArray();
-//        JSONObject jsonObject = new JSONObject();
-//        for (int j = 0; j < 2; j++) {
-//            try {
-//                jsonObject.put("kot_id", 1);
-//                jsonObject.put("kot_message", newMessage);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        jArray.put(jsonObject);
-//
-//        return jArray;
- //   }
+    public JSONArray convertCartTOJSON() {
+        List<CartItem> cartItems = cart.getCartItems();
+        JSONArray root = new JSONArray();
+        for (int i = 0; i < cartItems.size(); i++) {
+            JSONObject rootObject = new JSONObject();
+            JSONArray variants = new JSONArray();
+            JSONArray addOns = new JSONArray();
+            for (int j = 0; j < 2; j++) {
+                try {
+                    rootObject.put("item_id", cartItems.get(i).getMenuItem().getItemId());
+                    rootObject.put("item_qty", cartItems.get(i).getQuantity());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            root.put(rootObject);
+            for (int x = 0; x < cartItems.get(i).getMenuItem().getMenuVariantOptions().size(); x++) {
+
+                JSONObject variantObjects = new JSONObject();
+                for (int j = 0; j < 2; j++) {
+                    try {
+                        variantObjects.put("variant_option_id", cartItems.get(i).getMenuItem().getMenuVariantOptions().get(x).getOptionId());
+                        variantObjects.put("variant_id", cartItems.get(i).getMenuItem().getMenuVariantOptions().get(x).getVariantId());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                variants.put(variantObjects);
+            }
+            try {
+                rootObject.put("order_variants", variants);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            for (int x = 0; x < cartItems.get(i).getMenuItem().getMenuAddOns().size(); x++) {
+                JSONObject addOnObjects = new JSONObject();
+                for (int j = 0; j < 2; j++) {
+                    try {
+                        addOnObjects.put("menu_add_on_id", cartItems.get(i).getMenuItem().getMenuAddOns().get(x).getAddOnId());
+                        addOnObjects.put("group_id", cartItems.get(i).getMenuItem().getMenuAddOns().get(x).getGroupId());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                addOns.put(addOnObjects);
+            }
+            try {
+                rootObject.put("order_add_ons", addOns);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+        return root;
+    }
 
     @Override
     public void detachView() {
