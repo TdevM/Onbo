@@ -138,7 +138,7 @@ public class SingleCuisineGridFragment extends Fragment
 
         List<MenuAddOn> menuAddOns = new ArrayList<>();
         List<MenuVOption> menuVOptions = new ArrayList<>();
-        tdevm.app_ui.api.models.cart.MenuItem item = createCartMenuItemFromMenuItem(menuItem, menuVOptions, menuAddOns);// String itemHash = generateItemHashArray(item);
+        tdevm.app_ui.api.models.cart.MenuItem item = createCartMenuItemFromMenuItem(menuItem, menuVOptions, menuAddOns);
 
         ItemHash object = generateItemHash(item);
 
@@ -149,9 +149,15 @@ public class SingleCuisineGridFragment extends Fragment
 
     @Override
     public void onMinusButtonClicked(MenuItem menuItem, int num) {
-        //singleCuisineGridPresenter.updateCartItem(dishesOfCuisine);
-        Toast.makeText(getActivity(), "Minus", Toast.LENGTH_SHORT).show();
-        Log.d(TAG, menuItem.getItemName());
+        List<MenuAddOn> menuAddOns = new ArrayList<>();
+        List<MenuVOption> menuVOptions = new ArrayList<>();
+        tdevm.app_ui.api.models.cart.MenuItem item = createCartMenuItemFromMenuItem(menuItem, menuVOptions, menuAddOns);
+
+        ItemHash object = generateItemHash(item);
+
+        singleCuisineGridPresenter.updateCartItem(item, object.getItemPrice(), object.getItemHash());
+        Log.d(TAG, "REMOVED FROM CART: " + menuItem.getItemName());
+        Log.d(TAG, "ITEM_HASH: " + object.getItemHash());
     }
 
     @Override
@@ -162,7 +168,11 @@ public class SingleCuisineGridFragment extends Fragment
 
     @Override
     public void onCustomizableItemClicked(MenuItem menuItem, int flag) {
-        MenuItemCustomizationSheet.newInstance(menuItem).show(getChildFragmentManager(), "dialog");
+        if(flag==1) {
+            MenuItemCustomizationSheet.newInstance(menuItem).show(getChildFragmentManager(), "dialog");
+        }else if(flag==0){
+            Toast.makeText(getContext(), "Remove this item from cart!", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

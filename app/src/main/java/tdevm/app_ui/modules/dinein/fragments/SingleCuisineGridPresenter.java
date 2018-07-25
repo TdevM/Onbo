@@ -86,7 +86,10 @@ public class SingleCuisineGridPresenter extends BasePresenter
 
     @Override
     public void updateCartItem(tdevm.app_ui.api.models.cart.MenuItem menuItem, int itemTotal, String itemHash) {
-
+        cartHelper.updateCartItem(menuItem,itemTotal,itemHash);
+        cartHelper.updateSelectionItem(menuItem);
+        singleCuisineGridView.updateAdapter();
+        logSelections();
     }
 
 

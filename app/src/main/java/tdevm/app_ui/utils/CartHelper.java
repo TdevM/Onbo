@@ -157,7 +157,7 @@ public class CartHelper extends BasePresenter {
     public void updateCartItem(MenuItem menuItem, int itemPrice, String itemHash) {
         CartItem item = getCartItemById(itemHash);
         if (item != null) {
-            CartItem cartItem = new CartItem(itemHash, menuItem, item.getQuantity() - 1, (item.getQuantity() - 1) * itemPrice);
+            CartItem cartItem = new CartItem(item.getId(),itemHash, menuItem, item.getQuantity() - 1, (item.getQuantity() - 1) * itemPrice,menuItem.getCustomizable());
             cartItemDao.updateCartItem(cartItem);
             if (item.getQuantity() == 1) {
                 cartItemDao.deleteItemFromCart(item);

@@ -128,8 +128,6 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
 
                 @Override
                 public void onMinusClicked(int num) {
-                    menuItemClickListener.onMinusButtonClicked(menuItem, num);
-
                     if (menuItem.getCustomizable()) {
                         menuItemClickListener.onCustomizableItemClicked(menuItem, 0);
                     } else {

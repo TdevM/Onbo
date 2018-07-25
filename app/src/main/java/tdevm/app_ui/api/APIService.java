@@ -78,7 +78,7 @@ public interface APIService {
     Observable<Response<TOrder>> createNewTempOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
     @GET("m/t/orders")
     Observable<Response<TOrder>> fetchMyRunningOrder(@Header("x-auth") String token, @QueryMap Map<String,String> options);
-    @PATCH("m/t/orders/kot")
+    @POST("m/t/orders/kot")
     Observable<Response<TOrder>> addItemsToTempOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
     @GET("m/t/orders/merge")
     Observable<Response<MergedOrder>> fetchMergedOrder(@Header("x-auth") String token, @QueryMap Map<String,String> options);
