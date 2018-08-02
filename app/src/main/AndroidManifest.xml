@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="tdevm.app_ui">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,6 +15,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-sdk android:targetSdkVersion="27" android:minSdkVersion="14"
+        tools:overrideLibrary="com.razorpay"/>
 
     <application
         android:name=".AppApplication"
@@ -69,6 +73,10 @@
 
         </activity>
         <activity android:name=".modules.entry.SimpleScannerActivity" />
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_live_Urey27vmU2QSYM"
+            />
     </application>
 
 </manifest>

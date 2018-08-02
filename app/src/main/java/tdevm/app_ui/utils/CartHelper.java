@@ -70,7 +70,7 @@ public class CartHelper extends BasePresenter {
         return cartItemDao.getCartItems();
     }
 
-    public CartItem getCartItemById(String itemHash) {
+    public Single<CartItem> getCartItemByHash(String itemHash) {
 //        Single<CartItem> cartItemSingle = cartItemDao.getCartItemByHash(itemHash);
 //        cartItemSingle.subscribeWith(new SingleObserver<CartItem>() {
 //            @Override
@@ -107,7 +107,7 @@ public class CartHelper extends BasePresenter {
             @Override
             public void onSuccess(Integer integer) {
                 cartItemsCount = integer;
-                Log.d(TAG,"GET CART ITEM TOTAL RAN");
+                Log.d(TAG, "GET CART ITEM TOTAL RAN");
             }
 
             @Override
@@ -141,28 +141,48 @@ public class CartHelper extends BasePresenter {
 
     //Mutations
     public void addItemToCart(MenuItem menuItem, int itemPrice, String itemHash) {
-        CartItem item = getCartItemById(itemHash);
-        if (item == null) {
-            Log.d(TAG, "ITEM WAS NULL");
-            CartItem cartItem = new CartItem(itemHash, menuItem, 1, itemPrice, menuItem.getCustomizable());
-            cartItemDao.addItemToCart(cartItem);
-        } else if (item.getQuantity() >= 1) {
-            Log.d(TAG, item.getItem_hash());
-            Log.d(TAG, "ITEM WAS NOTTTT NULL");
-            CartItem cartItem = new CartItem(item.getId(), itemHash, menuItem, item.getQuantity() + 1, (item.getQuantity() + 1) * itemPrice, menuItem.getCustomizable());
-            cartItemDao.updateCartItem(cartItem);
-        }
+        Single<CartItem> cartItemSingle = cartItemDao.getCartItemByHash(itemHash);
+        cartItemSingle.subscribeWith(new DisposableSingleObserver<CartItem>() {
+            @Override
+            public void onSuccess(CartItem cartItem) {
+                if (cartItem != null) {
+                    if (cartItem.getQuantity() >= 1) {
+                        Log.d(TAG, cartItem.getItem_hash());
+                        Log.d(TAG, "ITEM WAS NOTTTT NULL");
+                        CartItem item = new CartItem(cartItem.getId(), itemHash, menuItem, cartItem.getQuantity() + 1, (cartItem.getQuantity() + 1) * itemPrice, menuItem.getCustomizable());
+                        cartItemDao.updateCartItem(item);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "ITEM WAS NULL");
+                CartItem cartItem = new CartItem(itemHash, menuItem, 1, itemPrice, menuItem.getCustomizable());
+                cartItemDao.addItemToCart(cartItem);
+            }
+        });
+
     }
 
     public void updateCartItem(MenuItem menuItem, int itemPrice, String itemHash) {
-        CartItem item = getCartItemById(itemHash);
-        if (item != null) {
-            CartItem cartItem = new CartItem(item.getId(),itemHash, menuItem, item.getQuantity() - 1, (item.getQuantity() - 1) * itemPrice,menuItem.getCustomizable());
-            cartItemDao.updateCartItem(cartItem);
-            if (item.getQuantity() == 1) {
-                cartItemDao.deleteItemFromCart(item);
+        Single<CartItem> cartItemSingle = cartItemDao.getCartItemByHash(itemHash);
+        cartItemSingle.subscribeWith(new DisposableSingleObserver<CartItem>() {
+            @Override
+            public void onSuccess(CartItem cartItem) {
+                if (cartItem != null) {
+                    CartItem item = new CartItem(cartItem.getId(), itemHash, menuItem, cartItem.getQuantity() - 1, (cartItem.getQuantity() - 1) * itemPrice, menuItem.getCustomizable());
+                    cartItemDao.updateCartItem(cartItem);
+                    if (item.getQuantity() == 1) {
+                        cartItemDao.deleteItemFromCart(item);
+                    }
+                }
             }
-        }
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "ITEM NOT FOUND");
+            }
+        });
     }
 
     public void addItemToSelection(String itemId) {
