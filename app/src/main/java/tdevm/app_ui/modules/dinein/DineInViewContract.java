@@ -1,9 +1,11 @@
 package tdevm.app_ui.modules.dinein;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Response;
 import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
+import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
 import tdevm.app_ui.api.models.response.v2.reviews.DishReviews;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
@@ -39,9 +41,10 @@ public interface DineInViewContract {
 
     }
 
-    interface RunningOrderView extends BaseView{
-//        void onTempOrderFetched(ArrayList<TempOrder> tempOrder);
-//        void showNoRunningOrder();
+    interface MergedOrderView extends BaseView{
+        void onRunningOrderFetched(TOrder tOrder);
+        void onMergedOrderFetched(MergedOrder mergedOrder);
+        void showNoRunningOrder();
     }
 
     interface PlaceTempOrderView extends BaseView{

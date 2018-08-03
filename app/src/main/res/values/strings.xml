@@ -59,8 +59,7 @@
     <string name="price">Price</string>
     <string name="qty">Qty</string>
     <string name="total">Total</string>
-    <string name="add_items">ADD Items</string>
-    <string name="finish_order">Finish Order</string>
+
     <string name="proceed">Proceed</string>
     <string name="total_items">Total items</string>
     <string name="_0">0</string>
@@ -86,4 +85,7 @@
     <string name="veg_non_veg">veg_non_indicator</string>
     <string name="how_many_guest">How many guest?</string>
     <string name="fetching_your_menu">Verifying you location.\nFetching Your Menu.....</string>
+    <string name="finish_order">Finish Order</string>
+    <string name="add_items">ADD Items</string>
+    <string name="no_order_is_running_n_place_an_order">No order is running \nPlace an Order</string>
 </resources>

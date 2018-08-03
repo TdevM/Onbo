@@ -12,7 +12,7 @@ import tdevm.app_ui.modules.dinein.activities.InitializeOrderActivity;
 import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
-import tdevm.app_ui.modules.dinein.fragments.RunningOrderFragment;
+import tdevm.app_ui.modules.dinein.fragments.MergedOrderFragment;
 import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
 import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
 import tdevm.app_ui.modules.nondinein.activities.NonDineActivity;
@@ -39,7 +39,7 @@ public interface APIComponent {
     void inject(InitializeOrderActivity initializeOrderActivity);
     void inject(NonDineRestaurantDetailsActivity activity);
     void inject(NonDineActivity activity);
-    void inject(RunningOrderFragment fragment);
+    void inject(MergedOrderFragment fragment);
     void inject(AccountsFragment fragment);
     void inject(DishReviewsSheetFragment fragment);
     void inject(RestaurantMenuEntryActivity activity);

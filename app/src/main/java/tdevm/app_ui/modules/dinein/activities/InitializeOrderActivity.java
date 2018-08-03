@@ -18,7 +18,7 @@ import tdevm.app_ui.modules.dinein.fragments.InitializeOrderFragment;
 import tdevm.app_ui.modules.dinein.fragments.TempOrderFragment;
 
 
-public class InitializeOrderActivity extends AppCompatActivity implements DineInViewContract.PlaceTempOrderView{
+public class InitializeOrderActivity extends AppCompatActivity implements DineInViewContract.PlaceTempOrderView {
     public static final String TAG = InitializeOrderActivity.class.getSimpleName();
     public static final String ORDER_RUNNING_STATUS = "ORDER_RUNNING_STATUS";
     public static TOrder tOrder;
@@ -30,7 +30,7 @@ public class InitializeOrderActivity extends AppCompatActivity implements DineIn
     protected void onResume() {
         super.onResume();
         placeTempOrderPresenter.attachView(this);
-        Log.d(TAG,"Temp Order onResume");
+        Log.d(TAG, "Temp Order onResume");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class InitializeOrderActivity extends AppCompatActivity implements DineIn
         resolveDaggerDependencies();
         placeTempOrderPresenter.checkCurrentOrderDetails();
         Log.d(TAG, placeTempOrderPresenter.convertCartTOJSON().toString());
-        Log.d(TAG,"Temp Order onCreate");
+        Log.d(TAG, "Temp Order onCreate");
         setContentView(R.layout.activity_place_temp_order);
     }
 
@@ -55,15 +55,15 @@ public class InitializeOrderActivity extends AppCompatActivity implements DineIn
 
     @Override
     public void resolveDaggerDependencies() {
-        ((AppApplication)getApplication()).getApiComponent().inject(this);
+        ((AppApplication) getApplication()).getApiComponent().inject(this);
 
     }
 
     @Override
-    public void showGetGuestMessage(){
-        Log.d(TAG,"Not running");
+    public void showGetGuestMessage() {
+        Log.d(TAG, "Not running");
         Bundle bundle = new Bundle();
-        bundle.putBoolean(ORDER_RUNNING_STATUS,false);
+        bundle.putBoolean(ORDER_RUNNING_STATUS, false);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         InitializeOrderFragment fragment = new InitializeOrderFragment();
         fragment.setArguments(bundle);
@@ -72,11 +72,11 @@ public class InitializeOrderActivity extends AppCompatActivity implements DineIn
     }
 
     @Override
-    public void showGetMessage(Response<TOrder> arrayListResponse){
-        Log.d(TAG,"Running");
+    public void showGetMessage(Response<TOrder> arrayListResponse) {
+        Log.d(TAG, "Running");
         tOrder = arrayListResponse.body();
         Bundle bundle = new Bundle();
-        bundle.putBoolean(ORDER_RUNNING_STATUS,true);
+        bundle.putBoolean(ORDER_RUNNING_STATUS, true);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         InitializeOrderFragment fragment = new InitializeOrderFragment();
         fragment.setArguments(bundle);
@@ -85,14 +85,14 @@ public class InitializeOrderActivity extends AppCompatActivity implements DineIn
     }
 
     @Override
-    public void createOrder(int guest, String userMessage){
-        placeTempOrderPresenter.createNewOrder(guest,userMessage);
-        placeTempOrderPresenter.clearCart();
+    public void createOrder(int guest, String userMessage) {
+        placeTempOrderPresenter.createNewOrder(guest, userMessage);
+
     }
 
     @Override
-    public void addItemsToOrder(String userMessage){
-        placeTempOrderPresenter.addItemsToOrder(userMessage,tOrder);
+    public void addItemsToOrder(String userMessage) {
+        placeTempOrderPresenter.addItemsToOrder(userMessage, tOrder);
 
     }
 

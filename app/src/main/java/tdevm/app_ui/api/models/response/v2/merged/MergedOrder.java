@@ -148,7 +148,13 @@ public class MergedOrder {
         this.isDel = isDel;
     }
 
+    public List<MergedItems> getMergedItems() {
+        return mergedItems;
+    }
 
+    public void setMergedItems(List<MergedItems> mergedItems) {
+        this.mergedItems = mergedItems;
+    }
 
     @Override
     public String toString() {

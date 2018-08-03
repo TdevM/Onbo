@@ -6,10 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -18,9 +15,8 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
 import tdevm.app_ui.modules.dinein.fragments.HighestRatedItemsFragment;
-import tdevm.app_ui.modules.dinein.fragments.RunningOrderFragment;
+import tdevm.app_ui.modules.dinein.fragments.MergedOrderFragment;
 import tdevm.app_ui.root.BottomNavigationViewHelper;
-import tdevm.app_ui.utils.AuthUtils;
 
 public class DineInActivity extends AppCompatActivity implements DineInViewContract.DineInActivity {
 
@@ -53,7 +49,7 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
                     fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_running_order:
-                    fragmentTransaction.replace(R.id.frame_layout_dine_in, new RunningOrderFragment());
+                    fragmentTransaction.replace(R.id.frame_layout_dine_in, new MergedOrderFragment());
                     fragmentTransaction.commit();
                     return true;
             }

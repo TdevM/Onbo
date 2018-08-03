@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -21,36 +21,39 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
+import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
+import tdevm.app_ui.modules.dinein.adapters.MergedOrderAdapter;
 import tdevm.app_ui.modules.dinein.adapters.RunningOrderAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RunningOrderFragment extends Fragment implements DineInViewContract.RunningOrderView {
+public class MergedOrderFragment extends Fragment implements DineInViewContract.MergedOrderView {
 
-    public static final String TAG = RunningOrderFragment.class.getCanonicalName();
+    public static final String TAG = MergedOrderFragment.class.getCanonicalName();
 
 
     @BindView(R.id.frame_layout_order_empty)
     FrameLayout frameLayout;
     Unbinder unbinder;
-    @BindView(R.id.rv_temp_order)
+    @BindView(R.id.rv_merged_order)
     RecyclerView recyclerViewTempOrder;
-    @BindView(R.id.tv_temp_order_id)
+    @BindView(R.id.tv_merged_order_id)
     TextView tempOrderId;
-    @BindView(R.id.tv_temp_order_table_no)
+    @BindView(R.id.tv_merged_order_table_no)
     TextView tableNo;
-    RunningOrderAdapter runningOrderAdapter;
+    MergedOrderAdapter mergedOrderAdapter;
     @Inject
-    RunningOrderPresenter presenter;
+    MergedOrderPresenter presenter;
 
-    public RunningOrderFragment() {
+    public MergedOrderFragment() {
         // Required empty public constructor
     }
 
-    public static RunningOrderFragment newInstance() {
-        return new RunningOrderFragment();
+    public static MergedOrderFragment newInstance() {
+        return new MergedOrderFragment();
     }
 
     @Override
@@ -64,12 +67,12 @@ public class RunningOrderFragment extends Fragment implements DineInViewContract
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         resolveDaggerDependencies();
-        View view = inflater.inflate(R.layout.fragment_running_order, container, false);
+        View view = inflater.inflate(R.layout.fragment_merged_order, container, false);
         unbinder = ButterKnife.bind(this, view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewTempOrder.setLayoutManager(mLayoutManager);
-        runningOrderAdapter = new RunningOrderAdapter(getContext());
-        recyclerViewTempOrder.setAdapter(runningOrderAdapter);
+        mergedOrderAdapter = new MergedOrderAdapter(getContext());
+        recyclerViewTempOrder.setAdapter(mergedOrderAdapter);
         presenter.fetchTempRunningOrder();
         return view;
     }
@@ -91,19 +94,22 @@ public class RunningOrderFragment extends Fragment implements DineInViewContract
     }
 
 
-//    @Override
-//    public void onTempOrderFetched(ArrayList<TempOrder> tempOrder) {
-//        runningOrderAdapter.onTempOrderFetched(tempOrder);
-//        Log.d(TAG, "Temp order size:" + String.valueOf(tempOrder.size()));
-//        Log.d(TAG, "Table no" + String.valueOf(tempOrder.get(0).getTable_no()));
-//        tempOrderId.setText(getActivity().getString(R.string.running_order_id,tempOrder.get(0).getOrder_id()));
-//        tableNo.setText(getActivity().getString(R.string.running_order_table_no,tempOrder.get(0).getTable_no()));
-//    }
-//
-//    @Override
-//    public void showNoRunningOrder() {
-//        frameLayout.setVisibility(View.VISIBLE);
-//    }
+    @Override
+    public void onRunningOrderFetched(TOrder tOrder) {
+        presenter.fetchMergedOrder(tOrder);
+    }
+
+    @Override
+    public void onMergedOrderFetched(MergedOrder mergedOrder) {
+        mergedOrderAdapter.onMergedOrderFetched(mergedOrder);
+        Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
+        Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
+    }
+
+    @Override
+    public void showNoRunningOrder() {
+        frameLayout.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void onDestroy() {
