@@ -58,35 +58,36 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     AuthenticationActivity authenticationActivity;
 
     @OnClick(R.id.btn_login_next)
-    public void onButtonClick(){
-        if(TextUtils.isEmpty(phoneNumberInit.getText())){
+    public void onButtonClick() {
+        if (TextUtils.isEmpty(phoneNumberInit.getText())) {
             Toast.makeText(getActivity(), "Enter phone number", Toast.LENGTH_SHORT).show();
-        }else {
-         AuthInitFragmentPermissionsDispatcher.sendOTPDetectSMSWithPermissionCheck(this);
+        } else {
+            AuthInitFragmentPermissionsDispatcher.sendOTPDetectSMSWithPermissionCheck(this);
         }
     }
 
-    @NeedsPermission({Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS})
-    public void sendOTPDetectSMS(){
+    @NeedsPermission({Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS})
+    public void sendOTPDetectSMS() {
         authInitPresenter.sendOTP(Long.parseLong(phoneNumberInit.getText().toString()));
     }
 
     public AuthInitFragment() {
         // Required empty public constructor
     }
+
     public static AuthInitFragment newInstance() {
         Log.d("AuthInitFragment", "new Instance() Called");
         return new AuthInitFragment();
     }
 
-    public void resolveDaggerDependencies(){
+    public void resolveDaggerDependencies() {
         ((AppApplication) getActivity().getApplication()).getApiComponent().inject(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-       authInitPresenter.attachView(this);
+        authInitPresenter.attachView(this);
     }
 
     @Override
@@ -95,12 +96,11 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
         resolveDaggerDependencies();
         authenticationActivity = (AuthenticationActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_auth_init, container, false);
-        unbinder = ButterKnife.bind(this,view);
-        phoneNumberInit.setFilters(new InputFilter[] {new InputFilter.LengthFilter(10)});
+        unbinder = ButterKnife.bind(this, view);
+        phoneNumberInit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
 
         return view;
     }
-
 
 
     @Override
@@ -121,7 +121,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
 
     @Override
     public void showOTPVerificationScreen(Long phone) {
-      authenticationActivity.showOTPVerificationFragment(phone);
+        authenticationActivity.showOTPVerificationFragment(phone);
     }
 
     @Override
@@ -150,7 +150,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        AuthInitFragmentPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+        AuthInitFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     @Override
@@ -183,13 +183,13 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
 
     @Override
     public void onDestroy() {
-        Log.d(TAG,"onDestroy Called");
+        Log.d(TAG, "onDestroy Called");
         authInitPresenter.detachView();
         super.onDestroy();
     }
 
 
-    @OnShowRationale({Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS})
+    @OnShowRationale({Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS})
     void showRationaleForSMS(PermissionRequest request) {
         new AlertDialog.Builder(getContext())
                 .setMessage("SEND SMS Permission Needed")
@@ -199,14 +199,14 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     }
 
     // Annotate a method which is invoked if the user doesn't grant the permissions
-    @OnPermissionDenied({Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS})
+    @OnPermissionDenied({Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS})
     void showDeniedForPhoneCall() {
         Toast.makeText(getActivity(), "Denied", Toast.LENGTH_SHORT).show();
     }
 
     // Annotates a method which is invoked if the user
     // chose to have the device "never ask again" about a permission
-    @OnNeverAskAgain({Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS})
+    @OnNeverAskAgain({Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS})
     void showNeverAskForPhoneCall() {
         Toast.makeText(getActivity(), "Never ask", Toast.LENGTH_SHORT).show();
     }

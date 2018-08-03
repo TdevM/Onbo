@@ -1,5 +1,6 @@
 package tdevm.app_ui.modules.dinein;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.modules.payment.PaymentsActivity;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
 import tdevm.app_ui.modules.dinein.fragments.HighestRatedItemsFragment;
@@ -108,6 +110,10 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
         ((AppApplication) getApplication()).getApiComponent().inject(this);
     }
 
+    public void startPaymentActivity(){
+        Intent intent = new Intent(DineInActivity.this, PaymentsActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onDestroy() {

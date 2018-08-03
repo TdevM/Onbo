@@ -47,6 +47,17 @@ public class MergedOrder {
     @Expose
     private RestaurantTable restaurantTable;
 
+    @SerializedName("order_total")
+    @Expose
+    private OrderTotal orderTotal;
+
+    public OrderTotal getOrderTotal() {
+        return orderTotal;
+    }
+
+    public void setOrderTotal(OrderTotal orderTotal) {
+        this.orderTotal = orderTotal;
+    }
 
     @SerializedName("user")
     @Expose
