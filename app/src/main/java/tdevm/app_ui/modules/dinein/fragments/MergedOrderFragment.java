@@ -12,7 +12,11 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -52,13 +56,15 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     TextView taxes;
     @BindView(R.id.tv_merged_total)
     TextView total;
+    @BindView(R.id.tv_merged_order_date)
+    TextView tvDate;
     MergedOrderAdapter mergedOrderAdapter;
     @Inject
     MergedOrderPresenter presenter;
     DineInActivity dineInActivity;
 
     @OnClick(R.id.btn_close_order)
-    public void closeOrder(){
+    public void closeOrder() {
         startPaymentActivity();
     }
 
@@ -82,7 +88,7 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         resolveDaggerDependencies();
-        dineInActivity  = (DineInActivity)getActivity();
+        dineInActivity = (DineInActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_merged_order, container, false);
         unbinder = ButterKnife.bind(this, view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -121,11 +127,17 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
         Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
         Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
 
-        tableNo.setText("Table no: "+String.valueOf(mergedOrder.getRestaurantTable().getTable_number()));
-        tempOrderId.setText("Order ID: "+mergedOrder.getOrderId());
-        subTotal.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getSubtotal())*0.01));
-        taxes.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getTaxes())*0.01));
-        total.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getGrand_total())*0.01));
+        tableNo.setText("Table no: " + String.valueOf(mergedOrder.getRestaurantTable().getTable_number()));
+        tempOrderId.setText("Order ID: " + mergedOrder.getOrderId());
+//        Timestamp timestamp = new Timestamp(Long.parseLong(mergedOrder.getTimestamp()));
+//        Date date = new Date(timestamp.getTime());
+//        Log.d("Date",date.toString());
+//        SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss a", Locale.UK);
+
+        tvDate.setText(mergedOrder.getTimestamp());
+        subTotal.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getSubtotal()) * 0.01));
+        taxes.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getTaxes()) * 0.01));
+        total.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getGrand_total()) * 0.01));
     }
 
     @Override
@@ -133,7 +145,7 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
         frameLayout.setVisibility(View.VISIBLE);
     }
 
-    public void startPaymentActivity(){
+    public void startPaymentActivity() {
         dineInActivity.startPaymentActivity();
     }
 

@@ -8,25 +8,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.google.zxing.client.android.Intents;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 import javax.inject.Inject;
 
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
-import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
-import tdevm.app_ui.modules.nondinein.activities.NonDineRestaurantDetailsActivity;
 import tdevm.app_ui.root.fragments.AccountsFragment;
-import tdevm.app_ui.root.fragments.BookFragment;
 import tdevm.app_ui.root.fragments.HomeFragment;
-import tdevm.app_ui.root.fragments.NotificationsFragment;
-import tdevm.app_ui.utils.CustomQRView;
 
 public class BottomNavigationHome extends AppCompatActivity implements NavigationHomeViewContract.BottomNavigationView {
 
@@ -47,20 +37,20 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
                     fragmentTransaction.replace(R.id.frame_layout, new HomeFragment());
                     fragmentTransaction.commit();
                     break;
-                case R.id.navigation_booking:
-                    fragmentTransaction.replace(R.id.frame_layout, new BookFragment());
-                    fragmentTransaction.commit();
-                    break;
+//                case R.id.navigation_booking:
+//                    fragmentTransaction.replace(R.id.frame_layout, new BookFragment());
+//                    fragmentTransaction.commit();
+//                    break;
                 case R.id.navigation_scanner:
                     bottomNavigationPresenter.verifyUserAuthentication();
                     break;
                 case R.id.navigation_account:
                     bottomNavigationPresenter.handleUserAuthentication();
                     break;
-                case R.id.navigation_notifications:
-                    fragmentTransaction.replace(R.id.frame_layout, new NotificationsFragment());
-                    fragmentTransaction.commit();
-                    break;
+//                case R.id.navigation_notifications:
+//                    fragmentTransaction.replace(R.id.frame_layout, new NotificationsFragment());
+//                    fragmentTransaction.commit();
+//                    break;
             }
             return true;
         }

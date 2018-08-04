@@ -38,7 +38,7 @@ public class MergedOrderAdapter extends RecyclerView.Adapter<MergedOrderAdapter.
     @NonNull
     @Override
     public MergedOrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view =  LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_rv_merged_order_inner, parent, false);
         return new MergedOrderViewHolder(view);
     }
@@ -46,9 +46,10 @@ public class MergedOrderAdapter extends RecyclerView.Adapter<MergedOrderAdapter.
     @Override
     public void onBindViewHolder(@NonNull MergedOrderViewHolder holder, int position) {
         holder.itemName.setText(mergedItemsList.get(position).getItem_data().getItem_name());
-        holder.itemPrice.setText(String.valueOf(Integer.parseInt(mergedItemsList.get(position).getItem_total())*0.01));
+        holder.itemPrice.setText(String.valueOf(Integer.parseInt(mergedItemsList.get(position).getItem_total()) * 0.01));
         holder.qty.setText(mergedItemsList.get(position).getItem_qty());
-        holder.itemTotal.setText(String.valueOf(Integer.parseInt(mergedItemsList.get(position).getItem_q_total())*0.01));
+        holder.itemTotal.setText(String.valueOf(Integer.parseInt(mergedItemsList.get(position).getItem_q_total()) * 0.01));
+
     }
 
     @Override
@@ -57,13 +58,16 @@ public class MergedOrderAdapter extends RecyclerView.Adapter<MergedOrderAdapter.
     }
 
     public class MergedOrderViewHolder extends RecyclerView.ViewHolder {
-        TextView itemName, itemPrice, qty, itemTotal;
+        TextView itemName, itemPrice, qty, itemTotal, timestamp;
+
         public MergedOrderViewHolder(View itemView) {
             super(itemView);
             itemName = itemView.findViewById(R.id.tv_rv_item_inner_item_name);
             itemPrice = itemView.findViewById(R.id.tv_rv_item_inner_item_price);
             qty = itemView.findViewById(R.id.tv_rv_item_inner_item_qty);
             itemTotal = itemView.findViewById(R.id.tv_rv_item_inner_item_total);
+
+
         }
 
     }
