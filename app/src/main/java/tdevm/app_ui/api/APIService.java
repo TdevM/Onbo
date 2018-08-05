@@ -17,6 +17,7 @@ import tdevm.app_ui.api.models.request.AddRestaurantReview;
 import tdevm.app_ui.api.models.request.NonDineOrder;
 import tdevm.app_ui.api.models.request.RestaurantOrder;
 import tdevm.app_ui.api.models.request.User;
+import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
 import tdevm.app_ui.api.models.response.v2.reviews.DishReviews;
 import tdevm.app_ui.api.models.response.v2.reviews.RestaurantReviews;
@@ -82,6 +83,8 @@ public interface APIService {
     Observable<Response<TOrder>> addItemsToTempOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
     @GET("m/t/orders/merge")
     Observable<Response<MergedOrder>> fetchMergedOrder(@Header("x-auth") String token, @QueryMap Map<String,String> options);
+    @POST("m/t/orders/close")
+    Observable<Response<FOrder>> closeRunningOrder(@Header("x-auth") String token, @QueryMap Map<String,String> options);
 
 
     //Type2 Orders (Non Dine)
