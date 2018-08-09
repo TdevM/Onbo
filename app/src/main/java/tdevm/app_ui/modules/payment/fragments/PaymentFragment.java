@@ -17,14 +17,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import tdevm.app_ui.R;
-import tdevm.app_ui.modules.payment.PaymentsActivity;
+import tdevm.app_ui.modules.payment.PaymentActivity;
 
 
 public class PaymentFragment extends Fragment {
 
     public static final String TAG = PaymentFragment.class.getSimpleName();
     Unbinder unbinder;
-    PaymentsActivity activity;
+    PaymentActivity activity;
+    String orderId;
 
     @OnClick(R.id.btn_pay)
     void startRazorPay() {
@@ -36,7 +37,7 @@ public class PaymentFragment extends Fragment {
     }
 
 
-    public static PaymentFragment newInstance(String param1, String param2) {
+    public static PaymentFragment newInstance(String orderId) {
         PaymentFragment fragment = new PaymentFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -46,6 +47,10 @@ public class PaymentFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            orderId = getArguments().getString("ORDER_ID");
+            Log.d(TAG,"Got into PaymentFragment"+ orderId);
+        }
 
     }
 
@@ -53,7 +58,7 @@ public class PaymentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment ge
-        activity = (PaymentsActivity) getActivity();
+        activity = (PaymentActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_payment, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -74,7 +79,7 @@ public class PaymentFragment extends Fragment {
         try {
             JSONObject options = new JSONObject();
             options.put("name", "TdevM's palace");
-            options.put("description", "Order #123456");
+            options.put("description", "Order" + orderId);
             options.put("currency", "INR");
             options.put("amount", "100");
             checkout.open(activity, options);

@@ -63,6 +63,8 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     MergedOrderPresenter presenter;
     DineInActivity dineInActivity;
 
+    MergedOrder fetchedOrder;
+
     @OnClick(R.id.btn_close_order)
     public void closeOrder() {
         startPaymentActivity();
@@ -124,6 +126,7 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     @Override
     public void onMergedOrderFetched(MergedOrder mergedOrder) {
         mergedOrderAdapter.onMergedOrderFetched(mergedOrder);
+        fetchedOrder = mergedOrder;
         Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
         Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
 
@@ -146,7 +149,9 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     }
 
     public void startPaymentActivity() {
-        dineInActivity.startPaymentActivity();
+        if(fetchedOrder!=null){
+            dineInActivity.startPaymentActivity(fetchedOrder.getOrderId());
+        }
     }
 
     @Override

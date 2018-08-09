@@ -13,7 +13,7 @@ import javax.inject.Inject;
 
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.modules.payment.PaymentsActivity;
+import tdevm.app_ui.modules.payment.PaymentActivity;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
 import tdevm.app_ui.modules.dinein.fragments.HighestRatedItemsFragment;
@@ -110,8 +110,9 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
         ((AppApplication) getApplication()).getApiComponent().inject(this);
     }
 
-    public void startPaymentActivity(){
-        Intent intent = new Intent(DineInActivity.this, PaymentsActivity.class);
+    public void startPaymentActivity(String orderId){
+        Intent intent = new Intent(DineInActivity.this, PaymentActivity.class);
+        intent.putExtra("ORDER_ID",orderId);
         startActivity(intent);
     }
 

@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="27"
         tools:overrideLibrary="com.razorpay" />
 
@@ -72,7 +72,7 @@
             android:label="@string/title_activity_restaurant_orders"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".modules.payment.PaymentsActivity" />
+        <activity android:name=".modules.payment.PaymentActivity" />
         <activity android:name=".modules.entry.RestaurantMenuEntryActivity">
 
         </activity>

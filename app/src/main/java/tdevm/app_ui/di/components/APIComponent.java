@@ -17,6 +17,9 @@ import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
 import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
 import tdevm.app_ui.modules.nondinein.activities.NonDineActivity;
 import tdevm.app_ui.modules.nondinein.activities.NonDineRestaurantDetailsActivity;
+import tdevm.app_ui.modules.payment.PaymentActivity;
+import tdevm.app_ui.modules.payment.fragments.CheckoutFragment;
+import tdevm.app_ui.modules.payment.fragments.PaymentFragment;
 import tdevm.app_ui.root.BottomNavigationHome;
 import tdevm.app_ui.root.fragments.AccountsFragment;
 
@@ -43,4 +46,7 @@ public interface APIComponent {
     void inject(AccountsFragment fragment);
     void inject(DishReviewsSheetFragment fragment);
     void inject(RestaurantMenuEntryActivity activity);
+    void inject(CheckoutFragment fragment);
+    void inject(PaymentFragment fragment);
+    void inject(PaymentActivity activity);
 }

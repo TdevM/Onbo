@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_marginTop="15dp"
     android:orientation="vertical"
-    tools:context="tdevm.app_ui.modules.payment.PaymentsActivity">
+    tools:context="tdevm.app_ui.modules.payment.PaymentActivity">
 
     <FrameLayout
         android:id="@+id/frame_layout_payments"

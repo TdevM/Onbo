@@ -2,6 +2,7 @@ package tdevm.app_ui;
 
 import android.app.Application;
 
+import com.onesignal.OneSignal;
 import com.squareup.leakcanary.LeakCanary;
 
 import tdevm.app_ui.di.components.APIComponent;
@@ -19,6 +20,7 @@ public class AppApplication extends Application {
 
     ApplicationComponent applicationComponent;
     APIComponent apiComponent;
+
     @Override
     public void onCreate() {
         initializeApplicationComponent();
@@ -31,7 +33,13 @@ public class AppApplication extends Application {
         }
         LeakCanary.install(this);
 
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+
     }
+
     private void initializeApplicationComponent() {
         applicationComponent = DaggerApplicationComponent
                 .builder()
@@ -40,7 +48,8 @@ public class AppApplication extends Application {
                 .build();
 
     }
-    private void initializeAPIComponent(){
+
+    private void initializeAPIComponent() {
         apiComponent = DaggerAPIComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())
@@ -51,8 +60,8 @@ public class AppApplication extends Application {
         return apiComponent;
     }
 
-    public ApplicationComponent getApplicationComponent(){
-        return  applicationComponent;
+    public ApplicationComponent getApplicationComponent() {
+        return applicationComponent;
     }
 
     @Override
