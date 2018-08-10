@@ -13,7 +13,7 @@ public interface PaymentViewContract {
     }
 
     interface PaymentFragmentView extends BaseView {
-
+        void onClosedOrderFetched(FOrder fOrder);
     }
 
     interface PaymentActivityView extends BaseView {

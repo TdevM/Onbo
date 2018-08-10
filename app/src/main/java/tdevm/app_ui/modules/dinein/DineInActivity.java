@@ -16,7 +16,7 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.modules.payment.PaymentActivity;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
-import tdevm.app_ui.modules.dinein.fragments.HighestRatedItemsFragment;
+import tdevm.app_ui.modules.dinein.fragments.BellFragment;
 import tdevm.app_ui.modules.dinein.fragments.MergedOrderFragment;
 import tdevm.app_ui.root.BottomNavigationViewHelper;
 
@@ -42,8 +42,8 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
                     fragmentTransaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);
                     fragmentTransaction.commit();
                     return true;
-                case R.id.navigation_favourites:
-                    fragmentTransaction.replace(R.id.frame_layout_dine_in, new HighestRatedItemsFragment());
+                case R.id.navigation_bell_request:
+                    fragmentTransaction.replace(R.id.frame_layout_dine_in, new BellFragment());
                     fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_cart:

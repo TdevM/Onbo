@@ -12,6 +12,7 @@ public interface PaymentPresenterContract {
     }
 
     interface PaymentFragmentPresenterContract extends BasePresenterMVP<PaymentViewContract.PaymentFragmentView> {
+        void fetchClosedOrder(String tOrderId, String fOrderId);
         void attachView(PaymentViewContract.PaymentFragmentView view);
         void detachView();
     }

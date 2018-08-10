@@ -1,8 +1,10 @@
 package tdevm.app_ui.modules.payment.fragments;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,10 +94,17 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
     }
 
     private void closeRunningOrder() {
-        if (orderId != null) {
-            checkoutPresenter.closeRunningOrder(orderId);
-        }
-
+        new AlertDialog.Builder(paymentActivity)
+                .setTitle("Close Running Order")
+                .setMessage("Are you sure you want to close your running order?")
+                .setPositiveButton("Close", (dialog, which) -> {
+                    if (orderId != null) {
+                        checkoutPresenter.closeRunningOrder(orderId);
+                    }
+                    Log.d(TAG, "Sending close order");
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> Log.d(TAG, "Aborting close order..."))
+                .show();
     }
 
     @Override
@@ -118,7 +127,7 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
     @Override
     public void onOrderClosed(FOrder fOrder) {
         Toast.makeText(paymentActivity, "Order closed!", Toast.LENGTH_SHORT).show();
-        paymentActivity.showMakePayment();
+        paymentActivity.showMakePayment(fOrder);
     }
 
     @Override
@@ -128,6 +137,6 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
 
     @Override
     public void onMergedOrderFetched(FOrder fOrder) {
-        Log.d(TAG,fOrder.toString());
+        Log.d(TAG, fOrder.toString());
     }
 }

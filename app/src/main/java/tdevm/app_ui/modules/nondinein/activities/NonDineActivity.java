@@ -7,13 +7,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
-import tdevm.app_ui.modules.dinein.fragments.HighestRatedItemsFragment;
-import tdevm.app_ui.root.BottomNavigationViewHelper;
+import tdevm.app_ui.modules.dinein.fragments.BellFragment;
 
 public class NonDineActivity extends AppCompatActivity {
 
@@ -36,7 +34,7 @@ public class NonDineActivity extends AppCompatActivity {
                     fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_favourites_t2:
-                    fragmentTransaction.replace(R.id.frame_layout_non_dine_in, new HighestRatedItemsFragment());
+                    fragmentTransaction.replace(R.id.frame_layout_non_dine_in, new BellFragment());
                     fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_cart_t2:

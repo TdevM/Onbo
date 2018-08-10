@@ -77,22 +77,24 @@ public interface APIService {
     //Running Orders
     @POST("m/t/orders")
     Observable<Response<TOrder>> createNewTempOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
-    @GET("m/t/orders")
-    Observable<Response<TOrder>> fetchMyRunningOrder(@Header("x-auth") String token, @QueryMap Map<String, String> options);
     @POST("m/t/orders/kot")
     Observable<Response<TOrder>> addItemsToTempOrder(@Header("x-auth") String token, @Body RestaurantOrder restaurantOrder);
+    @GET("m/t/orders")
+    Observable<Response<TOrder>> fetchMyRunningOrder(@Header("x-auth") String token, @QueryMap Map<String, String> options);
     @GET("m/t/orders/merge")
     Observable<Response<MergedOrder>> fetchMergedOrder(@Header("x-auth") String token, @QueryMap Map<String, String> options);
     @POST("m/t/orders/close")
     Observable<Response<FOrder>> closeRunningOrder(@Header("x-auth") String token, @QueryMap Map<String, String> options);
     @POST("m/t/orders/pay")
     Observable<Response<FOrder>> payOrder(@Header("x-auth") String token, @QueryMap Map<String, String> options);
+    @GET("m/f/orders")
+    Observable<Response<FOrder>> fetchClosedOrder(@Header("x-auth") String token, @QueryMap Map<String, String> options);
+
 
 
     //Type2 Orders (Non Dine)
     @POST("m/orders/t2/unpaid")
     Observable<Response<Object>> createUnpaidNonDineOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
-
     @POST("m/orders/t2")
     Observable<Response<Object>> createPaidNonDineOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
 

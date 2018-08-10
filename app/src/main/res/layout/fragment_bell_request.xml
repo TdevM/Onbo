@@ -2,12 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tdevm.app_ui.modules.dinein.fragments.HighestRatedItemsFragment">
+    tools:context="tdevm.app_ui.modules.dinein.fragments.BellFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Highest Rated Items Fragment" />
+        android:text="Bell Request" />
 
 </FrameLayout>

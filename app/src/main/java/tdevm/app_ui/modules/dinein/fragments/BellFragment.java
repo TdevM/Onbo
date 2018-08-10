@@ -9,15 +9,15 @@ import android.view.ViewGroup;
 
 import tdevm.app_ui.R;
 
-public class HighestRatedItemsFragment extends Fragment {
+public class BellFragment extends Fragment {
 
 
-    public HighestRatedItemsFragment() {
+    public BellFragment() {
         // Required empty public constructor
     }
 
-    public static HighestRatedItemsFragment newInstance() {
-        return new HighestRatedItemsFragment();
+    public static BellFragment newInstance() {
+        return new BellFragment();
     }
 
 
@@ -25,7 +25,7 @@ public class HighestRatedItemsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_highest_rated_items, container, false);
+        return inflater.inflate(R.layout.fragment_bell_request, container, false);
     }
 
 }

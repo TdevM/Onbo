@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
 import tdevm.app_ui.modules.payment.fragments.CheckoutFragment;
 import tdevm.app_ui.modules.payment.fragments.PaymentFragment;
@@ -42,7 +43,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         try {
             Intent intent = getIntent();
             orderId = intent.getStringExtra("ORDER_ID");
-            Log.d(TAG,"ORDER_ID_RECEIVED: "+ orderId);
+            Log.d(TAG, "ORDER_ID_RECEIVED: " + orderId);
             showCheckout(orderId);
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,24 +71,22 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         CheckoutFragment fragment = new CheckoutFragment();
         Bundle bundle = new Bundle();
-        if(orderId!=null){
-            bundle.putString("ORDER_ID",orderId);
+        if (orderId != null) {
+            bundle.putString("ORDER_ID", orderId);
             fragment.setArguments(bundle);
             transaction.replace(R.id.frame_layout_payments, fragment);
             transaction.commit();
         }
     }
 
-    public void showMakePayment() {
+    public void showMakePayment(FOrder fOrder) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         PaymentFragment fragment = new PaymentFragment();
         Bundle bundle = new Bundle();
-        if(orderId!=null){
-            bundle.putString("ORDER_ID",orderId);
-            transaction.replace(R.id.frame_layout_payments, fragment);
-            transaction.commit();
-        }
-
+        bundle.putString("F_ORDER_ID", fOrder.getOrder_id());
+        bundle.putString("ORDER_ID", fOrder.getT_order_id());
+        transaction.replace(R.id.frame_layout_payments, fragment);
+        transaction.commit();
     }
 
     @Override

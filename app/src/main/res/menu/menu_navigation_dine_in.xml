@@ -3,21 +3,21 @@
 
     <item
         android:id="@+id/navigation_dine_in_menu"
-        android:icon="@drawable/menu"
+        android:icon="@drawable/ic_local_dining_black_24dp"
         android:title="@string/title_menu" />
 
     <item
-        android:id="@+id/navigation_favourites"
-        android:icon="@drawable/fav"
-        android:title="@string/title_favourites" />
-
-    <item
         android:id="@+id/navigation_cart"
-        android:icon="@drawable/cart_1"
+        android:icon="@drawable/ic_add_shopping_cart_black_24dp"
         android:title="@string/title_cart" />
 
     <item
         android:id="@+id/navigation_running_order"
-        android:icon="@drawable/running_order"
+        android:icon="@drawable/ic_receipt_black_24dp"
         android:title="@string/title_running_order" />
+
+    <item
+        android:id="@+id/navigation_bell_request"
+        android:icon="@drawable/ic_add_alert_black_24dp"
+        android:title="@string/create_bell_request" />
 </menu>

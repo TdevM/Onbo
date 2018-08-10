@@ -12,6 +12,7 @@
     <string name="title_cart">Cart</string>
     <string name="title_favourites">Favourites</string>
     <string name="title_running_order">Running</string>
+    <string name="create_bell_request">Bell</string>
     <string name="please_wait_for_otp_complete">Please wait while we verify your number.</string>
     <string name="didnt_got_otp">Did\'nt got the code?</string>
     <string name="choose_an_option">Choose a dish variation.</string>
