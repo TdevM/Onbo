@@ -23,7 +23,7 @@ public interface CartItemDao {
     List<CartItem> getCartItems();
 
     @Query("SELECT * FROM cart_items WHERE item_hash = :itemHash")
-    Single<CartItem> getCartItemByHash(String itemHash);
+    CartItem getCartItemByHash(String itemHash);
 
     @Insert
     void addItemToCart(CartItem cartItem);

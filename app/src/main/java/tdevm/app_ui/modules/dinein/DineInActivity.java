@@ -7,12 +7,14 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import javax.inject.Inject;
 
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.modules.dinein.fragments.RunningOrderEmptyFragment;
 import tdevm.app_ui.modules.payment.PaymentActivity;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
@@ -29,7 +31,7 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
     DineInActivityPresenter presenter;
 
     FragmentTransaction fragmentTransaction;
-    //Toolbar toolbarDineIn;
+    Toolbar toolbarDineIn;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -71,17 +73,17 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dine_in_home);
         resolveDaggerDependencies();
-//        Toolbar toolbar = findViewById(R.id.toolbar_dine_in_activity);
-//        toolbar.setTitle(R.string.rest_name);
-//        setSupportActionBar(toolbar);
-//        if (getSupportActionBar() != null) {
-//            getSupportActionBar().setTitle("Dine in");
-//        }
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         DishMenuFragment dishMenuFragment = new DishMenuFragment();
         transaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);
         transaction.commit();
+
+        Toolbar toolbar = findViewById(R.id.toolbar_dine_in_activity);
+        toolbar.setTitle(R.string.rest_name);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Dine in");
+        }
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
@@ -98,6 +100,13 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         CartFragment cartFragment = new CartFragment();
         transaction.replace(R.id.frame_layout_dine_in, cartFragment);
+        transaction.commit();
+    }
+
+    public void showEmptyRunningOrderFragment(){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        RunningOrderEmptyFragment emptyFragment = new RunningOrderEmptyFragment();
+        transaction.replace(R.id.frame_layout_dine_in, emptyFragment);
         transaction.commit();
     }
 

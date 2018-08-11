@@ -266,6 +266,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     @Override
     public void redirectDineInActivity() {
         Intent intent = new Intent(RestaurantMenuEntryActivity.this, DineInActivity.class);
+        //intent.putExtra()
         startActivity(intent);
         finish();
     }

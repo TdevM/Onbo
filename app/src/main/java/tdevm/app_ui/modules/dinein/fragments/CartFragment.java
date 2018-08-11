@@ -86,7 +86,6 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
             nonDineActivity = (NonDineActivity) getActivity();
         }
         View view;
-        view = inflater.inflate(R.layout.fragment_cart_empty, container, false);
         if (cartFragmentPresenter.cartItemsExists()) {
             view = inflater.inflate(R.layout.fragment_cart, container, false);
             unbinder = ButterKnife.bind(this, view);
@@ -99,7 +98,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
             updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
             Log.d(TAG, String.valueOf(cartHelper.getCartTotalItems()));
         } else {
-
+            view = inflater.inflate(R.layout.fragment_cart_empty, container, false);
         }
         return view;
 

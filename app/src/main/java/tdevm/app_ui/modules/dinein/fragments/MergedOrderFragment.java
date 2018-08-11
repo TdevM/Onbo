@@ -10,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -41,8 +44,7 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     public static final String TAG = MergedOrderFragment.class.getCanonicalName();
 
 
-    @BindView(R.id.frame_layout_order_empty)
-    FrameLayout frameLayout;
+
     Unbinder unbinder;
     @BindView(R.id.rv_merged_order)
     RecyclerView recyclerViewTempOrder;
@@ -58,6 +60,13 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     TextView total;
     @BindView(R.id.tv_merged_order_date)
     TextView tvDate;
+
+    @BindView(R.id.shimmer_fragment_running_order)
+    ShimmerFrameLayout shimmerFrameLayout;
+
+    @BindView(R.id.scroll_view_fragment_running_order)
+    ScrollView scrollView;
+
     MergedOrderAdapter mergedOrderAdapter;
     @Inject
     MergedOrderPresenter presenter;
@@ -103,12 +112,14 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
 
     @Override
     public void showProgressUI() {
-
+        shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void hideProgressUI() {
-
+        shimmerFrameLayout.stopShimmer();
+        shimmerFrameLayout.setVisibility(View.GONE);
+        scrollView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -129,14 +140,8 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
         fetchedOrder = mergedOrder;
         Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
         Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
-
         tableNo.setText("Table no: " + String.valueOf(mergedOrder.getRestaurantTable().getTable_number()));
         tempOrderId.setText("Order ID: " + mergedOrder.getOrderId());
-//        Timestamp timestamp = new Timestamp(Long.parseLong(mergedOrder.getTimestamp()));
-//        Date date = new Date(timestamp.getTime());
-//        Log.d("Date",date.toString());
-//        SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss a", Locale.UK);
-
         tvDate.setText(mergedOrder.getTimestamp());
         subTotal.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getSubtotal()) * 0.01));
         taxes.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getTaxes()) * 0.01));
@@ -145,7 +150,7 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
 
     @Override
     public void showNoRunningOrder() {
-        frameLayout.setVisibility(View.VISIBLE);
+        dineInActivity.showEmptyRunningOrderFragment();
     }
 
     public void startPaymentActivity() {
