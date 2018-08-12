@@ -4,6 +4,7 @@ import android.location.Location;
 import android.util.Log;
 
 import com.google.android.gms.location.LocationResult;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +21,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
+import tdevm.app_ui.api.models.QRObjectRestaurant;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.RestaurantTable;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.utils.AuthUtils;
@@ -69,48 +72,72 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
 
     @Override
     public void handleQRContent(String qrContent) {
-        try {
-            JSONObject object = new JSONObject(qrContent);
-            String restaurantUUID = object.getString("uuid");
-            String restaurantID = object.getString("restaurant_id");
-            String tableNo;
-            try {
-                tableNo = object.getString("table_no");
-                if (tableNo != null && restaurantUUID != null) {
-                    //T1
-                    String tableShortId = restaurantUUID + '_' + tableNo;
-                    authUtils.saveDineQRTransaction(restaurantID, restaurantUUID, tableShortId, MODE_DINE_IN);
-                    Log.d(TAG, "Saved Restaurant" + authUtils.getScannedRestaurantUuid());
-                    Log.d(TAG, "Saved Table" + authUtils.getScannedRestaurantTableShortId());
-                    Log.d(TAG, "Restaurant Mode" + authUtils.getRestaurantMode());
-                    verifyRestaurantTableVacant(tableShortId, restaurantUUID);
-                    clearExistingCart();
-                }
-            } catch (JSONException e) {
-                //T2
-                if (restaurantUUID != null) {
-                    authUtils.saveNonDineQRTransaction(restaurantID, restaurantUUID, MODE_NON_DINE);
-                    Log.d(TAG, "Saved Restaurant" + authUtils.getScannedRestaurantUuid());
-                    Log.d(TAG, "Restaurant Mode" + authUtils.getRestaurantMode());
-                    Log.d(TAG, "Type 2 valid");
-                    clearExistingCart();
-                    //Calculate distance.
-                    //THEN
-                    view.redirectNonDineActivity();
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.d(TAG, "Malformed QR content");
+        Gson gson = new Gson();
+        QRObjectRestaurant object = gson.fromJson(qrContent, QRObjectRestaurant.class);
+        if (object.getData().getMode() == 1) {
+            verifyRestaurantTableVacant(object);
+        } else if ((object.getData().getMode()) == 2) {
+            fetchRestaurantDetails(object);
         }
     }
 
+    public void fetchRestaurantDetails(QRObjectRestaurant qrObjectRestaurant) {
+        Map<String, String> map = new HashMap<>();
+        map.put("restaurant_uuid", qrObjectRestaurant.getUuid());
+        Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map, authUtils.getAuthLoginToken());
+        subscribe(observable, new Observer<Response<Restaurant>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(Response<Restaurant> restaurantResponse) {
+                if (restaurantResponse.isSuccessful()) {
+                    if (restaurantResponse.body() != null) {
+                        onNonDineQRVerificationSuccess(qrObjectRestaurant, restaurantResponse.body());
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+
+    public void onDineQRVerificationSuccess(QRObjectRestaurant qrObjectRestaurant, Restaurant restaurant, RestaurantTable table) {
+        String tableShortId = restaurant.getRestaurant_uuid() + "_" + table.getTable_number();
+        authUtils.saveDineQRTransaction(restaurant.getRestaurant_id(), restaurant.getRestaurant_uuid(), table.getRestaurant_table_id(), tableShortId, MODE_DINE_IN);
+        Log.d(TAG, "Saved Restaurant" + authUtils.getScannedRestaurantUuid());
+        Log.d(TAG, "Saved Table" + authUtils.getScannedRestaurantTableShortId());
+        Log.d(TAG, "Restaurant Mode" + authUtils.getRestaurantMode());
+        clearExistingCart();
+        view.redirectDineInActivity();
+    }
+
+
+    public void onNonDineQRVerificationSuccess(QRObjectRestaurant qrObjectRestaurant, Restaurant restaurant) {
+        authUtils.saveNonDineQRTransaction(restaurant.getRestaurant_id(), restaurant.getRestaurant_uuid(), MODE_NON_DINE);
+        Log.d(TAG, "Saved Restaurant" + authUtils.getScannedRestaurantUuid());
+        Log.d(TAG, "Restaurant Mode" + authUtils.getRestaurantMode());
+        Log.d(TAG, "Type 2 valid");
+        clearExistingCart();
+        view.redirectNonDineActivity();
+    }
 
     @Override
-    public void verifyRestaurantTableVacant(String tableShortId, String restaurantUUID) {
+    public void verifyRestaurantTableVacant(QRObjectRestaurant qrObjectRestaurant) {
         Map<String, String> getRestData = new HashMap<>();
-        getRestData.put("short_id", tableShortId);
-        getRestData.put("restaurant_uuid", restaurantUUID);
+        getRestData.put("short_id", qrObjectRestaurant.getUuid() + "_" + qrObjectRestaurant.getData().getTable());
+        getRestData.put("restaurant_uuid", qrObjectRestaurant.getUuid());
         Observable<Response<RestaurantTable>> observable = apiService.verifyTableVacancy(authUtils.getAuthLoginToken(), getRestData);
         subscribe(observable, new Observer<Response<RestaurantTable>>() {
             @Override
@@ -123,13 +150,10 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
                 if (restaurantTableResponse.code() == 200) {
                     if (restaurantTableResponse.body() != null) {
                         Log.d(TAG, restaurantTableResponse.body().getRestaurant_table_id());
-                        authUtils.saveFetchedRestaurantTableId(restaurantTableResponse.body().getRestaurant_table_id());
+                        fetchRestaurantDetailsTable(qrObjectRestaurant, restaurantTableResponse.body());
                     }
-                    //Calculate distance.
-                    //THEN
-                    view.redirectDineInActivity();
                 } else if (restaurantTableResponse.code() == 400) {
-                    //Log.d(TAG, restaurantTableResponse.body().toString());
+                    Log.d(TAG, restaurantTableResponse.body().toString());
                     view.showTableOccupiedError();
                 }
             }
@@ -144,6 +168,38 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
 
             }
         });
+    }
+
+    private void fetchRestaurantDetailsTable(QRObjectRestaurant qrObjectRestaurant, RestaurantTable restaurantTable) {
+        Map<String, String> map = new HashMap<>();
+        map.put("restaurant_uuid", qrObjectRestaurant.getUuid());
+        Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map, authUtils.getAuthLoginToken());
+        subscribe(observable, new Observer<Response<Restaurant>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(Response<Restaurant> restaurantResponse) {
+                if (restaurantResponse.isSuccessful()) {
+                    if (restaurantResponse.body() != null) {
+                        onDineQRVerificationSuccess(qrObjectRestaurant, restaurantResponse.body(), restaurantTable);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
     }
 
 

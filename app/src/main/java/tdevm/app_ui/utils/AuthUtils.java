@@ -11,11 +11,10 @@ public class AuthUtils {
     private static final String AUTH_LOGIN_TOKEN = "AUTH_LOGIN_TOKEN";
     private static final String AUTH_LOGIN_PHONE = "AUTH_LOGIN_PHONE";
 
-    private static final String SCANNED_RESTAURANT_UUID = "SCANNED_RESTAURANT_UUID";
-    private static final String SCANNED_RESTAURANT_ID = "SCANNED_RESTAURANT_ID";
-    private static final String SCANNED_RESTAURANT_TABLE_NO = "SCANNED_RESTAURANT_TABLE_NO";
+    private static final String FETCHED_RESTAURANT_UUID = "FETCHED_RESTAURANT_UUID";
+    private static final String FETCHED_RESTAURANT_ID = "FETCHED_RESTAURANT_ID";
+    private static final String FETCHED_RESTAURANT_TABLE_NO = "FETCHED_RESTAURANT_TABLE_NO";
     private static final String RESTAURANT_MODE = "RESTAURANT_MODE";
-
     private static final String FETCHED_RESTAURANT_TABLE_ID = "FETCHED_RESTAURANT_TABLE_ID";
 
     private MySharedPreferences sharedPreferences;
@@ -32,29 +31,28 @@ public class AuthUtils {
 
     public void saveNonDineQRTransaction(String restaurantID, String uuid, String restaurantMode) {
         clearQRTransaction();
-        sharedPreferences.putDataString(SCANNED_RESTAURANT_UUID, uuid);
+        sharedPreferences.putDataString(FETCHED_RESTAURANT_UUID, uuid);
         sharedPreferences.putDataString(RESTAURANT_MODE, restaurantMode);
-        sharedPreferences.putDataString(SCANNED_RESTAURANT_ID, restaurantID);
-        sharedPreferences.putDataString(SCANNED_RESTAURANT_TABLE_NO, "0");
+        sharedPreferences.putDataString(FETCHED_RESTAURANT_ID, restaurantID);
+        sharedPreferences.putDataString(FETCHED_RESTAURANT_TABLE_NO, "0");
     }
 
-    public void saveFetchedRestaurantTableId(String tableId) {
-        sharedPreferences.putDataString(FETCHED_RESTAURANT_TABLE_ID, tableId);
-    }
 
-    public void saveDineQRTransaction(String restaurantID, String uuid, String tableShortID, String restaurantMode) {
+    public void saveDineQRTransaction(String restaurantID, String uuid, String tableId, String tableShortID, String restaurantMode) {
         clearQRTransaction();
-        sharedPreferences.putDataString(SCANNED_RESTAURANT_UUID, uuid);
-        sharedPreferences.putDataString(SCANNED_RESTAURANT_ID, restaurantID);
-        sharedPreferences.putDataString(SCANNED_RESTAURANT_TABLE_NO, tableShortID);
+        sharedPreferences.putDataString(FETCHED_RESTAURANT_UUID, uuid);
+        sharedPreferences.putDataString(FETCHED_RESTAURANT_ID, restaurantID);
+        sharedPreferences.putDataString(FETCHED_RESTAURANT_TABLE_ID, tableId);
+        sharedPreferences.putDataString(FETCHED_RESTAURANT_TABLE_NO, tableShortID);
         sharedPreferences.putDataString(RESTAURANT_MODE, restaurantMode);
     }
 
     public void clearQRTransaction() {
-        sharedPreferences.remove(SCANNED_RESTAURANT_UUID);
+        sharedPreferences.remove(FETCHED_RESTAURANT_UUID);
+        sharedPreferences.remove(FETCHED_RESTAURANT_ID);
+        sharedPreferences.remove(FETCHED_RESTAURANT_TABLE_NO);
+        sharedPreferences.remove(FETCHED_RESTAURANT_TABLE_ID);
         sharedPreferences.remove(RESTAURANT_MODE);
-        sharedPreferences.remove(SCANNED_RESTAURANT_TABLE_NO);
-        sharedPreferences.remove(SCANNED_RESTAURANT_ID);
 
     }
 
@@ -71,11 +69,11 @@ public class AuthUtils {
     }
 
     public String getScannedRestaurantUuid() {
-        return sharedPreferences.getDataString(SCANNED_RESTAURANT_UUID);
+        return sharedPreferences.getDataString(FETCHED_RESTAURANT_UUID);
     }
 
     public String getScannedRestaurantId() {
-        return sharedPreferences.getDataString(SCANNED_RESTAURANT_ID);
+        return sharedPreferences.getDataString(FETCHED_RESTAURANT_ID);
     }
 
     public String getRestaurantMode() {
@@ -83,7 +81,7 @@ public class AuthUtils {
     }
 
     public String getScannedRestaurantTableShortId() {
-        return sharedPreferences.getDataString(SCANNED_RESTAURANT_TABLE_NO);
+        return sharedPreferences.getDataString(FETCHED_RESTAURANT_TABLE_NO);
     }
 
     public String getFetchedRestaurantTableId() {
