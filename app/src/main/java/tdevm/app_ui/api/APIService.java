@@ -3,6 +3,7 @@ package tdevm.app_ui.api;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -53,6 +54,10 @@ public interface APIService {
     //Restaurant Data
     @GET("m/restaurant")
     Observable<Response<Restaurant>> fetchRestaurantDetails(@QueryMap Map<String, String> query, @Header("x-auth") String authToken);
+
+    @GET("m/restaurant")
+    Observable<Response<List<Restaurant>>> fetchAllRestaurants(@QueryMap Map<String, String> query, @Header("x-auth") String authToken);
+
     @GET("m/restaurant/table_status")
     Observable<Response<RestaurantTable>> verifyTableVacancy(@Header("x-auth") String authToken, @QueryMap Map<String, String> query);
     @GET("m/cuisines")

@@ -22,6 +22,7 @@ import tdevm.app_ui.modules.payment.fragments.CheckoutFragment;
 import tdevm.app_ui.modules.payment.fragments.PaymentFragment;
 import tdevm.app_ui.root.BottomNavigationHome;
 import tdevm.app_ui.root.fragments.AccountsFragment;
+import tdevm.app_ui.root.fragments.RestaurantListFragment;
 
 /**
  * Created by Tridev on 04-10-2017.
@@ -49,4 +50,5 @@ public interface APIComponent {
     void inject(CheckoutFragment fragment);
     void inject(PaymentFragment fragment);
     void inject(PaymentActivity activity);
+    void inject(RestaurantListFragment fragment);
 }

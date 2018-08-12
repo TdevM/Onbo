@@ -19,7 +19,12 @@ public interface NavigationHomePresenterContract {
         void detachView();
         void attachView(NavigationHomeViewContract.AccountsFragmentView view);
         void fetchUser();
-
         void logOutUser();
+    }
+
+    interface RestaurantListFragmentPresenter extends BasePresenterMVP<NavigationHomeViewContract.RestaurantsListView>{
+        void fetchRestaurants(String cityId);
+        void detachView();
+        void attachView(NavigationHomeViewContract.RestaurantsListView view);
     }
 }

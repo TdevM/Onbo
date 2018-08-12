@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".root.fragments.RestaurantListFragment">
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_fragment_restaurant_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shimmer_clip_to_children="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/running_order_empty_placeholder" />
+
+            <include layout="@layout/running_order_empty_placeholder" />
+
+            <include layout="@layout/running_order_empty_placeholder" />
+
+            <include layout="@layout/running_order_empty_placeholder" />
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_restaurant_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true">
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

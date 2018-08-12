@@ -1,6 +1,9 @@
 package tdevm.app_ui.root;
 
+import java.util.List;
+
 import tdevm.app_ui.api.models.response.UserApp;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.base.BaseView;
 
 /**
@@ -9,17 +12,23 @@ import tdevm.app_ui.base.BaseView;
 
 public interface NavigationHomeViewContract {
 
-    interface BottomNavigationView extends BaseView{
+    interface BottomNavigationView extends BaseView {
         void showUserProfile();
         void redirectAuthActivity();
         void redirectEntryActivity();
     }
 
-    interface AccountsFragmentView extends BaseView{
+    interface AccountsFragmentView extends BaseView {
         void onUserFetched(UserApp userApp);
         void showProgressUI();
         void hideProgressUI();
         void resolveDaggerDependencies();
         void onLoggedOut();
+    }
+
+    interface RestaurantsListView extends BaseView {
+        void onRestaurantsFetched(List<Restaurant> restaurantList);
+        void onRestaurantsFetchFailure();
+
     }
 }

@@ -16,7 +16,7 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
 import tdevm.app_ui.root.fragments.AccountsFragment;
-import tdevm.app_ui.root.fragments.HomeFragment;
+import tdevm.app_ui.root.fragments.RestaurantListFragment;
 
 public class BottomNavigationHome extends AppCompatActivity implements NavigationHomeViewContract.BottomNavigationView {
 
@@ -34,7 +34,7 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
             fragmentTransaction = getSupportFragmentManager().beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    fragmentTransaction.replace(R.id.frame_layout, new HomeFragment());
+                    fragmentTransaction.replace(R.id.frame_layout, new RestaurantListFragment());
                     fragmentTransaction.commit();
                     break;
 //                case R.id.navigation_booking:
@@ -74,7 +74,7 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
         BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
+        transaction.replace(R.id.frame_layout, RestaurantListFragment.newInstance());
         transaction.commit();
 
     }

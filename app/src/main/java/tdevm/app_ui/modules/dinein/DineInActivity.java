@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import javax.inject.Inject;
@@ -80,6 +81,7 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
 
         Toolbar toolbar = findViewById(R.id.toolbar_dine_in_activity);
         toolbar.setTitle(R.string.rest_name);
+        toolbar.inflateMenu(R.menu.menu_dine_in_main);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Dine in");
@@ -94,6 +96,18 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
     @Override
     public void showProgressUI() {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_dine_in_main,menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     public void showCartEmptyFragment(){
