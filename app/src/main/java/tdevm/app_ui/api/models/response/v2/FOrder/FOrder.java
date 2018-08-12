@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import org.json.JSONObject;
 
 import tdevm.app_ui.api.models.request.User;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.RestaurantTable;
 
 public class FOrder implements Parcelable{
@@ -21,6 +22,10 @@ public class FOrder implements Parcelable{
     private JSONObject txn_data;
 
     private String order_id;
+
+    private String restaurant_id;
+
+    private Restaurant restaurant;
 
     private String timestamp;
 
@@ -38,9 +43,15 @@ public class FOrder implements Parcelable{
 
     private String completed;
 
-    private String status;
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
 
-    private String restaurant_id;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    private String status;
 
     private String table_id;
 

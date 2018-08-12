@@ -1,11 +1,14 @@
 package tdevm.app_ui.api.models.response.v2;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Tridev on 19-08-2017.
  */
 
-public class Restaurant {
+public class Restaurant implements Parcelable {
     private String restaurant_id;
     private Boolean does_bookings;
     private Location location;
@@ -22,7 +25,58 @@ public class Restaurant {
     private String closes_at;
     private RestaurantType restaurant_type;
 
-    public class RestaurantType{
+    protected Restaurant(Parcel in) {
+        restaurant_id = in.readString();
+        byte tmpDoes_bookings = in.readByte();
+        does_bookings = tmpDoes_bookings == 0 ? null : tmpDoes_bookings == 1;
+        avg_cost_for_two = in.readInt();
+        image = in.readString();
+        restaurant_name = in.readString();
+        restaurant_uuid = in.readString();
+        type_id = in.readInt();
+        table_count = in.readInt();
+        currency = in.readString();
+        location_id = in.readInt();
+        restaurant_mode = in.readString();
+        opens_at = in.readString();
+        closes_at = in.readString();
+    }
+
+    public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(Parcel in) {
+            return new Restaurant(in);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(restaurant_id);
+        dest.writeByte((byte) (does_bookings == null ? 0 : does_bookings ? 1 : 2));
+        dest.writeInt(avg_cost_for_two);
+        dest.writeString(image);
+        dest.writeString(restaurant_name);
+        dest.writeString(restaurant_uuid);
+        dest.writeInt(type_id);
+        dest.writeInt(table_count);
+        dest.writeString(currency);
+        dest.writeInt(location_id);
+        dest.writeString(restaurant_mode);
+        dest.writeString(opens_at);
+        dest.writeString(closes_at);
+    }
+
+    public class RestaurantType {
         private String type_id;
         private String type_name;
 

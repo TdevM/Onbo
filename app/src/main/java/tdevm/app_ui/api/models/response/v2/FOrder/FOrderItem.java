@@ -14,7 +14,7 @@ public class FOrderItem {
 
     private FOrderAddOn[] f_order_addons;
 
-    private String[] f_order_v_extras;
+    private FOrderVExtra[] f_order_v_extras;
 
     private String tax_total;
 
@@ -84,11 +84,11 @@ public class FOrderItem {
         this.f_order_addons = f_order_addons;
     }
 
-    public String[] getF_order_v_extras() {
+    public FOrderVExtra[] getF_order_v_extras() {
         return f_order_v_extras;
     }
 
-    public void setF_order_v_extras(String[] f_order_v_extras) {
+    public void setF_order_v_extras(FOrderVExtra[] f_order_v_extras) {
         this.f_order_v_extras = f_order_v_extras;
     }
 

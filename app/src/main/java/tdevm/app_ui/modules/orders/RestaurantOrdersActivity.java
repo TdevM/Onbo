@@ -1,37 +1,46 @@
 package tdevm.app_ui.modules.orders;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.modules.orders.fragments.MyOrdersFragment;
 
-public class RestaurantOrdersActivity extends AppCompatActivity {
+public class RestaurantOrdersActivity extends AppCompatActivity implements RestaurantOrdersViewContract.RestaurantOrdersActivityView {
 
 
-    private OrdersPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
+    @BindView(R.id.toolbar_orders_activity)
+    Toolbar toolbar;
+
+
+    @Inject
+    RestaurantOrderActivityPresenter presenter;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.attachView(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        resolveDaggerDependencies();
         setContentView(R.layout.activity_restaurant_orders);
-
-        Toolbar toolbar = findViewById(R.id.toolbar_orders_activity);
+        ButterKnife.bind(this);
         toolbar.setTitle(R.string.my_orders);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         setSupportActionBar(toolbar);
-        mSectionsPagerAdapter = new OrdersPagerAdapter(getSupportFragmentManager());
-        mViewPager = findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        TabLayout tabLayout = findViewById(R.id.tabs);
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        showMyOrdersFragment();
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
@@ -53,4 +62,31 @@ public class RestaurantOrdersActivity extends AppCompatActivity {
     }
 
 
+    public void showMyOrdersFragment() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        MyOrdersFragment fragment = new MyOrdersFragment();
+        fragmentTransaction.replace(R.id.frame_layout_my_orders, fragment);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void showProgressUI() {
+
+    }
+
+    @Override
+    public void hideProgressUI() {
+
+    }
+
+    @Override
+    public void resolveDaggerDependencies() {
+        ((AppApplication) getApplication()).getApiComponent().inject(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
+    }
 }

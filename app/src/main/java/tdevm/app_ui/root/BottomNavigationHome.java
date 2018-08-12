@@ -13,8 +13,10 @@ import javax.inject.Inject;
 
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
+import tdevm.app_ui.root.activities.RestaurantDetailActivity;
 import tdevm.app_ui.root.fragments.AccountsFragment;
 import tdevm.app_ui.root.fragments.RestaurantListFragment;
 
@@ -84,6 +86,13 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
 
     }
 
+
+    @Override
+    public void showRestaurantDetailsActivity(Restaurant restaurant){
+        Intent intent = new Intent(this, RestaurantDetailActivity.class);
+        intent.putExtra("RESTAURANT",restaurant);
+        startActivity(intent);
+    }
 
     @Override
     protected void onResume() {

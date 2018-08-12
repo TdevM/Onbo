@@ -54,10 +54,8 @@ public interface APIService {
     //Restaurant Data
     @GET("m/restaurant")
     Observable<Response<Restaurant>> fetchRestaurantDetails(@QueryMap Map<String, String> query, @Header("x-auth") String authToken);
-
     @GET("m/restaurant")
     Observable<Response<List<Restaurant>>> fetchAllRestaurants(@QueryMap Map<String, String> query, @Header("x-auth") String authToken);
-
     @GET("m/restaurant/table_status")
     Observable<Response<RestaurantTable>> verifyTableVacancy(@Header("x-auth") String authToken, @QueryMap Map<String, String> query);
     @GET("m/cuisines")
@@ -94,6 +92,10 @@ public interface APIService {
     Observable<Response<FOrder>> payOrder(@Header("x-auth") String token, @QueryMap Map<String, String> options);
     @GET("m/f/orders")
     Observable<Response<FOrder>> fetchClosedOrder(@Header("x-auth") String token, @QueryMap Map<String, String> options);
+
+    //My Orders
+    @GET("m/orders")
+    Observable<Response<List<FOrder>>> fetchMyOrders(@Header("x-auth") String token);
 
 
 

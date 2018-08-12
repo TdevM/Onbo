@@ -14,13 +14,16 @@ import android.widget.Toast;
 
 public class SMSListener extends BroadcastReceiver {
 
+    public static final String TAG = SMSListener.class.getSimpleName();
     private static SMSReceived smsReceived;
+
     public static void setOnSMSReceivedListener(SMSReceived smsReceivedListener){
         smsReceived = smsReceivedListener;
     }
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("Message DishReviewsSheetListener","lo");
+        Log.d(TAG,"lo");
         if(intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")){
             Bundle bundle = intent.getExtras();           //---get the SMS message passed in---
             SmsMessage[] msgs = null;

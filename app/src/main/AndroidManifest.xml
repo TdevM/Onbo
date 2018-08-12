@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="tdevm.app_ui">
 
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="27"
+        tools:overrideLibrary="com.razorpay" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -15,11 +20,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="27"
-        tools:overrideLibrary="com.razorpay" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".AppApplication"
@@ -63,24 +65,36 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".modules.nondinein.activities.NonDineRestaurantDetailsActivity" />
+        <activity
+            android:name=".modules.nondinein.activities.NonDineRestaurantDetailsActivity"
+            android:screenOrientation="portrait"></activity>
+
         <activity
             android:name=".modules.nondinein.activities.NonDineActivity"
-            android:label="@string/title_activity_non_dine" />
+            android:label="@string/title_activity_non_dine"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".modules.orders.RestaurantOrdersActivity"
             android:label="@string/title_activity_restaurant_orders"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".modules.payment.PaymentActivity" />
-        <activity android:name=".modules.entry.RestaurantMenuEntryActivity">
-
-        </activity>
-        <activity android:name=".modules.entry.SimpleScannerActivity" />
+        <activity
+            android:name=".modules.payment.PaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.entry.RestaurantMenuEntryActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".modules.entry.SimpleScannerActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.razorpay.ApiKey"
             android:value="rzp_live_Urey27vmU2QSYM" />
+
+        <activity
+            android:name=".root.activities.RestaurantDetailActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

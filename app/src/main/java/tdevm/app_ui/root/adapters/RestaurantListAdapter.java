@@ -2,6 +2,7 @@ package tdevm.app_ui.root.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +19,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
+import tdevm.app_ui.root.callbacks.RestaurantItemClickListener;
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantListViewHolder> {
 
-
     private List<Restaurant> restaurants;
     private Context context;
+    private RestaurantItemClickListener listener;
 
 
     public RestaurantListAdapter(Context context) {
         this.context = context;
         restaurants = new ArrayList<>();
+    }
+
+
+    public void setRestaurantItemClickedListener(RestaurantItemClickListener clickedListener) {
+        this.listener = clickedListener;
     }
 
     @NonNull
@@ -48,7 +55,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     @Override
     public void onBindViewHolder(@NonNull RestaurantListViewHolder holder, int position) {
         Glide.with(context).load(restaurants.get(position).getImage()).into(holder.restaurantImageView);
-       holder.restaurantName.setText(restaurants.get(position).getRestaurant_name());
+        holder.restaurantName.setText(restaurants.get(position).getRestaurant_name());
+        holder.bind(restaurants.get(position), listener);
     }
 
     @Override
@@ -58,6 +66,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     public class RestaurantListViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.card_view_restaurant_list_item)
+        CardView cardView;
         @BindView(R.id.tv_restaurant_name)
         TextView restaurantName;
         @BindView(R.id.iv_restaurant_image)
@@ -66,6 +76,13 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         public RestaurantListViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        public void bind(final Restaurant restaurant, final RestaurantItemClickListener clickListener) {
+            cardView.setOnClickListener(v -> {
+                clickListener.onRestaurantItemClicked(restaurant);
+            });
+
         }
     }
 }
