@@ -74,10 +74,14 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     public void handleQRContent(String qrContent) {
         Gson gson = new Gson();
         QRObjectRestaurant object = gson.fromJson(qrContent, QRObjectRestaurant.class);
-        if (object.getData().getMode() == 1) {
-            verifyRestaurantTableVacant(object);
-        } else if ((object.getData().getMode()) == 2) {
-            fetchRestaurantDetails(object);
+        if (object.getData() != null) {
+            if (object.getData().getMode() == 1) {
+                verifyRestaurantTableVacant(object);
+            } else if ((object.getData().getMode()) == 2) {
+                fetchRestaurantDetails(object);
+            }
+        }else {
+            view.showMalformedQRCode();
         }
     }
 
@@ -153,7 +157,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
                         fetchRestaurantDetailsTable(qrObjectRestaurant, restaurantTableResponse.body());
                     }
                 } else if (restaurantTableResponse.code() == 400) {
-                    Log.d(TAG, restaurantTableResponse.body().toString());
+                    //Log.d(TAG, restaurantTableResponse.body().toString());
                     view.showTableOccupiedError();
                 }
             }

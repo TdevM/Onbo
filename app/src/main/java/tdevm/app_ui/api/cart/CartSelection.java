@@ -10,7 +10,7 @@ import android.arch.persistence.room.PrimaryKey;
  * Created by Tridev on 01-01-2018.
  */
 @Entity(tableName = "cart_selections")
-public class CartSelection  {
+public class CartSelection {
 
     @PrimaryKey
     private Long selectionItemId;
@@ -18,7 +18,7 @@ public class CartSelection  {
     private int qty;
 
 
-    public CartSelection(){
+    public CartSelection() {
 
     }
 

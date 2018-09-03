@@ -28,9 +28,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_notifications_black_24dp" />
-                            <entry key="sourceFile" value="C:\Users\Tridev\Desktop\profile-pic-male_2fd3e8.svg" />
+                            <entry key="outputName" value="ic_chef" />
+                            <entry key="sourceFile" value="C:\Users\Tridev\Downloads\chef.svg" />
                           </map>
                         </option>
                       </PersistentState>

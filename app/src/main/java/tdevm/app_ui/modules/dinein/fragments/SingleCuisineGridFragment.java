@@ -3,6 +3,7 @@ package tdevm.app_ui.modules.dinein.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,7 +89,7 @@ public class SingleCuisineGridFragment extends Fragment
         resolveDaggerDependencies();
         View view = inflater.inflate(R.layout.fragment_single_cuisine_grid, container, false);
         unbinder = ButterKnife.bind(this, view);
-        mLayoutManager = new GridLayoutManager(getContext(), 2);
+        mLayoutManager = new LinearLayoutManager(getContext());
         fetchDishesMap = new HashMap<>();
         fetchDishesMap.put("restaurant_id", String.valueOf(getArguments().getString(RESTAURANT_ID)));
         fetchDishesMap.put("cuisine_id", String.valueOf(getArguments().getLong(CUISINE_ID)));
@@ -125,6 +126,7 @@ public class SingleCuisineGridFragment extends Fragment
     public void updateAdapter() {
         recycledGridMenuAdapter.notifyDataSetChanged();
     }
+
 
     @Override
     public void onDestroy() {

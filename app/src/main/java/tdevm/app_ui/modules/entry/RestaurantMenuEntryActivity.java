@@ -272,6 +272,11 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     }
 
     @Override
+    public void showMalformedQRCode(){
+        Toast.makeText(this, "You seem to have scanned a wrong qr code.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void redirectNonDineActivity() {
         Intent intent = new Intent(RestaurantMenuEntryActivity.this,NonDineRestaurantDetailsActivity.class);
         startActivity(intent);

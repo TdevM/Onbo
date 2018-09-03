@@ -66,7 +66,9 @@ public interface DineInPresenterContract {
 
         void updateCartItem(MenuItem menuItem, String itemHash);
 
-       // void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long parentDishId, int operationFlag);
+        void fetchCartItems();
+
+        // void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long parentDishId, int operationFlag);
     }
 
     interface MergedOrderFragmentPresenter extends BasePresenterMVP<DineInViewContract.MergedOrderView> {

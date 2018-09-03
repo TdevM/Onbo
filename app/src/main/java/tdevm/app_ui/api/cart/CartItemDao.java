@@ -20,10 +20,10 @@ import io.reactivex.Single;
 public interface CartItemDao {
 
     @Query("SELECT * FROM cart_items")
-    List<CartItem> getCartItems();
+    Single<List<CartItem>> getCartItems();
 
     @Query("SELECT * FROM cart_items WHERE item_hash = :itemHash")
-    CartItem getCartItemByHash(String itemHash);
+    Single<CartItem> getCartItemByHash(String itemHash);
 
     @Insert
     void addItemToCart(CartItem cartItem);

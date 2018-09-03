@@ -2,16 +2,25 @@ package tdevm.app_ui.utils;
 
 import android.util.Log;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.cart.CartItemDao;
 import tdevm.app_ui.api.cart.CartSelection;
@@ -29,6 +38,7 @@ public class CartHelper extends BasePresenter {
     private CompositeDisposable compositeDisposable;
     private CartItemDao cartItemDao;
     private CartSelectionDao cartSelectionDao;
+    private CartListener listener;
 
     //
     private CartItem item;
@@ -44,58 +54,30 @@ public class CartHelper extends BasePresenter {
         compositeDisposable = new CompositeDisposable();
     }
 
-    //Queries
-    public List<CartItem> getCartItems() {
-//        Flowable<List<CartItem>> cartItems = cartItemDao.getCartItems();
-//        Disposable disposable = cartItems.subscribeWith(new DisposableSubscriber<List<CartItem>>() {
-//            @Override
-//            public void onNext(List<CartItem> cartItems) {
-//                cartItemsList = new ArrayList<>(cartItems);
-//            }
-//
-//            @Override
-//            public void onError(Throwable t) {
-//                cartItemsList = new ArrayList<>();
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
-//        compositeDisposable.add(disposable);
+
+    public void setCartListener(CartListener cartListener) {
+        this.listener = cartListener;
+    }
+
+    public Single<List<CartItem>> getCartItems() {
         return cartItemDao.getCartItems();
     }
 
-    public CartItem getCartItemById(String itemHash) {
-//        Single<CartItem> cartItemSingle = cartItemDao.getCartItemById(dishId);
-//        cartItemSingle.subscribeWith(new SingleObserver<CartItem>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//                compositeDisposable.add(d);
-//            }
-//
-//            @Override
-//            public void onSuccess(CartItem cartItem) {
-//                item = cartItem;
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                Log.d(TAG,"getCartItemById" +e.getMessage());
-//            }
-//        });
+    public Single<CartItem> getCartItemByHash(String itemHash) {
         return cartItemDao.getCartItemByHash(itemHash);
     }
 
-    public List<CartSelection> getCartSelections() {
+    public Single<List<CartSelection>> getCartSelections() {
         return cartSelectionDao.getCartSelections();
+    }
+
+    public Single<CartSelection> getCartSelectionById(Long dishId) {
+        return cartSelectionDao.getCartSelectionById(dishId);
     }
 
     public int getCartTotalItems() {
         Single<Integer> single = cartItemDao.getTotalItems();
-        single.subscribeWith(new SingleObserver<Integer>() {
+        single.subscribe(new SingleObserver<Integer>() {
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
@@ -117,7 +99,7 @@ public class CartHelper extends BasePresenter {
 
     public Integer getCartTotal() {
         Single<Integer> single = cartItemDao.getCartTotal();
-        single.subscribeWith(new DisposableSingleObserver<Integer>() {
+        single.subscribe(new DisposableSingleObserver<Integer>() {
             @Override
             public void onSuccess(Integer integer) {
                 cartTotal = integer;
@@ -131,51 +113,76 @@ public class CartHelper extends BasePresenter {
         return cartTotal;
     }
 
-    public CartSelection getCartSelectionById(Long dishId) {
-        return cartSelectionDao.getCartSelectionById(dishId);
-    }
-
     //Mutations
     public void addItemToCart(MenuItem menuItem, int itemPrice, String itemHash) {
-        CartItem item = getCartItemById(itemHash);
-        if (item == null) {
-            Log.d(TAG, "ITEM WAS NULL");
-            CartItem cartItem = new CartItem(itemHash, menuItem, 1, itemPrice, menuItem.getCustomizable());
-            cartItemDao.addItemToCart(cartItem);
-        } else if (item.getQuantity() >= 1) {
-            Log.d(TAG, item.getItem_hash());
-            Log.d(TAG, "ITEM WAS NOTTTT NULL");
-            CartItem cartItem = new CartItem(item.getId(), itemHash, menuItem, item.getQuantity() + 1, (item.getQuantity() + 1) * itemPrice, menuItem.getCustomizable());
-            cartItemDao.updateCartItem(cartItem);
-        }
+        Single<CartItem> cartItemSingle = cartItemDao.getCartItemByHash(itemHash);
+        cartItemSingle.subscribe(new DisposableSingleObserver<CartItem>() {
+            @Override
+            public void onSuccess(CartItem cartItem) {
+                if (cartItem != null) {
+                    if (cartItem.getQuantity() >= 1) {
+                        Log.d(TAG, cartItem.getItem_hash());
+                        Log.d(TAG, "ITEM WAS NOTTTT NULL");
+                        CartItem item = new CartItem(cartItem.getId(), itemHash, menuItem, cartItem.getQuantity() + 1, (cartItem.getQuantity() + 1) * itemPrice, menuItem.getCustomizable());
+                        cartItemDao.updateCartItem(item);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "ITEM WAS NULL");
+                insertCartItem(menuItem, itemPrice, itemHash);
+            }
+        });
     }
 
     public void updateCartItem(MenuItem menuItem, int itemPrice, String itemHash) {
-        CartItem item = getCartItemById(itemHash);
-        if (item != null) {
-            CartItem cartItem = new CartItem(item.getId(),itemHash, menuItem, item.getQuantity() - 1, (item.getQuantity() - 1) * itemPrice,menuItem.getCustomizable());
-            cartItemDao.updateCartItem(cartItem);
-            if (item.getQuantity() == 1) {
-                cartItemDao.deleteItemFromCart(item);
+        Single<CartItem> cartItemSingle = cartItemDao.getCartItemByHash(itemHash);
+        cartItemSingle.subscribe(new DisposableSingleObserver<CartItem>() {
+            @Override
+            public void onSuccess(CartItem cartItem) {
+                if (cartItem != null) {
+                   mutateCartItem(menuItem,itemPrice,itemHash,cartItem);
+                }
             }
-        }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "ITEM NOT FOUND");
+            }
+        });
     }
 
     public void addItemToSelection(String itemId) {
-        CartSelection i = cartSelectionDao.getCartSelectionById(Long.parseLong(itemId));
-        if (i == null) {
-            CartSelection newSelection = new CartSelection(Long.parseLong(itemId), 1);
-            cartSelectionDao.addItemToSelection(newSelection);
-        } else {
-            cartSelectionDao.incrementCartSelectionById(Long.parseLong(itemId));
-        }
+        Single<CartSelection> i = cartSelectionDao.getCartSelectionById(Long.parseLong(itemId));
+        i.subscribe(new DisposableSingleObserver<CartSelection>() {
+            @Override
+            public void onSuccess(CartSelection cartSelection) {
+                cartSelectionDao.incrementCartSelectionById(Long.parseLong(itemId));
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                CartSelection newSelection = new CartSelection(Long.parseLong(itemId), 1);
+                cartSelectionDao.addItemToSelection(newSelection);
+            }
+        });
     }
 
     public void updateSelectionItem(MenuItem menuItem) {
-        CartSelection i = cartSelectionDao.getCartSelectionById(Long.parseLong(menuItem.getItemId()));
-        if (i != null) {
-            cartSelectionDao.decrementCartSelectionById(Long.parseLong(menuItem.getItemId()));
-        }
+        Single<CartSelection> i = cartSelectionDao.getCartSelectionById(Long.parseLong(menuItem.getItemId()));
+        i.subscribe(new DisposableSingleObserver<CartSelection>() {
+            @Override
+            public void onSuccess(CartSelection cartSelection) {
+                cartSelectionDao.decrementCartSelectionById(Long.parseLong(menuItem.getItemId()));
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 
     public void incrementCartSelectionById(Long itemId) {
@@ -214,15 +221,122 @@ public class CartHelper extends BasePresenter {
     }
 
     public void logCartItems() {
-        for (int i = 0; i < getCartItems().size(); i++) {
-            Log.d(TAG, "Cart Item:" + getCartItems().get(i).getMenuItem().getItemName()
-                    + "QTY:" + getCartItems().get(i).getQuantity() +
-                    "Total:" + getCartItems().get(i).getPrice());
-        }
+        Single<List<CartItem>> cartItemsFetch = getCartItems();
+        cartItemsFetch.subscribe(new SingleObserver<List<CartItem>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onSuccess(List<CartItem> cartItems) {
+                for (int i = 0; i < cartItems.size(); i++) {
+                    Log.d(TAG, "Cart Item:" + cartItems.get(i).getMenuItem().getItemName()
+                            + "QTY:" + cartItems.get(i).getQuantity() +
+                            "Total:" + cartItems.get(i).getPrice());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+
+
     }
 
     public void onDestroy() {
         compositeDisposable.clear();
         compositeDisposable.dispose();
+    }
+
+
+    //Mutations
+
+
+    private void insertCartItem(MenuItem menuItem, int itemPrice, String itemHash) {
+
+        Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                CartItem cartItem = new CartItem(itemHash, menuItem, 1, itemPrice, menuItem.getCustomizable());
+                cartItemDao.addItemToCart(cartItem);
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "Inserted to cart");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "Failed to insert to cartItem");
+                e.printStackTrace();
+            }
+        });
+
+    }
+
+    private void mutateCartItem(MenuItem menuItem, int itemPrice, String itemHash,CartItem cartItem){
+
+        Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                CartItem item = new CartItem(cartItem.getId(), itemHash, menuItem, cartItem.getQuantity() - 1, (cartItem.getQuantity() - 1) * itemPrice, menuItem.getCustomizable());
+                cartItemDao.updateCartItem(item);
+                if (cartItem.getQuantity() == 1) {
+                    cartItemDao.deleteItemFromCart(cartItem);
+                }
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+
+    }
+
+
+    private void insertCartSelection(String itemId) {
+        Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "Inserted to selection");
+                listener.onCartSelectionUpdated();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "Failed to insert to selection");
+                e.printStackTrace();
+            }
+        });
     }
 }

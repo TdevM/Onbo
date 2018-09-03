@@ -12,9 +12,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Single;
+import io.reactivex.observers.DisposableSingleObserver;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
@@ -32,9 +35,11 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
 
     private Context mContext;
     private ArrayList<MenuItem> dishArrayList;
+    private List<CartSelection> cartSelectionList;
     private MenuItemClickListener menuItemClickListener;
     private SingleCuisineGridPresenter singleCuisineGridPresenter;
     private CartHelper cartHelper;
+    private int itemQty;
 
     public RecycledGridMenuAdapter(Context context, SingleCuisineGridPresenter presenter, CartHelper helper) {
         this.mContext = context;
@@ -47,9 +52,17 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         this.menuItemClickListener = menuItemClickListenerCallback;
     }
 
+    public void setItemQty(int qty){
+        this.itemQty = qty;
+    }
+
     public void onItemsFetched(ArrayList<MenuItem> menuItems) {
         dishArrayList.addAll(menuItems);
         notifyDataSetChanged();
+    }
+
+    public void onCartSelectionListFetched(){
+        this.cartSelectionList.addAll(cartSelectionList);
     }
 
     @Override
@@ -61,9 +74,9 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
     @Override
     public void onBindViewHolder(RecycledGridViewHolder holder, int position) {
 
-        Glide.with(mContext).load(dishArrayList.get(position).getItemImage()).into(holder.dishImage);
+        //Glide.with(mContext).load(dishArrayList.get(position).getItemImage()).into(holder.dishImage);
         holder.dishName.setText(dishArrayList.get(position).getItemName());
-        holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, dishArrayList.get(position).getItemPrice()*0.01));
+        holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, dishArrayList.get(position).getItemPrice() * 0.01));
         if (dishArrayList.get(position).getIsVeg()) {
             holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg_indicator));
@@ -71,10 +84,22 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
             holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.non_veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg_indicator));
         }
-            CartSelection selection = cartHelper.getCartSelectionById(Long.parseLong(dishArrayList.get(position).getItemId()));
-            if(selection!=null){
-                holder.incDecButton.setNumber(selection.getQty(),true);
+        Single<CartSelection> selection = cartHelper.getCartSelectionById(Long.parseLong(dishArrayList.get(position).getItemId()));
+        selection.subscribe(new DisposableSingleObserver<CartSelection>() {
+            @Override
+            public void onSuccess(CartSelection cartSelection) {
+                if (cartSelection != null) {
+                    holder.incDecButton.setNumber(cartSelection.getQty(), true);
+                }
             }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+
+
 
         holder.bind(dishArrayList.get(position), menuItemClickListener);
     }
@@ -99,8 +124,7 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
         TextView dishName;
         @BindView(R.id.tv_si_dish_price)
         TextView dishPrice;
-        @BindView(R.id.iv_si_dish_grid)
-        ImageView dishImage;
+
         @BindView(R.id.btn_id_item_dish_grid)
         IncDecButton incDecButton;
         @BindView(R.id.iv_veg_non_veg_grid)
@@ -136,7 +160,7 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
                 }
             });
             // Open dish reviews
-            dishImage.setOnClickListener(v -> menuItemClickListener.onItemImageClicked(menuItem));
+            //dishImage.setOnClickListener(v -> menuItemClickListener.onItemImageClicked(menuItem));
         }
 
     }

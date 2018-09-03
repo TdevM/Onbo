@@ -13,7 +13,7 @@ public interface MenuEntryViewContract {
         void redirectNonDineActivity();
         void showTableOccupiedError();
         void startQRScanner();
-
+        void showMalformedQRCode();
         void stopLocationUpdates();
     }
 }

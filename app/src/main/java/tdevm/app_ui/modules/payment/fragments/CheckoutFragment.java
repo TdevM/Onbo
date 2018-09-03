@@ -95,7 +95,7 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
 
     private void closeRunningOrder() {
         new AlertDialog.Builder(paymentActivity)
-                .setTitle("Close Running Order")
+                .setTitle("Close running_order_empty")
                 .setMessage("Are you sure you want to close your running order?")
                 .setPositiveButton("Close", (dialog, which) -> {
                     if (orderId != null) {

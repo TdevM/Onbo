@@ -40,12 +40,17 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         this.context = context;
         this.cartFragmentPresenter = cartFragmentPresenter;
         this.cartHelper = cartHelper;
+        this.cartItemArrayList = new ArrayList<>();
     }
 
     public void setOnDishItemClickListener(MenuItemClickListener d) {
         this.menuItemClickListener = d;
     }
 
+    public void onCartItemFetched(List<CartItem> items){
+        this.cartItemArrayList.addAll(items);
+        notifyDataSetChanged();
+    }
 
     @Override
     public CartItemsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -57,11 +62,8 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
 
     @Override
     public void onBindViewHolder(CartItemsViewHolder holder, final int position) {
-        Log.d(TAG,"onBindViewHolder");
-        cartItemArrayList = new ArrayList<>();
+        Log.d(TAG, "onBindViewHolder");
         Log.d("Cart", String.valueOf(cartHelper.getCartTotalItems()));
-        List<CartItem> cartItems = cartHelper.getCartItems();
-        cartItemArrayList.addAll(cartItems);
         holder.dishName.setText(cartItemArrayList.get(position).getMenuItem().getItemName());
         holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice()*0.01)));
         holder.incDecButton.setNumber(cartItemArrayList.get(position).getQuantity(), true);
@@ -75,22 +77,11 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
 
     @Override
     public int getItemCount() {
-        int size;
-        List<CartItem> cartItems = cartHelper.getCartItems();
-        if(cartItems!=null){
-            size = cartItems.size();
-            Log.d(TAG,"SizeE: "+String.valueOf(cartItems.size()));
-        }else {
-            size = 0;
-            Log.d(TAG,"cartItems is null, size is : "+ size);
-        }
-        return size;
+        return cartItemArrayList.size();
     }
 
 
     public class CartItemsViewHolder extends RecyclerView.ViewHolder {
-
-
 
         @BindView(R.id.cart_item_tv_dish_name)
         TextView dishName;
@@ -105,7 +96,6 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
 
         public void bind(final MenuItem menuItem, String itemHash, final MenuItemClickListener menuItemClickListener) {
             incDecButton.setOnButtonsClickedListener(new IncDecButton.OnButtonsClickedListener() {

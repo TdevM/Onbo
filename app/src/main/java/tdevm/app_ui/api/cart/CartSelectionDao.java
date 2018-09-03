@@ -8,6 +8,9 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.Single;
+
 /**
  * Created by Tridev on 02-01-2018.
  */
@@ -16,11 +19,11 @@ import java.util.List;
 public interface CartSelectionDao {
 
     @Query("SELECT * FROM cart_selections")
-    List<CartSelection> getCartSelections();
+    Single<List<CartSelection>> getCartSelections();
 
 
     @Query("SELECT * FROM cart_selections WHERE selectionItemId = :itemId")
-    CartSelection getCartSelectionById(Long itemId);
+    Single<CartSelection> getCartSelectionById(Long itemId);
 
     @Update
     void updateCartSelectionItem(CartSelection selection);

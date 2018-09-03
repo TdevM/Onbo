@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Response;
+import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
 import tdevm.app_ui.api.models.response.v2.reviews.DishReviews;
@@ -29,6 +30,7 @@ public interface DineInViewContract {
         void updateBottomSheet(int totalItems, int cartTotal);
         void updateAdapter();
         void showNonDineEmptyCart();
+        void onCartItemsFetched(List<CartItem> cartItems);
         void showDineCartEmpty();
     }
 
