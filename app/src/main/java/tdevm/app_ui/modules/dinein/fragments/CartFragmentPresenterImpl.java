@@ -93,6 +93,16 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
         });
     }
 
+
+    @Override
+    public void handleOrderInit() {
+        if (authUtils.getRestaurantMode().equals(MODE_DINE_IN)) {
+            cartFragmentView.startDineOrderActivity();
+        } else if (authUtils.getRestaurantMode().equals(MODE_NON_DINE)) {
+            cartFragmentView.startNonDineActivity();
+        }
+    }
+
     @Override
     public void showCartEmpty() {
         if (authUtils.getRestaurantMode().equals(MODE_DINE_IN)) {

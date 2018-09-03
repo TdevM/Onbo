@@ -13,9 +13,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import tdevm.app_ui.R;
-import tdevm.app_ui.modules.dinein.activities.InitializeOrderActivity;
+import tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity;
 
-import static tdevm.app_ui.modules.dinein.activities.InitializeOrderActivity.ORDER_RUNNING_STATUS;
+import static tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity.ORDER_RUNNING_STATUS;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +23,7 @@ import static tdevm.app_ui.modules.dinein.activities.InitializeOrderActivity.ORD
 public class InitializeOrderFragment extends Fragment {
 
     private Boolean orderRunning;
-    private InitializeOrderActivity initializeOrderActivity;
+    private InitializeDineOrderActivity initializeDineOrderActivity;
     Unbinder unbinder;
     @OnClick(R.id.btn_temp_order_init)
     void clicked(){
@@ -55,7 +55,7 @@ public class InitializeOrderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        initializeOrderActivity = (InitializeOrderActivity)getActivity();
+        initializeDineOrderActivity = (InitializeDineOrderActivity)getActivity();
         View view = inflater.inflate(R.layout.fragment_initialize_temp_order, container, false);
         unbinder = ButterKnife.bind(this,view);
         if(getArguments()!=null){
@@ -70,13 +70,13 @@ public class InitializeOrderFragment extends Fragment {
 
     private void placeOrder(){
        if(getGuestCount.getText()!=null && userMessage.getText()!=null){
-           initializeOrderActivity.createOrder(Integer.parseInt(getGuestCount.getText().toString()),userMessage.getText().toString());
+           initializeDineOrderActivity.createOrder(Integer.parseInt(getGuestCount.getText().toString()),userMessage.getText().toString());
        }
     }
 
     private void addItemsToOrder(){
         if(userMessage.getText()!=null){
-            initializeOrderActivity.addItemsToOrder(userMessage.getText().toString());
+            initializeDineOrderActivity.addItemsToOrder(userMessage.getText().toString());
         }
     }
 

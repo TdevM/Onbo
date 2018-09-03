@@ -56,7 +56,7 @@
             android:name=".modules.auth.AuthenticationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".modules.dinein.activities.InitializeOrderActivity"
+            android:name=".modules.dinein.activities.InitializeDineOrderActivity"
             android:screenOrientation="portrait" />
 
         <receiver android:name=".utils.SMSListener">

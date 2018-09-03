@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +33,9 @@ import tdevm.app_ui.utils.CartHelper;
  * Created by Tridev on 29-12-2017.
  */
 
-public class InitOrderPresenterImpl extends BasePresenter implements DineInPresenterContract.PlaceTempOrderPresenter {
+public class InitDineOrderPresenterImpl extends BasePresenter implements DineInPresenterContract.PlaceTempOrderPresenter {
 
-    public static final String TAG = InitOrderPresenterImpl.class.getSimpleName();
+    public static final String TAG = InitDineOrderPresenterImpl.class.getSimpleName();
 
     private APIService apiService;
     private AuthUtils authUtils;
@@ -45,7 +44,7 @@ public class InitOrderPresenterImpl extends BasePresenter implements DineInPrese
     private CartHelper cart;
 
     @Inject
-    public InitOrderPresenterImpl(APIService apiService, AuthUtils authUtils, CartHelper cartHelper) {
+    public InitDineOrderPresenterImpl(APIService apiService, AuthUtils authUtils, CartHelper cartHelper) {
         this.apiService = apiService;
         this.cart = cartHelper;
         this.authUtils = authUtils;

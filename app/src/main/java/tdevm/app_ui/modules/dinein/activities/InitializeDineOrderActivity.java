@@ -5,8 +5,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import retrofit2.Response;
@@ -18,13 +16,13 @@ import tdevm.app_ui.modules.dinein.fragments.InitializeOrderFragment;
 import tdevm.app_ui.modules.dinein.fragments.TempOrderFragment;
 
 
-public class InitializeOrderActivity extends AppCompatActivity implements DineInViewContract.PlaceTempOrderView {
-    public static final String TAG = InitializeOrderActivity.class.getSimpleName();
+public class InitializeDineOrderActivity extends AppCompatActivity implements DineInViewContract.PlaceTempOrderView {
+    public static final String TAG = InitializeDineOrderActivity.class.getSimpleName();
     public static final String ORDER_RUNNING_STATUS = "ORDER_RUNNING_STATUS";
     public static TOrder tOrder;
 
     @Inject
-    InitOrderPresenterImpl placeTempOrderPresenter;
+    InitDineOrderPresenterImpl placeTempOrderPresenter;
 
     @Override
     protected void onResume() {

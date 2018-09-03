@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
-import tdevm.app_ui.modules.dinein.activities.InitializeOrderActivity;
+import tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity;
 import tdevm.app_ui.modules.dinein.adapters.CartItemsRecyclerAdapter;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.nondinein.activities.NonDineActivity;
@@ -43,8 +44,8 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     RecyclerView recyclerViewCart;
 
     @OnClick(R.id.btn_order_initiate)
-    void clear() {
-        startTempOrderActivity();
+    void initiateOrder() {
+        handleInitiateOrder();
     }
 
     @BindView(R.id.tv_total_quantities)
@@ -127,9 +128,8 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
         cartFragmentPresenter.clearCart();
     }
 
-    public void startTempOrderActivity() {
-        Intent intent = new Intent(getContext(), InitializeOrderActivity.class);
-        startActivity(intent);
+    public void handleInitiateOrder(){
+        cartFragmentPresenter.handleOrderInit();
     }
 
     @Override
@@ -187,5 +187,16 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     @Override
     public void showDineCartEmpty() {
         activity.showCartEmptyFragment();
+    }
+
+    @Override
+    public void startNonDineActivity() {
+        Toast.makeText(nonDineActivity,"Non dine activity" , Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void startDineOrderActivity() {
+        Intent intent = new Intent(getContext(), InitializeDineOrderActivity.class);
+        startActivity(intent);
     }
 }

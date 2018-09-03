@@ -67,6 +67,7 @@ public interface DineInPresenterContract {
         void updateCartItem(MenuItem menuItem, String itemHash);
 
         void fetchCartItems();
+        void handleOrderInit();
 
         // void addCustomizableItemToCart(DishesOfCuisine dishesOfCuisine, Long parentDishId, int operationFlag);
     }
