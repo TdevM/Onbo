@@ -3,9 +3,6 @@ package tdevm.app_ui.modules.payment;
 
 import android.util.Log;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
@@ -14,6 +11,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
+import tdevm.app_ui.api.models.request.PaymentCapture;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.utils.AuthUtils;
@@ -41,11 +39,8 @@ public class PaymentActivityPresenter extends BasePresenter implements PaymentPr
 
     @Override
     public void captureOrderPayment(String paymentId, String orderId) {
-        Map<String, String> map = new HashMap<>();
-        map.put("order_id", orderId);
-        map.put("payment_id", paymentId);
-        map.put("restaurant_id", authUtils.getScannedRestaurantId());
-        Observable<Response<FOrder>> observable = apiService.payOrder(authUtils.getAuthLoginToken(), map);
+        PaymentCapture capture = new PaymentCapture(orderId,paymentId,authUtils.getScannedRestaurantId());
+        Observable<Response<FOrder>> observable = apiService.payOrder(authUtils.getAuthLoginToken(), capture);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -57,16 +52,16 @@ public class PaymentActivityPresenter extends BasePresenter implements PaymentPr
                 if (fOrderResponse.isSuccessful()) {
                     if (fOrderResponse.body() != null) {
                         Log.d(TAG, fOrderResponse.body().toString());
-                        paymentActivityView.onPaymentDone();
+                        paymentActivityView.onPaymentCaptured();
                     }
                 } else {
-                    paymentActivityView.onPaymentFailure();
+                    paymentActivityView.onPaymentCaptureFailure();
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                paymentActivityView.onPaymentFailure();
+                paymentActivityView.onPaymentCaptureFailure();
             }
 
             @Override

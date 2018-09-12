@@ -66,7 +66,7 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
             orderId = getArguments().getString("ORDER_ID");
             fOrderId = getArguments().getString("F_ORDER_ID");
             Log.d(TAG, "Got into PaymentFragment" + orderId + " " + fOrderId);
-            presenter.fetchClosedOrder(orderId, fOrderId);
+
         }
 
     }
@@ -76,6 +76,7 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         resolveDaggerDependencies();
+        presenter.fetchClosedOrder(orderId, fOrderId);
         activity = (PaymentActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_payment, container, false);
         unbinder = ButterKnife.bind(this, view);
@@ -103,7 +104,7 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
             try {
                 JSONObject options = new JSONObject();
                 options.put("name", "tdevm's palace");
-                options.put("description", "Order" + fOrder.getOrder_id());
+                options.put("description", "Order ID" + fOrder.getOrder_id());
                 options.put("currency", "INR");
                 options.put("amount", fOrder.getGrand_total());
                 checkout.open(activity, options);

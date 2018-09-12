@@ -127,6 +127,8 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
     @Override
     public void onOrderClosed(FOrder fOrder) {
         Toast.makeText(paymentActivity, "Order closed!", Toast.LENGTH_SHORT).show();
+        Log.d(TAG,fOrder.getOrder_id());
+        Log.d(TAG,fOrder.getT_order_id());
         paymentActivity.showMakePayment(fOrder);
     }
 

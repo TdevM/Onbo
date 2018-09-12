@@ -15,7 +15,6 @@ import javax.inject.Inject;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
-import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
 import tdevm.app_ui.modules.payment.fragments.CheckoutFragment;
 import tdevm.app_ui.modules.payment.fragments.PaymentFragment;
 
@@ -85,18 +84,9 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         Bundle bundle = new Bundle();
         bundle.putString("F_ORDER_ID", fOrder.getOrder_id());
         bundle.putString("ORDER_ID", fOrder.getT_order_id());
+        fragment.setArguments(bundle);
         transaction.replace(R.id.frame_layout_payments, fragment);
         transaction.commit();
-    }
-
-    @Override
-    public void onPaymentDone() {
-        Toast.makeText(this, "Voila! Your payment was successful", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onPaymentFailure() {
-        Toast.makeText(this, ":( Payment failed.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -124,5 +114,15 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     protected void onDestroy() {
         super.onDestroy();
         paymentActivityPresenter.detachView();
+    }
+
+    @Override
+    public void onPaymentCaptured() {
+        Toast.makeText(this, "Voila! Your payment was successful", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPaymentCaptureFailure() {
+        Toast.makeText(this, ":( Payment failed.", Toast.LENGTH_SHORT).show();
     }
 }

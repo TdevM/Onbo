@@ -1,7 +1,5 @@
 package tdevm.app_ui.api;
 
-import com.google.gson.JsonObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +15,7 @@ import tdevm.app_ui.api.models.OneTimePassword;
 import tdevm.app_ui.api.models.request.AddDishReview;
 import tdevm.app_ui.api.models.request.AddRestaurantReview;
 import tdevm.app_ui.api.models.request.NonDineOrder;
+import tdevm.app_ui.api.models.request.PaymentCapture;
 import tdevm.app_ui.api.models.request.RestaurantOrder;
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.api.models.response.UserApp;
@@ -89,7 +88,7 @@ public interface APIService {
     @POST("m/t/orders/close")
     Observable<Response<FOrder>> closeRunningOrder(@Header("x-auth") String token, @QueryMap Map<String, String> options);
     @POST("m/t/orders/pay")
-    Observable<Response<FOrder>> payOrder(@Header("x-auth") String token, @QueryMap Map<String, String> options);
+    Observable<Response<FOrder>> payOrder(@Header("x-auth") String token, @Body PaymentCapture capture);
     @GET("m/f/orders")
     Observable<Response<FOrder>> fetchClosedOrder(@Header("x-auth") String token, @QueryMap Map<String, String> options);
 
