@@ -52,25 +52,28 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
 
 
     @Override
-    public void addItemToCart(MenuItem menuItem, String itemHash) {
-//        cartHelper.addItemToCart(dishesOfCuisine);
-//        cartHelper.addItemToSelection(dishesOfCuisine);
-//        cartFragmentView.updateAdapter();
-//        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
+    public void addItemToCart(tdevm.app_ui.api.models.cart.MenuItem menuItem, int itemTotal, String itemHash) {
+        cartHelper.addItemToCart(menuItem, itemTotal, itemHash);
+        cartHelper.addItemToSelection(menuItem.getItemId());
+        //cartFragmentView.updateAdapter();
+        fetchCartItems();
+        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
         logSelections();
     }
 
     @Override
-    public void updateCartItem(MenuItem menuItem, String itemHash) {
-//        cartHelper.updateCartItem(dishesOfCuisine);
-//        cartHelper.updateSelectionItem(dishesOfCuisine);
-        cartFragmentView.updateAdapter();
+    public void updateCartItem(tdevm.app_ui.api.models.cart.MenuItem menuItem, int itemTotal, String itemHash) {
+        cartHelper.updateCartItem(menuItem, itemTotal, itemHash);
+        cartHelper.updateSelectionItem(menuItem);
+        //cartFragmentView.updateAdapter();
+        fetchCartItems();
         cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
         if (cartHelper.getCartTotalItems() == 0) {
             showCartEmpty();
         }
         logSelections();
     }
+
 
     @Override
     public void fetchCartItems() {
@@ -99,7 +102,7 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
         if (authUtils.getRestaurantMode().equals(MODE_DINE_IN)) {
             cartFragmentView.startDineOrderActivity();
         } else if (authUtils.getRestaurantMode().equals(MODE_NON_DINE)) {
-            cartFragmentView.startNonDineActivity();
+            cartFragmentView.startNonDineOrderActivity();
         }
     }
 

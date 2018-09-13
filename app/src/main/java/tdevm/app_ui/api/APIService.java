@@ -99,9 +99,12 @@ public interface APIService {
 
 
     //Type2 Orders (Non Dine)
-    @POST("m/orders/t2/unpaid")
-    Observable<Response<Object>> createUnpaidNonDineOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
-    @POST("m/orders/t2")
-    Observable<Response<Object>> createPaidNonDineOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
+    @POST("m/f/orders/unpaid")
+    Observable<Response<FOrder>> createUnpaidNonDineOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
+    @POST("m/f/orders")
+    Observable<Response<FOrder>> createPaidNonDineOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
+    @POST("m/f/orders")
+    Observable<Response<FOrder>> captureNonDineOrderPayment(@Header("x-auth") String token, @Body PaymentCapture paymentCapture);
+
 
 }

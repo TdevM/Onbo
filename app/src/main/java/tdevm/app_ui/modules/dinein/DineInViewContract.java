@@ -32,7 +32,7 @@ public interface DineInViewContract {
         void showNonDineEmptyCart();
         void onCartItemsFetched(List<CartItem> cartItems);
         void showDineCartEmpty();
-        void startNonDineActivity();
+        void startNonDineOrderActivity();
         void startDineOrderActivity();
     }
 

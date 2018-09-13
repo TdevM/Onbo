@@ -62,9 +62,9 @@ public interface DineInPresenterContract {
 
         void showCartEmpty();
 
-        void addItemToCart(MenuItem menuItem, String itemHash);
+        void addItemToCart(tdevm.app_ui.api.models.cart.MenuItem menuItem, int itemTotal, String itemHash);
 
-        void updateCartItem(MenuItem menuItem, String itemHash);
+        void updateCartItem(MenuItem menuItem, int itemTotal, String itemHash);
 
         void fetchCartItems();
         void handleOrderInit();

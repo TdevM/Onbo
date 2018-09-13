@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.cart.MenuItem;
+import tdevm.app_ui.modules.dinein.callbacks.CartItemClickListener;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.CartFragmentPresenterImpl;
 import tdevm.app_ui.utils.CartHelper;
@@ -32,7 +33,7 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
     public static final String TAG = CartItemsRecyclerAdapter.class.getSimpleName();
     private Context context;
     private List<CartItem> cartItemArrayList;
-    private MenuItemClickListener menuItemClickListener;
+    private CartItemClickListener cartItemClickListener;
     private CartHelper cartHelper;
     private CartFragmentPresenterImpl cartFragmentPresenter;
 
@@ -43,11 +44,12 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         this.cartItemArrayList = new ArrayList<>();
     }
 
-    public void setOnDishItemClickListener(MenuItemClickListener d) {
-        this.menuItemClickListener = d;
+    public void setOnCartItemClickListener(CartItemClickListener d) {
+        this.cartItemClickListener = d;
     }
 
-    public void onCartItemFetched(List<CartItem> items){
+    public void onCartItemFetched(List<CartItem> items) {
+        this.cartItemArrayList.clear();
         this.cartItemArrayList.addAll(items);
         notifyDataSetChanged();
     }
@@ -65,14 +67,14 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         Log.d(TAG, "onBindViewHolder");
         Log.d("Cart", String.valueOf(cartHelper.getCartTotalItems()));
         holder.dishName.setText(cartItemArrayList.get(position).getMenuItem().getItemName());
-        holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice()*0.01)));
+        holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice() * 0.01)));
         holder.incDecButton.setNumber(cartItemArrayList.get(position).getQuantity(), true);
-        if(cartItemArrayList.get(position).getMenuItem().getVeg()){
+        if (cartItemArrayList.get(position).getMenuItem().getVeg()) {
             holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
-        }else if(!cartItemArrayList.get(position).getMenuItem().getVeg()){
+        } else if (!cartItemArrayList.get(position).getMenuItem().getVeg()) {
             holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.non_veg_symbol));
         }
-        holder.bind(cartItemArrayList.get(position).getMenuItem(),cartItemArrayList.get(position).getItem_hash(), menuItemClickListener);
+        holder.bind(cartItemArrayList.get(position).getMenuItem(), cartItemArrayList.get(position).getItem_hash(), cartItemClickListener);
     }
 
     @Override
@@ -97,35 +99,27 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final MenuItem menuItem, String itemHash, final MenuItemClickListener menuItemClickListener) {
+        public void bind(final MenuItem menuItem, String itemHash, final CartItemClickListener menuItemClickListener) {
             incDecButton.setOnButtonsClickedListener(new IncDecButton.OnButtonsClickedListener() {
                 @Override
                 public void onPlusClicked(int num) {
-//                    if (dish.getIs_customizable()) {
-////                        if (dish.getIs_child()) {
-////                            menuItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 1);
-////                        } else if (dish.getIs_parent()) {
-////                            menuItemClickListener.onCustomizableItemClicked(dish, 1);
-////                        }
-//                    } else {
-//                       // menuItemClickListener.onPlusButtonClicked(dish, num);
-//                        Log.d(TAG,"Click+");
-//                    }
+                    if (menuItem.getCustomizable()) {
+                        cartItemClickListener.onCustomizableItemClicked(menuItem, 1);
+                        if (incDecButton.getNumber() == 0) {
+                            incDecButton.setNumber(0, true);
+                        }
+                    } else {
+                        cartItemClickListener.onPlusButtonClicked(menuItem, num);
+                    }
                 }
 
                 @Override
                 public void onMinusClicked(int num) {
-//                    if (dish.getIs_customizable()) {
-////                        if (dish.getIs_child()) {
-////                            menuItemClickListener.onCustomizableItemClicked(dish, dish.getParent_id(), 0);
-////                        } else if (dish.getIs_parent()) {
-////                            menuItemClickListener.onCustomizableItemClicked(dish, 0);
-////                        }
-//                    } else {
-//                      //  menuItemClickListener.onMinusButtonClicked(dish, num);
-//                        Log.d(TAG,"Click+");
-//
-//                    }
+                    if (menuItem.getCustomizable()) {
+                        cartItemClickListener.onCustomizableItemClicked(menuItem, 0);
+                    } else {
+                        cartItemClickListener.onMinusButtonClicked(menuItem, num);
+                    }
                 }
             });
         }

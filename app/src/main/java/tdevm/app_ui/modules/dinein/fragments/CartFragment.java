@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,17 +27,21 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartItem;
+import tdevm.app_ui.api.models.ItemHash;
+import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
+import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity;
 import tdevm.app_ui.modules.dinein.adapters.CartItemsRecyclerAdapter;
+import tdevm.app_ui.modules.dinein.callbacks.CartItemClickListener;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.nondinein.activities.NonDineActivity;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CartHelper;
 
-public class CartFragment extends Fragment implements DineInViewContract.CartFragmentView, MenuItemClickListener {
+public class CartFragment extends Fragment implements DineInViewContract.CartFragmentView, CartItemClickListener {
 
     public static final String TAG = CartFragment.class.getSimpleName();
     private static final String MODE_DINE_IN = "MODE_DINE_IN";
@@ -95,7 +101,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
             unbinder = ButterKnife.bind(this, view);
             mLayoutManager = new LinearLayoutManager(getContext());
             adapter = new CartItemsRecyclerAdapter(getActivity(), cartFragmentPresenter, cartHelper);
-            adapter.setOnDishItemClickListener(this);
+            adapter.setOnCartItemClickListener(this);
             recyclerViewCart.setLayoutManager(mLayoutManager);
             recyclerViewCart.setAdapter(adapter);
             cartFragmentPresenter.fetchCartItems();
@@ -140,31 +146,8 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
 
     @Override
-    public void onPlusButtonClicked(MenuItem menuItem, int num) {
-        //cartFragmentPresenter.addItemToCart(menuItem);
-        Log.d(TAG, menuItem.getItemName());
-    }
-
-    @Override
-    public void onMinusButtonClicked(MenuItem menuItem, int num) {
-        //cartFragmentPresenter.updateCartItem(dishesOfCuisine);
-        // Log.d(TAG, dishesOfCuisine.getDish_name());
-    }
-
-    @Override
-    public void onItemImageClicked(MenuItem menuItem) {
-
-    }
-
-    @Override
-    public void onCustomizableItemClicked(MenuItem menuItem, int flag) {
-
-    }
-
-
-    @Override
     public void updateBottomSheet(int totalItems, int cartTotal) {
-        //   tvTotalBillAmt.setText(String.valueOf(getActivity().getApplication().getString(R.string.rupee_symbol, cartTotal.intValue())));
+        tvTotalBillAmt.setText(String.valueOf(getActivity().getApplication().getString(R.string.rupee_symbol, String.valueOf(cartTotal*0.01) )));
         tvTotalQuantities.setText(String.valueOf(totalItems));
     }
 
@@ -190,7 +173,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     }
 
     @Override
-    public void startNonDineActivity() {
+    public void startNonDineOrderActivity() {
         Toast.makeText(nonDineActivity,"Non dine activity" , Toast.LENGTH_SHORT).show();
     }
 
@@ -198,5 +181,58 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     public void startDineOrderActivity() {
         Intent intent = new Intent(getContext(), InitializeDineOrderActivity.class);
         startActivity(intent);
+    }
+
+
+    public ItemHash generateItemHash(tdevm.app_ui.api.models.cart.MenuItem cartMenuItem) {
+        String itemHash = cartMenuItem.getItemId();
+        int itemPrice = cartMenuItem.getItemPrice();
+        StringBuilder sb = new StringBuilder();
+        sb.append(itemHash);
+        List<MenuAddOn> menuAddOns = cartMenuItem.getMenuAddOns();
+        List<MenuVOption> menuVOptions = cartMenuItem.getMenuVariantOptions();
+        Iterator<MenuVOption> menuVOptionIterator;
+        Iterator<MenuAddOn> menuAddOnIterator;
+        if (menuVOptions != null) {
+            menuVOptionIterator = menuVOptions.listIterator();
+            while (menuVOptionIterator.hasNext()) {
+                MenuVOption option = menuVOptionIterator.next();
+                sb.append(option.getOptionId());
+                itemPrice += option.getPrice();
+            }
+            if (menuAddOns != null) {
+                menuAddOnIterator = menuAddOns.listIterator();
+                while (menuAddOnIterator.hasNext()) {
+                    MenuAddOn addOn = menuAddOnIterator.next();
+                    itemPrice += addOn.getPrice();
+                    sb.append(addOn.getAddOnId());
+                }
+            }
+
+        }
+
+        return new ItemHash(sb.toString(), itemPrice);
+    }
+
+    @Override
+    public void onPlusButtonClicked(tdevm.app_ui.api.models.cart.MenuItem menuItem, int num) {
+        ItemHash object = generateItemHash(menuItem);
+        cartFragmentPresenter.addItemToCart(menuItem, object.getItemPrice(), object.getItemHash());
+        Log.d(TAG, "ADDED TO CART: " + menuItem.getItemName());
+        Log.d(TAG, "ITEM_HASH: " + object.getItemHash());
+    }
+
+    @Override
+    public void onMinusButtonClicked(tdevm.app_ui.api.models.cart.MenuItem menuItem, int num) {
+        ItemHash object = generateItemHash(menuItem);
+        cartFragmentPresenter.updateCartItem(menuItem, object.getItemPrice(), object.getItemHash());
+        Log.d(TAG, "REMOVED FROM CART: " + menuItem.getItemName());
+        Log.d(TAG, "ITEM_HASH: " + object.getItemHash());
+        Log.d(TAG, menuItem.getItemName());
+    }
+
+    @Override
+    public void onCustomizableItemClicked(tdevm.app_ui.api.models.cart.MenuItem menuItem, int flag) {
+
     }
 }
