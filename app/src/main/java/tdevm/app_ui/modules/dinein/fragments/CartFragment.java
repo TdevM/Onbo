@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,15 +28,14 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.ItemHash;
 import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
-import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity;
 import tdevm.app_ui.modules.dinein.adapters.CartItemsRecyclerAdapter;
 import tdevm.app_ui.modules.dinein.callbacks.CartItemClickListener;
-import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
-import tdevm.app_ui.modules.nondinein.activities.NonDineActivity;
+import tdevm.app_ui.modules.nondinein.NonDineActivity;
+import tdevm.app_ui.modules.nondinein.activities.InitNonDineOrderActivity;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CartHelper;
 
@@ -174,7 +172,8 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     @Override
     public void startNonDineOrderActivity() {
-        Toast.makeText(nonDineActivity,"Non dine activity" , Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), InitNonDineOrderActivity.class);
+        startActivity(intent);
     }
 
     @Override

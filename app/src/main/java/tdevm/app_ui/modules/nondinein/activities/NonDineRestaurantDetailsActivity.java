@@ -14,6 +14,7 @@ import butterknife.OnClick;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
+import tdevm.app_ui.modules.nondinein.NonDineActivity;
 import tdevm.app_ui.modules.nondinein.NonDineViewContract;
 
 public class NonDineRestaurantDetailsActivity extends AppCompatActivity implements NonDineViewContract.NonDineRestaurantDetailsView {

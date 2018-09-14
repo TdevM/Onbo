@@ -67,10 +67,9 @@
 
         <activity
             android:name=".modules.nondinein.activities.NonDineRestaurantDetailsActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".modules.nondinein.activities.NonDineActivity"
+            android:name=".modules.nondinein.NonDineActivity"
             android:label="@string/title_activity_non_dine"
             android:screenOrientation="portrait" />
         <activity
@@ -83,7 +82,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.entry.RestaurantMenuEntryActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".modules.entry.SimpleScannerActivity"
             android:screenOrientation="portrait" />
@@ -94,7 +93,8 @@
 
         <activity
             android:name=".root.activities.RestaurantDetailActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".modules.nondinein.activities.InitNonDineOrderActivity"></activity>
     </application>
 
 </manifest>

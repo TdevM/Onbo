@@ -15,6 +15,17 @@ public interface NonDineViewContract {
 
     interface NonDineRestaurantDetailsView extends BaseView{
         void onRestaurantDetailsFetched(Restaurant restaurant);
+    }
+
+    interface InitNonDineOrderView extends BaseView{
+
+    }
+
+    interface NonDineOrderSummaryView extends BaseView{
+
+    }
+
+    interface OrderPaymentTypeView extends BaseView{
 
     }
 }
