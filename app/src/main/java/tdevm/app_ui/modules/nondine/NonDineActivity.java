@@ -1,4 +1,4 @@
-package tdevm.app_ui.modules.nondinein;
+package tdevm.app_ui.modules.nondine;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

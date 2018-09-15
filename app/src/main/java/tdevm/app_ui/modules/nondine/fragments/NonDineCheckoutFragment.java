@@ -1,4 +1,4 @@
-package tdevm.app_ui.modules.nondinein.fragments;
+package tdevm.app_ui.modules.nondine.fragments;
 
 
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -21,9 +20,9 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.Checkout;
-import tdevm.app_ui.modules.nondinein.NonDineViewContract;
-import tdevm.app_ui.modules.nondinein.activities.InitNonDineOrderActivity;
-import tdevm.app_ui.modules.nondinein.adapters.NonDineCheckoutAdapter;
+import tdevm.app_ui.modules.nondine.NonDineViewContract;
+import tdevm.app_ui.modules.nondine.activities.InitNonDineOrderActivity;
+import tdevm.app_ui.modules.nondine.adapters.NonDineCheckoutAdapter;
 
 
 public class NonDineCheckoutFragment extends Fragment implements NonDineViewContract.NonDineCheckoutView {

@@ -51,8 +51,7 @@ import permissions.dispatcher.RuntimePermissions;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.dinein.DineInActivity;
-import tdevm.app_ui.modules.dinein.callbacks.BarCodeListener;
-import tdevm.app_ui.modules.nondinein.activities.NonDineRestaurantDetailsActivity;
+import tdevm.app_ui.modules.nondine.activities.NonDineRestaurantDetailsActivity;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CustomQRView;
 

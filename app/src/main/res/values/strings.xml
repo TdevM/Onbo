@@ -98,4 +98,7 @@
     <string name="please_choose_a_payment_method">Please choose a payment method</string>
     <string name="cards_wallets_net_banking">Cards, Wallets, Net Banking</string>
     <string name="pay_by_cash">Pay By Cash</string>
+    <string name="order_created_successfully">Order created successfully!</string>
+    <string name="view_details">View details</string>
+    <string name="please_make_your_payment_at_the_terminal_by_cash">Please make your payment at the terminal by cash</string>
 </resources>

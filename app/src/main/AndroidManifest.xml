@@ -66,10 +66,10 @@
         </receiver>
 
         <activity
-            android:name=".modules.nondinein.activities.NonDineRestaurantDetailsActivity"
+            android:name=".modules.nondine.activities.NonDineRestaurantDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".modules.nondinein.NonDineActivity"
+            android:name=".modules.nondine.NonDineActivity"
             android:label="@string/title_activity_non_dine"
             android:screenOrientation="portrait" />
         <activity
@@ -94,7 +94,7 @@
         <activity
             android:name=".root.activities.RestaurantDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".modules.nondinein.activities.InitNonDineOrderActivity"
+        <activity android:name=".modules.nondine.activities.InitNonDineOrderActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>

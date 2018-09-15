@@ -1,4 +1,4 @@
-package tdevm.app_ui.modules.nondinein.activities;
+package tdevm.app_ui.modules.nondine.activities;
 
 
 import android.util.Log;
@@ -16,8 +16,8 @@ import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.modules.nondinein.NonDinePresenterContract;
-import tdevm.app_ui.modules.nondinein.NonDineViewContract;
+import tdevm.app_ui.modules.nondine.NonDinePresenterContract;
+import tdevm.app_ui.modules.nondine.NonDineViewContract;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CartHelper;
 

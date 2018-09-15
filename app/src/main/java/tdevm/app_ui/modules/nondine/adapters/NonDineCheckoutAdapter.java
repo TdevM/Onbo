@@ -1,4 +1,4 @@
-package tdevm.app_ui.modules.nondinein.adapters;
+package tdevm.app_ui.modules.nondine.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

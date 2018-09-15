@@ -1,6 +1,7 @@
-package tdevm.app_ui.modules.nondinein;
+package tdevm.app_ui.modules.nondine;
 
 import tdevm.app_ui.api.models.response.v2.FOrder.Checkout;
+import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.base.BaseView;
 
@@ -19,7 +20,8 @@ public interface NonDineViewContract {
     }
 
     interface InitNonDineOrderView extends BaseView{
-
+        void onNDCashOrderCreated(FOrder fOrder);
+        void onOrderCreationFailure();
     }
 
     interface NonDineCheckoutView extends BaseView{
@@ -28,6 +30,10 @@ public interface NonDineViewContract {
     }
 
     interface OrderPaymentTypeView extends BaseView{
+
+    }
+
+    interface PlaceNDOrderCashView extends BaseView{
 
     }
 }

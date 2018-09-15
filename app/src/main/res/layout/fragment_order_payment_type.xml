@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".modules.nondinein.fragments.OrderPaymentTypeFragment">
+    tools:context=".modules.nondine.fragments.OrderPaymentTypeFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -18,7 +18,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
 
     <ImageView
-        android:id="@+id/iv_payment_option_online"
+        android:id="@+id/iv_payment_option_digital"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
@@ -64,9 +64,39 @@
         android:id="@+id/btn_place_nd_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Continue" />
+        android:enabled="false"
+        android:text="Continue"
+        android:textAllCaps="false" />
+
+    <ImageView
+        android:id="@+id/check_btn_digital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="191dp"
+        android:layout_marginLeft="88dp"
+        android:layout_marginStart="88dp"
+        android:background="@color/FloralWhite"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_check" />
+
+    <ImageView
+        android:id="@+id/check_btn_cash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/check_btn_digital"
+        android:layout_marginBottom="191dp"
+        android:layout_marginEnd="88dp"
+        android:layout_marginRight="88dp"
+        android:background="@color/FloralWhite"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_check" />
 
 </RelativeLayout>

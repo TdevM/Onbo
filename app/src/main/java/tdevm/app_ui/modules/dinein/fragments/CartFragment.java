@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Iterator;
 import java.util.List;
@@ -34,8 +33,8 @@ import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity;
 import tdevm.app_ui.modules.dinein.adapters.CartItemsRecyclerAdapter;
 import tdevm.app_ui.modules.dinein.callbacks.CartItemClickListener;
-import tdevm.app_ui.modules.nondinein.NonDineActivity;
-import tdevm.app_ui.modules.nondinein.activities.InitNonDineOrderActivity;
+import tdevm.app_ui.modules.nondine.NonDineActivity;
+import tdevm.app_ui.modules.nondine.activities.InitNonDineOrderActivity;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CartHelper;
 

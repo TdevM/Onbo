@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".modules.nondine.fragments.PlaceNDOrderCashFragment">
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_fragment_create_nd_cash_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:shimmer_clip_to_children="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/activity_padding">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="101dp"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/placeholder_text_height"
+                        android:layout_marginEnd="100dp"
+                        android:layout_marginRight="100dp"
+                        android:background="@color/placeholder_bg" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/placeholder_text_height"
+                        android:layout_marginEnd="50dp"
+                        android:layout_marginRight="50dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/placeholder_bg" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/placeholder_text_height"
+                        android:layout_marginEnd="160dp"
+                        android:layout_marginRight="160dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/placeholder_bg" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/thumbnail"
+                    android:layout_width="@dimen/placeholder_image"
+                    android:layout_height="@dimen/placeholder_image"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="104dp"
+                    android:background="@color/placeholder_bg" />
+
+                <View
+                    android:id="@+id/name"
+                    android:layout_width="150dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="254dp"
+                    android:background="@color/placeholder_bg" />
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/placeholder_text_height"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="211dp"
+                    android:background="@color/placeholder_bg" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="208dp"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/placeholder_text_height"
+                        android:layout_marginEnd="100dp"
+                        android:layout_marginRight="100dp"
+                        android:background="@color/placeholder_bg" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/placeholder_text_height"
+                        android:layout_marginEnd="50dp"
+                        android:layout_marginRight="50dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/placeholder_bg" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/placeholder_text_height"
+                        android:layout_marginEnd="160dp"
+                        android:layout_marginRight="160dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/placeholder_bg" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="5"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="0dp">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    app:srcCompat="@drawable/ic_check" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="120dp"
+                    android:text="@string/order_created_successfully"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3">
+
+
+
+
+                <Button
+                    android:id="@+id/btn_view_nd_cash_order_details"
+                    android:text="@string/view_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="63dp"
+                    android:text="@string/please_make_your_payment_at_the_terminal_by_cash" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Order ID"
+                    android:layout_marginLeft="11dp"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginTop="55dp"
+                    android:text="Order amount" />
+
+                <TextView
+                    android:id="@+id/tv_nd_cash_order_id_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="34dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="34dp" />
+
+                <TextView
+                    android:id="@+id/tv_nd_cash_order_amount_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignStart="@+id/tv_nd_cash_order_id_value"
+                    android:layout_marginTop="62dp"
+                    android:layout_alignLeft="@+id/tv_nd_cash_order_id_value" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

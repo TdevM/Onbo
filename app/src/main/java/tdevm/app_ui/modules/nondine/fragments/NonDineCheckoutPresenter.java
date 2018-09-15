@@ -1,4 +1,4 @@
-package tdevm.app_ui.modules.nondinein.fragments;
+package tdevm.app_ui.modules.nondine.fragments;
 
 import javax.inject.Inject;
 
@@ -11,8 +11,8 @@ import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.request.NonDineOrder;
 import tdevm.app_ui.api.models.response.v2.FOrder.Checkout;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.modules.nondinein.NonDinePresenterContract;
-import tdevm.app_ui.modules.nondinein.NonDineViewContract;
+import tdevm.app_ui.modules.nondine.NonDinePresenterContract;
+import tdevm.app_ui.modules.nondine.NonDineViewContract;
 import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CartHelper;
 

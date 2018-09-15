@@ -1,4 +1,4 @@
-package tdevm.app_ui.modules.nondinein.activities;
+package tdevm.app_ui.modules.nondine.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +14,8 @@ import butterknife.OnClick;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
-import tdevm.app_ui.modules.nondinein.NonDineActivity;
-import tdevm.app_ui.modules.nondinein.NonDineViewContract;
+import tdevm.app_ui.modules.nondine.NonDineActivity;
+import tdevm.app_ui.modules.nondine.NonDineViewContract;
 
 public class NonDineRestaurantDetailsActivity extends AppCompatActivity implements NonDineViewContract.NonDineRestaurantDetailsView {
 

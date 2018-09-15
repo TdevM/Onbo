@@ -1,4 +1,4 @@
-package tdevm.app_ui.modules.nondinein;
+package tdevm.app_ui.modules.nondine;
 
 import tdevm.app_ui.base.BasePresenterMVP;
 
@@ -16,6 +16,7 @@ public interface NonDinePresenterContract {
     interface InitNonDineOrderPresenter extends BasePresenterMVP<NonDineViewContract.InitNonDineOrderView>{
         void attachView(NonDineViewContract.InitNonDineOrderView view);
         void detachView();
+        void createCashNDOrder();
     }
 
     interface NonDineSummaryPresenter extends BasePresenterMVP<NonDineViewContract.NonDineCheckoutView>{
@@ -27,6 +28,13 @@ public interface NonDinePresenterContract {
     interface OrderPaymentTypePresenter extends BasePresenterMVP<NonDineViewContract.OrderPaymentTypeView>{
         void attachView(NonDineViewContract.OrderPaymentTypeView view);
         void detachView();
+
+    }
+
+    interface PlaceNDOrderCashPresenter extends BasePresenterMVP<NonDineViewContract.PlaceNDOrderCashView>{
+        void attachView(NonDineViewContract.PlaceNDOrderCashView view);
+        void detachView();
+
     }
 }
 

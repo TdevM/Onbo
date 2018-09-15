@@ -4,7 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.nondinein.activities.InitNonDineOrderActivity">
+    tools:context=".modules.nondine.activities.InitNonDineOrderActivity">
+
+    <ProgressBar
+        android:id="@+id/pb_non_dine_init"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
 
     <FrameLayout
         android:id="@+id/frame_layout_place_non_dine_order"

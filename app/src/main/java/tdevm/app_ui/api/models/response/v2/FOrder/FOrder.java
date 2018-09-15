@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.RestaurantTable;
@@ -341,10 +343,10 @@ public class FOrder implements Parcelable{
         this.order_type = order_type;
     }
 
-    @Override
-    public String toString() {
-        return "ClassPojo [created_from = " + created_from + ", txn_mode = " + txn_mode + ", offer_id = " + offer_id + ", packing_chrg = " + packing_chrg + ", txn_data = " + txn_data + ", order_id = " + order_id + ", timestamp = " + timestamp + ", restaurant_table = " + restaurant_table + ", txn_status = " + txn_status + ", txn_id = " + txn_id + ", order_source = " + order_source + ", user_id = " + user_id + ", grand_total = " + grand_total + ", completed = " + completed + ", status = " + status + ", restaurant_id = " + restaurant_id + ", table_id = " + table_id + ", subtotal = " + subtotal + ", discount = " + discount + ", f_order_items = " + f_order_items + ", guest_count = " + guest_count + ", f_order_detail = " + f_order_detail + ", user_msg = " + user_msg + ", conv_chrg = " + conv_chrg + ", dlv_chrg = " + dlv_chrg + ", user = " + user + ", taxes = " + taxes + ", order_type = " + order_type + "]";
-    }
+//    @Override
+//    public String toString() {
+//        return "ClassPojo [created_from = " + created_from + ", txn_mode = " + txn_mode + ", offer_id = " + offer_id + ", packing_chrg = " + packing_chrg + ", txn_data = " + txn_data + ", order_id = " + order_id + ", timestamp = " + timestamp + ", restaurant_table = " + restaurant_table + ", txn_status = " + txn_status + ", txn_id = " + txn_id + ", order_source = " + order_source + ", user_id = " + user_id + ", grand_total = " + grand_total + ", completed = " + completed + ", status = " + status + ", restaurant_id = " + restaurant_id + ", table_id = " + table_id + ", subtotal = " + subtotal + ", discount = " + discount + ", f_order_items = " + f_order_items + ", guest_count = " + guest_count + ", f_order_detail = " + f_order_detail + ", user_msg = " + user_msg + ", conv_chrg = " + conv_chrg + ", dlv_chrg = " + dlv_chrg + ", user = " + user + ", taxes = " + taxes + ", order_type = " + order_type + "]";
+//    }
 
     @Override
     public int describeContents() {
@@ -388,5 +390,41 @@ public class FOrder implements Parcelable{
         dest.writeString(dlv_chrg);
         dest.writeString(taxes);
         dest.writeString(order_type);
+    }
+
+    @Override
+    public String toString() {
+        return "FOrder{" +
+                "created_from='" + created_from + '\'' +
+                ", txn_mode='" + txn_mode + '\'' +
+                ", offer_id='" + offer_id + '\'' +
+                ", packing_chrg='" + packing_chrg + '\'' +
+                ", txn_data=" + txn_data +
+                ", order_id='" + order_id + '\'' +
+                ", restaurant_id='" + restaurant_id + '\'' +
+                ", restaurant=" + restaurant +
+                ", timestamp='" + timestamp + '\'' +
+                ", restaurant_table=" + restaurant_table +
+                ", txn_status='" + txn_status + '\'' +
+                ", txn_id='" + txn_id + '\'' +
+                ", order_source='" + order_source + '\'' +
+                ", user_id='" + user_id + '\'' +
+                ", grand_total='" + grand_total + '\'' +
+                ", completed='" + completed + '\'' +
+                ", status='" + status + '\'' +
+                ", table_id='" + table_id + '\'' +
+                ", subtotal='" + subtotal + '\'' +
+                ", discount='" + discount + '\'' +
+                ", f_order_items=" + Arrays.toString(f_order_items) +
+                ", guest_count='" + guest_count + '\'' +
+                ", f_order_detail=" + f_order_detail +
+                ", user_msg='" + user_msg + '\'' +
+                ", conv_chrg='" + conv_chrg + '\'' +
+                ", dlv_chrg='" + dlv_chrg + '\'' +
+                ", user=" + user +
+                ", taxes='" + taxes + '\'' +
+                ", order_type='" + order_type + '\'' +
+                ", t_order_id='" + t_order_id + '\'' +
+                '}';
     }
 }
