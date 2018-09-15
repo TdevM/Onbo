@@ -1,14 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".modules.nondinein.fragments.OrderPaymentTypeFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="113dp"
+        android:text="@string/please_choose_a_payment_method"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/iv_payment_option_online"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
+        app:srcCompat="@drawable/ic_pay_online" />
+
+    <ImageView
+        android:id="@+id/iv_payment_option_cash"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        app:srcCompat="@drawable/ic_pay_cash" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="162dp"
+        android:layout_marginStart="15dp"
+        android:text="@string/cards_wallets_net_banking"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/iv_payment_option_cash"
+        android:layout_alignTop="@+id/textView10"
+        android:text="@string/pay_by_cash"
+        android:layout_alignRight="@+id/iv_payment_option_cash" />
+
+    <Button
+        android:id="@+id/btn_place_nd_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Continue" />
+
+</RelativeLayout>

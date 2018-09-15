@@ -18,6 +18,11 @@ public class NonDineOrder {
         this.order_items = order_items;
     }
 
+    public NonDineOrder(String restaurant_id, String order_items) {
+        this.restaurant_id = restaurant_id;
+        this.order_items = order_items;
+    }
+
     public String getRestaurant_id() {
         return restaurant_id;
     }

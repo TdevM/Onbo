@@ -2,6 +2,9 @@ package tdevm.app_ui.utils;
 
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
@@ -339,4 +342,81 @@ public class CartHelper extends BasePresenter {
             }
         });
     }
+
+    public JSONArray convertCartTOJSON() {
+        JSONArray root = new JSONArray();
+        Single<List<CartItem>> cartItems = getCartItems();
+        cartItems.subscribe(new SingleObserver<List<CartItem>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onSuccess(List<CartItem> cartItems) {
+                for (int i = 0; i < cartItems.size(); i++) {
+                    JSONObject rootObject = new JSONObject();
+                    JSONArray variants = new JSONArray();
+                    JSONArray addOns = new JSONArray();
+                    JSONArray vExtra = new JSONArray();
+                    for (int j = 0; j < 2; j++) {
+                        try {
+                            rootObject.put("item_id", cartItems.get(i).getMenuItem().getItemId());
+                            rootObject.put("item_qty", cartItems.get(i).getQuantity());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    root.put(rootObject);
+                    for (int x = 0; x < cartItems.get(i).getMenuItem().getMenuVariantOptions().size(); x++) {
+
+                        JSONObject variantObjects = new JSONObject();
+                        for (int j = 0; j < 2; j++) {
+                            try {
+                                variantObjects.put("variant_option_id", cartItems.get(i).getMenuItem().getMenuVariantOptions().get(x).getOptionId());
+                                variantObjects.put("variant_id", cartItems.get(i).getMenuItem().getMenuVariantOptions().get(x).getVariantId());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        variants.put(variantObjects);
+                    }
+                    try {
+                        rootObject.put("order_variants", variants);
+                        rootObject.put("variants_extras", vExtra);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    for (int x = 0; x < cartItems.get(i).getMenuItem().getMenuAddOns().size(); x++) {
+                        JSONObject addOnObjects = new JSONObject();
+                        for (int j = 0; j < 2; j++) {
+                            try {
+                                addOnObjects.put("menu_add_on_id", cartItems.get(i).getMenuItem().getMenuAddOns().get(x).getAddOnId());
+                                addOnObjects.put("group_id", cartItems.get(i).getMenuItem().getMenuAddOns().get(x).getGroupId());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        addOns.put(addOnObjects);
+                    }
+                    try {
+                        rootObject.put("order_add_ons", addOns);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+
+        return root;
+    }
+
 }

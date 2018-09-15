@@ -94,7 +94,9 @@
         <activity
             android:name=".root.activities.RestaurantDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".modules.nondinein.activities.InitNonDineOrderActivity"></activity>
+        <activity android:name=".modules.nondinein.activities.InitNonDineOrderActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

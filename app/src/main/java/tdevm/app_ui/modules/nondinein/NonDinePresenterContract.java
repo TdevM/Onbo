@@ -16,13 +16,12 @@ public interface NonDinePresenterContract {
     interface InitNonDineOrderPresenter extends BasePresenterMVP<NonDineViewContract.InitNonDineOrderView>{
         void attachView(NonDineViewContract.InitNonDineOrderView view);
         void detachView();
-        void test();
     }
 
-    interface NonDineSummaryPresenter extends BasePresenterMVP<NonDineViewContract.NonDineOrderSummaryView>{
-        void attachView(NonDineViewContract.NonDineOrderSummaryView view);
+    interface NonDineSummaryPresenter extends BasePresenterMVP<NonDineViewContract.NonDineCheckoutView>{
+        void attachView(NonDineViewContract.NonDineCheckoutView view);
         void detachView();
-        void test();
+        void checkoutOrderSummary();
     }
 
     interface OrderPaymentTypePresenter extends BasePresenterMVP<NonDineViewContract.OrderPaymentTypeView>{

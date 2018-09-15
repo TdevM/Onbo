@@ -60,7 +60,7 @@
     <string name="dish">Dish</string>
     <string name="price">Price</string>
     <string name="qty">Qty</string>
-    <string name="total">Total</string>
+
 
     <string name="proceed">Proceed</string>
     <string name="total_items">Total items</string>
@@ -90,4 +90,12 @@
     <string name="finish_order">Finish Order</string>
     <string name="add_items">ADD Items</string>
     <string name="no_order_is_running_n_place_an_order">No order is running \nPlace an Order</string>
+    <string name="taxes">Taxes</string>
+    <string name="gst">GST</string>
+    <string name="total">Total</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="choose_payment_method">Choose payment method</string>
+    <string name="please_choose_a_payment_method">Please choose a payment method</string>
+    <string name="cards_wallets_net_banking">Cards, Wallets, Net Banking</string>
+    <string name="pay_by_cash">Pay By Cash</string>
 </resources>

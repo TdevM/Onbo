@@ -1,5 +1,7 @@
 package tdevm.app_ui.modules.nondinein.activities;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -34,6 +36,7 @@ public class InitNonDineOrderPresenter extends BasePresenter implements NonDineP
     @Override
     public void attachView(NonDineViewContract.InitNonDineOrderView view) {
         this.nonDineOrderView = view;
+        Log.d(TAG,"Attach view called for presenter");
     }
 
     @Override
@@ -44,8 +47,4 @@ public class InitNonDineOrderPresenter extends BasePresenter implements NonDineP
         }
     }
 
-    @Override
-    public void test() {
-        nonDineOrderView.showProgressUI();
-    }
 }

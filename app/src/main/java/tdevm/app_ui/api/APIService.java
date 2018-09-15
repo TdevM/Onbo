@@ -19,6 +19,7 @@ import tdevm.app_ui.api.models.request.PaymentCapture;
 import tdevm.app_ui.api.models.request.RestaurantOrder;
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.api.models.response.UserApp;
+import tdevm.app_ui.api.models.response.v2.FOrder.Checkout;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.RestaurantTable;
@@ -99,6 +100,9 @@ public interface APIService {
 
 
     //Type2 Orders (Non Dine)
+    @POST("m/f/orders/checkout")
+    Observable<Response<Checkout>> checkoutOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
+
     @POST("m/f/orders/unpaid")
     Observable<Response<FOrder>> createUnpaidNonDineOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
     @POST("m/f/orders")

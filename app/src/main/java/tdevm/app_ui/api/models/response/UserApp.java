@@ -98,4 +98,18 @@ public class UserApp {
         this.userImageUrl = userImageUrl;
     }
 
+
+    @Override
+    public String toString() {
+        return "UserApp{" +
+                "userName='" + userName + '\'' +
+                ", userGender=" + userGender +
+                ", userEmail='" + userEmail + '\'' +
+                ", userMobile='" + userMobile + '\'' +
+                ", userUsername=" + userUsername +
+                ", userIsVerifiedEmail=" + userIsVerifiedEmail +
+                ", userIsVerifiedMobile=" + userIsVerifiedMobile +
+                ", userImageUrl='" + userImageUrl + '\'' +
+                '}';
+    }
 }
