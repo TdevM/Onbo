@@ -20,8 +20,6 @@ import tdevm.app_ui.R;
 
 public abstract class BaseFragment extends Fragment {
 
-    @BindView(R.id.progressBar2)
-    ProgressBar progressBar;
 
     @LayoutRes
     protected abstract int getLayoutRes();
@@ -31,9 +29,7 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-    public ProgressBar getProgressBar() {
-        return progressBar;
-    }
+
 
     @Nullable
     @Override

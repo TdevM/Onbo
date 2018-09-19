@@ -6,6 +6,7 @@ import java.util.List;
 import retrofit2.Response;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
+import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
 import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
 import tdevm.app_ui.api.models.response.v2.reviews.DishReviews;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
@@ -38,6 +39,8 @@ public interface DineInViewContract {
 
     interface SingleCuisineGridView extends BaseView{
         void onMenuItemsFetched(ArrayList<MenuItem> arrayList);
+        void onMenuItemsFetchedV2(List<CuisineMenuItems> cuisineMenuItems);
+        void onMenuItemFetchFailure();
         void updateAdapter();
     }
 

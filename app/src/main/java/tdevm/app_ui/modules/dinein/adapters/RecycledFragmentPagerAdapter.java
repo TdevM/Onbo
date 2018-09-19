@@ -29,7 +29,8 @@ public class RecycledFragmentPagerAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
-        return  SingleCuisineGridFragment.newInstance(RESTAURANT_ID,cuisineList.get(position).getCuisine_id());
+        return  SingleCuisineGridFragment.newInstance("8");
+
     }
 
     @Override

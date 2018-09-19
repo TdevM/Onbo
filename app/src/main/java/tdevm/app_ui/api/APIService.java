@@ -24,6 +24,7 @@ import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.RestaurantTable;
 import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
+import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
 import tdevm.app_ui.api.models.response.v2.reviews.DishReviews;
@@ -64,6 +65,9 @@ public interface APIService {
     Observable<ArrayList<MenuItem>> fetchAllMenuItems(@Header("x-auth") String authToken, @QueryMap Map<String, String> options);
     @GET("m/menu_items")
     Observable<ArrayList<MenuItem>> fetchMenuItemsByCuisine(@Header("x-auth") String authToken, @QueryMap Map<String, String> options);
+
+    @GET("m/menu")
+    Observable<Response<List<CuisineMenuItems>>> fetchMenuItems(@Header("x-auth") String authToken, @QueryMap Map<String, String> options);
 
 
     //Reviews

@@ -2,7 +2,6 @@ package tdevm.app_ui.modules.dinein.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,9 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,15 +24,19 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.ItemHash;
+import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
 import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
+import tdevm.app_ui.modules.dinein.adapters.MenuAdapter;
+import tdevm.app_ui.modules.dinein.adapters.MenuItemsAdapter;
 import tdevm.app_ui.modules.dinein.adapters.RecycledGridMenuAdapter;
 import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
 import tdevm.app_ui.modules.dinein.bottomsheets.section_r_view.MenuItemCustomizationSheet;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemOptionsSelected;
+import tdevm.app_ui.utils.AuthUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -57,15 +57,19 @@ public class SingleCuisineGridFragment extends Fragment
     Unbinder unbinder;
     private Map<String, String> fetchDishesMap;
     RecycledGridMenuAdapter recycledGridMenuAdapter;
+    MenuAdapter menuAdapter;
 
     @Inject
     SingleCuisineGridPresenter singleCuisineGridPresenter;
     @Inject
     CartHelper cartHelper;
 
-    public static SingleCuisineGridFragment newInstance(String restaurantUUID, Long mCuisineId) {
+    @Inject
+    AuthUtils authUtils;
+
+    public static SingleCuisineGridFragment newInstance(String restaurantUUID) {
         Bundle args = new Bundle();
-        args.putLong(CUISINE_ID, mCuisineId);
+        args.putLong(CUISINE_ID, 4);
         args.putString(RESTAURANT_ID, restaurantUUID);
         SingleCuisineGridFragment fragment = new SingleCuisineGridFragment();
         fragment.setArguments(args);
@@ -87,17 +91,18 @@ public class SingleCuisineGridFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         resolveDaggerDependencies();
+
+        Log.d(TAG, " single cuisine onCreateee");
         View view = inflater.inflate(R.layout.fragment_single_cuisine_grid, container, false);
         unbinder = ButterKnife.bind(this, view);
         mLayoutManager = new LinearLayoutManager(getContext());
         fetchDishesMap = new HashMap<>();
-        fetchDishesMap.put("restaurant_id", String.valueOf(getArguments().getString(RESTAURANT_ID)));
-        fetchDishesMap.put("cuisine_id", String.valueOf(getArguments().getLong(CUISINE_ID)));
+        fetchDishesMap.put("restaurant_id", authUtils.getScannedRestaurantId());
         recyclerViewGridSingle.setLayoutManager(mLayoutManager);
-        recycledGridMenuAdapter = new RecycledGridMenuAdapter(getActivity(), singleCuisineGridPresenter, cartHelper);
-        recyclerViewGridSingle.setAdapter(recycledGridMenuAdapter);
-        singleCuisineGridPresenter.fetchMenuItemsByCuisine(fetchDishesMap);
-        recycledGridMenuAdapter.setDishItemClickListenerCallback(this);
+        menuAdapter = new MenuAdapter(getContext(), cartHelper);
+        menuAdapter.setDishItemClickListenerCallback(this);
+        recyclerViewGridSingle.setAdapter(menuAdapter);
+        singleCuisineGridPresenter.fetchMenuItems(fetchDishesMap);
         logSelections();
         return view;
     }
@@ -123,8 +128,19 @@ public class SingleCuisineGridFragment extends Fragment
     }
 
     @Override
+    public void onMenuItemsFetchedV2(List<CuisineMenuItems> cuisineMenuItems) {
+        menuAdapter.onCuisineListFetched(cuisineMenuItems);
+        Log.d(TAG, "Cuisine menu item fetched into fragment");
+    }
+
+    @Override
+    public void onMenuItemFetchFailure() {
+        Toast.makeText(getContext(), "Failed to load items", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void updateAdapter() {
-        recycledGridMenuAdapter.notifyDataSetChanged();
+        menuAdapter.notifyDataSetChanged();
     }
 
 
@@ -170,9 +186,9 @@ public class SingleCuisineGridFragment extends Fragment
 
     @Override
     public void onCustomizableItemClicked(MenuItem menuItem, int flag) {
-        if(flag==1) {
+        if (flag == 1) {
             MenuItemCustomizationSheet.newInstance(menuItem).show(getChildFragmentManager(), "dialog");
-        }else if(flag==0){
+        } else if (flag == 0) {
             Toast.makeText(getContext(), "Remove this item from cart!", Toast.LENGTH_SHORT).show();
         }
     }

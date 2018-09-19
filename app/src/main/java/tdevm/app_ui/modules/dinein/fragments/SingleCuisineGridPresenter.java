@@ -18,9 +18,11 @@ import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.cart.CartSelection;
+import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
@@ -63,6 +65,40 @@ public class SingleCuisineGridPresenter extends BasePresenter
             @Override
             public void onNext(ArrayList<MenuItem> arrayList) {
                 singleCuisineGridView.onMenuItemsFetched(arrayList);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void fetchMenuItems(Map<String, String> map) {
+        Observable<Response<List<CuisineMenuItems>>> cuisineItem = apiService.fetchMenuItems(authUtils.getAuthLoginToken(), map);
+        subscribe(cuisineItem, new Observer<Response<List<CuisineMenuItems>>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(Response<List<CuisineMenuItems>> listResponse) {
+                Log.d(TAG,"SUccess response");
+                if (listResponse.isSuccessful()){
+                    if(listResponse.code() == 200){
+                        singleCuisineGridView.onMenuItemsFetchedV2(listResponse.body());
+                        Log.d(TAG,"Presenter fetch menu V2");
+                    }
+                }else {
+                    singleCuisineGridView.onMenuItemFetchFailure();
+                }
             }
 
             @Override

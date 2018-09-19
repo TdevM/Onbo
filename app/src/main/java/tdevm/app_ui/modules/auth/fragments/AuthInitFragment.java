@@ -49,7 +49,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     @Inject
     AuthInitPresenter authInitPresenter;
 
-    @BindView(R.id.progressBar2)
+    @BindView(R.id.progress_bar_auth_init)
     ProgressBar progressBar;
     @BindView(R.id.et_init_phone_number)
     EditText phoneNumberInit;

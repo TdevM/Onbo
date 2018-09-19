@@ -34,6 +34,8 @@ public interface DineInPresenterContract {
 
         void fetchMenuItemsByCuisine(Map<String, String> map);
 
+        void fetchMenuItems(Map<String,String> map);
+
         void addItemToCart(MenuItem menuItem, int itemTotal, String  itemHash);
 
         void addItemToSelection(MenuItem menuItem);

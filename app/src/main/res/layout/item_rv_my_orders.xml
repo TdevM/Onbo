@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tv_my_orders_restaurant_name"
-            android:text="$ 2440" />
+            android:text="$ 2440"
+            android:layout_alignParentLeft="true" />
 
 
     </RelativeLayout>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -16,11 +17,13 @@ import javax.inject.Inject;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.dinein.fragments.RunningOrderEmptyFragment;
+import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
 import tdevm.app_ui.modules.payment.PaymentActivity;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
 import tdevm.app_ui.modules.dinein.fragments.BellFragment;
 import tdevm.app_ui.modules.dinein.fragments.MergedOrderFragment;
+import tdevm.app_ui.root.BottomNavigationViewBehavior;
 import tdevm.app_ui.root.BottomNavigationViewHelper;
 
 public class DineInActivity extends AppCompatActivity implements DineInViewContract.DineInActivity {
@@ -41,8 +44,8 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
             fragmentTransaction = getSupportFragmentManager().beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_dine_in_menu:
-                    DishMenuFragment dishMenuFragment = new DishMenuFragment();
-                    fragmentTransaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);
+                    SingleCuisineGridFragment cuisineGridFragment = new SingleCuisineGridFragment();
+                    fragmentTransaction.replace(R.id.frame_layout_dine_in, cuisineGridFragment);
                     fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_bell_request:
@@ -75,7 +78,7 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
         setContentView(R.layout.activity_dine_in_home);
         resolveDaggerDependencies();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        DishMenuFragment dishMenuFragment = new DishMenuFragment();
+        SingleCuisineGridFragment dishMenuFragment = new SingleCuisineGridFragment();
         transaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);
         transaction.commit();
 
@@ -90,6 +93,8 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
         BottomNavigationView navigation = findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationViewBehavior());
 
     }
 

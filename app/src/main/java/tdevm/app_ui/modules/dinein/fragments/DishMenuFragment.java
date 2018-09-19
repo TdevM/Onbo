@@ -31,8 +31,8 @@ public class DishMenuFragment extends Fragment implements DineInViewContract.Dis
     public static final String TAG = AuthInitFragment.class.getSimpleName();
 
     Unbinder unbinder;
-    @BindView(R.id.viewpager_dish_menu)
-    ViewPager viewPagerDishMenu;
+//    @BindView(R.id.viewpager_dish_menu)
+//    ViewPager viewPagerDishMenu;
     @BindView(R.id.sliding_tabs_dish_menu)
     TabLayout tabLayoutDishMenu;
 
@@ -71,8 +71,8 @@ public class DishMenuFragment extends Fragment implements DineInViewContract.Dis
         View view =  inflater.inflate(R.layout.fragment_dish_menu, container, false);
 
         unbinder =  ButterKnife.bind(this,view);
-        tabLayoutDishMenu.setupWithViewPager(viewPagerDishMenu);
-        tabLayoutDishMenu.setOverScrollMode(1);
+       // tabLayoutDishMenu.setupWithViewPager(viewPagerDishMenu);
+        //tabLayoutDishMenu.setOverScrollMode(1);
         Map<String,String> map = new HashMap<>();
         map.put("restaurant_id",authUtils.getScannedRestaurantId());
         dishMenuPresenter.FetchAllCuisines(map);
@@ -96,7 +96,8 @@ public class DishMenuFragment extends Fragment implements DineInViewContract.Dis
 
     @Override
     public void onCuisinesFetched(ArrayList<Cuisine> cuisines) {
-      viewPagerDishMenu.setAdapter(new RecycledFragmentPagerAdapter(getChildFragmentManager(),getActivity(),cuisines,authUtils.getScannedRestaurantId()));
+      //viewPagerDishMenu.setAdapter(new RecycledFragmentPagerAdapter(getChildFragmentManager(),getActivity(),cuisines,authUtils.getScannedRestaurantId()));
+        SingleCuisineGridFragment.newInstance(authUtils.getScannedRestaurantId());
     }
 
     @Override
