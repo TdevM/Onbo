@@ -173,7 +173,7 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     @Override
     public void onDestroy() {
         verifyPhoneOTPPresenter.detachView();
-       // smsListener.abortBroadcast();
+//        getActivity().unregisterReceiver(smsListener);
         super.onDestroy();
     }
 

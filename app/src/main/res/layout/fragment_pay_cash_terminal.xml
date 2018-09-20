@@ -156,7 +156,7 @@
                     android:layout_marginTop="120dp"
                     android:text="@string/order_created_successfully"
                     android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large" />
             </RelativeLayout>
 
 

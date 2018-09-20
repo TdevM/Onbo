@@ -8,13 +8,15 @@
 
     <TextView
         android:id="@+id/text_login_home"
-        android:layout_width="wrap_content"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="204dp"
-        android:text="@string/lets_get_started" />
-
+        android:textColor="@color/blue_default_app"
+        android:layout_marginTop="153dp"
+        android:text="@string/lets_get_started"
+        android:textSize="20sp" />
 
     <tdevm.app_ui.widgets.PhoneEditText
         android:id="@+id/et_init_phone_number"
@@ -31,14 +33,14 @@
 
     <Button
         android:id="@+id/btn_login_next"
-        style=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/et_init_phone_number"
-        android:layout_marginTop="25dp"
-        android:text="@string/auth_next" />
+        android:background="@color/blue_default_app"
+        android:text="@string/auth_next"
+        android:textColor="@color/white"
+        android:layout_alignParentLeft="true" />
 
     <ProgressBar
         android:id="@+id/progress_bar_auth_init"

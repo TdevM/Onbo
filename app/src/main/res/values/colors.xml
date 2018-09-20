@@ -155,4 +155,8 @@
     <color name="chef">#777</color>
     <color name="timestamp">#777</color>
 
+    <color name="blue_default_app">#00C1F8</color>
+    <color name="color_primary_dark">#11549B</color>
+    <color name="color_accent">#1F1C51</color>
+
 </resources>

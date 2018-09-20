@@ -35,7 +35,7 @@
     <string name="password_again">Password</string>
 
     <string name="login">Login</string>
-    <string name="sign_up">SignUp</string>
+    <string name="sign_up">Sign Up</string>
     <string name="email">Email</string>
     <string name="name">Name</string>
     <string name="gender_male">Guy</string>
@@ -101,4 +101,5 @@
     <string name="order_created_successfully">Order created successfully!</string>
     <string name="view_details">View details</string>
     <string name="please_make_your_payment_at_the_terminal_by_cash">Please make your payment at the terminal by cash</string>
+    <string name="verification">Verification</string>
 </resources>
