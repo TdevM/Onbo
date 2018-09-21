@@ -35,7 +35,7 @@ import tdevm.app_ui.modules.dinein.adapters.CartItemsRecyclerAdapter;
 import tdevm.app_ui.modules.dinein.callbacks.CartItemClickListener;
 import tdevm.app_ui.modules.nondine.NonDineActivity;
 import tdevm.app_ui.modules.nondine.activities.InitNonDineOrderActivity;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 public class CartFragment extends Fragment implements DineInViewContract.CartFragmentView, CartItemClickListener {
@@ -60,7 +60,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     @Inject
     CartHelper cartHelper;
     @Inject
-    AuthUtils authUtils;
+    PreferenceUtils preferenceUtils;
 
     @Inject
     CartFragmentPresenterImpl cartFragmentPresenter;
@@ -87,9 +87,9 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (authUtils.getRestaurantMode().equals(MODE_DINE_IN)) {
+        if (preferenceUtils.getRestaurantMode().equals(MODE_DINE_IN)) {
             activity = (DineInActivity) getActivity();
-        } else if (authUtils.getRestaurantMode().equals(MODE_NON_DINE)) {
+        } else if (preferenceUtils.getRestaurantMode().equals(MODE_NON_DINE)) {
             nonDineActivity = (NonDineActivity) getActivity();
         }
         View view;

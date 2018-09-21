@@ -3,18 +3,12 @@ package tdevm.app_ui.modules.nondine.fragments;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
-import tdevm.app_ui.api.models.request.NonDineOrder;
-import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.nondine.NonDinePresenterContract;
 import tdevm.app_ui.modules.nondine.NonDineViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 public class PlaceNDOrderCashPresenter extends BasePresenter implements NonDinePresenterContract.PlaceNDOrderCashPresenter{
@@ -23,15 +17,15 @@ public class PlaceNDOrderCashPresenter extends BasePresenter implements NonDineP
 
     private APIService apiService;
     private CartHelper cartHelper;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private NonDineViewContract.PlaceNDOrderCashView view;
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    public PlaceNDOrderCashPresenter(APIService apiService, CartHelper cartHelper, AuthUtils authUtils) {
+    public PlaceNDOrderCashPresenter(APIService apiService, CartHelper cartHelper, PreferenceUtils preferenceUtils) {
         this.apiService = apiService;
         this.cartHelper = cartHelper;
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
         this.compositeDisposable = new CompositeDisposable();
     }
 

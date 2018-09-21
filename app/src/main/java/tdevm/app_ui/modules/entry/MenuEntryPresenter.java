@@ -6,9 +6,6 @@ import android.util.Log;
 import com.google.android.gms.location.LocationResult;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +22,7 @@ import tdevm.app_ui.api.models.QRObjectRestaurant;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.RestaurantTable;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -39,15 +36,15 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     private static final String MODE_DINE_IN = "MODE_DINE_IN";
     private static final String MODE_NON_DINE = "MODE_NON_DINE";
     private APIService apiService;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private CartHelper cartHelper;
     private CompositeDisposable compositeDisposable;
     private MenuEntryViewContract.RestaurantMenuEntryView view;
 
     @Inject
-    public MenuEntryPresenter(APIService apiService, AuthUtils authUtils, CartHelper cartHelper) {
+    public MenuEntryPresenter(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cartHelper) {
         this.apiService = apiService;
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
         this.cartHelper = cartHelper;
         compositeDisposable = new CompositeDisposable();
     }
@@ -88,7 +85,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     public void fetchRestaurantDetails(QRObjectRestaurant qrObjectRestaurant) {
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_uuid", qrObjectRestaurant.getUuid());
-        Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map, authUtils.getAuthLoginToken());
+        Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map, preferenceUtils.getAuthLoginToken());
         subscribe(observable, new Observer<Response<Restaurant>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -119,19 +116,19 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
 
     public void onDineQRVerificationSuccess(QRObjectRestaurant qrObjectRestaurant, Restaurant restaurant, RestaurantTable table) {
         String tableShortId = restaurant.getRestaurant_uuid() + "_" + table.getTable_number();
-        authUtils.saveDineQRTransaction(restaurant.getRestaurant_id(), restaurant.getRestaurant_uuid(), table.getRestaurant_table_id(), tableShortId, MODE_DINE_IN);
-        Log.d(TAG, "Saved Restaurant" + authUtils.getScannedRestaurantUuid());
-        Log.d(TAG, "Saved Table" + authUtils.getScannedRestaurantTableShortId());
-        Log.d(TAG, "Restaurant Mode" + authUtils.getRestaurantMode());
+        preferenceUtils.saveDineQRTransaction(restaurant.getRestaurant_id(), restaurant.getRestaurant_uuid(), table.getRestaurant_table_id(), tableShortId, MODE_DINE_IN);
+        Log.d(TAG, "Saved Restaurant" + preferenceUtils.getScannedRestaurantUuid());
+        Log.d(TAG, "Saved Table" + preferenceUtils.getScannedRestaurantTableShortId());
+        Log.d(TAG, "Restaurant Mode" + preferenceUtils.getRestaurantMode());
         clearExistingCart();
         view.redirectDineInActivity();
     }
 
 
     public void onNonDineQRVerificationSuccess(QRObjectRestaurant qrObjectRestaurant, Restaurant restaurant) {
-        authUtils.saveNonDineQRTransaction(restaurant.getRestaurant_id(), restaurant.getRestaurant_uuid(), MODE_NON_DINE);
-        Log.d(TAG, "Saved Restaurant" + authUtils.getScannedRestaurantUuid());
-        Log.d(TAG, "Restaurant Mode" + authUtils.getRestaurantMode());
+        preferenceUtils.saveNonDineQRTransaction(restaurant.getRestaurant_id(), restaurant.getRestaurant_uuid(), MODE_NON_DINE);
+        Log.d(TAG, "Saved Restaurant" + preferenceUtils.getScannedRestaurantUuid());
+        Log.d(TAG, "Restaurant Mode" + preferenceUtils.getRestaurantMode());
         Log.d(TAG, "Type 2 valid");
         clearExistingCart();
         view.redirectNonDineActivity();
@@ -142,7 +139,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
         Map<String, String> getRestData = new HashMap<>();
         getRestData.put("short_id", qrObjectRestaurant.getUuid() + "_" + qrObjectRestaurant.getData().getTable());
         getRestData.put("restaurant_uuid", qrObjectRestaurant.getUuid());
-        Observable<Response<RestaurantTable>> observable = apiService.verifyTableVacancy(authUtils.getAuthLoginToken(), getRestData);
+        Observable<Response<RestaurantTable>> observable = apiService.verifyTableVacancy(preferenceUtils.getAuthLoginToken(), getRestData);
         subscribe(observable, new Observer<Response<RestaurantTable>>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
@@ -177,7 +174,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     private void fetchRestaurantDetailsTable(QRObjectRestaurant qrObjectRestaurant, RestaurantTable restaurantTable) {
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_uuid", qrObjectRestaurant.getUuid());
-        Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map, authUtils.getAuthLoginToken());
+        Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map, preferenceUtils.getAuthLoginToken());
         subscribe(observable, new Observer<Response<Restaurant>>() {
             @Override
             public void onSubscribe(Disposable d) {

@@ -8,7 +8,7 @@ import retrofit2.Retrofit;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.di.scopes.PerActivity;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 
 /**
  * Created by Tridev on 04-10-2017.
@@ -25,8 +25,8 @@ public class APIModule {
 
     @PerActivity
     @Provides
-    AuthUtils authUtils(SharedPreferences sharedPreferences){
-        return new AuthUtils(new MySharedPreferences(sharedPreferences));
+    PreferenceUtils authUtils(SharedPreferences sharedPreferences){
+        return new PreferenceUtils(new MySharedPreferences(sharedPreferences));
     }
 
 }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +23,7 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.modules.auth.fragments.AuthInitFragment;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
-import tdevm.app_ui.modules.dinein.adapters.RecycledFragmentPagerAdapter;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 
 public class DishMenuFragment extends Fragment implements DineInViewContract.DishMenuView {
     public static final String TAG = AuthInitFragment.class.getSimpleName();
@@ -39,7 +37,7 @@ public class DishMenuFragment extends Fragment implements DineInViewContract.Dis
     @Inject
     DishMenuPresenter dishMenuPresenter;
     @Inject
-    AuthUtils authUtils;
+    PreferenceUtils preferenceUtils;
 
 
     public DishMenuFragment() {
@@ -74,7 +72,7 @@ public class DishMenuFragment extends Fragment implements DineInViewContract.Dis
        // tabLayoutDishMenu.setupWithViewPager(viewPagerDishMenu);
         //tabLayoutDishMenu.setOverScrollMode(1);
         Map<String,String> map = new HashMap<>();
-        map.put("restaurant_id",authUtils.getScannedRestaurantId());
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         dishMenuPresenter.FetchAllCuisines(map);
         return view;
     }
@@ -96,8 +94,8 @@ public class DishMenuFragment extends Fragment implements DineInViewContract.Dis
 
     @Override
     public void onCuisinesFetched(ArrayList<Cuisine> cuisines) {
-      //viewPagerDishMenu.setAdapter(new RecycledFragmentPagerAdapter(getChildFragmentManager(),getActivity(),cuisines,authUtils.getScannedRestaurantId()));
-        SingleCuisineGridFragment.newInstance(authUtils.getScannedRestaurantId());
+      //viewPagerDishMenu.setAdapter(new RecycledFragmentPagerAdapter(getChildFragmentManager(),getActivity(),cuisines,preferenceUtils.getScannedRestaurantId()));
+        SingleCuisineGridFragment.newInstance(preferenceUtils.getScannedRestaurantId());
     }
 
     @Override

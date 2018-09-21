@@ -39,11 +39,6 @@
             android:name=".root.BottomNavigationHome"
             android:label="@string/title_activity_bottom_navigation"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".modules.dinein.DineInActivity"
@@ -94,8 +89,21 @@
         <activity
             android:name=".root.activities.RestaurantDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".modules.nondine.activities.InitNonDineOrderActivity"
+        <activity
+            android:name=".modules.nondine.activities.InitNonDineOrderActivity"
             android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".modules.intro.IntroActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".modules.intro.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -12,7 +12,7 @@ import tdevm.app_ui.api.models.response.UserApp;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.root.NavigationHomePresenterContract;
 import tdevm.app_ui.root.NavigationHomeViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -23,14 +23,14 @@ public class AccountsFragmentPresenter extends BasePresenter implements Navigati
 
     private NavigationHomeViewContract.AccountsFragmentView fragmentView;
 
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private APIService apiService;
     private CartHelper cartHelper;
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    public AccountsFragmentPresenter(AuthUtils authUtils, APIService apiService, CartHelper cartHelper) {
-        this.authUtils = authUtils;
+    public AccountsFragmentPresenter(PreferenceUtils preferenceUtils, APIService apiService, CartHelper cartHelper) {
+        this.preferenceUtils = preferenceUtils;
         this.apiService = apiService;
         this.cartHelper = cartHelper;
         this.compositeDisposable = new CompositeDisposable();
@@ -45,7 +45,7 @@ public class AccountsFragmentPresenter extends BasePresenter implements Navigati
 
     @Override
     public void fetchUser() {
-      Observable<Response<UserApp>> appObservable = apiService.fetchUser(authUtils.getAuthLoginToken());
+      Observable<Response<UserApp>> appObservable = apiService.fetchUser(preferenceUtils.getAuthLoginToken());
       subscribe(appObservable, new Observer<Response<UserApp>>() {
           @Override
           public void onSubscribe(Disposable d) {

@@ -18,7 +18,7 @@ import tdevm.app_ui.api.models.response.v2.reviews.DishReviews;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -32,14 +32,14 @@ public class DishReviewsSheetPresenter extends BasePresenter implements DineInPr
     private DineInViewContract.DishReviewsSheetView sheetView;
     private APIService apiService;
     private CartHelper cartHelper;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    public DishReviewsSheetPresenter(APIService apiService, CartHelper cartHelper, AuthUtils authUtils) {
+    public DishReviewsSheetPresenter(APIService apiService, CartHelper cartHelper, PreferenceUtils preferenceUtils) {
         this.apiService = apiService;
         this.cartHelper = cartHelper;
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
         this.compositeDisposable = new CompositeDisposable();
     }
 
@@ -47,7 +47,7 @@ public class DishReviewsSheetPresenter extends BasePresenter implements DineInPr
     public void fetchMenuItemReview(Long dishId) {
         Map<String,String> map = new HashMap<>();
         map.put("dish_id",String.valueOf(dishId.intValue()));
-        Observable<Response<ArrayList<DishReviews>>> responseObservable = apiService.fetchDishReviewsById(authUtils.getAuthLoginToken(),map);
+        Observable<Response<ArrayList<DishReviews>>> responseObservable = apiService.fetchDishReviewsById(preferenceUtils.getAuthLoginToken(),map);
         subscribe(responseObservable, new Observer<Response<ArrayList<DishReviews>>>() {
             @Override
             public void onSubscribe(Disposable d) {

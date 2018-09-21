@@ -11,12 +11,11 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
-import tdevm.app_ui.api.models.MySharedPreferences;
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.auth.AuthPresenterContract;
 import tdevm.app_ui.modules.auth.AuthViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 
 /**
  * Created by Tridev on 12-10-2017.
@@ -27,13 +26,13 @@ public class AuthRegisterPresenter extends BasePresenter implements AuthPresente
     public static final String TAG = AuthRegisterPresenter.class.getSimpleName();
     private AuthViewContract.AuthRegisterView authRegisterView;
     private APIService apiService;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    public AuthRegisterPresenter(APIService apiService,AuthUtils authUtils) {
+    public AuthRegisterPresenter(APIService apiService,PreferenceUtils preferenceUtils) {
         this.apiService = apiService;
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
         this.compositeDisposable = new CompositeDisposable();
     }
 
@@ -54,7 +53,7 @@ public class AuthRegisterPresenter extends BasePresenter implements AuthPresente
                     Log.d("RegisterPresenter",response.body().toString());
                 }else if(response.code() ==200){
                     Log.d("RegisterPresenter",response.body().toString());
-                    authUtils.saveAuthTransaction(response.headers().get("X-auth"),user.getMobile(),true);
+                    preferenceUtils.saveAuthTransaction(response.headers().get("X-auth"),user.getMobile(),true);
                     authRegisterView.showRegistrationSuccess();
                 }else if(response.code() == 403){
                     authRegisterView.showRegistrationError("Email is already in use");

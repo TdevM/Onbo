@@ -18,7 +18,7 @@ import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.nondine.NonDinePresenterContract;
 import tdevm.app_ui.modules.nondine.NonDineViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -29,23 +29,23 @@ public class NonDineRestDetailPresenter extends BasePresenter implements NonDine
 
     public static final String TAG = NonDineRestDetailPresenter.class.getSimpleName();
     private APIService apiService;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private CartHelper cartHelper;
     private NonDineViewContract.NonDineRestaurantDetailsView view;
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    public NonDineRestDetailPresenter(APIService apiService, AuthUtils authUtils, CartHelper cartHelper) {
+    public NonDineRestDetailPresenter(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cartHelper) {
         this.apiService = apiService;
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
         this.compositeDisposable = new CompositeDisposable();
         this.cartHelper = cartHelper;
     }
 
     public void fetchRestaurantDetails(){
         Map<String,String> map = new HashMap<>();
-        map.put("restaurant_uuid",authUtils.getScannedRestaurantUuid());
-        Observable<Response<Restaurant>> restaurant = apiService.fetchRestaurantDetails(map, authUtils.getAuthLoginToken());
+        map.put("restaurant_uuid", preferenceUtils.getScannedRestaurantUuid());
+        Observable<Response<Restaurant>> restaurant = apiService.fetchRestaurantDetails(map, preferenceUtils.getAuthLoginToken());
         subscribe(restaurant, new Observer<Response<Restaurant>>() {
             @Override
             public void onSubscribe(Disposable d) {

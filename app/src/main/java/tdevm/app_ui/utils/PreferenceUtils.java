@@ -6,10 +6,11 @@ import tdevm.app_ui.api.models.MySharedPreferences;
  * Created by Tridev on 18-10-2017.
  */
 
-public class AuthUtils {
+public class PreferenceUtils {
     private static final String AUTH_LOGIN_STATE = "AUTH_LOGIN_STATE ";
     private static final String AUTH_LOGIN_TOKEN = "AUTH_LOGIN_TOKEN";
     private static final String AUTH_LOGIN_PHONE = "AUTH_LOGIN_PHONE";
+    private static final String INTRO_SCREEN_DISPLAYED = "INTRO_SCREEN_DISPLAYED";
 
     private static final String FETCHED_RESTAURANT_UUID = "FETCHED_RESTAURANT_UUID";
     private static final String FETCHED_RESTAURANT_ID = "FETCHED_RESTAURANT_ID";
@@ -19,7 +20,7 @@ public class AuthUtils {
 
     private MySharedPreferences sharedPreferences;
 
-    public AuthUtils(MySharedPreferences sharedPreferences) {
+    public PreferenceUtils(MySharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
     }
 
@@ -62,6 +63,18 @@ public class AuthUtils {
 
     public Long getAuthLoginPhone() {
         return sharedPreferences.getDataLong(AUTH_LOGIN_PHONE);
+    }
+
+    public Boolean getIntroScreenDisplayed() {
+        return sharedPreferences.getDataBool(INTRO_SCREEN_DISPLAYED);
+    }
+
+    public void setIntroScreenDisplayed(Boolean b){
+        sharedPreferences.putDataBool(INTRO_SCREEN_DISPLAYED,b);
+    }
+
+    public void removeIntroScreenDisplayed(){
+        sharedPreferences.remove(INTRO_SCREEN_DISPLAYED);
     }
 
     public String getAuthLoginToken() {

@@ -14,7 +14,7 @@ import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 
 /**
  * Created by Tridev on 06-11-2017.
@@ -27,18 +27,18 @@ public class DishMenuPresenter extends BasePresenter implements DineInPresenterC
     private CompositeDisposable compositeDisposable;
     private DineInViewContract.DishMenuView dishMenuView;
 
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
 
     @Inject
-    public DishMenuPresenter(APIService apiService, AuthUtils authUtils) {
+    public DishMenuPresenter(APIService apiService, PreferenceUtils preferenceUtils) {
         this.apiService = apiService;
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
         this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override
     public void FetchAllCuisines(Map<String,String> map) {
-        Observable<ArrayList<Cuisine>> fetchCuisines = apiService.fetchCuisines(authUtils.getAuthLoginToken(),map);
+        Observable<ArrayList<Cuisine>> fetchCuisines = apiService.fetchCuisines(preferenceUtils.getAuthLoginToken(),map);
         subscribe(fetchCuisines, new Observer<ArrayList<Cuisine>>() {
             @Override
             public void onSubscribe(Disposable d) {

@@ -2,25 +2,20 @@ package tdevm.app_ui.modules.dinein.fragments;
 
 import android.util.Log;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.cart.CartSelection;
-import tdevm.app_ui.api.models.cart.MenuItem;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -33,14 +28,14 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
     private CartHelper cartHelper;
     private DineInViewContract.CartFragmentView cartFragmentView;
     private CompositeDisposable compositeDisposable;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private static final String MODE_DINE_IN = "MODE_DINE_IN";
     private static final String MODE_NON_DINE = "MODE_NON_DINE";
 
     @Inject
-    public CartFragmentPresenterImpl(CartHelper cartHelper, AuthUtils authUtils) {
+    public CartFragmentPresenterImpl(CartHelper cartHelper, PreferenceUtils preferenceUtils) {
         this.cartHelper = cartHelper;
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
         this.compositeDisposable = new CompositeDisposable();
     }
 
@@ -99,18 +94,18 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
 
     @Override
     public void handleOrderInit() {
-        if (authUtils.getRestaurantMode().equals(MODE_DINE_IN)) {
+        if (preferenceUtils.getRestaurantMode().equals(MODE_DINE_IN)) {
             cartFragmentView.startDineOrderActivity();
-        } else if (authUtils.getRestaurantMode().equals(MODE_NON_DINE)) {
+        } else if (preferenceUtils.getRestaurantMode().equals(MODE_NON_DINE)) {
             cartFragmentView.startNonDineOrderActivity();
         }
     }
 
     @Override
     public void showCartEmpty() {
-        if (authUtils.getRestaurantMode().equals(MODE_DINE_IN)) {
+        if (preferenceUtils.getRestaurantMode().equals(MODE_DINE_IN)) {
             cartFragmentView.showDineCartEmpty();
-        } else if (authUtils.getRestaurantMode().equals(MODE_NON_DINE)) {
+        } else if (preferenceUtils.getRestaurantMode().equals(MODE_NON_DINE)) {
             cartFragmentView.showNonDineEmptyCart();
         }
     }

@@ -15,7 +15,7 @@ import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.nondine.NonDinePresenterContract;
 import tdevm.app_ui.modules.nondine.NonDineViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 public class InitNonDineOrderPresenter extends BasePresenter implements NonDinePresenterContract.InitNonDineOrderPresenter{
@@ -23,7 +23,7 @@ public class InitNonDineOrderPresenter extends BasePresenter implements NonDineP
     public static final String TAG = InitNonDineOrderPresenter.class.getSimpleName();
 
     private APIService apiService;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private CompositeDisposable compositeDisposable;
     private CartHelper cart;
 
@@ -31,9 +31,9 @@ public class InitNonDineOrderPresenter extends BasePresenter implements NonDineP
 
 
     @Inject
-    public InitNonDineOrderPresenter(APIService apiService, AuthUtils authUtils, CartHelper cart) {
+    public InitNonDineOrderPresenter(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cart) {
         this.apiService = apiService;
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
         this.cart = cart;
         this.compositeDisposable = new CompositeDisposable();
     }
@@ -54,8 +54,8 @@ public class InitNonDineOrderPresenter extends BasePresenter implements NonDineP
 
     @Override
     public void createCashNDOrder() {
-        NonDineOrder order = new NonDineOrder(authUtils.getScannedRestaurantId(),"This is a hardcoded text",cart.convertCartTOJSON().toString());
-        Observable<Response<FOrder>> createNDCashOrder =  apiService.createUnpaidNonDineOrder(authUtils.getAuthLoginToken(),order);
+        NonDineOrder order = new NonDineOrder(preferenceUtils.getScannedRestaurantId(),"This is a hardcoded text",cart.convertCartTOJSON().toString());
+        Observable<Response<FOrder>> createNDCashOrder =  apiService.createUnpaidNonDineOrder(preferenceUtils.getAuthLoginToken(),order);
         subscribe(createNDCashOrder, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

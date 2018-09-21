@@ -26,7 +26,7 @@ import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -38,16 +38,16 @@ public class InitDineOrderPresenterImpl extends BasePresenter implements DineInP
     public static final String TAG = InitDineOrderPresenterImpl.class.getSimpleName();
 
     private APIService apiService;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private CompositeDisposable compositeDisposable;
     private DineInViewContract.PlaceTempOrderView placeTempOrderView;
     private CartHelper cart;
 
     @Inject
-    public InitDineOrderPresenterImpl(APIService apiService, AuthUtils authUtils, CartHelper cartHelper) {
+    public InitDineOrderPresenterImpl(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cartHelper) {
         this.apiService = apiService;
         this.cart = cartHelper;
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
         this.compositeDisposable = new CompositeDisposable();
     }
 
@@ -61,9 +61,9 @@ public class InitDineOrderPresenterImpl extends BasePresenter implements DineInP
     public void checkCurrentOrderDetails() {
         Log.d(TAG, "Checking order...");
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_id", authUtils.getScannedRestaurantId());
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         Log.d(TAG, convertCartTOJSON().toString());
-        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(authUtils.getAuthLoginToken(), map);
+        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -99,8 +99,8 @@ public class InitDineOrderPresenterImpl extends BasePresenter implements DineInP
 
     @Override
     public void addItemsToOrder(String userMessage, TOrder tOrder) {
-        RestaurantOrder order = new RestaurantOrder(authUtils.getScannedRestaurantId(), tOrder.getOrderId(), userMessage, convertCartTOJSON().toString());
-        Observable<Response<TOrder>> observable = apiService.addItemsToTempOrder(authUtils.getAuthLoginToken(), order);
+        RestaurantOrder order = new RestaurantOrder(preferenceUtils.getScannedRestaurantId(), tOrder.getOrderId(), userMessage, convertCartTOJSON().toString());
+        Observable<Response<TOrder>> observable = apiService.addItemsToTempOrder(preferenceUtils.getAuthLoginToken(), order);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -135,8 +135,8 @@ public class InitDineOrderPresenterImpl extends BasePresenter implements DineInP
 
     @Override
     public void createNewOrder(int guest, String message) {
-        RestaurantOrder order = new RestaurantOrder(authUtils.getScannedRestaurantId(), authUtils.getFetchedRestaurantTableId(), message, convertCartTOJSON().toString(), guest);
-        Observable<Response<TOrder>> observable = apiService.createNewTempOrder(authUtils.getAuthLoginToken(), order);
+        RestaurantOrder order = new RestaurantOrder(preferenceUtils.getScannedRestaurantId(), preferenceUtils.getFetchedRestaurantTableId(), message, convertCartTOJSON().toString(), guest);
+        Observable<Response<TOrder>> observable = apiService.createNewTempOrder(preferenceUtils.getAuthLoginToken(), order);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

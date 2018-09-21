@@ -2,16 +2,12 @@ package tdevm.app_ui.modules.dinein.fragments;
 
 import android.util.Log;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.Single;
@@ -27,7 +23,7 @@ import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 import tdevm.app_ui.utils.CartListener;
 
@@ -41,13 +37,13 @@ public class SingleCuisineGridPresenter extends BasePresenter
     private DineInViewContract.SingleCuisineGridView singleCuisineGridView;
     private APIService apiService;
     private CompositeDisposable compositeDisposable;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private CartHelper cartHelper;
 
     @Inject
-    public SingleCuisineGridPresenter(AuthUtils authUtils, APIService apiService, CartHelper cartHelper) {
+    public SingleCuisineGridPresenter(PreferenceUtils preferenceUtils, APIService apiService, CartHelper cartHelper) {
         this.compositeDisposable = new CompositeDisposable();
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
         this.cartHelper = cartHelper;
         this.apiService = apiService;
         this.cartHelper.setCartListener(this);
@@ -55,7 +51,7 @@ public class SingleCuisineGridPresenter extends BasePresenter
 
     @Override
     public void fetchMenuItemsByCuisine(Map<String, String> map) {
-        Observable<ArrayList<MenuItem>> dishesOfCuisineObservable = apiService.fetchMenuItemsByCuisine(authUtils.getAuthLoginToken(), map);
+        Observable<ArrayList<MenuItem>> dishesOfCuisineObservable = apiService.fetchMenuItemsByCuisine(preferenceUtils.getAuthLoginToken(), map);
         subscribe(dishesOfCuisineObservable, new Observer<ArrayList<MenuItem>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -81,7 +77,7 @@ public class SingleCuisineGridPresenter extends BasePresenter
 
     @Override
     public void fetchMenuItems(Map<String, String> map) {
-        Observable<Response<List<CuisineMenuItems>>> cuisineItem = apiService.fetchMenuItems(authUtils.getAuthLoginToken(), map);
+        Observable<Response<List<CuisineMenuItems>>> cuisineItem = apiService.fetchMenuItems(preferenceUtils.getAuthLoginToken(), map);
         subscribe(cuisineItem, new Observer<Response<List<CuisineMenuItems>>>() {
             @Override
             public void onSubscribe(Disposable d) {

@@ -15,7 +15,7 @@ import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.auth.AuthPresenterContract;
 import tdevm.app_ui.modules.auth.AuthViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 
 /**
  * Created by Tridev on 12-10-2017.
@@ -26,14 +26,14 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
     public static final String TAG = AuthInitPresenter.class.getSimpleName();
     private APIService apiService;
     private AuthViewContract.AuthLoginView authLoginView;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    public AuthLoginPresenter(APIService apiService,AuthUtils authUtils) {
+    public AuthLoginPresenter(APIService apiService,PreferenceUtils preferenceUtils) {
         this.compositeDisposable = new CompositeDisposable();
         this.apiService = apiService;
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
     }
 
     public void loginUser(final Long phone, final String password){
@@ -54,7 +54,7 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
                     authLoginView.showLoginError();
                 }else if(response.code() ==200){
                     Log.d(TAG,response.body().toString());
-                    authUtils.saveAuthTransaction(response.headers().get("X-auth"),phone,true);
+                    preferenceUtils.saveAuthTransaction(response.headers().get("X-auth"),phone,true);
                     authLoginView.loginSuccess();
                     authLoginView.hideProgressUI();
                 }

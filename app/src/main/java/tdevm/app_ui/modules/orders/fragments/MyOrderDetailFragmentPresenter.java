@@ -7,19 +7,19 @@ import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.orders.RestaurantOrdersPresenterContract;
 import tdevm.app_ui.modules.orders.RestaurantOrdersViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 
 public class MyOrderDetailFragmentPresenter extends BasePresenter implements RestaurantOrdersPresenterContract.MyOrderDetailFragment {
 
     public static final String TAG = MyOrderDetailFragmentPresenter.class.getSimpleName();
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private APIService apiService;
     private CompositeDisposable compositeDisposable;
     private RestaurantOrdersViewContract.MyOrderDetailFragmentView myOrderDetailFragmentView;
 
     @Inject
-    public MyOrderDetailFragmentPresenter(AuthUtils authUtils, APIService apiService) {
-        this.authUtils = authUtils;
+    public MyOrderDetailFragmentPresenter(PreferenceUtils preferenceUtils, APIService apiService) {
+        this.preferenceUtils = preferenceUtils;
         this.apiService = apiService;
     }
 

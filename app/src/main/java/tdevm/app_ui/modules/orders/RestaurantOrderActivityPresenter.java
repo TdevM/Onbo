@@ -5,21 +5,21 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 
 public class RestaurantOrderActivityPresenter extends BasePresenter implements RestaurantOrdersPresenterContract.RestaurantOrderPresenter{
 
     public static final String TAG = RestaurantOrderActivityPresenter.class.getSimpleName();
 
     private RestaurantOrdersViewContract.RestaurantOrdersActivityView restaurantOrdersActivityView;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private APIService apiService;
     private CompositeDisposable compositeDisposable;
 
 
     @Inject
-    public RestaurantOrderActivityPresenter(AuthUtils authUtils, APIService apiService) {
-        this.authUtils = authUtils;
+    public RestaurantOrderActivityPresenter(PreferenceUtils preferenceUtils, APIService apiService) {
+        this.preferenceUtils = preferenceUtils;
         this.apiService = apiService;
         this.compositeDisposable = new CompositeDisposable();
     }

@@ -1,6 +1,5 @@
 package tdevm.app_ui.modules.dinein.fragments;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -28,14 +27,14 @@ public class MergedOrderPresenter extends BasePresenter implements DineInPresent
 
     private DineInViewContract.MergedOrderView view;
     private CompositeDisposable compositeDisposable;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private CartHelper cartHelper;
     private APIService apiService;
 
     @Inject
-    public MergedOrderPresenter(AuthUtils authUtils, CartHelper cartHelper, APIService apiService) {
+    public MergedOrderPresenter(PreferenceUtils preferenceUtils, CartHelper cartHelper, APIService apiService) {
         this.compositeDisposable = new CompositeDisposable();
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
         this.cartHelper = cartHelper;
         this.apiService = apiService;
     }
@@ -43,8 +42,8 @@ public class MergedOrderPresenter extends BasePresenter implements DineInPresent
 
     public void fetchTempRunningOrder() {
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_id", authUtils.getScannedRestaurantId());
-        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(authUtils.getAuthLoginToken(), map);
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
+        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -76,9 +75,9 @@ public class MergedOrderPresenter extends BasePresenter implements DineInPresent
 
     public void fetchMergedOrder(TOrder tOrder) {
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_id", authUtils.getScannedRestaurantId());
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("order_id", tOrder.getOrderId());
-        Observable<Response<MergedOrder>> observable = apiService.fetchMergedOrder(authUtils.getAuthLoginToken(), map);
+        Observable<Response<MergedOrder>> observable = apiService.fetchMergedOrder(preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<MergedOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

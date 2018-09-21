@@ -30,13 +30,12 @@ import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.MenuAdapter;
-import tdevm.app_ui.modules.dinein.adapters.MenuItemsAdapter;
 import tdevm.app_ui.modules.dinein.adapters.RecycledGridMenuAdapter;
 import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
 import tdevm.app_ui.modules.dinein.bottomsheets.section_r_view.MenuItemCustomizationSheet;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemOptionsSelected;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -65,7 +64,7 @@ public class SingleCuisineGridFragment extends Fragment
     CartHelper cartHelper;
 
     @Inject
-    AuthUtils authUtils;
+    PreferenceUtils preferenceUtils;
 
     public static SingleCuisineGridFragment newInstance(String restaurantUUID) {
         Bundle args = new Bundle();
@@ -97,7 +96,7 @@ public class SingleCuisineGridFragment extends Fragment
         unbinder = ButterKnife.bind(this, view);
         mLayoutManager = new LinearLayoutManager(getContext());
         fetchDishesMap = new HashMap<>();
-        fetchDishesMap.put("restaurant_id", authUtils.getScannedRestaurantId());
+        fetchDishesMap.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         recyclerViewGridSingle.setLayoutManager(mLayoutManager);
         menuAdapter = new MenuAdapter(getContext(), cartHelper);
         menuAdapter.setDishItemClickListenerCallback(this);

@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
 /**
@@ -16,15 +16,15 @@ public class BottomNavigationPresenter extends BasePresenter implements Navigati
     public static final String TAG = BottomNavigationPresenter.class.getSimpleName();
 
     private APIService apiService;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private CartHelper cartHelper;
     private CompositeDisposable compositeDisposable;
 
     private NavigationHomeViewContract.BottomNavigationView bottomNavigationView;
 
     @Inject
-    public BottomNavigationPresenter(APIService apiService, AuthUtils authUtils, CartHelper cartHelper) {
-        this.authUtils = authUtils;
+    public BottomNavigationPresenter(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cartHelper) {
+        this.preferenceUtils = preferenceUtils;
         this.cartHelper = cartHelper;
         this.compositeDisposable = new CompositeDisposable();
         this.apiService = apiService;
@@ -33,7 +33,7 @@ public class BottomNavigationPresenter extends BasePresenter implements Navigati
 
     @Override
     public void handleUserAuthentication() {
-        if (authUtils.getAuthLoginState()) {
+        if (preferenceUtils.getAuthLoginState()) {
             bottomNavigationView.showUserProfile();
         } else {
             bottomNavigationView.redirectAuthActivity();
@@ -54,7 +54,7 @@ public class BottomNavigationPresenter extends BasePresenter implements Navigati
     }
 
     public void verifyUserAuthentication() {
-        if (authUtils.getAuthLoginState()) {
+        if (preferenceUtils.getAuthLoginState()) {
             bottomNavigationView.redirectEntryActivity();
         } else {
             bottomNavigationView.redirectAuthActivity();

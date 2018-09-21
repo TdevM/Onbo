@@ -14,20 +14,20 @@ import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.request.PaymentCapture;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 
 public class PaymentActivityPresenter extends BasePresenter implements PaymentPresenterContract.PaymentActivityPresenterContract {
 
     public static final String TAG = PaymentActivityPresenter.class.getSimpleName();
     private CompositeDisposable compositeDisposable;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private APIService apiService;
     private PaymentViewContract.PaymentActivityView paymentActivityView;
 
 
     @Inject
-    public PaymentActivityPresenter(AuthUtils authUtils, APIService apiService) {
-        this.authUtils = authUtils;
+    public PaymentActivityPresenter(PreferenceUtils preferenceUtils, APIService apiService) {
+        this.preferenceUtils = preferenceUtils;
         this.apiService = apiService;
         this.compositeDisposable = new CompositeDisposable();
     }
@@ -39,8 +39,8 @@ public class PaymentActivityPresenter extends BasePresenter implements PaymentPr
 
     @Override
     public void captureOrderPayment(String paymentId, String orderId) {
-        PaymentCapture capture = new PaymentCapture(orderId,paymentId,authUtils.getScannedRestaurantId());
-        Observable<Response<FOrder>> observable = apiService.payOrder(authUtils.getAuthLoginToken(), capture);
+        PaymentCapture capture = new PaymentCapture(orderId,paymentId, preferenceUtils.getScannedRestaurantId());
+        Observable<Response<FOrder>> observable = apiService.payOrder(preferenceUtils.getAuthLoginToken(), capture);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

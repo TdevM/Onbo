@@ -1,7 +1,5 @@
 package tdevm.app_ui.modules.orders.fragments;
 
-import android.util.Log;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,21 +14,21 @@ import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.orders.RestaurantOrdersPresenterContract;
 import tdevm.app_ui.modules.orders.RestaurantOrdersViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 
 public class MyOrdersFragmentPresenter extends BasePresenter implements RestaurantOrdersPresenterContract.MyOrdersFragmentPresenter {
 
     public static final String TAG = MyOrdersFragmentPresenter.class.getSimpleName();
 
     private APIService service;
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private CompositeDisposable compositeDisposable;
     private RestaurantOrdersViewContract.MyOrdersFragmentView fragmentView;
 
     @Inject
-    public MyOrdersFragmentPresenter(APIService service, AuthUtils authUtils) {
+    public MyOrdersFragmentPresenter(APIService service, PreferenceUtils preferenceUtils) {
         this.service = service;
-        this.authUtils = authUtils;
+        this.preferenceUtils = preferenceUtils;
         this.compositeDisposable = new CompositeDisposable();
     }
 
@@ -41,7 +39,7 @@ public class MyOrdersFragmentPresenter extends BasePresenter implements Restaura
 
     @Override
     public void fetchMyOrders(){
-        Observable<Response<List<FOrder>>> observable = service.fetchMyOrders(authUtils.getAuthLoginToken());
+        Observable<Response<List<FOrder>>> observable = service.fetchMyOrders(preferenceUtils.getAuthLoginToken());
         subscribe(observable, new Observer<Response<List<FOrder>>>() {
             @Override
             public void onSubscribe(Disposable d) {

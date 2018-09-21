@@ -16,21 +16,21 @@ import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.root.NavigationHomePresenterContract;
 import tdevm.app_ui.root.NavigationHomeViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 
 public class RestaurantListFragmentPresenter extends BasePresenter implements NavigationHomePresenterContract.RestaurantListFragmentPresenter {
 
     public static final String TAG = RestaurantListFragmentPresenter.class.getSimpleName();
 
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private APIService service;
     private NavigationHomeViewContract.RestaurantsListView restaurantsListView;
     private CompositeDisposable compositeDisposable;
 
 
     @Inject
-    public RestaurantListFragmentPresenter(AuthUtils authUtils, APIService service) {
-        this.authUtils = authUtils;
+    public RestaurantListFragmentPresenter(PreferenceUtils preferenceUtils, APIService service) {
+        this.preferenceUtils = preferenceUtils;
         this.service = service;
         this.compositeDisposable = new CompositeDisposable();
     }
@@ -41,7 +41,7 @@ public class RestaurantListFragmentPresenter extends BasePresenter implements Na
     public void fetchRestaurants(String cityId){
         Map<String, String> map = new HashMap<>();
         map.put("city_id",cityId);
-        Observable<Response<List<Restaurant>>> observable = service.fetchAllRestaurants(map,authUtils.getAuthLoginToken());
+        Observable<Response<List<Restaurant>>> observable = service.fetchAllRestaurants(map, preferenceUtils.getAuthLoginToken());
         subscribe(observable, new Observer<Response<List<Restaurant>>>() {
             @Override
             public void onSubscribe(Disposable d) {

@@ -113,8 +113,9 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
       progressBar.setVisibility(View.GONE);
     }
 
+
     @Override
-    public void showRegistrationError() {
+    public void showRegistrationError(String error) {
         Toast.makeText(authenticationActivity, "Registration Failed", Toast.LENGTH_SHORT).show();
     }
 

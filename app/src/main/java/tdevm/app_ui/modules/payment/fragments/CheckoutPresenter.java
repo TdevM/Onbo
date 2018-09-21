@@ -13,24 +13,23 @@ import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
-import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.payment.PaymentPresenterContract;
 import tdevm.app_ui.modules.payment.PaymentViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 
 public class CheckoutPresenter extends BasePresenter implements PaymentPresenterContract.CheckoutPresenterContract {
 
     public static final String TAG = CheckoutPresenter.class.getSimpleName();
     private CompositeDisposable compositeDisposable;
 
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private APIService service;
     private PaymentViewContract.CheckoutFragmentView view;
 
     @Inject
-    public CheckoutPresenter(AuthUtils authUtils, APIService apiService) {
-        this.authUtils = authUtils;
+    public CheckoutPresenter(PreferenceUtils preferenceUtils, APIService apiService) {
+        this.preferenceUtils = preferenceUtils;
         this.service = apiService;
         this.compositeDisposable = new CompositeDisposable();
     }
@@ -38,9 +37,9 @@ public class CheckoutPresenter extends BasePresenter implements PaymentPresenter
     @Override
     public void closeRunningOrder(String orderId) {
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_id", authUtils.getScannedRestaurantId());
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("order_id", orderId);
-        Observable<Response<FOrder>> closeRunningOrder = service.closeRunningOrder(authUtils.getAuthLoginToken(), map);
+        Observable<Response<FOrder>> closeRunningOrder = service.closeRunningOrder(preferenceUtils.getAuthLoginToken(), map);
         subscribe(closeRunningOrder, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -76,9 +75,9 @@ public class CheckoutPresenter extends BasePresenter implements PaymentPresenter
 
     public void fetchMergedOrder(String orderId) {
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_id", authUtils.getScannedRestaurantId());
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("order_id", orderId);
-        Observable<Response<MergedOrder>> observable = service.fetchMergedOrder(authUtils.getAuthLoginToken(), map);
+        Observable<Response<MergedOrder>> observable = service.fetchMergedOrder(preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<MergedOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

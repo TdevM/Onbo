@@ -15,20 +15,20 @@ import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.payment.PaymentPresenterContract;
 import tdevm.app_ui.modules.payment.PaymentViewContract;
-import tdevm.app_ui.utils.AuthUtils;
+import tdevm.app_ui.utils.PreferenceUtils;
 
 public class PaymentFragmentPresenter extends BasePresenter implements PaymentPresenterContract.PaymentFragmentPresenterContract {
 
     public static final String TAG = PaymentFragmentPresenter.class.getSimpleName();
-    private AuthUtils authUtils;
+    private PreferenceUtils preferenceUtils;
     private APIService apiService;
     private CompositeDisposable compositeDisposable;
     private PaymentViewContract.PaymentFragmentView paymentFragmentView;
 
 
     @Inject
-    public PaymentFragmentPresenter(AuthUtils authUtils, APIService apiService) {
-        this.authUtils = authUtils;
+    public PaymentFragmentPresenter(PreferenceUtils preferenceUtils, APIService apiService) {
+        this.preferenceUtils = preferenceUtils;
         this.apiService = apiService;
         this.compositeDisposable = new CompositeDisposable();
     }
@@ -41,10 +41,10 @@ public class PaymentFragmentPresenter extends BasePresenter implements PaymentPr
     @Override
     public void fetchClosedOrder(String tOrderId, String fOrderId){
         Map<String,String> map = new HashMap<>();
-        map.put("restaurant_id",authUtils.getScannedRestaurantId());
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("t_order_id", tOrderId);
         map.put("order_id",fOrderId);
-        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder(authUtils.getAuthLoginToken(),map);
+        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder(preferenceUtils.getAuthLoginToken(),map);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
