@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="5dp"
     tools:context="tdevm.app_ui.modules.auth.AuthenticationActivity">
 
     <TextView
@@ -13,9 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/blue_default_app"
         android:layout_marginTop="153dp"
         android:text="@string/lets_get_started"
+        android:textColor="@color/blue_default_app"
         android:textSize="20sp" />
 
     <tdevm.app_ui.widgets.PhoneEditText
@@ -36,11 +37,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="@color/blue_default_app"
         android:text="@string/auth_next"
-        android:textColor="@color/white"
-        android:layout_alignParentLeft="true" />
+        android:textColor="@color/white" />
 
     <ProgressBar
         android:id="@+id/progress_bar_auth_init"

@@ -5,6 +5,7 @@
     android:id="@+id/activity_user_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="5dp"
     tools:context=".modules.auth.AuthenticationActivity">
 
 
@@ -79,14 +80,14 @@
 
     <TextView
         android:id="@+id/textView12"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="68dp"
-        android:textColor="@color/blue_default_app"
         android:text="@string/login"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:textColor="@color/blue_default_app"
         android:textSize="20sp" />
 
 </RelativeLayout>

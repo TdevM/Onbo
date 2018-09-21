@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_user_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:orientation="vertical"
+    android:weightSum="5"
     tools:context=".modules.auth.AuthenticationActivity">
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true">
+        android:layout_height="0dp"
+        android:layout_weight="3.5">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,7 +52,6 @@
                 android:id="@+id/textInputLayout_sign_up_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
                 app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
 
@@ -107,22 +107,19 @@
     </ScrollView>
 
 
-
-    <ProgressBar
-        android:id="@+id/progressBar_sign_up"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="248dp"
-        android:visibility="invisible" />
-
-
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1.5">
+
+        <ProgressBar
+            android:id="@+id/progressBar_sign_up"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/btn_register"
@@ -140,5 +137,4 @@
     </RelativeLayout>
 
 
-
-</RelativeLayout>
+</LinearLayout>

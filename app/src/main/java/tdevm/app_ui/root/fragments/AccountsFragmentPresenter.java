@@ -54,12 +54,18 @@ public class AccountsFragmentPresenter extends BasePresenter implements Navigati
 
           @Override
           public void onNext(Response<UserApp> userAppResponse) {
-           fragmentView.onUserFetched(userAppResponse.body());
+              if(userAppResponse.isSuccessful()){
+                  if(userAppResponse.body()!=null){
+                      fragmentView.onUserFetched(userAppResponse.body());
+                  }
+              }else {
+                  fragmentView.onUserFetchFailure();
+              }
           }
 
           @Override
           public void onError(Throwable e) {
-
+              fragmentView.onUserFetchFailure();
           }
 
           @Override

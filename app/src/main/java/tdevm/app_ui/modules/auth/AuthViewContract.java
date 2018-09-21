@@ -24,7 +24,7 @@ public interface AuthViewContract {
     }
 
     interface AuthRegisterView extends BaseView{
-        void showRegistrationError();
+        void showRegistrationError(String error);
         void showRegistrationSuccess();
         void showDuplicationError(String message);
     }

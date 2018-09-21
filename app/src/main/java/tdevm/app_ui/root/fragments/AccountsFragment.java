@@ -135,6 +135,11 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
     }
 
     @Override
+    public void onUserFetchFailure() {
+        Toast.makeText(getContext(), "Failed to fetch user", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onLoggedOut() {
         Toast.makeText(getContext(), "Logged Out!", Toast.LENGTH_SHORT).show();
     }

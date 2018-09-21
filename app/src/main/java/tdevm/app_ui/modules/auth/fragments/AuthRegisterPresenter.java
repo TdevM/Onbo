@@ -50,12 +50,14 @@ public class AuthRegisterPresenter extends BasePresenter implements AuthPresente
             @Override
             public void onNext(@NonNull Response<Object> response) {
                 if(response.code() == 206){
-                    authRegisterView.showRegistrationError();
+                    authRegisterView.showRegistrationError("Forbidden");
                     Log.d("RegisterPresenter",response.body().toString());
                 }else if(response.code() ==200){
                     Log.d("RegisterPresenter",response.body().toString());
                     authUtils.saveAuthTransaction(response.headers().get("X-auth"),user.getMobile(),true);
                     authRegisterView.showRegistrationSuccess();
+                }else if(response.code() == 403){
+                    authRegisterView.showRegistrationError("Email is already in use");
                 }
 
             }

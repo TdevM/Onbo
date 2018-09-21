@@ -102,4 +102,6 @@
     <string name="view_details">View details</string>
     <string name="please_make_your_payment_at_the_terminal_by_cash">Please make your payment at the terminal by cash</string>
     <string name="verification">Verification</string>
+    <string name="otp_message">OTP Message</string>
+    <string name="enter_6_digit_code">Enter 6 Digit Code</string>
 </resources>

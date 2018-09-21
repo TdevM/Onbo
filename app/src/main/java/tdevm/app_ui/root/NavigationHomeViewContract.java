@@ -24,6 +24,7 @@ public interface NavigationHomeViewContract {
         void showProgressUI();
         void hideProgressUI();
         void resolveDaggerDependencies();
+        void onUserFetchFailure();
         void onLoggedOut();
     }
 

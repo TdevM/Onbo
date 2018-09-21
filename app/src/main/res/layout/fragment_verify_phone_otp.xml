@@ -1,8 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
     android:orientation="vertical"
     tools:context="tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment">
 
@@ -13,17 +14,19 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"
+        android:contentDescription="@string/otp_message"
         app:srcCompat="@drawable/otp_waiting" />
 
     <LinearLayout
         android:id="@+id/linearLayout_fragment_verify_otp"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_above="@+id/btn_otp_verify_mobile"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginBottom="102dp"
         android:orientation="vertical"
-        android:weightSum="5"
-        android:layout_alignParentLeft="true">
+        android:weightSum="5">
 
 
         <TextView
@@ -56,6 +59,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:fontFamily="monospace"
+            android:hint="@string/enter_6_digit_code"
             android:inputType="number"
             android:paddingEnd="0dp"
             android:paddingLeft="30dp"
@@ -97,33 +101,35 @@
         android:id="@+id/btn_otp_verify_mobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/verify_number"
-        android:textAllCaps="false"
-        android:background="@color/blue_default_app"
-        android:textColor="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@color/blue_default_app"
+        android:text="@string/verify_number"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
 
     <ProgressBar
         android:id="@+id/progressBar_otp_view"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="202dp"
         android:visibility="invisible" />
 
     <TextView
         android:id="@+id/textView13"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="54dp"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:text="@string/verification"
         android:textColor="@color/blue_default_app"
-        android:textSize="20sp"
-        android:text="@string/verification" />
+        android:textSize="20sp" />
 
 
 </RelativeLayout>
