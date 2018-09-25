@@ -4,8 +4,6 @@
     package="tdevm.app_ui">
 
     <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="27"
         tools:overrideLibrary="com.razorpay" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -36,7 +34,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".root.BottomNavigationHome"
+            android:name=".root.RootActivity"
             android:label="@string/title_activity_bottom_navigation"
             android:screenOrientation="portrait">
         </activity>
@@ -101,7 +99,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

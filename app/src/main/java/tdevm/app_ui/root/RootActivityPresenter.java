@@ -12,18 +12,18 @@ import tdevm.app_ui.utils.CartHelper;
  * Created by Tridev on 18-10-2017.
  */
 
-public class BottomNavigationPresenter extends BasePresenter implements NavigationHomePresenterContract.BottomNavigationHomePresenter {
-    public static final String TAG = BottomNavigationPresenter.class.getSimpleName();
+public class RootActivityPresenter extends BasePresenter implements NavigationHomePresenterContract.BottomNavigationHomePresenter {
+    public static final String TAG = RootActivityPresenter.class.getSimpleName();
 
     private APIService apiService;
     private PreferenceUtils preferenceUtils;
     private CartHelper cartHelper;
     private CompositeDisposable compositeDisposable;
 
-    private NavigationHomeViewContract.BottomNavigationView bottomNavigationView;
+    private NavigationHomeViewContract.RootActivityView rootActivityView;
 
     @Inject
-    public BottomNavigationPresenter(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cartHelper) {
+    public RootActivityPresenter(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cartHelper) {
         this.preferenceUtils = preferenceUtils;
         this.cartHelper = cartHelper;
         this.compositeDisposable = new CompositeDisposable();
@@ -34,15 +34,15 @@ public class BottomNavigationPresenter extends BasePresenter implements Navigati
     @Override
     public void handleUserAuthentication() {
         if (preferenceUtils.getAuthLoginState()) {
-            bottomNavigationView.showUserProfile();
+            rootActivityView.showUserProfile();
         } else {
-            bottomNavigationView.redirectAuthActivity();
+            rootActivityView.redirectAuthActivity();
         }
     }
 
     @Override
-    public void attachView(NavigationHomeViewContract.BottomNavigationView view) {
-        bottomNavigationView = view;
+    public void attachView(NavigationHomeViewContract.RootActivityView view) {
+        rootActivityView = view;
     }
 
     @Override
@@ -55,9 +55,9 @@ public class BottomNavigationPresenter extends BasePresenter implements Navigati
 
     public void verifyUserAuthentication() {
         if (preferenceUtils.getAuthLoginState()) {
-            bottomNavigationView.redirectEntryActivity();
+            rootActivityView.redirectEntryActivity();
         } else {
-            bottomNavigationView.redirectAuthActivity();
+            rootActivityView.redirectAuthActivity();
         }
     }
 }

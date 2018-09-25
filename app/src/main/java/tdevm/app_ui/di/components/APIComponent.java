@@ -29,7 +29,7 @@ import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
 import tdevm.app_ui.modules.payment.PaymentActivity;
 import tdevm.app_ui.modules.payment.fragments.CheckoutFragment;
 import tdevm.app_ui.modules.payment.fragments.PaymentFragment;
-import tdevm.app_ui.root.BottomNavigationHome;
+import tdevm.app_ui.root.RootActivity;
 import tdevm.app_ui.root.fragments.AccountsFragment;
 import tdevm.app_ui.root.fragments.RestaurantListFragment;
 
@@ -44,7 +44,7 @@ public interface APIComponent {
     void inject(AuthLoginFragment authLoginFragment);
     void inject(VerifyPhoneOTPFragment verifyPhoneOTPFragment);
     void inject(AuthRegisterFragment authRegisterFragment);
-    void inject(BottomNavigationHome bottomNavigationHome);
+    void inject(RootActivity rootActivity);
     void inject(SingleCuisineGridFragment singleCuisineGridFragment);
     void inject(DishMenuFragment dishMenuFragment);
     void inject(CartFragment cartFragment);

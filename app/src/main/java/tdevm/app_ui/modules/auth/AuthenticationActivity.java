@@ -1,5 +1,6 @@
 package tdevm.app_ui.modules.auth;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import tdevm.app_ui.modules.auth.fragments.AuthInitFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthLoginFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthRegisterFragment;
 import tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment;
+import tdevm.app_ui.root.RootActivity;
 
 //TODO back stack management.
 public class AuthenticationActivity extends AppCompatActivity implements AuthInitFragment.AuthInitInteractionListener {
@@ -67,6 +69,11 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
     @Override
     public void onAuthInitInteractionListener(Uri uri) {
 
+    }
+
+    public void showRootActivity(){
+        Intent intent = new Intent(this, RootActivity.class);
+        startActivity(intent);
     }
 
 

@@ -12,7 +12,7 @@ import tdevm.app_ui.base.BaseView;
 
 public interface NavigationHomeViewContract {
 
-    interface BottomNavigationView extends BaseView {
+    interface RootActivityView extends BaseView {
         void showRestaurantDetailsActivity(Restaurant restaurant);
         void showUserProfile();
         void redirectAuthActivity();

@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
+import tdevm.app_ui.root.RootActivity;
 import tdevm.app_ui.utils.PreferenceUtils;
 
 public class SplashActivity extends AppCompatActivity {
@@ -36,8 +37,15 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(preferenceUtils.getIntroScreenDisplayed()){
-                    Intent i = new Intent(SplashActivity.this, AuthenticationActivity.class);
-                    startActivity(i);
+
+                    if(preferenceUtils.getAuthLoginState()){
+                        Intent i = new Intent(SplashActivity.this, RootActivity.class);
+                        startActivity(i);
+                    }else {
+                        Intent i = new Intent(SplashActivity.this, AuthenticationActivity.class);
+                        startActivity(i);
+                    }
+
                 }else {
                     Intent i = new Intent(SplashActivity.this, IntroActivity.class);
                     startActivity(i);

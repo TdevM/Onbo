@@ -8,8 +8,8 @@ import tdevm.app_ui.base.BasePresenterMVP;
 
 public interface NavigationHomePresenterContract {
 
-    interface BottomNavigationHomePresenter extends BasePresenterMVP<NavigationHomeViewContract.BottomNavigationView>{
-        void attachView(NavigationHomeViewContract.BottomNavigationView view);
+    interface BottomNavigationHomePresenter extends BasePresenterMVP<NavigationHomeViewContract.RootActivityView>{
+        void attachView(NavigationHomeViewContract.RootActivityView view);
         void detachView();
         void handleUserAuthentication();
 

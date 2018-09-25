@@ -23,7 +23,7 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
-import tdevm.app_ui.root.BottomNavigationHome;
+import tdevm.app_ui.root.RootActivity;
 import tdevm.app_ui.root.NavigationHomeViewContract;
 import tdevm.app_ui.root.adapters.RestaurantListAdapter;
 import tdevm.app_ui.root.callbacks.RestaurantItemClickListener;
@@ -46,7 +46,7 @@ public class RestaurantListFragment extends Fragment
     ShimmerFrameLayout shimmerFrameLayout;
 
     RecyclerView.LayoutManager layoutManager;
-    BottomNavigationHome activity;
+    RootActivity activity;
 
     public RestaurantListFragment() {
         // Required empty public constructor
@@ -74,7 +74,7 @@ public class RestaurantListFragment extends Fragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         resolveDaggerDependencies();
-        activity =(BottomNavigationHome) getActivity();
+        activity =(RootActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_restuarant_list, container, false);
         layoutManager = new LinearLayoutManager(getContext());
         adapter = new RestaurantListAdapter(getContext());

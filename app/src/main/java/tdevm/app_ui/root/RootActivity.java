@@ -20,11 +20,11 @@ import tdevm.app_ui.root.activities.RestaurantDetailActivity;
 import tdevm.app_ui.root.fragments.AccountsFragment;
 import tdevm.app_ui.root.fragments.RestaurantListFragment;
 
-public class BottomNavigationHome extends AppCompatActivity implements NavigationHomeViewContract.BottomNavigationView {
+public class RootActivity extends AppCompatActivity implements NavigationHomeViewContract.RootActivityView {
 
-    public static final String TAG = BottomNavigationHome.class.getSimpleName();
+    public static final String TAG = RootActivity.class.getSimpleName();
     @Inject
-    BottomNavigationPresenter bottomNavigationPresenter;
+    RootActivityPresenter rootActivityPresenter;
     Toolbar toolbarMain;
     BottomNavigationView navigation;
     FragmentTransaction fragmentTransaction;
@@ -44,10 +44,10 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
 //                    fragmentTransaction.commit();
 //                    break;
                 case R.id.navigation_scanner:
-                    bottomNavigationPresenter.verifyUserAuthentication();
+                    rootActivityPresenter.verifyUserAuthentication();
                     break;
                 case R.id.navigation_account:
-                    bottomNavigationPresenter.handleUserAuthentication();
+                    rootActivityPresenter.handleUserAuthentication();
                     break;
 //                case R.id.navigation_notifications:
 //                    fragmentTransaction.replace(R.id.frame_layout, new NotificationsFragment());
@@ -96,7 +96,7 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
 
     @Override
     protected void onResume() {
-        bottomNavigationPresenter.attachView(this);
+        rootActivityPresenter.attachView(this);
         super.onResume();
     }
 
@@ -119,19 +119,19 @@ public class BottomNavigationHome extends AppCompatActivity implements Navigatio
 
     @Override
     public void redirectEntryActivity() {
-        Intent intent = new Intent(BottomNavigationHome.this, RestaurantMenuEntryActivity.class);
+        Intent intent = new Intent(RootActivity.this, RestaurantMenuEntryActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void redirectAuthActivity() {
-        Intent intent = new Intent(BottomNavigationHome.this, AuthenticationActivity.class);
+        Intent intent = new Intent(RootActivity.this, AuthenticationActivity.class);
         startActivity(intent);
     }
 
     @Override
     protected void onDestroy() {
-        bottomNavigationPresenter.detachView();
+        rootActivityPresenter.detachView();
         super.onDestroy();
     }
 

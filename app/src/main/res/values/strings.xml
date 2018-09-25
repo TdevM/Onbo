@@ -125,4 +125,7 @@
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
+    <string name="intro_text_1">We know you are tired of standing in queue to order your meal</string>
+    <string name="intro_text_2">Break the Queue</string>
+    <string name="intro_text_3">Scan the QR to order</string>
 </resources>
