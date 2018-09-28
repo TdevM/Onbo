@@ -98,6 +98,7 @@ public class SingleCuisineGridFragment extends Fragment
         fetchDishesMap = new HashMap<>();
         fetchDishesMap.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         recyclerViewGridSingle.setLayoutManager(mLayoutManager);
+        //recyclerViewGridSingle.hasFixedSize();
         menuAdapter = new MenuAdapter(getContext(), cartHelper);
         menuAdapter.setDishItemClickListenerCallback(this);
         recyclerViewGridSingle.setAdapter(menuAdapter);

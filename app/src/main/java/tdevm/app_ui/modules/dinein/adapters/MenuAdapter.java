@@ -70,7 +70,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuAdapterVie
             holder.cuisineName.setText(cuisineList.get(position).getCuisine_name());
             RecyclerView.LayoutManager manager = new LinearLayoutManager(mContext);
             holder.recyclerView.setLayoutManager(manager);
-            holder.recyclerView.setRecycledViewPool(pool);
+            //holder.recyclerView.setRecycledViewPool(pool);
+            //holder.recyclerView.hasFixedSize();
             MenuItemsAdapter adapter = new MenuItemsAdapter(mContext, cuisineList.get(position).getMenu_items(), cartHelper);
             adapter.setDishItemClickListenerCallback(menuItemClickListener);
             holder.recyclerView.setAdapter(adapter);
