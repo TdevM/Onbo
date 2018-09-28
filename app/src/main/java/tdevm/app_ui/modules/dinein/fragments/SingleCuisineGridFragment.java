@@ -55,7 +55,7 @@ public class SingleCuisineGridFragment extends Fragment
     RecyclerView recyclerViewGridSingle;
     Unbinder unbinder;
     private Map<String, String> fetchDishesMap;
-    RecycledGridMenuAdapter recycledGridMenuAdapter;
+//    RecycledGridMenuAdapter recycledGridMenuAdapter;
     MenuAdapter menuAdapter;
 
     @Inject
@@ -123,7 +123,7 @@ public class SingleCuisineGridFragment extends Fragment
 
     @Override
     public void onMenuItemsFetched(ArrayList<MenuItem> arrayList) {
-        recycledGridMenuAdapter.onItemsFetched(arrayList);
+        //recycledGridMenuAdapter.onItemsFetched(arrayList);
     }
 
     @Override

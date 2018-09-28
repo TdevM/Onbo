@@ -132,7 +132,7 @@
     <color name="DodgerBlue">#1E90FF</color>
     <color name="MidnightBlue">#191970</color>
     <color name="Aqua">#00ffff</color>
-    <color name="Cyan">#00FFFF</color>
+    <color name="blue_default_app">#00FFFF</color>
     <color name="SpringGreen">#00FF7F</color>
     <color name="Lime">#00FF00</color>
     <color name="MediumSpringGreen">#00FA9A</color>
@@ -155,9 +155,9 @@
     <color name="chef">#777</color>
     <color name="timestamp">#777</color>
 
-    <color name="blue_default_app">#00C1F8</color>
-    <color name="color_primary_dark">#11549B</color>
-    <color name="color_accent">#1F1C51</color>
+    <color name="primary_default_app">#f09819</color>
+    <color name="primary_dark_app">#ff6519</color>
+    <color name="primary_accent">#1F1C51</color>
 
 
 

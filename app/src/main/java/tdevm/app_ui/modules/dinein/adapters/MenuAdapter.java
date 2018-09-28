@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,11 +31,13 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuAdapterVie
     private List<CuisineMenuItems> cuisineList;
     private MenuItemClickListener menuItemClickListener;
     private CartHelper cartHelper;
+    RecyclerView.RecycledViewPool pool;
 
     public MenuAdapter(Context mContext, CartHelper helper) {
         this.mContext = mContext;
         this.cartHelper = helper;
         this.cuisineList = new ArrayList<>();
+        pool = new RecyclerView.RecycledViewPool();
     }
 
     public void setDishItemClickListenerCallback(MenuItemClickListener menuItemClickListenerCallback) {
@@ -43,6 +46,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuAdapterVie
 
     public void onCuisineListFetched(List<CuisineMenuItems> cuisines) {
         this.cuisineList.clear();
+        ListIterator<CuisineMenuItems> iterator = cuisines.listIterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getMenu_items().size() <= 0) {
+                iterator.remove();
+            }
+        }
         this.cuisineList.addAll(cuisines);
         Log.d(TAG, "Cuisine list menu items fetched");
         notifyDataSetChanged();
@@ -57,16 +66,21 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuAdapterVie
 
     @Override
     public void onBindViewHolder(@NonNull MenuAdapterViewHolder holder, int position) {
-        holder.cuisineName.setText(cuisineList.get(position).getCuisine_name());
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(mContext);
-        holder.recyclerView.setLayoutManager(manager);
-        MenuItemsAdapter adapter = new MenuItemsAdapter(mContext, cuisineList.get(position).getMenu_items(),cartHelper);
-        adapter.setDishItemClickListenerCallback(menuItemClickListener);
-        holder.recyclerView.setAdapter(adapter);
+        if (cuisineList != null) {
+            holder.cuisineName.setText(cuisineList.get(position).getCuisine_name());
+            RecyclerView.LayoutManager manager = new LinearLayoutManager(mContext);
+            holder.recyclerView.setLayoutManager(manager);
+            holder.recyclerView.setRecycledViewPool(pool);
+            MenuItemsAdapter adapter = new MenuItemsAdapter(mContext, cuisineList.get(position).getMenu_items(), cartHelper);
+            adapter.setDishItemClickListenerCallback(menuItemClickListener);
+            holder.recyclerView.setAdapter(adapter);
+        }
+
     }
 
     @Override
     public int getItemCount() {
+
         return cuisineList.size();
     }
 

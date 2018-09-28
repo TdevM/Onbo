@@ -86,6 +86,7 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
 
             @Override
             public void onNext(@NonNull Response<Object> response) {
+                authOTPView.showProgressUI();
                 if(response.code() ==200){
                     //OTP Verified, show Register Fragment.
                     Log.d(TAG,response.body().toString());
@@ -103,7 +104,7 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
 
             @Override
             public void onComplete() {
-
+                authOTPView.hideProgressUI();
             }
         });
 

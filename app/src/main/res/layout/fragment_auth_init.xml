@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="tdevm.app_ui.modules.auth.AuthenticationActivity">
 
     <TextView
@@ -15,9 +16,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="213dp"
         android:text="@string/lets_get_started"
-        android:textColor="@color/blue_default_app"
-        android:textSize="20sp"
-        android:layout_alignParentLeft="true" />
+        android:textColor="@color/primary_default_app"
+        android:textSize="20sp" />
 
     <tdevm.app_ui.widgets.PhoneEditText
         android:id="@+id/et_init_phone_number"
@@ -29,15 +29,13 @@
         android:gravity="bottom"
         android:inputType="phone"
         android:tag="+91"
-        android:textSize="20sp"
-        android:layout_alignParentLeft="true" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btn_login_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="@drawable/gradient_6"
         android:text="@string/auth_next"
@@ -48,18 +46,43 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="0dp"
         android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:cropToPadding="false"
-        app:srcCompat="@drawable/ic_breakfast" />
+        android:layout_marginStart="0dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitStart"
+        app:srcCompat="@drawable/auth_init_1xxhdpi" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="152dp"
+        android:layout_marginEnd="0dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitEnd"
+        app:srcCompat="@drawable/auth_init_2xxhdpi" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="90dp"
+        android:scaleType="fitEnd"
+        app:srcCompat="@drawable/auth_init_3xxhdpi" />
 
 
 </RelativeLayout>

@@ -127,6 +127,7 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     @Override
     public void showProgressUI() {
         progressBarOTP.setVisibility(View.VISIBLE);
+        buttonVerifyOTP.setVisibility(View.GONE);
 
     }
 
@@ -147,6 +148,7 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     @Override
     public void hideProgressUI() {
       progressBarOTP.setVisibility(View.GONE);
+      buttonVerifyOTP.setVisibility(View.VISIBLE);
     }
 
     @Override

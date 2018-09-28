@@ -12,6 +12,7 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.DishMenuFragment;
 import tdevm.app_ui.modules.dinein.fragments.BellFragment;
+import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridFragment;
 
 public class NonDineActivity extends AppCompatActivity {
 
@@ -29,8 +30,8 @@ public class NonDineActivity extends AppCompatActivity {
             fragmentTransaction = getSupportFragmentManager().beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_dine_in_menu_t2:
-                    DishMenuFragment dishMenuFragment = new DishMenuFragment();
-                    fragmentTransaction.replace(R.id.frame_layout_non_dine_in, dishMenuFragment);
+                    SingleCuisineGridFragment singleCuisineGridFragment = new SingleCuisineGridFragment();
+                    fragmentTransaction.replace(R.id.frame_layout_non_dine_in, singleCuisineGridFragment);
                     fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_favourites_t2:
@@ -52,8 +53,8 @@ public class NonDineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_non_dine);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        DishMenuFragment dishMenuFragment = new DishMenuFragment();
-        transaction.replace(R.id.frame_layout_non_dine_in, dishMenuFragment);
+        SingleCuisineGridFragment singleCuisineGridFragment = new SingleCuisineGridFragment();
+        transaction.replace(R.id.frame_layout_non_dine_in, singleCuisineGridFragment);
         transaction.commit();
 
         BottomNavigationView navigation = findViewById(R.id.navigation_non_dine_in);

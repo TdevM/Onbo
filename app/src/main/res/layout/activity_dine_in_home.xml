@@ -46,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
-        app:menu="@menu/menu_navigation_dine_in" />
+        app:menu="@menu/menu_navigation_dine_in"
+        app:labelVisibilityMode="labeled"/>
 
 </android.support.design.widget.CoordinatorLayout>

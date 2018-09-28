@@ -108,11 +108,13 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     @Override
     public void showProgressUI() {
         progressBar.setVisibility(View.VISIBLE);
+        btnLoginInit.setVisibility(View.GONE);
     }
 
     @Override
     public void hideProgressUI() {
         progressBar.setVisibility(View.GONE);
+        btnLoginInit.setVisibility(View.VISIBLE);
 
     }
 

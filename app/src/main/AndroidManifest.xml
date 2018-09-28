@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="tdevm.app_ui">
 
-    <uses-sdk
-        tools:overrideLibrary="com.razorpay" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
