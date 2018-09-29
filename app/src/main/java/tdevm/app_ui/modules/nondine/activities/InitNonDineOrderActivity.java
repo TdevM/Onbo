@@ -1,12 +1,17 @@
 package tdevm.app_ui.modules.nondine.activities;
 
-import android.net.Uri;
+import android.app.Activity;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
+
+import org.json.JSONObject;
 
 import javax.inject.Inject;
 
@@ -15,16 +20,18 @@ import butterknife.ButterKnife;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
+import tdevm.app_ui.modules.dinein.fragments.TempOrderFragment;
 import tdevm.app_ui.modules.nondine.NonDineViewContract;
+import tdevm.app_ui.modules.nondine.fragments.DigitalPaymentOptionsFragment;
+import tdevm.app_ui.modules.nondine.fragments.NDOrderCashFragment;
 import tdevm.app_ui.modules.nondine.fragments.NonDineCheckoutFragment;
 import tdevm.app_ui.modules.nondine.fragments.OrderPaymentTypeFragment;
-import tdevm.app_ui.modules.nondine.fragments.PlaceNDOrderCashFragment;
 
 public class InitNonDineOrderActivity extends AppCompatActivity implements NonDineViewContract.InitNonDineOrderView,
-        OrderPaymentTypeFragment.OrderPaymentTypeListener, PlaceNDOrderCashFragment.OnFragmentInteractionListener{
+        PaymentResultListener {
 
     public static final String TAG = InitNonDineOrderActivity.class.getSimpleName();
-
+    private FOrder fOrderDigital;
     @Inject
     InitNonDineOrderPresenter presenter;
 
@@ -44,6 +51,7 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
         resolveDaggerDependencies();
         setContentView(R.layout.activity_init_non_dine_order);
         ButterKnife.bind(this);
+        Checkout.preload(getApplicationContext());
         showOrderSummary();
     }
 
@@ -57,13 +65,13 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
         progressBar.setVisibility(View.GONE);
     }
 
-    public void showOrderSummary(){
+    public void showOrderSummary() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout_place_non_dine_order, NonDineCheckoutFragment.newInstance());
         transaction.commit();
     }
 
-    public void showOrderPaymentType(){
+    public void showOrderPaymentType() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout_place_non_dine_order, OrderPaymentTypeFragment.newInstance());
         transaction.commit();
@@ -75,12 +83,10 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
     }
 
 
-    public void createNonDineOrderCash(){
-        presenter.createCashNDOrder();
-    }
-
-    public void showDigitalPaymentOptions(){
-
+    public void showDigitalPaymentOptions() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout_place_non_dine_order, DigitalPaymentOptionsFragment.newInstance());
+        transaction.commit();
     }
 
     @Override
@@ -89,25 +95,57 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
         presenter.detachView();
     }
 
-    @Override
-    public void onPaymentMethodSelected(Uri uri) {
 
-    }
-
-    @Override
     public void onNDCashOrderCreated(FOrder fOrder) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout_place_non_dine_order, PlaceNDOrderCashFragment.newInstance(fOrder));
+        transaction.replace(R.id.frame_layout_place_non_dine_order, NDOrderCashFragment.newInstance(fOrder));
         transaction.commit();
     }
 
+
+    public void startPayment(FOrder fOrder) {
+        Checkout checkout = new Checkout();
+        checkout.setImage(R.drawable.done);
+        fOrderDigital = fOrder;
+        final Activity activity = this;
+        if (fOrder != null) {
+            try {
+                JSONObject options = new JSONObject();
+                options.put("name", "tdevm's palace");
+                options.put("description", "Order ID" + fOrder.getOrder_id());
+                options.put("currency", "INR");
+                options.put("amount", fOrder.getGrand_total());
+                checkout.open(activity, options);
+            } catch (Exception e) {
+                Log.e(TAG, "Error in starting Razorpay Checkout", e);
+            }
+        }
+    }
+
+
     @Override
-    public void onOrderCreationFailure() {
-        Toast.makeText(this, "Failed to create order.", Toast.LENGTH_SHORT).show();
+    public void onPaymentSuccess(String s) {
+        if(fOrderDigital!=null){
+            presenter.capturePaymentForOrder(s, fOrderDigital.getOrder_id());
+        }
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onPaymentError(int i, String s) {
+        // Authorization failed
+    }
+
+    @Override
+    public void onPaymentCaptured() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        TempOrderFragment fragment = new TempOrderFragment();
+        transaction.replace(R.id.frame_layout_place_non_dine_order, fragment);
+        transaction.commit();
+        presenter.clearCart();
+    }
+
+    @Override
+    public void onPaymentCaptureFailure() {
 
     }
 }

@@ -11,9 +11,9 @@ import tdevm.app_ui.modules.nondine.NonDineViewContract;
 import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
-public class PlaceNDOrderCashPresenter extends BasePresenter implements NonDinePresenterContract.PlaceNDOrderCashPresenter{
+public class NDOrderCashPresenter extends BasePresenter implements NonDinePresenterContract.PlaceNDOrderCashPresenter{
 
-    public static final String TAG = PlaceNDOrderCashPresenter.class.getSimpleName();
+    public static final String TAG = NDOrderCashPresenter.class.getSimpleName();
 
     private APIService apiService;
     private CartHelper cartHelper;
@@ -22,7 +22,7 @@ public class PlaceNDOrderCashPresenter extends BasePresenter implements NonDineP
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    public PlaceNDOrderCashPresenter(APIService apiService, CartHelper cartHelper, PreferenceUtils preferenceUtils) {
+    public NDOrderCashPresenter(APIService apiService, CartHelper cartHelper, PreferenceUtils preferenceUtils) {
         this.apiService = apiService;
         this.cartHelper = cartHelper;
         this.preferenceUtils = preferenceUtils;

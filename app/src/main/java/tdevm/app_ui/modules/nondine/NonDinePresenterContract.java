@@ -14,9 +14,10 @@ public interface NonDinePresenterContract {
     }
 
     interface InitNonDineOrderPresenter extends BasePresenterMVP<NonDineViewContract.InitNonDineOrderView>{
+        void capturePaymentForOrder(String payment_id, String orderId);
         void attachView(NonDineViewContract.InitNonDineOrderView view);
         void detachView();
-        void createCashNDOrder();
+
     }
 
     interface NonDineSummaryPresenter extends BasePresenterMVP<NonDineViewContract.NonDineCheckoutView>{
@@ -28,6 +29,7 @@ public interface NonDinePresenterContract {
     interface OrderPaymentTypePresenter extends BasePresenterMVP<NonDineViewContract.OrderPaymentTypeView>{
         void attachView(NonDineViewContract.OrderPaymentTypeView view);
         void detachView();
+        void createCashNDOrder();
 
     }
 
@@ -36,6 +38,13 @@ public interface NonDinePresenterContract {
         void detachView();
 
     }
+
+    interface DigitalPaymentOptionPresenter extends BasePresenterMVP<NonDineViewContract.DigitalPaymentOptionView>{
+        void attachView(NonDineViewContract.DigitalPaymentOptionView view);
+        void detachView();
+        void createPaidNDOrder();
+    }
+
 }
 
 

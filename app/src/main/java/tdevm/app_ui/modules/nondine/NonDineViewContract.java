@@ -20,8 +20,8 @@ public interface NonDineViewContract {
     }
 
     interface InitNonDineOrderView extends BaseView{
-        void onNDCashOrderCreated(FOrder fOrder);
-        void onOrderCreationFailure();
+        void onPaymentCaptured();
+        void onPaymentCaptureFailure();
     }
 
     interface NonDineCheckoutView extends BaseView{
@@ -30,10 +30,18 @@ public interface NonDineViewContract {
     }
 
     interface OrderPaymentTypeView extends BaseView{
-
+        void onNDCashOrderCreated(FOrder fOrder);
+        void onOrderCreationFailure();
     }
 
     interface PlaceNDOrderCashView extends BaseView{
 
+    }
+
+    interface DigitalPaymentOptionView extends BaseView{
+        void showProgressUI();
+        void hideProgressUI();
+        void onNDPaidOrderCreated(FOrder fOrder);
+        void onOrderCreationFailure();
     }
 }

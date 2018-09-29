@@ -11,6 +11,7 @@ import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.request.NonDineOrder;
+import tdevm.app_ui.api.models.request.PaymentCapture;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.nondine.NonDinePresenterContract;
@@ -18,7 +19,7 @@ import tdevm.app_ui.modules.nondine.NonDineViewContract;
 import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
-public class InitNonDineOrderPresenter extends BasePresenter implements NonDinePresenterContract.InitNonDineOrderPresenter{
+public class InitNonDineOrderPresenter extends BasePresenter implements NonDinePresenterContract.InitNonDineOrderPresenter {
 
     public static final String TAG = InitNonDineOrderPresenter.class.getSimpleName();
 
@@ -41,7 +42,7 @@ public class InitNonDineOrderPresenter extends BasePresenter implements NonDineP
     @Override
     public void attachView(NonDineViewContract.InitNonDineOrderView view) {
         this.nonDineOrderView = view;
-        Log.d(TAG,"Attach view called for presenter");
+        Log.d(TAG, "Attach view called for presenter");
     }
 
     @Override
@@ -52,11 +53,13 @@ public class InitNonDineOrderPresenter extends BasePresenter implements NonDineP
         }
     }
 
+
     @Override
-    public void createCashNDOrder() {
-        NonDineOrder order = new NonDineOrder(preferenceUtils.getScannedRestaurantId(),"This is a hardcoded text",cart.convertCartTOJSON().toString());
-        Observable<Response<FOrder>> createNDCashOrder =  apiService.createUnpaidNonDineOrder(preferenceUtils.getAuthLoginToken(),order);
-        subscribe(createNDCashOrder, new Observer<Response<FOrder>>() {
+    public void capturePaymentForOrder(String payment_id, String orderId) {
+
+        PaymentCapture capture = new PaymentCapture(orderId,payment_id, preferenceUtils.getScannedRestaurantId());
+        Observable<Response<FOrder>> observable = apiService.captureNonDineOrderPayment(preferenceUtils.getAuthLoginToken(), capture);
+        subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
@@ -64,26 +67,33 @@ public class InitNonDineOrderPresenter extends BasePresenter implements NonDineP
 
             @Override
             public void onNext(Response<FOrder> fOrderResponse) {
-                nonDineOrderView.showProgressUI();
-                if(fOrderResponse.isSuccessful()){
-                    if(fOrderResponse.body()!=null){
-                        nonDineOrderView.onNDCashOrderCreated(fOrderResponse.body());
+                if (fOrderResponse.isSuccessful()) {
+                    if (fOrderResponse.body() != null) {
+                        Log.d(TAG, fOrderResponse.body().toString());
+                        nonDineOrderView.onPaymentCaptured();
                     }
-                }else {
-                    nonDineOrderView.onOrderCreationFailure();
+                } else {
+                    nonDineOrderView.onPaymentCaptureFailure();
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                nonDineOrderView.onOrderCreationFailure();
+                nonDineOrderView.onPaymentCaptureFailure();
             }
 
             @Override
             public void onComplete() {
-                nonDineOrderView.hideProgressUI();
+
             }
         });
+
     }
+
+
+    public void clearCart() {
+        cart.clearCart();
+    }
+
 
 }

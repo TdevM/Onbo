@@ -11,34 +11,36 @@ import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.request.NonDineOrder;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.base.BasePresenter;
+import tdevm.app_ui.base.BasePresenterMVP;
 import tdevm.app_ui.modules.nondine.NonDinePresenterContract;
 import tdevm.app_ui.modules.nondine.NonDineViewContract;
-import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
+import tdevm.app_ui.utils.PreferenceUtils;
 
-public class OrderPaymentTypePresenter extends BasePresenter implements NonDinePresenterContract.OrderPaymentTypePresenter{
+public class DigitalPaymentOptionsPresenter extends BasePresenter implements NonDinePresenterContract.DigitalPaymentOptionPresenter {
 
+    public static final String TAG = DigitalPaymentOptionsPresenter.class.getSimpleName();
 
-    public static final String TAG = OrderPaymentTypePresenter.class.getSimpleName();
 
     private APIService apiService;
     private PreferenceUtils preferenceUtils;
+    private CartHelper cartHelper;
     private CompositeDisposable compositeDisposable;
-    private CartHelper cart;
 
-    private NonDineViewContract.OrderPaymentTypeView paymentTypeView;
+
+    private NonDineViewContract.DigitalPaymentOptionView view;
 
     @Inject
-    public OrderPaymentTypePresenter(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cart) {
+    public DigitalPaymentOptionsPresenter(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cartHelper) {
         this.apiService = apiService;
         this.preferenceUtils = preferenceUtils;
-        this.cart = cart;
+        this.cartHelper = cartHelper;
         this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override
-    public void attachView(NonDineViewContract.OrderPaymentTypeView view) {
-        this.paymentTypeView = view;
+    public void attachView(NonDineViewContract.DigitalPaymentOptionView view) {
+        this.view = view;
     }
 
     @Override
@@ -49,10 +51,11 @@ public class OrderPaymentTypePresenter extends BasePresenter implements NonDineP
         }
     }
 
+
     @Override
-    public void createCashNDOrder() {
-        NonDineOrder order = new NonDineOrder(preferenceUtils.getScannedRestaurantId(),"This is a hardcoded text",cart.convertCartTOJSON().toString());
-        Observable<Response<FOrder>> createNDCashOrder =  apiService.createUnpaidNonDineOrder(preferenceUtils.getAuthLoginToken(),order);
+    public void createPaidNDOrder() {
+        NonDineOrder order = new NonDineOrder(preferenceUtils.getScannedRestaurantId(),"This is a hardcoded text",cartHelper.convertCartTOJSON().toString());
+        Observable<Response<FOrder>> createNDCashOrder =  apiService.createPaidNonDineOrder(preferenceUtils.getAuthLoginToken(),order);
         subscribe(createNDCashOrder, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -61,24 +64,24 @@ public class OrderPaymentTypePresenter extends BasePresenter implements NonDineP
 
             @Override
             public void onNext(Response<FOrder> fOrderResponse) {
-                paymentTypeView.showProgressUI();
+                view.showProgressUI();
                 if(fOrderResponse.isSuccessful()){
                     if(fOrderResponse.body()!=null){
-                        paymentTypeView.onNDCashOrderCreated(fOrderResponse.body());
+                        view.onNDPaidOrderCreated(fOrderResponse.body());
                     }
                 }else {
-                    paymentTypeView.onOrderCreationFailure();
+                    view.onOrderCreationFailure();
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                paymentTypeView.onOrderCreationFailure();
+                view.onOrderCreationFailure();
             }
 
             @Override
             public void onComplete() {
-                paymentTypeView.hideProgressUI();
+                view.hideProgressUI();
             }
         });
     }

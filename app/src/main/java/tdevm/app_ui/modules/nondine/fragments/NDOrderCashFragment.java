@@ -4,11 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -24,16 +22,14 @@ import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.modules.nondine.NonDineViewContract;
 
 
-public class PlaceNDOrderCashFragment extends Fragment implements NonDineViewContract.PlaceNDOrderCashView {
+public class NDOrderCashFragment extends Fragment implements NonDineViewContract.PlaceNDOrderCashView {
 
-    public static final String TAG = PlaceNDOrderCashFragment.class.getSimpleName();
-
-    private OnFragmentInteractionListener mListener;
+    public static final String TAG = NDOrderCashFragment.class.getSimpleName();
 
     public static String CREATED_ORDER_ND_CASH = "CREATED_ORDER_ND_CASH";
     Unbinder unbinder;
 
-    public PlaceNDOrderCashFragment() {
+    public NDOrderCashFragment() {
         // Required empty public constructor
     }
 
@@ -47,11 +43,11 @@ public class PlaceNDOrderCashFragment extends Fragment implements NonDineViewCon
     ShimmerFrameLayout shimmerFrameLayout;
 
     @Inject
-    PlaceNDOrderCashPresenter placeNDOrderCashPresenter;
+    NDOrderCashPresenter NDOrderCashPresenter;
 
 
-    public static PlaceNDOrderCashFragment newInstance(FOrder fOrder) {
-        PlaceNDOrderCashFragment fragment = new PlaceNDOrderCashFragment();
+    public static NDOrderCashFragment newInstance(FOrder fOrder) {
+        NDOrderCashFragment fragment = new NDOrderCashFragment();
         Bundle args = new Bundle();
         args.putParcelable(CREATED_ORDER_ND_CASH, fOrder);
         fragment.setArguments(args);
@@ -67,7 +63,7 @@ public class PlaceNDOrderCashFragment extends Fragment implements NonDineViewCon
     @Override
     public void onResume() {
         super.onResume();
-        placeNDOrderCashPresenter.attachView(this);
+        NDOrderCashPresenter.attachView(this);
     }
 
     @Override
@@ -84,27 +80,16 @@ public class PlaceNDOrderCashFragment extends Fragment implements NonDineViewCon
     }
 
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+
     }
 
     @Override
@@ -137,7 +122,7 @@ public class PlaceNDOrderCashFragment extends Fragment implements NonDineViewCon
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        placeNDOrderCashPresenter.detachView();
+        NDOrderCashPresenter.detachView();
     }
 
     @Override
@@ -145,8 +130,4 @@ public class PlaceNDOrderCashFragment extends Fragment implements NonDineViewCon
         ((AppApplication) getActivity().getApplication()).getApiComponent().inject(this);
     }
 
-
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
-    }
 }

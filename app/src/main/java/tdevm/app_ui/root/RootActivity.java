@@ -73,7 +73,7 @@ public class RootActivity extends AppCompatActivity implements NavigationHomeVie
         }
         toolbarMain.setNavigationOnClickListener(view -> onBackPressed());
         navigation = findViewById(R.id.navigation);
-        BottomNavigationViewHelper.disableShiftMode(navigation);
+        //BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, RestaurantListFragment.newInstance());

@@ -20,9 +20,10 @@ import tdevm.app_ui.modules.intro.SplashActivity;
 import tdevm.app_ui.modules.nondine.NonDineActivity;
 import tdevm.app_ui.modules.nondine.activities.InitNonDineOrderActivity;
 import tdevm.app_ui.modules.nondine.activities.NonDineRestaurantDetailsActivity;
+import tdevm.app_ui.modules.nondine.fragments.DigitalPaymentOptionsFragment;
 import tdevm.app_ui.modules.nondine.fragments.NonDineCheckoutFragment;
 import tdevm.app_ui.modules.nondine.fragments.OrderPaymentTypeFragment;
-import tdevm.app_ui.modules.nondine.fragments.PlaceNDOrderCashFragment;
+import tdevm.app_ui.modules.nondine.fragments.NDOrderCashFragment;
 import tdevm.app_ui.modules.orders.fragments.MyOrderDetailFragment;
 import tdevm.app_ui.modules.orders.fragments.MyOrdersFragment;
 import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
@@ -66,7 +67,8 @@ public interface APIComponent {
     void inject(NonDineCheckoutFragment fragment);
     void inject(InitNonDineOrderActivity initNonDineOrderActivity);
     void inject(OrderPaymentTypeFragment fragment);
-    void inject(PlaceNDOrderCashFragment fragment);
+    void inject(NDOrderCashFragment fragment);
     void inject(SplashActivity activity);
     void inject(IntroActivity activity);
+    void inject(DigitalPaymentOptionsFragment fragment);
 }

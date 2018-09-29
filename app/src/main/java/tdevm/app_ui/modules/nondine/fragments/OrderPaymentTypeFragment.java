@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,15 +20,18 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.modules.nondine.NonDineViewContract;
 import tdevm.app_ui.modules.nondine.activities.InitNonDineOrderActivity;
 
 
 public class OrderPaymentTypeFragment extends Fragment implements NonDineViewContract.OrderPaymentTypeView {
 
-    private OrderPaymentTypeListener mListener;
-
     InitNonDineOrderActivity activity;
+
+    @Inject
+    OrderPaymentTypePresenter paymentTypePresenter;
+
 
     private static final String MODE_CASH = "MODE_CASH";
     private static final String MODE_DIGITAL = "MODE_DIGITAL";
@@ -34,6 +40,9 @@ public class OrderPaymentTypeFragment extends Fragment implements NonDineViewCon
     @BindView(R.id.btn_place_nd_order)
     Button buttonContinue;
 
+    @BindView(R.id.progress_bar_order_payment_type)
+    ProgressBar progressBar;
+
     @BindView(R.id.check_btn_cash)
     ImageView checkBtnCash;
 
@@ -41,14 +50,14 @@ public class OrderPaymentTypeFragment extends Fragment implements NonDineViewCon
     ImageView checkBtnDigital;
 
     @OnClick(R.id.iv_payment_option_cash)
-    void updateTypeCash(){
+    void updateTypeCash() {
         selectedPaymentMode = MODE_CASH;
         showCashSelected();
         buttonContinue.setEnabled(true);
     }
 
     @OnClick(R.id.iv_payment_option_digital)
-    void updateTypeDigital(){
+    void updateTypeDigital() {
         selectedPaymentMode = MODE_DIGITAL;
         showDigitalSelected();
         buttonContinue.setEnabled(true);
@@ -81,6 +90,12 @@ public class OrderPaymentTypeFragment extends Fragment implements NonDineViewCon
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        paymentTypePresenter.attachView(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_payment_type, container, false);
@@ -90,63 +105,54 @@ public class OrderPaymentTypeFragment extends Fragment implements NonDineViewCon
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onPaymentMethodSelected(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OrderPaymentTypeListener) {
-            mListener = (OrderPaymentTypeListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        paymentTypePresenter.detachView();
     }
 
     @Override
     public void showProgressUI() {
-
+        progressBar.setVisibility(View.VISIBLE);
+        buttonContinue.setVisibility(View.GONE);
     }
 
     @Override
     public void hideProgressUI() {
-
+        progressBar.setVisibility(View.GONE);
+        buttonContinue.setVisibility(View.VISIBLE);
     }
 
-    public void handleOrderPaymentType(){
-        if(selectedPaymentMode!=null){
-            if (selectedPaymentMode.equals(MODE_CASH)){
-                activity.createNonDineOrderCash();
-            }else if(selectedPaymentMode.equals(MODE_DIGITAL)){
+    public void handleOrderPaymentType() {
+        if (selectedPaymentMode != null) {
+            if (selectedPaymentMode.equals(MODE_CASH)) {
+                paymentTypePresenter.createCashNDOrder();
+            } else if (selectedPaymentMode.equals(MODE_DIGITAL)) {
                 activity.showDigitalPaymentOptions();
             }
         }
     }
 
 
-    public void showCashSelected(){
+    public void showCashSelected() {
         checkBtnDigital.setVisibility(View.GONE);
         checkBtnCash.setVisibility(View.VISIBLE);
     }
 
-    public void showDigitalSelected(){
+    public void showDigitalSelected() {
         checkBtnCash.setVisibility(View.GONE);
         checkBtnDigital.setVisibility(View.VISIBLE);
     }
@@ -157,8 +163,15 @@ public class OrderPaymentTypeFragment extends Fragment implements NonDineViewCon
 
     }
 
-
-    public interface OrderPaymentTypeListener {
-        void onPaymentMethodSelected(Uri uri);
+    @Override
+    public void onNDCashOrderCreated(FOrder fOrder) {
+        activity.onNDCashOrderCreated(fOrder);
     }
+
+    @Override
+    public void onOrderCreationFailure() {
+
+    }
+
+
 }

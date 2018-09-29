@@ -47,7 +47,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
     public void onBindViewHolder(@NonNull MyOrdersViewHolder holder, int position) {
         holder.restaurantName.setText(orderList.get(position).getRestaurant().getRestaurant_name());
         holder.orderTotal.setText(orderList.get(position).getGrand_total());
-        holder.localityName.setText(orderList.get(position).getRestaurant().getLocation().getLocation_locality());
+        if (orderList.get(position).getRestaurant().getLocation()!=null) {
+            holder.localityName.setText(orderList.get(position).getRestaurant().getLocation().getLocation_locality());
+        }
         holder.orderTime.setText(orderList.get(position).getTimestamp());
     }
 

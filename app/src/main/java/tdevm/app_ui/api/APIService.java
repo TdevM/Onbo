@@ -111,7 +111,7 @@ public interface APIService {
     Observable<Response<FOrder>> createUnpaidNonDineOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
     @POST("m/f/orders")
     Observable<Response<FOrder>> createPaidNonDineOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
-    @POST("m/f/orders")
+    @POST("m/f/payment")
     Observable<Response<FOrder>> captureNonDineOrderPayment(@Header("x-auth") String token, @Body PaymentCapture paymentCapture);
 
 
