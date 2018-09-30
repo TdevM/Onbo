@@ -11,6 +11,7 @@ android {
         applicationId "tdevm.app_ui"
         minSdkVersion 19
         targetSdkVersion 28
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -64,6 +65,7 @@ dependencies {
     implementation('com.github.hotchemi:permissionsdispatcher:3.1.0') {
         exclude module: "support-v13"
     }
+    implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.onesignal:OneSignal:3.10.0'
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0'
     implementation 'com.xwray:groupie:2.1.0'

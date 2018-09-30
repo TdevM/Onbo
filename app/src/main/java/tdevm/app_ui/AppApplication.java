@@ -1,6 +1,6 @@
 package tdevm.app_ui;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.onesignal.OneSignal;
 import com.squareup.leakcanary.LeakCanary;
@@ -16,7 +16,7 @@ import tdevm.app_ui.di.modules.NetworkModule;
  * Created by Tridev on 03-10-2017.
  */
 
-public class AppApplication extends Application {
+public class AppApplication extends MultiDexApplication {
 
     ApplicationComponent applicationComponent;
     APIComponent apiComponent;
