@@ -6,7 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toolbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +30,13 @@ public class InitializeOrderFragment extends Fragment {
     private Boolean orderRunning;
     private InitializeDineOrderActivity initializeDineOrderActivity;
     Unbinder unbinder;
+
+    @BindView(R.id.toolbar_guest_fragment)
+    Toolbar toolbar;
+
+    @BindView(R.id.progress_bar_place_t_order)
+    ProgressBar progressBar;
+
     @OnClick(R.id.btn_temp_order_init)
     void clicked(){
         if(orderRunning){
@@ -37,8 +49,25 @@ public class InitializeOrderFragment extends Fragment {
     @BindView(R.id.et_temp_order_user_message)
     EditText userMessage;
 
-    @BindView(R.id.et_order_guest_count)
-    EditText getGuestCount;
+    @BindView(R.id.tv_guest_count)
+    TextView guestCount;
+
+    @OnClick(R.id.btn_plus_guest_count)
+    void increaseGuestCount(){
+       int count =  Integer.parseInt(guestCount.getText().toString());
+       count = count+1;
+       guestCount.setText(String.valueOf(count));
+    }
+
+    @OnClick(R.id.btn_minus_guest_count)
+    void decreaseGuestCount(){
+        int count =  Integer.parseInt(guestCount.getText().toString());
+        count = count-1;
+        guestCount.setText(String.valueOf(count));
+    }
+
+    @BindView(R.id.layout_guest_count_picker)
+    LinearLayout guestPicker;
 
     public InitializeOrderFragment() {
         // Required empty public constructor
@@ -62,15 +91,15 @@ public class InitializeOrderFragment extends Fragment {
             orderRunning = getArguments().getBoolean(ORDER_RUNNING_STATUS);
         }
         if(orderRunning){
-            getGuestCount.setVisibility(View.GONE);
+            guestPicker.setVisibility(View.GONE);
         }
 
         return view;
     }
 
     private void placeOrder(){
-       if(getGuestCount.getText()!=null && userMessage.getText()!=null){
-           initializeDineOrderActivity.createOrder(Integer.parseInt(getGuestCount.getText().toString()),userMessage.getText().toString());
+       if(guestCount.getText()!=null && userMessage.getText()!=null){
+           initializeDineOrderActivity.createOrder(Integer.parseInt(guestCount.getText().toString()),userMessage.getText().toString());
        }
     }
 

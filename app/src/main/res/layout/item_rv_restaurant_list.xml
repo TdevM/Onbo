@@ -111,11 +111,11 @@
 
             <ImageView
                 android:id="@+id/imageView14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginLeft="@dimen/padding_10"
-                android:layout_marginTop="5dp"
-                app:srcCompat="@drawable/ic_star" />
+                android:layout_marginTop="@dimen/padding_10"
+                app:srcCompat="@drawable/res_strokexxhdpi" />
 
             <TextView
                 android:id="@+id/textView18"
@@ -127,11 +127,12 @@
 
             <ImageView
                 android:id="@+id/imageView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="18dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                app:srcCompat="@drawable/ic_rupee_stroke" />
+                android:layout_marginTop="@dimen/padding_10"
+                android:paddingTop="2dp"
+                app:srcCompat="@drawable/rupee_strokexxhdpi" />
 
             <TextView
                 android:id="@+id/textView19"
@@ -143,11 +144,11 @@
 
             <ImageView
                 android:id="@+id/imageView17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                app:srcCompat="@drawable/ic_star" />
+                android:layout_marginTop="@dimen/padding_10"
+                app:srcCompat="@drawable/qr_strokexxhdpi" />
 
             <TextView
                 android:id="@+id/textView20"

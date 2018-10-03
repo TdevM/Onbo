@@ -1,6 +1,10 @@
 package tdevm.app_ui.root;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,6 +12,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import javax.inject.Inject;
 
@@ -64,6 +70,8 @@ public class RootActivity extends AppCompatActivity implements NavigationHomeVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resolveDaggerDependencies();
+        //setGradientToolbar();
+        //setStatusBarGradient(this);
         setContentView(R.layout.activity_bottom_navigation);
         toolbarMain = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbarMain);
@@ -86,6 +94,29 @@ public class RootActivity extends AppCompatActivity implements NavigationHomeVie
 
     }
 
+
+    public void setGradientToolbar(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            //window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+            //window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setStatusBarGradient(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            Drawable background = activity.getResources().getDrawable(R.drawable.gradient_6);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(activity.getResources().getColor(android.R.color.transparent));
+            //window.setNavigationBarColor(activity.getResources().getColor(android.R.color.transparent));
+            window.setBackgroundDrawable(background);
+        }
+    }
 
     @Override
     public void showRestaurantDetailsActivity(Restaurant restaurant){

@@ -1,9 +1,15 @@
 package tdevm.app_ui.modules.dinein.activities;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 import javax.inject.Inject;
 
@@ -38,6 +44,7 @@ public class InitializeDineOrderActivity extends AppCompatActivity implements Di
         placeTempOrderPresenter.checkCurrentOrderDetails();
         Log.d(TAG, placeTempOrderPresenter.convertCartTOJSON().toString());
         Log.d(TAG, "Temp Order onCreate");
+        //setStatusBarGradient(this);
         setContentView(R.layout.activity_place_temp_order);
     }
 
@@ -50,6 +57,20 @@ public class InitializeDineOrderActivity extends AppCompatActivity implements Di
     public void hideProgressUI() {
 
     }
+
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setStatusBarGradient(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            Drawable background = activity.getResources().getDrawable(R.drawable.gradient_6);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(activity.getResources().getColor(android.R.color.transparent));
+            window.setNavigationBarColor(activity.getResources().getColor(android.R.color.transparent));
+            //window.setBackgroundDrawable(background);
+        }
+    }
+
 
     @Override
     public void resolveDaggerDependencies() {

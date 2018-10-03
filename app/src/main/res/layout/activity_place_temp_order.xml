@@ -5,23 +5,13 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="15dp"
     android:orientation="vertical"
     tools:context="tdevm.app_ui.modules.dinein.DineInActivity">
-
-    <ProgressBar
-        android:id="@+id/pb_load_running_order"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/frame_layout_place_temp_order"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
 
     </FrameLayout>

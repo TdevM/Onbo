@@ -1,7 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="tdevm.app_ui.modules.dinein.fragments.InitializeOrderFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,31 +12,108 @@
         android:id="@+id/btn_temp_order_init"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="117dp"
-        android:text="@string/proceed" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/AntiqueWhite"
+        android:textAllCaps="false"
+        android:background="@drawable/gradient_6"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="Place Order" />
 
     <EditText
         android:id="@+id/et_temp_order_user_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_temp_order_init"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="23dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="59dp"
+        android:layout_marginLeft="59dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="185dp"
         android:hint="@string/any_message_you_want_to_send_to_chef" />
 
-    <EditText
-        android:id="@+id/et_order_guest_count"
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="64dp"
+        app:srcCompat="@drawable/ic_kitchen_message" />
+
+    <android.widget.Toolbar
+        android:id="@+id/toolbar_guest_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/gradient_6"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_place_t_order"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/et_temp_order_user_message"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="127dp"
-        android:ems="10"
-        android:hint="@string/how_many_guest"
-        android:inputType="numberSigned" />
+        android:visibility="invisible" />
+
+
+
+
+        <LinearLayout
+            android:id="@+id/layout_guest_count_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/shape_guest_picker_2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="98dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_minus_guest_count"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="-"
+                android:background="@drawable/shape_guest_picker"
+                android:textColor="@color/primary_dark_app"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_guest_count"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="1"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btn_plus_guest_count"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/shape_guest_picker"
+                android:text="+"
+                android:textColor="@color/primary_dark_app"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="193dp"
+        android:text="@string/how_many_of_you_are_here_today" />
 
 </RelativeLayout>

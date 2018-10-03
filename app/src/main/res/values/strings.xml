@@ -128,4 +128,7 @@
     <string name="intro_text_1">We know you are tired of standing in queue to order your meal</string>
     <string name="intro_text_2">Break the Queue</string>
     <string name="intro_text_3">Scan the QR to order</string>
+    <string name="how_many_of_you_are_here_today">How many of you are here today?</string>
+    <string name="edit_details">Edit Details</string>
+    <string name="help_n_support"><![CDATA[Help & Support]]></string>
 </resources>
