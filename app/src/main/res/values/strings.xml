@@ -129,6 +129,16 @@
     <string name="intro_text_2">Break the Queue</string>
     <string name="intro_text_3">Scan the QR to order</string>
     <string name="how_many_of_you_are_here_today">How many of you are here today?</string>
-    <string name="edit_details">Edit Details</string>
     <string name="help_n_support"><![CDATA[Help & Support]]></string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm">Confirm</string>
+    <string name="change_password">Change password</string>
+    <string name="email_address">Email address</string>
+    <string name="full_name">Full Name</string>
+    <string name="update_changes">Update Changes</string>
+    <string name="edit_details">Edit Details</string>
+    <string name="close_window">Close window</string>
+    <string name="email_image">Email</string>
+    <string name="profile_image">Profile image</string>
 </resources>

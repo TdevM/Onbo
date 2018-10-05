@@ -3,12 +3,10 @@ package tdevm.app_ui.root.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +24,8 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.UserApp;
+import tdevm.app_ui.modules.account.activities.ChangePasswordActivity;
+import tdevm.app_ui.modules.account.activities.EditAccountDetailsActivity;
 import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
 import tdevm.app_ui.root.NavigationHomeViewContract;
 
@@ -49,9 +49,22 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
         presenter.logOutUser();
     }
 
-    @BindView(R.id.cardView_text_orders)
-    CardView cardView;
+    @OnClick(R.id.cardView_text_orders)
+    void showOrders(){
+        Intent intent = new Intent(getContext(), RestaurantOrdersActivity.class);
+        startActivity(intent);
+    }
 
+    @OnClick(R.id.cardView_text_change_password)
+    void showChangePassword(){
+        Intent intent = new Intent(getContext(), ChangePasswordActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.tv_edit_profile_details)
+    void showEditAccountDetails(){
+       presenter.fetchUserEdit();
+    }
 
     @Inject
     AccountsFragmentPresenter presenter;
@@ -81,15 +94,10 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
                              Bundle savedInstanceState) {
         Log.d("AccountsFragment", "onCreateView() Called");
         resolveDaggerDependencies();
-        // Inflate the layout for this fragment
         View view;
         presenter.fetchUser();
         view = inflater.inflate(R.layout.fragment_accounts,container,false);
         unbinder = ButterKnife.bind(this,view);
-        cardView.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), RestaurantOrdersActivity.class);
-            startActivity(intent);
-        });
         return view;
     }
 
@@ -137,6 +145,13 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
     @Override
     public void onUserFetchFailure() {
         Toast.makeText(getContext(), "Failed to fetch user", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void allowEdit(UserApp userApp) {
+        Intent intent = new Intent(getContext(), EditAccountDetailsActivity.class);
+        intent.putExtra("user_details",userApp);
+        startActivity(intent);
     }
 
     @Override

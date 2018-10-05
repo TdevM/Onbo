@@ -7,14 +7,17 @@ import java.util.Map;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 import tdevm.app_ui.api.models.OneTimePassword;
 import tdevm.app_ui.api.models.request.AddDishReview;
 import tdevm.app_ui.api.models.request.AddRestaurantReview;
 import tdevm.app_ui.api.models.request.NonDineOrder;
+import tdevm.app_ui.api.models.request.Password;
 import tdevm.app_ui.api.models.request.PaymentCapture;
 import tdevm.app_ui.api.models.request.RestaurantOrder;
 import tdevm.app_ui.api.models.request.User;
@@ -48,8 +51,10 @@ public interface APIService {
     Observable<Response<Object>> loginUser(@Body User user);
     @GET("m/user/me")
     Observable<Response<UserApp>> fetchUser(@Header("x-auth") String authToken);
-//    @GET("m/user/orders")
-//    Observable<Object> fetchOrders(@Header("x-auth") String authToken);
+    @PATCH("m/user/password")
+    Observable<Response<Object>> changeUserPassword(@Header("x-auth") String authToken, @Body Password password);
+    @PATCH("m/user")
+    Observable<Response<Object>> updateUser(@Header("x-auth") String authToken, @Body UserApp user);
 
 
     //Restaurant Data
@@ -61,11 +66,11 @@ public interface APIService {
     Observable<Response<RestaurantTable>> verifyTableVacancy(@Header("x-auth") String authToken, @QueryMap Map<String, String> query);
     @GET("m/cuisines")
     Observable<ArrayList<Cuisine>> fetchCuisines(@Header("x-auth") String authToken, @QueryMap Map<String, String> options);
+
     @GET("m/menu_items")
     Observable<ArrayList<MenuItem>> fetchAllMenuItems(@Header("x-auth") String authToken, @QueryMap Map<String, String> options);
     @GET("m/menu_items")
     Observable<ArrayList<MenuItem>> fetchMenuItemsByCuisine(@Header("x-auth") String authToken, @QueryMap Map<String, String> options);
-
     @GET("m/menu")
     Observable<Response<List<CuisineMenuItems>>> fetchMenuItems(@Header("x-auth") String authToken, @QueryMap Map<String, String> options);
 
@@ -100,13 +105,9 @@ public interface APIService {
     //My Orders
     @GET("m/orders")
     Observable<Response<List<FOrder>>> fetchMyOrders(@Header("x-auth") String token);
-
-
-
     //Type2 Orders (Non Dine)
     @POST("m/f/orders/checkout")
     Observable<Response<Checkout>> checkoutOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
-
     @POST("m/f/orders/unpaid")
     Observable<Response<FOrder>> createUnpaidNonDineOrder(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
     @POST("m/f/orders")

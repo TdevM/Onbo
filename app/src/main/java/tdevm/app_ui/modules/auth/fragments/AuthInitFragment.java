@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -100,7 +102,8 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
         View view = inflater.inflate(R.layout.fragment_auth_init, container, false);
         unbinder = ButterKnife.bind(this, view);
         phoneNumberInit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
-
+       // final Animation myAnim = AnimationUtils.loadAnimation(getContext(), R.anim.cycle7);
+       // btnLoginInit.startAnimation(myAnim);
         return view;
     }
 

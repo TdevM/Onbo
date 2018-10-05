@@ -75,6 +75,39 @@ public class AccountsFragmentPresenter extends BasePresenter implements Navigati
       });
     }
 
+
+    @Override
+    public void fetchUserEdit() {
+        Observable<Response<UserApp>> appObservable = apiService.fetchUser(preferenceUtils.getAuthLoginToken());
+        subscribe(appObservable, new Observer<Response<UserApp>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(Response<UserApp> userAppResponse) {
+                if(userAppResponse.isSuccessful()){
+                    if(userAppResponse.body()!=null){
+                        fragmentView.allowEdit(userAppResponse.body());
+                    }
+                }else {
+                    fragmentView.onUserFetchFailure();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                fragmentView.onUserFetchFailure();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
     @Override
     public void logOutUser() {
       fragmentView.onLoggedOut();

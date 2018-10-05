@@ -3,6 +3,8 @@ package tdevm.app_ui.di.components;
 import dagger.Component;
 import tdevm.app_ui.di.modules.APIModule;
 import tdevm.app_ui.di.scopes.PerActivity;
+import tdevm.app_ui.modules.account.activities.ChangePasswordActivity;
+import tdevm.app_ui.modules.account.activities.EditAccountDetailsActivity;
 import tdevm.app_ui.modules.auth.fragments.AuthInitFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthLoginFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthRegisterFragment;
@@ -71,4 +73,6 @@ public interface APIComponent {
     void inject(SplashActivity activity);
     void inject(IntroActivity activity);
     void inject(DigitalPaymentOptionsFragment fragment);
+    void inject(EditAccountDetailsActivity activity);
+    void inject(ChangePasswordActivity activity);
 }
