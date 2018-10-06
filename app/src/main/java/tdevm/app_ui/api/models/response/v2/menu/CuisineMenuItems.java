@@ -50,4 +50,15 @@ public class CuisineMenuItems {
     public void setMenu_items(List<MenuItem> menu_items) {
         this.menu_items = menu_items;
     }
+
+    @Override
+    public String toString() {
+        return "CuisineMenuItems{" +
+                "added_at='" + added_at + '\'' +
+                ", restaurant_id='" + restaurant_id + '\'' +
+                ", cuisine_name='" + cuisine_name + '\'' +
+                ", cuisine_id=" + cuisine_id +
+                ", menu_items=" + menu_items +
+                '}';
+    }
 }

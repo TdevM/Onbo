@@ -251,4 +251,26 @@ public class MenuItem implements Serializable, Parcelable {
         return 0;
     }
 
+
+    @Override
+    public String toString() {
+        return "MenuItem{" +
+                "itemId='" + itemId + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", description='" + description + '\'' +
+                ", itemPrice=" + itemPrice +
+                ", itemImage='" + itemImage + '\'' +
+                ", isVeg=" + isVeg +
+                ", restaurantId='" + restaurantId + '\'' +
+                ", isVisible=" + isVisible +
+                ", cuisineId='" + cuisineId + '\'' +
+                ", addedAt='" + addedAt + '\'' +
+                ", isDeleted=" + isDeleted +
+                ", customizable=" + customizable +
+                ", itemDetail=" + itemDetail +
+                ", cuisine=" + cuisine +
+                ", menuVariants=" + menuVariants +
+                ", menuAddOnGroups=" + menuAddOnGroups +
+                '}';
+    }
 }

@@ -6,8 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="15dp"
     tools:context="tdevm.app_ui.modules.dinein.DineInActivity">
+
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_dine_in_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:titleTextColor="@color/primary_default_app"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:title="Non Dine" />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#E2E2E2"
+        android:layout_height="2dp" />
+
+
 
     <FrameLayout
         android:id="@+id/frame_layout_non_dine_in"

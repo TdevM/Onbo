@@ -34,10 +34,6 @@ public class NonDineActivity extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.frame_layout_non_dine_in, singleCuisineGridFragment);
                     fragmentTransaction.commit();
                     return true;
-                case R.id.navigation_favourites_t2:
-                    fragmentTransaction.replace(R.id.frame_layout_non_dine_in, new BellFragment());
-                    fragmentTransaction.commit();
-                    return true;
                 case R.id.navigation_cart_t2:
                     fragmentTransaction.replace(R.id.frame_layout_non_dine_in, new CartFragment());
                     fragmentTransaction.commit();
