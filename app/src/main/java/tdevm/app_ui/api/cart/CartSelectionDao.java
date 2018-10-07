@@ -23,6 +23,10 @@ public interface CartSelectionDao {
 
 
     @Query("SELECT * FROM cart_selections WHERE selectionItemId = :itemId")
+    CartSelection getMySelection(Long itemId);
+
+
+    @Query("SELECT * FROM cart_selections WHERE selectionItemId = :itemId")
     Single<CartSelection> getCartSelectionById(Long itemId);
 
     @Update

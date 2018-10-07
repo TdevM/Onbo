@@ -9,6 +9,7 @@ public class HeterogeneousObject {
     String itemClass;
     CuisineMenuItems cuisine;
     MenuItem menuItem;
+    int menuItemCount;
 
 
     public HeterogeneousObject(int itemType,String itemClass, CuisineMenuItems cuisine) {
@@ -41,6 +42,14 @@ public class HeterogeneousObject {
 
     public MenuItem getMenuItem() {
         return menuItem;
+    }
+
+    public int getMenuItemCount() {
+        return menuItemCount;
+    }
+
+    public void setMenuItemCount(int menuItemCount) {
+        this.menuItemCount = menuItemCount;
     }
 
     public void setMenuItem(MenuItem menuItem) {

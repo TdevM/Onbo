@@ -28,8 +28,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/iv_veg_non_veg_grid"
-                android:layout_marginLeft="47dp"
-                android:layout_marginStart="47dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
                 android:text="Tiramisu"
                 android:textSize="16sp" />
 
@@ -50,9 +50,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="11dp"
-                android:layout_marginStart="11dp"
-                android:layout_marginTop="11dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:contentDescription="@string/veg_non_veg"
                 android:scaleType="fitXY"
                 android:src="@drawable/veg_symbol" />
@@ -63,6 +63,7 @@
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/default_space_10"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
                 app:backGroundColor="@android:color/holo_blue_dark"

@@ -127,12 +127,14 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public void onSuccess(CartSelection cartSelection) {
                         if (cartSelection != null) {
                             holder.incDecButton.setNumber(cartSelection.getQty(), true);
+                        }else {
+                            holder.incDecButton.setNumber(0,false);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        holder.incDecButton.setNumber(0,false);
                     }
                 });
                 holder.bind(object.getMenuItem(), menuItemClickListener);
