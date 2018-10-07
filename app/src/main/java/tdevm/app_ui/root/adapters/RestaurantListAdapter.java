@@ -48,6 +48,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
 
     public void onRestaurantsFetched(List<Restaurant> restaurantList) {
+        this.restaurants.clear();
         this.restaurants.addAll(restaurantList);
         notifyDataSetChanged();
     }

@@ -1,406 +1,392 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeToRefresh_account_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentBottom="true"
-    android:fillViewport="true"
+    android:layout_height="wrap_content"
     tools:context="tdevm.app_ui.root.fragments.AccountsFragment">
 
-
-    <RelativeLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:fillViewport="true">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView_profile"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView_profile"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="150dp">
 
-                <ImageView
-                    android:id="@+id/iv_user_profile_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="@dimen/default_height_20"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="@dimen/default_height_20"
-                    android:layout_toStartOf="@+id/tv_logged_user_name"
-                    android:contentDescription="@string/user_profile_picture"
-                    app:srcCompat="@drawable/ic_profile_pic_male_2fd3e8" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/iv_user_profile_image"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="@dimen/default_height_20"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="@dimen/default_height_20"
+                        android:contentDescription="@string/user_profile_picture"
+                        app:srcCompat="@drawable/ic_profile_pic_male_2fd3e8" />
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <LinearLayout
+                            android:layout_width="200dp"
+                            android:layout_height="100dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_logged_user_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tridev_mishra"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/tv_logged_user_mobile"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/_919560447160"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tv_logged_user_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tridevtga_gmail_com"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tv_edit_profile_details"
+                                android:layout_width="70dp"
+                                android:layout_height="20dp"
+                                android:text="@string/edit_details"
+                                android:textAlignment="textStart"
+                                android:textAllCaps="false"
+                                android:textColor="@color/primary_default_app"
+                                android:textSize="10sp" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView_text_profile"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_below="@+id/cardView_profile"
+                android:layout_alignParentStart="true"
+                android:visibility="gone"
+                app:cardElevation="1dip">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:paddingStart="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:paddingRight="10dp"
+                        android:text="@string/profile"
+                        android:textAlignment="viewStart"
+                        android:textSize="20sp" />
+                </RelativeLayout>
 
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="100dp"
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView_text_orders"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/cardView_text_profile"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                app:cardElevation="1dip">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageView19"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="15dp"
+                        app:srcCompat="@drawable/ic_receipt_black_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_logged_user_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tridev_mishra"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/tv_logged_user_mobile"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/_919560447160"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tv_logged_user_email"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tridevtga_gmail_com"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tv_edit_profile_details"
-                            android:layout_width="70dp"
-                            android:layout_height="20dp"
-                            android:text="@string/edit_details"
-                            android:textAlignment="textStart"
-                            android:textAllCaps="false"
-                            android:textColor="@color/primary_default_app"
-                            android:textSize="10sp" />
-
-                    </LinearLayout>
-
+                        android:layout_marginStart="50dp"
+                        android:gravity="center|start"
+                        android:minLines="1"
+                        android:text="@string/my_orders"
+                        android:textAlignment="viewStart"
+                        android:textSize="16sp" />
                 </RelativeLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView_text_profile"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_below="@+id/cardView_profile"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:visibility="gone"
-            app:cardElevation="1dip">
+            </android.support.v7.widget.CardView>
 
-            <RelativeLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView_text_favorites"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="50dp"
+                android:layout_below="@+id/cardView_text_orders"
+                android:layout_alignParentStart="true"
+                app:cardElevation="1dp">
 
-                <TextView
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageView20"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="15dp"
+                        app:srcCompat="@drawable/ic_favorite_black_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="50dp"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:minLines="1"
+                        android:text="@string/my_favourites"
+                        android:textAlignment="viewStart"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView_text_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/cardView_text_favorites"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="@dimen/padding_10"
+                app:cardElevation="1dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageView21"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="15dp"
+                        app:srcCompat="@drawable/ic_lock_black_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="50dp"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:minLines="1"
+                        android:text="@string/change_password"
+                        android:textAlignment="viewStart"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView_text_help"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/cardView_text_change_password"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="@dimen/padding_10"
+                app:cardElevation="1dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageView22"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="false"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="15dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="15dp"
+                        app:srcCompat="@drawable/ic_help_black_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="50dp"
+                        android:maxLines="1"
+                        android:text="@string/help_n_support"
+                        android:textAlignment="viewStart"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView_text_policies"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/cardView_text_help"
+                android:layout_alignParentStart="true"
+                android:visibility="gone"
+                app:cardElevation="1dp">
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="start"
-                    android:maxLines="1"
-                    android:paddingStart="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="20dp"
-                    android:paddingRight="10dp"
-                    android:text="@string/profile"
-                    android:textAlignment="viewStart"
-                    android:textSize="20sp" />
-            </RelativeLayout>
+                    android:layout_alignStart="@+id/cardView_text_policies">
 
-        </android.support.v7.widget.CardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="50dp"
+                        android:gravity="start"
+                        android:text="@string/policies"
+                        android:textAlignment="viewStart"
+                        android:textSize="16sp" />
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView_text_orders"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/cardView_text_profile"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="5dp"
-            app:cardElevation="1dip">
+                    <ImageView
+                        android:id="@+id/imageView23"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="15dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp"
+                        app:srcCompat="@drawable/ic_import_contacts_black_24dp" />
+                </RelativeLayout>
 
-            <RelativeLayout
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView_text_about_us"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="50dp"
+                android:layout_below="@+id/cardView_text_policies"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="@dimen/padding_10"
+                app:cardElevation="1dp">
 
-                <ImageView
-                    android:id="@+id/imageView19"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="15dp"
-                    app:srcCompat="@drawable/ic_receipt_black_24dp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignStart="@+id/cardView_text_about_us">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginLeft="50dp"
-                    android:gravity="center|start"
-                    android:minLines="1"
-                    android:text="@string/my_orders"
-                    android:textAlignment="viewStart"
-                    android:textSize="16sp" />
-            </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="50dp"
+                        android:gravity="start"
+                        android:minLines="1"
+                        android:text="@string/about"
+                        android:textAlignment="viewStart"
+                        android:textSize="16sp" />
 
-        </android.support.v7.widget.CardView>
+                    <ImageView
+                        android:id="@+id/imageView24"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="15dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp"
+                        app:srcCompat="@drawable/ic_info_black_24dp" />
+                </RelativeLayout>
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView_text_favorites"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/cardView_text_orders"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            app:cardElevation="1dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/imageView20"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="15dp"
-                    app:srcCompat="@drawable/ic_favorite_black_24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginLeft="50dp"
-                    android:gravity="center|start"
-                    android:maxLines="1"
-                    android:minLines="1"
-                    android:text="@string/my_favourites"
-                    android:textAlignment="viewStart"
-                    android:textSize="16sp" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView_text_change_password"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/cardView_text_favorites"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="@dimen/padding_10"
-            app:cardElevation="1dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/imageView21"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="15dp"
-                    app:srcCompat="@drawable/ic_lock_black_24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="false"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginLeft="50dp"
-                    android:gravity="start"
-                    android:maxLines="1"
-                    android:minLines="1"
-                    android:text="Change Password"
-                    android:textAlignment="viewStart"
-                    android:textSize="16sp" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView_text_help"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/cardView_text_change_password"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="@dimen/padding_10"
-            app:cardElevation="1dp">
+            <Button
+                android:id="@+id/btn_logout_user"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cardView_text_about_us"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/default_height_40"
+                android:text="@string/logout" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/imageView22"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerInParent="false"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="15dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="15dp"
-                    app:srcCompat="@drawable/ic_help_black_24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="false"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginLeft="50dp"
-                    android:maxLines="1"
-                    android:text="@string/help_n_support"
-                    android:textAlignment="viewStart"
-                    android:textSize="16sp" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView_text_policies"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/cardView_text_help"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:visibility="gone"
-            app:cardElevation="1dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignStart="@+id/cardView_text_policies">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginLeft="50dp"
-                    android:gravity="start"
-                    android:text="Policies"
-                    android:textAlignment="viewStart"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/imageView23"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="15dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    app:srcCompat="@drawable/ic_import_contacts_black_24dp" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
+            <TextView
+                android:id="@+id/tv_app_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_logout_user"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="Version 1.0-beta1" />
 
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView_text_about_us"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/cardView_text_policies"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="@dimen/padding_10"
-            app:cardElevation="1dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignStart="@+id/cardView_text_about_us">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginLeft="50dp"
-                    android:gravity="start"
-                    android:minLines="1"
-                    android:text="About "
-                    android:textAlignment="viewStart"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/imageView24"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="15dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    app:srcCompat="@drawable/ic_info_black_24dp" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-
-
-        <Button
-            android:id="@+id/btn_logout_user"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cardView_text_about_us"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/default_height_40"
-            android:text="@string/logout" />
-
-        <TextView
-            android:id="@+id/tv_app_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/btn_logout_user"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="Version 1.0-beta1" />
-
-
-    </RelativeLayout>
-</android.support.v4.widget.NestedScrollView>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>
 
 

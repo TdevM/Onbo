@@ -2,6 +2,7 @@ package tdevm.app_ui.modules.dinein.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,7 +31,6 @@ import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.MenuAdapter;
-import tdevm.app_ui.modules.dinein.adapters.RecycledGridMenuAdapter;
 import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
 import tdevm.app_ui.modules.dinein.bottomsheets.section_r_view.MenuItemCustomizationSheet;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
@@ -42,11 +42,11 @@ import tdevm.app_ui.utils.CartHelper;
  * Created by Tridev on 30-07-2017.
  */
 
-public class SingleCuisineGridFragment extends Fragment
+public class MenuItemsFragment extends Fragment
         implements DineInViewContract.SingleCuisineGridView,
-        MenuItemClickListener, MenuItemOptionsSelected, DishReviewsSheetFragment.DishReviewsSheetListener {
+        MenuItemClickListener, MenuItemOptionsSelected, DishReviewsSheetFragment.DishReviewsSheetListener, SwipeRefreshLayout.OnRefreshListener {
 
-    public static final String TAG = SingleCuisineGridFragment.class.getSimpleName();
+    public static final String TAG = MenuItemsFragment.class.getSimpleName();
     public static final String CUISINE_ID = "CUISINE_ID";
     public static final String RESTAURANT_ID = "RESTAURANT_ID";
 
@@ -55,22 +55,26 @@ public class SingleCuisineGridFragment extends Fragment
     RecyclerView recyclerViewGridSingle;
     Unbinder unbinder;
     private Map<String, String> fetchDishesMap;
-//    RecycledGridMenuAdapter recycledGridMenuAdapter;
+    //    RecycledGridMenuAdapter recycledGridMenuAdapter;
     MenuAdapter menuAdapter;
 
     @Inject
-    SingleCuisineGridPresenter singleCuisineGridPresenter;
+    MenuItemsPresenter menuItemsPresenter;
     @Inject
     CartHelper cartHelper;
 
     @Inject
     PreferenceUtils preferenceUtils;
 
-    public static SingleCuisineGridFragment newInstance(String restaurantUUID) {
+
+    @BindView(R.id.swipe_refresh_menu_items_fragment)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    public static MenuItemsFragment newInstance(String restaurantUUID) {
         Bundle args = new Bundle();
         args.putLong(CUISINE_ID, 4);
         args.putString(RESTAURANT_ID, restaurantUUID);
-        SingleCuisineGridFragment fragment = new SingleCuisineGridFragment();
+        MenuItemsFragment fragment = new MenuItemsFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,7 +86,7 @@ public class SingleCuisineGridFragment extends Fragment
 
     @Override
     public void onResume() {
-        singleCuisineGridPresenter.attachView(this);
+        menuItemsPresenter.attachView(this);
         super.onResume();
     }
 
@@ -102,7 +106,9 @@ public class SingleCuisineGridFragment extends Fragment
         menuAdapter = new MenuAdapter(getContext(), cartHelper);
         menuAdapter.setDishItemClickListenerCallback(this);
         recyclerViewGridSingle.setAdapter(menuAdapter);
-        singleCuisineGridPresenter.fetchMenuItems(fetchDishesMap);
+        menuItemsPresenter.fetchMenuItems(fetchDishesMap);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
         logSelections();
         return view;
     }
@@ -123,13 +129,9 @@ public class SingleCuisineGridFragment extends Fragment
 
 
     @Override
-    public void onMenuItemsFetched(ArrayList<MenuItem> arrayList) {
-        //recycledGridMenuAdapter.onItemsFetched(arrayList);
-    }
-
-    @Override
     public void onMenuItemsFetchedV2(List<CuisineMenuItems> cuisineMenuItems) {
         menuAdapter.onCuisineListFetched(cuisineMenuItems);
+        swipeRefreshLayout.setRefreshing(false);
         Log.d(TAG, "Cuisine menu item fetched into fragment");
     }
 
@@ -147,7 +149,7 @@ public class SingleCuisineGridFragment extends Fragment
     @Override
     public void onDestroy() {
         super.onDestroy();
-        singleCuisineGridPresenter.detachView();
+        menuItemsPresenter.detachView();
         cartHelper.onDestroy();
     }
 
@@ -160,7 +162,7 @@ public class SingleCuisineGridFragment extends Fragment
 
         ItemHash object = generateItemHash(item);
 
-        singleCuisineGridPresenter.addItemToCart(item, object.getItemPrice(), object.getItemHash());
+        menuItemsPresenter.addItemToCart(item, object.getItemPrice(), object.getItemHash());
         Log.d(TAG, "ADDED TO CART: " + menuItem.getItemName());
         Log.d(TAG, "ITEM_HASH: " + object.getItemHash());
     }
@@ -173,7 +175,7 @@ public class SingleCuisineGridFragment extends Fragment
 
         ItemHash object = generateItemHash(item);
 
-        singleCuisineGridPresenter.updateCartItem(item, object.getItemPrice(), object.getItemHash());
+        menuItemsPresenter.updateCartItem(item, object.getItemPrice(), object.getItemHash());
         Log.d(TAG, "REMOVED FROM CART: " + menuItem.getItemName());
         Log.d(TAG, "ITEM_HASH: " + object.getItemHash());
     }
@@ -259,11 +261,18 @@ public class SingleCuisineGridFragment extends Fragment
         Log.d(TAG, "ADDED TO CART: " + menuItem.getItemName());
         ItemHash object = generateItemHash(item);
         Log.d(TAG, "ITEM_HASH: " + object.getItemHash());
-        singleCuisineGridPresenter.addItemToCart(item, object.getItemPrice(), object.getItemHash());
+        menuItemsPresenter.addItemToCart(item, object.getItemPrice(), object.getItemHash());
     }
 
     @Override
     public void onItemClicked(int position) {
 
+    }
+
+    @Override
+    public void onRefresh() {
+        Map<String, String> map = new HashMap<>();
+        map.put("restaurant_id",preferenceUtils.getScannedRestaurantId());
+        menuItemsPresenter.fetchMenuItems(map);
     }
 }

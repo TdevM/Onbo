@@ -30,10 +30,10 @@ import tdevm.app_ui.utils.CartListener;
 /**
  * Created by Tridev on 06-11-2017.
  */
-public class SingleCuisineGridPresenter extends BasePresenter
+public class MenuItemsPresenter extends BasePresenter
         implements DineInPresenterContract.SingleCuisineGridPresenter, CartListener {
 
-    public static final String TAG = SingleCuisineGridPresenter.class.getSimpleName();
+    public static final String TAG = MenuItemsPresenter.class.getSimpleName();
     private DineInViewContract.SingleCuisineGridView singleCuisineGridView;
     private APIService apiService;
     private CompositeDisposable compositeDisposable;
@@ -41,7 +41,7 @@ public class SingleCuisineGridPresenter extends BasePresenter
     private CartHelper cartHelper;
 
     @Inject
-    public SingleCuisineGridPresenter(PreferenceUtils preferenceUtils, APIService apiService, CartHelper cartHelper) {
+    public MenuItemsPresenter(PreferenceUtils preferenceUtils, APIService apiService, CartHelper cartHelper) {
         this.compositeDisposable = new CompositeDisposable();
         this.preferenceUtils = preferenceUtils;
         this.cartHelper = cartHelper;
@@ -60,7 +60,7 @@ public class SingleCuisineGridPresenter extends BasePresenter
 
             @Override
             public void onNext(ArrayList<MenuItem> arrayList) {
-                singleCuisineGridView.onMenuItemsFetched(arrayList);
+
             }
 
             @Override

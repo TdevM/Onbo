@@ -27,8 +27,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="4"
                 android:clipToPadding="false"
-                android:overScrollMode="never"
-                android:padding="@dimen/recycler_view_item_width"></android.support.v7.widget.RecyclerView>
+                android:overScrollMode="never">
+
+            </android.support.v7.widget.RecyclerView>
 
 
         </LinearLayout>
@@ -46,7 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="1"
             app:cardCornerRadius="@dimen/padding_10"
             app:cardElevation="5dp">
 

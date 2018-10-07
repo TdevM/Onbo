@@ -31,6 +31,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
     }
 
     public void onMyOrdersFetched(List<FOrder> fOrders) {
+        this.orderList.clear();
         this.orderList.addAll(fOrders);
         Log.d(TAG,fOrders.size() + "Order fetched");
         notifyDataSetChanged();

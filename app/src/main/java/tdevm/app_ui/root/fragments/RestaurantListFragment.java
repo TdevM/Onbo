@@ -3,6 +3,7 @@ package tdevm.app_ui.root.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,7 +33,8 @@ import tdevm.app_ui.root.callbacks.RestaurantItemClickListener;
  * A simple {@link Fragment} subclass.
  */
 public class RestaurantListFragment extends Fragment
-        implements NavigationHomeViewContract.RestaurantsListView, RestaurantItemClickListener {
+        implements NavigationHomeViewContract.RestaurantsListView, RestaurantItemClickListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
 
     public static final String TAG = RestaurantListFragment.class.getSimpleName();
@@ -41,6 +43,10 @@ public class RestaurantListFragment extends Fragment
 
     @BindView(R.id.rv_restaurant_list)
     RecyclerView recyclerView;
+
+    @BindView(R.id.swipeToRefresh_restaurant_list)
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
     @BindView(R.id.shimmer_fragment_restaurant_list)
     ShimmerFrameLayout shimmerFrameLayout;
@@ -74,7 +80,7 @@ public class RestaurantListFragment extends Fragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         resolveDaggerDependencies();
-        activity =(RootActivity) getActivity();
+        activity = (RootActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_restuarant_list, container, false);
         layoutManager = new LinearLayoutManager(getContext());
         adapter = new RestaurantListAdapter(getContext());
@@ -83,12 +89,16 @@ public class RestaurantListFragment extends Fragment
         recyclerView.setAdapter(adapter);
         adapter.setRestaurantItemClickedListener(this);
         presenter.fetchRestaurants("118");
+        swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
+
+        swipeRefreshLayout.setOnRefreshListener(this);
         return view;
     }
 
     @Override
     public void onRestaurantsFetched(List<Restaurant> restaurantList) {
         adapter.onRestaurantsFetched(restaurantList);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -122,7 +132,12 @@ public class RestaurantListFragment extends Fragment
 
     @Override
     public void onRestaurantItemClicked(Restaurant restaurant) {
-        Log.d(TAG,"Clicked restaurant: "+restaurant.getRestaurant_name());
+        Log.d(TAG, "Clicked restaurant: " + restaurant.getRestaurant_name());
         activity.showRestaurantDetailsActivity(restaurant);
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.fetchRestaurants("118");
     }
 }

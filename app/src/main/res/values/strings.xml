@@ -141,4 +141,9 @@
     <string name="close_window">Close window</string>
     <string name="email_image">Email</string>
     <string name="profile_image">Profile image</string>
+    <string name="spaghetti">Spaghetti</string>
+    <string name="_400">$400</string>
+    <string name="half">Half</string>
+    <string name="policies">Policies</string>
+    <string name="about">About</string>
 </resources>

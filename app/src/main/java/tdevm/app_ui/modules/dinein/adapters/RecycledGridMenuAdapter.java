@@ -6,10 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +19,7 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
-import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridPresenter;
+import tdevm.app_ui.modules.dinein.fragments.MenuItemsPresenter;
 import tdevm.app_ui.utils.CartHelper;
 import tdevm.app_ui.widgets.IncDecButton;
 
@@ -37,13 +34,13 @@ public class RecycledGridMenuAdapter extends RecyclerView.Adapter<RecycledGridMe
     private ArrayList<MenuItem> dishArrayList;
     private List<CartSelection> cartSelectionList;
     private MenuItemClickListener menuItemClickListener;
-    private SingleCuisineGridPresenter singleCuisineGridPresenter;
+    private MenuItemsPresenter menuItemsPresenter;
     private CartHelper cartHelper;
     private int itemQty;
 
-    public RecycledGridMenuAdapter(Context context, SingleCuisineGridPresenter presenter, CartHelper helper) {
+    public RecycledGridMenuAdapter(Context context, MenuItemsPresenter presenter, CartHelper helper) {
         this.mContext = context;
-        this.singleCuisineGridPresenter = presenter;
+        this.menuItemsPresenter = presenter;
         this.cartHelper = helper;
         dishArrayList = new ArrayList<>();
     }

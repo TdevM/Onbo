@@ -11,17 +11,10 @@ import tdevm.app_ui.R;
 
 public class RestaurantDetailActivity extends AppCompatActivity {
 
-
-    @BindView(R.id.toolbar_restaurant_details_activity)
-    Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_detail);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 }

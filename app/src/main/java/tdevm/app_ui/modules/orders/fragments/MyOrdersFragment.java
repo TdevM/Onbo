@@ -3,6 +3,7 @@ package tdevm.app_ui.modules.orders.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,7 +27,7 @@ import tdevm.app_ui.modules.orders.adapters.MyOrdersAdapter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyOrdersFragment extends Fragment implements RestaurantOrdersViewContract.MyOrdersFragmentView {
+public class MyOrdersFragment extends Fragment implements RestaurantOrdersViewContract.MyOrdersFragmentView, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = MyOrdersFragment.class.getSimpleName();
     Unbinder unbinder;
@@ -36,6 +37,9 @@ public class MyOrdersFragment extends Fragment implements RestaurantOrdersViewCo
 
     RecyclerView.LayoutManager layoutManager;
     MyOrdersAdapter adapter;
+
+    @BindView(R.id.swipe_refresh_layout_my_orders)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Inject
     MyOrdersFragmentPresenter presenter;
@@ -66,7 +70,8 @@ public class MyOrdersFragment extends Fragment implements RestaurantOrdersViewCo
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
         presenter.fetchMyOrders();
         return view;
     }
@@ -96,6 +101,7 @@ public class MyOrdersFragment extends Fragment implements RestaurantOrdersViewCo
 
     @Override
     public void onMyOrderFetched(List<FOrder> fOrders) {
+        swipeRefreshLayout.setRefreshing(false);
         adapter.onMyOrdersFetched(fOrders);
     }
 
@@ -107,5 +113,10 @@ public class MyOrdersFragment extends Fragment implements RestaurantOrdersViewCo
     @Override
     public void onFetchingOrdersFailure() {
         Toast.makeText(getContext(), "Failed to fetch orders", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.fetchMyOrders();
     }
 }

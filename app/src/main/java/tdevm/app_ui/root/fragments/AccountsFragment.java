@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,8 @@ import tdevm.app_ui.root.NavigationHomeViewContract;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccountsFragment extends Fragment implements NavigationHomeViewContract.AccountsFragmentView{
+public class AccountsFragment extends Fragment implements NavigationHomeViewContract.AccountsFragmentView,
+        SwipeRefreshLayout.OnRefreshListener {
 
 
     public static final String TAG = AccountsFragment.class.getSimpleName();
@@ -44,34 +46,41 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
     TextView userMobile;
     @BindView(R.id.tv_logged_user_name)
     TextView userName;
+
     @OnClick(R.id.btn_logout_user)
-    void onClick(){
+    void onClick() {
         presenter.logOutUser();
     }
 
+    @BindView(R.id.swipeToRefresh_account_fragment)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+
     @OnClick(R.id.cardView_text_orders)
-    void showOrders(){
+    void showOrders() {
         Intent intent = new Intent(getContext(), RestaurantOrdersActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.cardView_text_change_password)
-    void showChangePassword(){
+    void showChangePassword() {
         Intent intent = new Intent(getContext(), ChangePasswordActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.tv_edit_profile_details)
-    void showEditAccountDetails(){
-       presenter.fetchUserEdit();
+    void showEditAccountDetails() {
+        presenter.fetchUserEdit();
     }
 
     @Inject
     AccountsFragmentPresenter presenter;
     Unbinder unbinder;
+
     public AccountsFragment() {
         // Required empty public constructor
     }
+
     public static AccountsFragment newInstance() {
         Log.d("AccountsFragment", "new Instance() Called");
         return new AccountsFragment();
@@ -96,8 +105,10 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
         resolveDaggerDependencies();
         View view;
         presenter.fetchUser();
-        view = inflater.inflate(R.layout.fragment_accounts,container,false);
-        unbinder = ButterKnife.bind(this,view);
+        view = inflater.inflate(R.layout.fragment_accounts, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
         return view;
     }
 
@@ -120,10 +131,11 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
 
     @Override
     public void onUserFetched(UserApp userApp) {
-      userName.setText(userApp.getUserName());
-      userEmail.setText(userApp.getUserEmail());
-      userMobile.setText(userApp.getUserMobile());
-        Log.d(TAG,"user details fetched");
+        swipeRefreshLayout.setRefreshing(false);
+        userName.setText(userApp.getUserName());
+        userEmail.setText(userApp.getUserEmail());
+        userMobile.setText(userApp.getUserMobile());
+        Log.d(TAG, "user details fetched");
     }
 
     @Override
@@ -150,13 +162,18 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
     @Override
     public void allowEdit(UserApp userApp) {
         Intent intent = new Intent(getContext(), EditAccountDetailsActivity.class);
-        intent.putExtra("user_details",userApp);
+        intent.putExtra("user_details", userApp);
         startActivity(intent);
     }
 
     @Override
     public void onLoggedOut() {
         Toast.makeText(getContext(), "Logged Out!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.fetchUser();
     }
 
 

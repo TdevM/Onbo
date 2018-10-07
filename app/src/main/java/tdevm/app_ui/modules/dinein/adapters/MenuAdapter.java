@@ -30,10 +30,7 @@ import tdevm.app_ui.widgets.IncDecButton;
 
 public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-
     public static final String TAG = MenuAdapter.class.getSimpleName();
-
-
     private Context mContext;
     private List<CuisineMenuItems> cuisineList;
     private MenuItemClickListener menuItemClickListener;
@@ -63,7 +60,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         }
         this.cuisineList.addAll(cuisines);
-
+        this.heterogeneousObjects.clear();
         ListIterator<CuisineMenuItems> sortedMenu = cuisineList.listIterator();
         while (sortedMenu.hasNext()) {
             CuisineMenuItems item = sortedMenu.next();
@@ -75,10 +72,10 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             }
         }
-        ListIterator<HeterogeneousObject> objectListIterator = heterogeneousObjects.listIterator();
-        while (objectListIterator.hasNext()) {
-            Log.d(TAG, "RV Item :" + objectListIterator.next().toString());
-        }
+//        ListIterator<HeterogeneousObject> objectListIterator = heterogeneousObjects.listIterator();
+//        while (objectListIterator.hasNext()) {
+//            Log.d(TAG, "RV Item :" + objectListIterator.next().toString());
+//        }
 
         Log.d(TAG, "Cuisine list menu items fetched");
         notifyDataSetChanged();
@@ -127,14 +124,14 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public void onSuccess(CartSelection cartSelection) {
                         if (cartSelection != null) {
                             holder.incDecButton.setNumber(cartSelection.getQty(), true);
-                        }else {
-                            holder.incDecButton.setNumber(0,false);
+                        } else {
+                            holder.incDecButton.setNumber(0, false);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        holder.incDecButton.setNumber(0,false);
+                        holder.incDecButton.setNumber(0, false);
                     }
                 });
                 holder.bind(object.getMenuItem(), menuItemClickListener);
@@ -142,7 +139,6 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
     }
-
 
     @Override
     public int getItemCount() {
@@ -160,7 +156,6 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ButterKnife.bind(this, itemView);
         }
     }
-
 
     @Override
     public int getItemViewType(int position) {

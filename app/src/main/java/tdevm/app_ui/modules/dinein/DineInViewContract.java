@@ -38,7 +38,6 @@ public interface DineInViewContract {
     }
 
     interface SingleCuisineGridView extends BaseView{
-        void onMenuItemsFetched(ArrayList<MenuItem> arrayList);
         void onMenuItemsFetchedV2(List<CuisineMenuItems> cuisineMenuItems);
         void onMenuItemFetchFailure();
         void updateAdapter();

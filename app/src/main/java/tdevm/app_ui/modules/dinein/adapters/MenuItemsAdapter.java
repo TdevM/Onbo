@@ -19,7 +19,7 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
-import tdevm.app_ui.modules.dinein.fragments.SingleCuisineGridPresenter;
+import tdevm.app_ui.modules.dinein.fragments.MenuItemsPresenter;
 import tdevm.app_ui.utils.CartHelper;
 import tdevm.app_ui.widgets.IncDecButton;
 
@@ -34,7 +34,7 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.Recy
     private List<MenuItem> menuItemList;
     private List<CartSelection> cartSelectionList;
     private MenuItemClickListener menuItemClickListener;
-    private SingleCuisineGridPresenter singleCuisineGridPresenter;
+    private MenuItemsPresenter menuItemsPresenter;
     private CartHelper cartHelper;
     private int itemQty;
 
