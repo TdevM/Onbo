@@ -9,17 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
-
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -34,7 +27,6 @@ import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.MergedOrderAdapter;
-import tdevm.app_ui.modules.dinein.adapters.RunningOrderAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -25,8 +25,11 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.UserApp;
+import tdevm.app_ui.modules.account.activities.AboutActivity;
+import tdevm.app_ui.modules.account.activities.HelpSupportActivity;
 import tdevm.app_ui.modules.account.activities.ChangePasswordActivity;
 import tdevm.app_ui.modules.account.activities.EditAccountDetailsActivity;
+import tdevm.app_ui.modules.account.activities.FavouritesActivity;
 import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
 import tdevm.app_ui.root.NavigationHomeViewContract;
 
@@ -46,6 +49,24 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
     TextView userMobile;
     @BindView(R.id.tv_logged_user_name)
     TextView userName;
+
+    @OnClick(R.id.cardView_text_favorites)
+    void showFavourites() {
+        Intent intent = new Intent(getContext(), FavouritesActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.cardView_text_about_us)
+    void showAbout() {
+        Intent intent = new Intent(getContext(), AboutActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.cardView_text_help)
+    void showHelpNSupport() {
+        Intent intent = new Intent(getContext(), HelpSupportActivity.class);
+        startActivity(intent);
+    }
 
     @OnClick(R.id.btn_logout_user)
     void onClick() {

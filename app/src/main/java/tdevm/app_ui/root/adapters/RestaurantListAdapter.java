@@ -14,11 +14,13 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
+import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.root.callbacks.RestaurantItemClickListener;
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantListViewHolder> {
@@ -57,6 +59,21 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public void onBindViewHolder(@NonNull RestaurantListViewHolder holder, int position) {
         Glide.with(context).load(restaurants.get(position).getImage()).into(holder.restaurantImageView);
         holder.restaurantName.setText(restaurants.get(position).getRestaurant_name());
+        holder.restaurantLocality.setText(restaurants.get(position).getLocation().getLocation_locality());
+        holder.costForTwo.setText(String.format("%s for two", String.valueOf(restaurants.get(position).getAvg_cost_for_two())));
+        if (restaurants.get(position).getRating() != null) {
+            Double d = Double.parseDouble(restaurants.get(position).getRating().getRestaurant_avg_rating());
+            double roundOff = Math.round(d * 100.0) / 100.0;
+            holder.starRating.setText(String.valueOf(roundOff));
+        }
+        if (restaurants.get(position).getQr_active()) {
+            holder.qrEnabled.setText("QR Active");
+        } else {
+            holder.qrEnabled.setText("QR Inactive");
+        }
+        if (restaurants.get(position).getCuisines() != null) {
+            holder.restaurantCuisines.setText(generateCuisineSlug(restaurants.get(position).getCuisines()));
+        }
         holder.bind(restaurants.get(position), listener);
     }
 
@@ -74,6 +91,24 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         @BindView(R.id.iv_restaurant_image)
         ImageView restaurantImageView;
 
+        @BindView(R.id.tv_restaurant_locality)
+        TextView restaurantLocality;
+
+        @BindView(R.id.tv_restaurant_cuisine)
+        TextView restaurantCuisines;
+
+        @BindView(R.id.tv_restaurant_rating_start)
+        TextView starRating;
+
+        @BindView(R.id.tv_cost_for_two)
+        TextView costForTwo;
+
+        @BindView(R.id.tv_self_ordering)
+        TextView selfOrdering;
+
+        @BindView(R.id.tv_qr_enabled)
+        TextView qrEnabled;
+
         public RestaurantListViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -85,5 +120,16 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             });
 
         }
+    }
+
+    public String generateCuisineSlug(List<Cuisine> cuisines) {
+        ListIterator<Cuisine> cuisineListIterator = cuisines.listIterator();
+        StringBuilder stringBuilder = new StringBuilder();
+        while (cuisineListIterator.hasNext()) {
+            Cuisine cuisine = cuisineListIterator.next();
+            stringBuilder.append(cuisine.getCuisine_name());
+            stringBuilder.append(",");
+        }
+        return stringBuilder.toString();
     }
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -17,8 +18,9 @@ import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.cart.MenuItem;
+import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
+import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.modules.dinein.callbacks.CartItemClickListener;
-import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.CartFragmentPresenterImpl;
 import tdevm.app_ui.utils.CartHelper;
 import tdevm.app_ui.widgets.IncDecButton;
@@ -58,7 +60,7 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
     public CartItemsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cart_recycler_item, parent, false);
+                .inflate(R.layout.item_cart_recycler, parent, false);
         return new CartItemsViewHolder(view);
     }
 
@@ -66,14 +68,17 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
     public void onBindViewHolder(CartItemsViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder");
         Log.d("Cart", String.valueOf(cartHelper.getCartTotalItems()));
-        holder.dishName.setText(cartItemArrayList.get(position).getMenuItem().getItemName());
+        MenuItem item = cartItemArrayList.get(position).getMenuItem();
+        holder.dishName.setText(item.getItemName());
         holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice() * 0.01)));
         holder.incDecButton.setNumber(cartItemArrayList.get(position).getQuantity(), true);
-        if (cartItemArrayList.get(position).getMenuItem().getVeg()) {
+        if (item.getVeg()) {
             holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
-        } else if (!cartItemArrayList.get(position).getMenuItem().getVeg()) {
+        } else if (!item.getVeg()) {
             holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.non_veg_symbol));
         }
+
+        holder.cartSlug.setText(generateSlug(item));
         holder.bind(cartItemArrayList.get(position).getMenuItem(), cartItemArrayList.get(position).getItem_hash(), cartItemClickListener);
     }
 
@@ -93,6 +98,8 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         IncDecButton incDecButton;
         @BindView(R.id.iv_veg_non_veg_cart)
         AppCompatImageView vegNonVegIndicator;
+        @BindView(R.id.tv_cart_slug)
+        TextView cartSlug;
 
         public CartItemsViewHolder(View itemView) {
             super(itemView);
@@ -122,7 +129,35 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
                     }
                 }
             });
+
         }
+    }
+
+
+    private String generateSlug(MenuItem item) {
+        StringBuilder sb = new StringBuilder();
+        List<MenuAddOn> menuAddOns = item.getMenuAddOns();
+        List<MenuVOption> menuVOptions = item.getMenuVariantOptions();
+        Iterator<MenuVOption> menuVOptionIterator;
+        Iterator<MenuAddOn> menuAddOnIterator;
+        if (menuVOptions != null) {
+            menuVOptionIterator = menuVOptions.listIterator();
+            while (menuVOptionIterator.hasNext()) {
+                MenuVOption option = menuVOptionIterator.next();
+                sb.append(" ");
+                sb.append(option.getOptionName());
+            }
+            if (menuAddOns != null) {
+                menuAddOnIterator = menuAddOns.listIterator();
+                while (menuAddOnIterator.hasNext()) {
+                    MenuAddOn addOn = menuAddOnIterator.next();
+                    sb.append(" ");
+                    sb.append(addOn.getAddOnName());
+                }
+            }
+
+        }
+        return sb.toString();
     }
 
 }

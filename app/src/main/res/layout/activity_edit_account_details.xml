@@ -9,50 +9,22 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_layout_edit_account_details"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_change_password"
+                android:id="@+id/toolbar_edit_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/app_name"
+                app:title="@string/edit_details"
                 app:titleTextColor="@color/primary_default_app">
-
-                <ImageView
-                    android:id="@+id/imageView25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/close_window"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_close_black_24dp" />
-
-
-                <TextView
-                    android:id="@+id/tv_toolbar_title_edit_details"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:minLines="1"
-                    android:text="@string/edit_details"
-                    android:textAlignment="center"
-                    android:textColor="@color/primary_default_app"
-                    android:textSize="16sp"
-                    tools:layout_editor_absoluteX="40dp"
-                    tools:layout_editor_absoluteY="19dp" />
-
 
             </android.support.v7.widget.Toolbar>
 
-
-        </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
 
 

@@ -146,4 +146,5 @@
     <string name="half">Half</string>
     <string name="policies">Policies</string>
     <string name="about">About</string>
+    <string name="you_have_no_favourites">You have no favourites</string>
 </resources>

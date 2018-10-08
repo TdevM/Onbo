@@ -1,8 +1,8 @@
 package tdevm.app_ui.modules.account.activities;
 
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -14,7 +14,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.api.models.response.UserApp;
 import tdevm.app_ui.modules.account.AccountViewContract;
 import tdevm.app_ui.modules.account.EditAccountDetailPresenter;
@@ -33,6 +32,10 @@ public class EditAccountDetailsActivity extends AppCompatActivity implements Acc
 
     @Inject
     EditAccountDetailPresenter presenter;
+
+
+    @BindView(R.id.toolbar_edit_account)
+    android.support.v7.widget.Toolbar toolbar;
 
 
     @Override
@@ -61,6 +64,9 @@ public class EditAccountDetailsActivity extends AppCompatActivity implements Acc
             UserApp user = new UserApp(name.getText().toString(),email.getText().toString());
             presenter.updateUser(user);
         });
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_close_black_24dp);
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
     }
 

@@ -1,8 +1,8 @@
 package tdevm.app_ui.modules.account.activities;
 
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -36,6 +36,9 @@ public class ChangePasswordActivity extends AppCompatActivity implements Account
     }
 
 
+    @BindView(R.id.toolbar_change_password)
+    android.support.v7.widget.Toolbar toolbar;
+
     @BindView(R.id.progress_bar_change_password)
     ProgressBar progressBar;
 
@@ -55,6 +58,9 @@ public class ChangePasswordActivity extends AppCompatActivity implements Account
         resolveDaggerDependencies();
         setContentView(R.layout.activity_change_password);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_close_black_24dp);
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
     @Override

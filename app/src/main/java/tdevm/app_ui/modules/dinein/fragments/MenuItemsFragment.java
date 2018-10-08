@@ -44,7 +44,8 @@ import tdevm.app_ui.utils.CartHelper;
 
 public class MenuItemsFragment extends Fragment
         implements DineInViewContract.SingleCuisineGridView,
-        MenuItemClickListener, MenuItemOptionsSelected, DishReviewsSheetFragment.DishReviewsSheetListener, SwipeRefreshLayout.OnRefreshListener {
+        MenuItemClickListener, MenuItemOptionsSelected, DishReviewsSheetFragment.DishReviewsSheetListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = MenuItemsFragment.class.getSimpleName();
     public static final String CUISINE_ID = "CUISINE_ID";

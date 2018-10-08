@@ -4,6 +4,10 @@ package tdevm.app_ui.api.models.response.v2;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
+import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
+
 /**
  * Created by Tridev on 19-08-2017.
  */
@@ -24,6 +28,33 @@ public class Restaurant implements Parcelable {
     private String opens_at;
     private String closes_at;
     private RestaurantType restaurant_type;
+    private Rating rating;
+    private Boolean qr_active;
+    private List<Cuisine> cuisines;
+
+    public List<Cuisine> getCuisines() {
+        return cuisines;
+    }
+
+    public void setCuisines(List<Cuisine> cuisines) {
+        this.cuisines = cuisines;
+    }
+
+    public Boolean getQr_active() {
+        return qr_active;
+    }
+
+    public void setQr_active(Boolean qr_active) {
+        this.qr_active = qr_active;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
 
     protected Restaurant(Parcel in) {
         restaurant_id = in.readString();
@@ -97,6 +128,24 @@ public class Restaurant implements Parcelable {
             this.type_name = type_name;
         }
     }
+
+    public class Rating{
+        private String restaurant_avg_rating;
+
+
+        public String getRestaurant_avg_rating() {
+            return restaurant_avg_rating;
+        }
+
+        public void setRestaurant_avg_rating(String restaurant_avg_rating) {
+            this.restaurant_avg_rating = restaurant_avg_rating;
+        }
+    }
+
+    public static Creator<Restaurant> getCREATOR() {
+        return CREATOR;
+    }
+
 
 
     public String getRestaurant_id() {

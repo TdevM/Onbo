@@ -100,7 +100,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".modules.account.activities.ChangePasswordActivity" />
-        <activity android:name=".modules.account.activities.EditAccountDetailsActivity"></activity>
+        <activity android:name=".modules.account.activities.EditAccountDetailsActivity" />
+        <activity android:name=".modules.account.activities.FavouritesActivity" />
+        <activity android:name=".modules.account.activities.HelpSupportActivity" />
+        <activity android:name=".modules.account.activities.AboutActivity"></activity>
     </application>
 
 </manifest>
