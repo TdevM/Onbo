@@ -18,10 +18,13 @@ import java.util.ListIterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.root.callbacks.RestaurantItemClickListener;
+
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantListViewHolder> {
 
@@ -57,7 +60,10 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantListViewHolder holder, int position) {
-        Glide.with(context).load(restaurants.get(position).getImage()).into(holder.restaurantImageView);
+        Glide.with(context)
+                .load(restaurants.get(position).getImage())
+                .apply(bitmapTransform(new RoundedCornersTransformation(25, 3)))
+                .into(holder.restaurantImageView);
         holder.restaurantName.setText(restaurants.get(position).getRestaurant_name());
         holder.restaurantLocality.setText(restaurants.get(position).getLocation().getLocation_locality());
         holder.costForTwo.setText(String.format("%s for two", String.valueOf(restaurants.get(position).getAvg_cost_for_two())));

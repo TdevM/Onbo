@@ -5,6 +5,7 @@ import java.util.List;
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.api.models.response.UserApp;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
+import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
 import tdevm.app_ui.base.BaseView;
 
 /**
@@ -34,5 +35,10 @@ public interface NavigationHomeViewContract {
         void onRestaurantsFetched(List<Restaurant> restaurantList);
         void onRestaurantsFetchFailure();
 
+    }
+
+    interface RestaurantDetailView extends BaseView{
+        void onMenuItemsFetchedV2(List<CuisineMenuItems> cuisineMenuItems);
+        void onMenuItemsFetchFailure();
     }
 }

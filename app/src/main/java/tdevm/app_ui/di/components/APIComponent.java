@@ -31,7 +31,9 @@ import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
 import tdevm.app_ui.modules.payment.PaymentActivity;
 import tdevm.app_ui.modules.payment.fragments.CheckoutFragment;
 import tdevm.app_ui.modules.payment.fragments.PaymentFragment;
+import tdevm.app_ui.root.NavigationHomeViewContract;
 import tdevm.app_ui.root.RootActivity;
+import tdevm.app_ui.root.activities.RestaurantDetailActivity;
 import tdevm.app_ui.root.fragments.AccountsFragment;
 import tdevm.app_ui.root.fragments.RestaurantListFragment;
 
@@ -73,4 +75,5 @@ public interface APIComponent {
     void inject(DigitalPaymentOptionsFragment fragment);
     void inject(EditAccountDetailsActivity activity);
     void inject(ChangePasswordActivity activity);
+    void inject(RestaurantDetailActivity activity);
 }

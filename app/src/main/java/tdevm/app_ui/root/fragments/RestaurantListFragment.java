@@ -4,6 +4,7 @@ package tdevm.app_ui.root.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -86,6 +87,7 @@ public class RestaurantListFragment extends Fragment
         adapter = new RestaurantListAdapter(getContext());
         unbinder = ButterKnife.bind(this, view);
         recyclerView.setLayoutManager(layoutManager);
+       // recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
         adapter.setRestaurantItemClickedListener(this);
         presenter.fetchRestaurants("118");
