@@ -21,13 +21,17 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
+import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
 import tdevm.app_ui.modules.orders.RestaurantOrdersViewContract;
 import tdevm.app_ui.modules.orders.adapters.MyOrdersAdapter;
+import tdevm.app_ui.modules.orders.callback.MyOrdersClickListener;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyOrdersFragment extends Fragment implements RestaurantOrdersViewContract.MyOrdersFragmentView, SwipeRefreshLayout.OnRefreshListener {
+public class MyOrdersFragment extends Fragment implements
+        RestaurantOrdersViewContract.MyOrdersFragmentView,
+        SwipeRefreshLayout.OnRefreshListener, MyOrdersClickListener {
 
     public static final String TAG = MyOrdersFragment.class.getSimpleName();
     Unbinder unbinder;
@@ -43,6 +47,8 @@ public class MyOrdersFragment extends Fragment implements RestaurantOrdersViewCo
 
     @Inject
     MyOrdersFragmentPresenter presenter;
+
+    RestaurantOrdersActivity activity;
 
     public MyOrdersFragment() {
         // Required empty public constructor
@@ -64,6 +70,7 @@ public class MyOrdersFragment extends Fragment implements RestaurantOrdersViewCo
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         resolveDaggerDependencies();
+        activity = (RestaurantOrdersActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_my_orders, container, false);
         unbinder = ButterKnife.bind(this, view);
         adapter = new MyOrdersAdapter(getContext());
@@ -73,6 +80,7 @@ public class MyOrdersFragment extends Fragment implements RestaurantOrdersViewCo
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
         presenter.fetchMyOrders();
+        adapter.setOrderClickListener(this);
         return view;
     }
 
@@ -118,5 +126,10 @@ public class MyOrdersFragment extends Fragment implements RestaurantOrdersViewCo
     @Override
     public void onRefresh() {
         presenter.fetchMyOrders();
+    }
+
+    @Override
+    public void onOrderClicked(FOrder fOrder) {
+        activity.showOrderDetails(fOrder);
     }
 }

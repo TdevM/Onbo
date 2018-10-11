@@ -1,5 +1,6 @@
 package tdevm.app_ui.modules.orders;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +14,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
+import tdevm.app_ui.modules.orders.fragments.MyOrderDetailActivity;
 import tdevm.app_ui.modules.orders.fragments.MyOrdersFragment;
 
-public class RestaurantOrdersActivity extends AppCompatActivity implements RestaurantOrdersViewContract.RestaurantOrdersActivityView {
-
+public class RestaurantOrdersActivity extends AppCompatActivity implements
+        RestaurantOrdersViewContract.RestaurantOrdersActivityView {
 
     @BindView(R.id.toolbar_orders_activity)
     Toolbar toolbar;
@@ -42,6 +45,7 @@ public class RestaurantOrdersActivity extends AppCompatActivity implements Resta
         setSupportActionBar(toolbar);
         showMyOrdersFragment();
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
+
     }
 
 
@@ -69,6 +73,12 @@ public class RestaurantOrdersActivity extends AppCompatActivity implements Resta
         fragmentTransaction.commit();
     }
 
+    public void showOrderDetails(FOrder fOrder) {
+        Intent intent = new Intent(this,MyOrderDetailActivity.class);
+        intent.putExtra("ORDER",fOrder);
+        startActivity(intent);
+    }
+
     @Override
     public void showProgressUI() {
 
@@ -89,4 +99,5 @@ public class RestaurantOrdersActivity extends AppCompatActivity implements Resta
         super.onDestroy();
         presenter.detachView();
     }
+
 }

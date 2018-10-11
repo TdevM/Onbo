@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/tv_si_dish_name"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="309dp"
+                android:layout_marginStart="250dp"
                 android:layout_marginBottom="32dp"
                 android:maxLines="1"
                 android:text="220"

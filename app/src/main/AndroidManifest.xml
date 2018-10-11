@@ -103,7 +103,8 @@
         <activity android:name=".modules.account.activities.EditAccountDetailsActivity" />
         <activity android:name=".modules.account.activities.FavouritesActivity" />
         <activity android:name=".modules.account.activities.HelpSupportActivity" />
-        <activity android:name=".modules.account.activities.AboutActivity"></activity>
+        <activity android:name=".modules.account.activities.AboutActivity"/>
+        <activity android:name=".modules.orders.fragments.MyOrderDetailActivity"/>
     </application>
 
 </manifest>

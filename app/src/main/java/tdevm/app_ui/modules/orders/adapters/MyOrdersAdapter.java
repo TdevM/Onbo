@@ -2,6 +2,7 @@ package tdevm.app_ui.modules.orders.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
+import tdevm.app_ui.modules.orders.callback.MyOrdersClickListener;
 
 public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrdersViewHolder> {
 
@@ -23,6 +25,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
 
     private Context context;
     private List<FOrder> orderList;
+    private MyOrdersClickListener myOrdersClickListener;
 
 
     public MyOrdersAdapter(Context context) {
@@ -33,8 +36,12 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
     public void onMyOrdersFetched(List<FOrder> fOrders) {
         this.orderList.clear();
         this.orderList.addAll(fOrders);
-        Log.d(TAG,fOrders.size() + "Order fetched");
+        Log.d(TAG, fOrders.size() + "Order fetched");
         notifyDataSetChanged();
+    }
+
+    public void setOrderClickListener(MyOrdersClickListener listener) {
+        this.myOrdersClickListener = listener;
     }
 
     @NonNull
@@ -48,10 +55,12 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
     public void onBindViewHolder(@NonNull MyOrdersViewHolder holder, int position) {
         holder.restaurantName.setText(orderList.get(position).getRestaurant().getRestaurant_name());
         holder.orderTotal.setText(orderList.get(position).getGrand_total());
-        if (orderList.get(position).getRestaurant().getLocation()!=null) {
+        if (orderList.get(position).getRestaurant().getLocation() != null) {
             holder.localityName.setText(orderList.get(position).getRestaurant().getLocation().getLocation_locality());
         }
         holder.orderTime.setText(orderList.get(position).getTimestamp());
+        holder.bind(orderList.get(position), myOrdersClickListener);
+
     }
 
     @Override
@@ -69,9 +78,20 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
         @BindView(R.id.tv_my_orders_order_time)
         TextView orderTime;
 
+        @BindView(R.id.card_view_my_order_single)
+        CardView cardView;
+
         public MyOrdersViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        public void bind(final FOrder fOrder, MyOrdersClickListener myOrdersClickListener) {
+
+            cardView.setOnClickListener(v -> {
+                myOrdersClickListener.onOrderClicked(fOrder);
+            });
+
         }
     }
 }

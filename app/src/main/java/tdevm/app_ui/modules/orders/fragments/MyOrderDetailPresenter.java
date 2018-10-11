@@ -9,23 +9,24 @@ import tdevm.app_ui.modules.orders.RestaurantOrdersPresenterContract;
 import tdevm.app_ui.modules.orders.RestaurantOrdersViewContract;
 import tdevm.app_ui.utils.PreferenceUtils;
 
-public class MyOrderDetailFragmentPresenter extends BasePresenter implements RestaurantOrdersPresenterContract.MyOrderDetailFragment {
+public class MyOrderDetailPresenter extends BasePresenter implements RestaurantOrdersPresenterContract.MyOrderDetail {
 
-    public static final String TAG = MyOrderDetailFragmentPresenter.class.getSimpleName();
+    public static final String TAG = MyOrderDetailPresenter.class.getSimpleName();
     private PreferenceUtils preferenceUtils;
     private APIService apiService;
     private CompositeDisposable compositeDisposable;
-    private RestaurantOrdersViewContract.MyOrderDetailFragmentView myOrderDetailFragmentView;
+    private RestaurantOrdersViewContract.MyOrderDetailView myOrderDetailView;
 
     @Inject
-    public MyOrderDetailFragmentPresenter(PreferenceUtils preferenceUtils, APIService apiService) {
+    public MyOrderDetailPresenter(PreferenceUtils preferenceUtils, APIService apiService) {
         this.preferenceUtils = preferenceUtils;
         this.apiService = apiService;
+        this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override
-    public void attachView(RestaurantOrdersViewContract.MyOrderDetailFragmentView view) {
-        this.myOrderDetailFragmentView = view;
+    public void attachView(RestaurantOrdersViewContract.MyOrderDetailView view) {
+        this.myOrderDetailView = view;
     }
 
     @Override

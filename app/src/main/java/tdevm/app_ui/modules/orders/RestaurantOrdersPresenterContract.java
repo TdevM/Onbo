@@ -15,8 +15,8 @@ public interface RestaurantOrdersPresenterContract {
         void detachView();
     }
 
-    interface MyOrderDetailFragment extends BasePresenterMVP<RestaurantOrdersViewContract.MyOrderDetailFragmentView>{
-        void attachView(RestaurantOrdersViewContract.MyOrderDetailFragmentView view);
+    interface MyOrderDetail extends BasePresenterMVP<RestaurantOrdersViewContract.MyOrderDetailView>{
+        void attachView(RestaurantOrdersViewContract.MyOrderDetailView view);
         void detachView();
     }
 

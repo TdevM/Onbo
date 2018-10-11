@@ -17,7 +17,7 @@ public interface RestaurantOrdersViewContract {
         void onFetchingOrdersFailure();
     }
 
-    interface MyOrderDetailFragmentView extends BaseView{
+    interface MyOrderDetailView extends BaseView{
 
     }
 }
