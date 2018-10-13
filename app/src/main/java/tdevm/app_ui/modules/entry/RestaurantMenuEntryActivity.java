@@ -82,6 +82,15 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     @BindView(R.id.fl_show_getting_menu)
     FrameLayout showGettingMenu;
 
+    @BindView(R.id.fl_show_wrong_location)
+    FrameLayout wrongLocation;
+
+    @BindView(R.id.fl_show_qr_wrong)
+    FrameLayout wrongQR;
+
+    @BindView(R.id.fl_show_table_occupied)
+    FrameLayout tableOccupied;
+
 
     @BindView(R.id.btn_fetch_location)
     Button startLocation;
@@ -92,6 +101,25 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
     @OnClick(R.id.btn_fetch_location)
     void fetchLocation() {
+        initializeScanning();
+    }
+
+    @OnClick(R.id.btn_fetch_location_retry)
+    void run(){
+        initializeScanning();
+    }
+
+    @OnClick(R.id.btn_fetch_location_retry_retry)
+    void run1(){
+        initializeScanning();
+    }
+
+    @OnClick(R.id.btn_fetch_location_retry_retry_table_retry)
+    void run2(){
+        initializeScanning();
+    }
+
+    void initializeScanning(){
         locationRequestMade = true;
         QR_SCANNER_SHOWN = false;
         if (checkPermissions()) {
@@ -100,7 +128,6 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
         } else if (!checkPermissions()) {
             RestaurantMenuEntryActivityPermissionsDispatcher.requestLocationUpdatesWithPermissionCheck(this);
         }
-        //startQRScanner();
     }
 
     @Inject
@@ -237,16 +264,16 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 //            stopLocationUpdates();
 //            showFetchLocation();
 //        } else {
-            if (locationRequestMade) {
-                if (checkPermissions()) {
-                    startLocationUpdates();
-                    //showProgressUI();
-                    showLocationFetching();
-                } else if (!checkPermissions()) {
-                    RestaurantMenuEntryActivityPermissionsDispatcher.requestLocationUpdatesWithPermissionCheck(this);
-                }
+        if (locationRequestMade) {
+            if (checkPermissions()) {
+                startLocationUpdates();
+                //showProgressUI();
+                showLocationFetching();
+            } else if (!checkPermissions()) {
+                RestaurantMenuEntryActivityPermissionsDispatcher.requestLocationUpdatesWithPermissionCheck(this);
             }
-      //  }
+        }
+        //  }
     }
 
     @Override
@@ -257,10 +284,11 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
             if (result.getContents() == null) {
                 stopLocationUpdates();
                 locationRequestMade = false;
+                presenter.setQrScannerShown(false);
                 showFetchLocation();
             } else {
                 presenter.handleQRContent(result.getContents());
-               // hideProgressUI();
+                // hideProgressUI();
             }
         } else {
             //super.onActivityResult(requestCode, resultCode, data);
@@ -276,6 +304,9 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
                         break;
                     case Activity.RESULT_CANCELED:
                         Log.i(TAG, "User chose not to make required location settings changes.");
+                        stopLocationUpdates();
+                        showFetchLocation();
+                        locationRequestMade = false;
                         break;
                 }
                 break;
@@ -298,10 +329,18 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
     @Override
     public void showMalformedQRCode() {
-        Toast.makeText(this, "You seem to have scanned a wrong qr code.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "You seem to have scanned a wrong qr code.", Toast.LENGTH_SHORT).show();
         stopLocationUpdates();
-        showFetchLocation();
+        showWrongQr();
+        //showFetchLocation();
         locationRequestMade = false;
+    }
+
+    @Override
+    public void showWrongLocationError() {
+        showWrongLocation();
+        locationRequestMade = false;
+        stopLocationUpdates();
     }
 
     @Override
@@ -314,30 +353,74 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
 
     public void showLocationFetching() {
-        requestLocation.setVisibility(View.GONE);
         showVerifying.setVisibility(View.VISIBLE);
+
+        requestLocation.setVisibility(View.GONE);
         showGettingMenu.setVisibility(View.GONE);
+        wrongLocation.setVisibility(View.GONE);
+        wrongQR.setVisibility(View.GONE);
+        tableOccupied.setVisibility(View.GONE);
     }
 
     public void showFetchLocation() {
         requestLocation.setVisibility(View.VISIBLE);
+
         showVerifying.setVisibility(View.GONE);
         showGettingMenu.setVisibility(View.GONE);
+        wrongLocation.setVisibility(View.GONE);
+        wrongQR.setVisibility(View.GONE);
+        tableOccupied.setVisibility(View.GONE);
     }
 
-    public void showGettingMenu(){
+    public void showGettingMenu() {
         showGettingMenu.setVisibility(View.VISIBLE);
+
         requestLocation.setVisibility(View.GONE);
         showVerifying.setVisibility(View.GONE);
+        wrongLocation.setVisibility(View.GONE);
+        wrongQR.setVisibility(View.GONE);
+        tableOccupied.setVisibility(View.GONE);
     }
 
+
+    public void showWrongQr() {
+        wrongQR.setVisibility(View.VISIBLE);
+
+        showGettingMenu.setVisibility(View.GONE);
+        requestLocation.setVisibility(View.GONE);
+        showVerifying.setVisibility(View.GONE);
+        wrongLocation.setVisibility(View.GONE);
+        tableOccupied.setVisibility(View.GONE);
+    }
+
+    public void showWrongLocation() {
+        wrongLocation.setVisibility(View.VISIBLE);
+
+        showGettingMenu.setVisibility(View.GONE);
+        wrongQR.setVisibility(View.GONE);
+        requestLocation.setVisibility(View.GONE);
+        showVerifying.setVisibility(View.GONE);
+        tableOccupied.setVisibility(View.GONE);
+    }
+
+    public void showTableOccupied() {
+        tableOccupied.setVisibility(View.VISIBLE);
+
+        showGettingMenu.setVisibility(View.GONE);
+        wrongLocation.setVisibility(View.GONE);
+        requestLocation.setVisibility(View.GONE);
+        showVerifying.setVisibility(View.GONE);
+        wrongQR.setVisibility(View.GONE);
+    }
 
     @Override
     public void showTableOccupiedError() {
-        hideProgressUI();
-        Toast.makeText(RestaurantMenuEntryActivity.this, "This table is occupied", Toast.LENGTH_SHORT).show();
-        showFetchLocation();
+        //hideProgressUI();
+        //Toast.makeText(RestaurantMenuEntryActivity.this, "This table is occupied", Toast.LENGTH_SHORT).show();
+        //showFetchLocation();
+        showTableOccupied();
         stopLocationUpdates();
+        locationRequestMade = false;
     }
 
 
@@ -349,7 +432,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
                 setCaptureActivity(CustomQRView.class).
                 initiateScan();
         QR_SCANNER_SHOWN = true;
-        locationRequestMade = false;
+        //locationRequestMade = false;
     }
 
     private boolean checkPermissions() {

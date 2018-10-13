@@ -16,5 +16,6 @@ public interface MenuEntryPresenterContract {
         void clearExistingCart();
         void handleQRContent(String qrContent);
         void verifyRestaurantTableVacant(QRObjectRestaurant qrObjectRestaurant);
+        void setQrScannerShown(boolean v);
     }
 }

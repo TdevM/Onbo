@@ -41,6 +41,11 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     private CompositeDisposable compositeDisposable;
     private MenuEntryViewContract.RestaurantMenuEntryView view;
 
+    private Double locationLat;
+    private Double locationLong;
+
+    static Boolean qrScannerShown = false;
+
     @Inject
     public MenuEntryPresenter(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cartHelper) {
         this.apiService = apiService;
@@ -55,8 +60,13 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
             Location mCurrentLocation = result.getLastLocation();
             Log.d(TAG, "Provider: " + mCurrentLocation.getProvider());
             if (mCurrentLocation.getAccuracy() < 50.0) {
-                view.startQRScanner();
-                view.stopLocationUpdates();
+                if (!qrScannerShown) {
+                    qrScannerShown = true;
+                    view.startQRScanner();
+                }
+                locationLat = mCurrentLocation.getLatitude();
+                locationLong = mCurrentLocation.getLongitude();
+                // view.stopLocationUpdates();
             }
         }
     }
@@ -72,22 +82,30 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     @Override
     public void handleQRContent(String qrContent) {
         Gson gson = new Gson();
-        QRObjectRestaurant object = gson.fromJson(qrContent, QRObjectRestaurant.class);
+        QRObjectRestaurant object = new QRObjectRestaurant();
+        try {
+            object = gson.fromJson(qrContent, QRObjectRestaurant.class);
+
+        } catch (Exception e) {
+            view.showMalformedQRCode();
+            e.printStackTrace();
+            qrScannerShown = false;
+        }
+
         if (object.getData() != null) {
-            view.showGettingMenu();
-            view.stopLocationUpdates();
             if (object.getData().getMode() == 1) {
                 verifyRestaurantTableVacant(object);
             } else if ((object.getData().getMode()) == 2) {
-
                 fetchRestaurantDetails(object);
             }
-        }else {
+        } else {
             view.showMalformedQRCode();
+            qrScannerShown = false;
         }
     }
 
     public void fetchRestaurantDetails(QRObjectRestaurant qrObjectRestaurant) {
+        view.showGettingMenu();
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_uuid", qrObjectRestaurant.getUuid());
         Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map, preferenceUtils.getAuthLoginToken());
@@ -101,7 +119,17 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
             public void onNext(Response<Restaurant> restaurantResponse) {
                 if (restaurantResponse.isSuccessful()) {
                     if (restaurantResponse.body() != null) {
-                        onNonDineQRVerificationSuccess(qrObjectRestaurant, restaurantResponse.body());
+
+                        tdevm.app_ui.api.models.response.v2.Location location = restaurantResponse.body().getLocation();
+                        if (calculateLocationDistance(location.getLocation_lat(), location.getLocation_long())) {
+                            onNonDineQRVerificationSuccess(qrObjectRestaurant, restaurantResponse.body());
+                            view.stopLocationUpdates();
+                            qrScannerShown = false;
+                        } else {
+                            view.showWrongLocationError();
+                            qrScannerShown = false;
+                        }
+
                     }
                 }
             }
@@ -161,6 +189,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
                 } else if (restaurantTableResponse.code() == 400) {
                     //Log.d(TAG, restaurantTableResponse.body().toString());
                     view.showTableOccupiedError();
+                    qrScannerShown = false;
                 }
             }
 
@@ -177,6 +206,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     }
 
     private void fetchRestaurantDetailsTable(QRObjectRestaurant qrObjectRestaurant, RestaurantTable restaurantTable) {
+        view.showGettingMenu();
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_uuid", qrObjectRestaurant.getUuid());
         Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map, preferenceUtils.getAuthLoginToken());
@@ -189,8 +219,21 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
             @Override
             public void onNext(Response<Restaurant> restaurantResponse) {
                 if (restaurantResponse.isSuccessful()) {
+
+
                     if (restaurantResponse.body() != null) {
-                        onDineQRVerificationSuccess(qrObjectRestaurant, restaurantResponse.body(), restaurantTable);
+
+                        tdevm.app_ui.api.models.response.v2.Location location = restaurantResponse.body().getLocation();
+                        if (calculateLocationDistance(location.getLocation_lat(), location.getLocation_long())) {
+                            onDineQRVerificationSuccess(qrObjectRestaurant, restaurantResponse.body(), restaurantTable);
+                            view.stopLocationUpdates();
+                            qrScannerShown = false;
+                        } else {
+                            view.showWrongLocationError();
+                            qrScannerShown = false;
+                        }
+
+
                     }
                 }
             }
@@ -208,6 +251,43 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
 
     }
 
+    boolean calculateLocationDistance(String lat1, String long1) {
+        Double distance = distance(Double.parseDouble(lat1), Double.parseDouble(long1), locationLat, locationLong);
+        Log.d(TAG, "calculated distance :" + distance.toString());
+        if (distance <= 0.1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+    private double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return (dist);
+    }
+
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
+    }
+
+
+    public void setQrScannerShown(boolean v){
+        qrScannerShown = v;
+    }
 
     @Override
     public void attachView(MenuEntryViewContract.RestaurantMenuEntryView view) {

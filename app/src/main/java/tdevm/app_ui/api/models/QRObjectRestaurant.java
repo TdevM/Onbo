@@ -6,6 +6,10 @@ public class QRObjectRestaurant {
     int entity;
     QRDataRestaurant data;
 
+
+    public QRObjectRestaurant() {
+    }
+
     public QRObjectRestaurant(String uuid, int entity, QRDataRestaurant data) {
         this.uuid = uuid;
         this.entity = entity;

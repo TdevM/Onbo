@@ -74,7 +74,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="400dp"
-                android:text="@string/fetching_your_menu"
+                android:text="@string/fetching_your_location"
                 android:textAlignment="center"
                 android:visibility="visible" />
 
@@ -101,6 +101,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
+            <TextView
+                android:id="@+id/tv_show_verifying"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="400dp"
+                android:text="@string/fetching_your_menu"
+                android:textAlignment="center"
+                android:visibility="visible" />
+
             <ProgressBar
                 android:id="@+id/progressBar3"
                 style="?android:attr/progressBarStyle"
@@ -112,6 +124,127 @@
 
 
     </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fl_show_wrong_location"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/tv_show_location_wrong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="400dp"
+                android:text="@string/failed_to_verify_your_exact_location_please_retry"
+                android:textAlignment="center"
+                android:visibility="visible" />
+
+
+            <Button
+                android:id="@+id/btn_fetch_location_retry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="0dp"
+                android:text="Fetch Location"
+                android:textAlignment="center" />
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fl_show_qr_wrong"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/tv_show_qr_wrong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="400dp"
+                android:text="@string/failed_to_verify_qr_authenticity_please_retry"
+                android:textAlignment="center"
+                android:visibility="visible" />
+
+
+            <Button
+                android:id="@+id/btn_fetch_location_retry_retry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="0dp"
+                android:text="Fetch Location"
+                android:textAlignment="center" />
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fl_show_table_occupied"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/tv_table_occupied"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="400dp"
+                android:text="@string/this_table_is_occupied_sorry_for_your_luck"
+                android:textAlignment="center"
+                android:visibility="visible" />
+
+
+            <Button
+                android:id="@+id/btn_fetch_location_retry_retry_table_retry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="0dp"
+                android:text="Fetch Location"
+                android:textAlignment="center" />
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
 
 
 </LinearLayout>

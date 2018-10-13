@@ -147,4 +147,8 @@
     <string name="policies">Policies</string>
     <string name="about">About</string>
     <string name="you_have_no_favourites">You have no favourites</string>
+    <string name="fetching_your_location">Fetching your location</string>
+    <string name="failed_to_verify_your_exact_location_please_retry">Failed to verify your exact location, please retry.</string>
+    <string name="failed_to_verify_qr_authenticity_please_retry">Failed to verify QR Authenticity, please retry.</string>
+    <string name="this_table_is_occupied_sorry_for_your_luck">This table is occupied. Sorry for your luck</string>
 </resources>
