@@ -13,13 +13,12 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_dishes_grid_single"
             android:layout_width="match_parent"
+            android:clipToPadding="false"
             android:layout_height="match_parent"
             android:overScrollMode="never">
 
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
-
-
 
 
 </LinearLayout>

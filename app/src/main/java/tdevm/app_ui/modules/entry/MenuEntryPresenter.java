@@ -50,11 +50,13 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     }
 
     public void handleLocationUpdates(LocationResult result) {
+
         if (result != null) {
             Location mCurrentLocation = result.getLastLocation();
             Log.d(TAG, "Provider: " + mCurrentLocation.getProvider());
             if (mCurrentLocation.getAccuracy() < 50.0) {
                 view.startQRScanner();
+                view.stopLocationUpdates();
             }
         }
     }
@@ -72,9 +74,12 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
         Gson gson = new Gson();
         QRObjectRestaurant object = gson.fromJson(qrContent, QRObjectRestaurant.class);
         if (object.getData() != null) {
+            view.showGettingMenu();
+            view.stopLocationUpdates();
             if (object.getData().getMode() == 1) {
                 verifyRestaurantTableVacant(object);
             } else if ((object.getData().getMode()) == 2) {
+
                 fetchRestaurantDetails(object);
             }
         }else {
@@ -121,7 +126,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
         Log.d(TAG, "Saved Table" + preferenceUtils.getScannedRestaurantTableShortId());
         Log.d(TAG, "Restaurant Mode" + preferenceUtils.getRestaurantMode());
         clearExistingCart();
-        view.redirectDineInActivity();
+        view.redirectDineInActivity(restaurant);
     }
 
 
@@ -131,7 +136,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
         Log.d(TAG, "Restaurant Mode" + preferenceUtils.getRestaurantMode());
         Log.d(TAG, "Type 2 valid");
         clearExistingCart();
-        view.redirectNonDineActivity();
+        view.redirectNonDineActivity(restaurant);
     }
 
     @Override

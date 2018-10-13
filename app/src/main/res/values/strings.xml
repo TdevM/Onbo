@@ -86,7 +86,7 @@
     <string name="dish_image_review">dish_image_review</string>
     <string name="veg_non_veg">veg_non_indicator</string>
     <string name="how_many_guest">How many guest?</string>
-    <string name="fetching_your_menu">Verifying you location.\nFetching Your Menu.....</string>
+    <string name="fetching_your_menu">Verifying your location.\nFetching Your Menu.....</string>
     <string name="finish_order">Finish Order</string>
     <string name="add_items">ADD Items</string>
     <string name="no_order_is_running_n_place_an_order">No order is running \nPlace an Order</string>

@@ -29,13 +29,13 @@ public class CustomQRView extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_qrview);
 
-        barcodeScannerView = (DecoratedBarcodeView)findViewById(R.id.zxing_barcode_scanner);
+        barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
         barcodeScannerView.setTorchListener(this);
 
-      //  switchFlashlightButton = (Button)findViewById(R.id.switch_flashlight);
-        floatingActionButtonBack = (FloatingActionButton)findViewById(R.id.floatingActionButton_back);
-        flashLightButtonOn = (FloatingActionButton)findViewById(R.id.floatingActionButton_flash);
-        flashLightButtonOff = (FloatingActionButton)findViewById(R.id.floatingActionButton_flash_off);
+        //  switchFlashlightButton = (Button)findViewById(R.id.switch_flashlight);
+        floatingActionButtonBack = (FloatingActionButton) findViewById(R.id.floatingActionButton_back);
+        flashLightButtonOn = (FloatingActionButton) findViewById(R.id.floatingActionButton_flash);
+        flashLightButtonOff = (FloatingActionButton) findViewById(R.id.floatingActionButton_flash_off);
 
         // if the device does not have flashlight in its camera,
         // then remove the switch flashlight button...
@@ -48,30 +48,30 @@ public class CustomQRView extends AppCompatActivity implements
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.decode();
 
-     flashLightButtonOn.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-             barcodeScannerView.setTorchOn();
-             flashLightButtonOn.setVisibility(View.GONE);
-             flashLightButtonOff.setVisibility(View.VISIBLE);
-         }
-     });
+        flashLightButtonOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                barcodeScannerView.setTorchOn();
+                flashLightButtonOn.setVisibility(View.GONE);
+                flashLightButtonOff.setVisibility(View.VISIBLE);
+            }
+        });
 
-     flashLightButtonOff.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-             barcodeScannerView.setTorchOff();
-             flashLightButtonOff.setVisibility(View.GONE);
-             flashLightButtonOn.setVisibility(View.VISIBLE);
-         }
-     });
+        flashLightButtonOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                barcodeScannerView.setTorchOff();
+                flashLightButtonOff.setVisibility(View.GONE);
+                flashLightButtonOn.setVisibility(View.VISIBLE);
+            }
+        });
 
-     floatingActionButtonBack.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-             onBackPressed();
-         }
-     });
+        floatingActionButtonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -92,6 +92,7 @@ public class CustomQRView extends AppCompatActivity implements
         capture.onDestroy();
     }
 
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -105,6 +106,7 @@ public class CustomQRView extends AppCompatActivity implements
 
     /**
      * Check if the device's camera has a Flashlight.
+     *
      * @return true if there is Flashlight, otherwise false.
      */
     private boolean hasFlash() {
@@ -122,7 +124,7 @@ public class CustomQRView extends AppCompatActivity implements
 
     @Override
     public void onTorchOn() {
-       // switchFlashlightButton.setText(R.string.turn_off_flashlight);
+        // switchFlashlightButton.setText(R.string.turn_off_flashlight);
         flashLightButtonOn.setVisibility(View.GONE);
         flashLightButtonOff.setVisibility(View.VISIBLE);
 
@@ -130,7 +132,7 @@ public class CustomQRView extends AppCompatActivity implements
 
     @Override
     public void onTorchOff() {
-      //  switchFlashlightButton.setText(R.string.turn_on_flashlight);
+        //  switchFlashlightButton.setText(R.string.turn_on_flashlight);
         flashLightButtonOn.setVisibility(View.VISIBLE);
         flashLightButtonOff.setVisibility(View.GONE);
     }

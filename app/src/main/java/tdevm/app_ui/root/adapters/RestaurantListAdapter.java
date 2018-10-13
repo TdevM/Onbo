@@ -62,7 +62,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public void onBindViewHolder(@NonNull RestaurantListViewHolder holder, int position) {
         Glide.with(context)
                 .load(restaurants.get(position).getImage())
-                .apply(bitmapTransform(new RoundedCornersTransformation(25, 3)))
                 .into(holder.restaurantImageView);
         holder.restaurantName.setText(restaurants.get(position).getRestaurant_name());
         holder.restaurantLocality.setText(restaurants.get(position).getLocation().getLocation_locality());

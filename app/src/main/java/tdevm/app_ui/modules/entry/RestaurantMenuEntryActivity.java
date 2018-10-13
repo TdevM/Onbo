@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,13 +51,14 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.nondine.activities.NonDineRestaurantDetailsActivity;
 import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CustomQRView;
 
 @RuntimePermissions
-public class RestaurantMenuEntryActivity extends AppCompatActivity implements MenuEntryViewContract.RestaurantMenuEntryView{
+public class RestaurantMenuEntryActivity extends AppCompatActivity implements MenuEntryViewContract.RestaurantMenuEntryView {
     public static final String TAG = RestaurantMenuEntryActivity.class.getSimpleName();
 
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
@@ -66,7 +68,20 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     private LocationCallback mLocationCallback;
     private Location mCurrentLocation;
 
+
     private boolean locationRequestMade = false;
+    private boolean QR_SCANNER_SHOWN = false;
+
+
+    @BindView(R.id.fl_request_location)
+    FrameLayout requestLocation;
+
+    @BindView(R.id.fl_show_verifying)
+    FrameLayout showVerifying;
+
+    @BindView(R.id.fl_show_getting_menu)
+    FrameLayout showGettingMenu;
+
 
     @BindView(R.id.btn_fetch_location)
     Button startLocation;
@@ -76,15 +91,16 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     TextView textView;
 
     @OnClick(R.id.btn_fetch_location)
-    void fetchLocation(){
-//        locationRequestMade = true;
-//        if(checkPermissions()){
-//            startLocationUpdates();
-//            showProgressUI();
-//        }else if(!checkPermissions()){
-//            RestaurantMenuEntryActivityPermissionsDispatcher.requestLocationUpdatesWithPermissionCheck(this);
-//        }
-        startQRScanner();
+    void fetchLocation() {
+        locationRequestMade = true;
+        QR_SCANNER_SHOWN = false;
+        if (checkPermissions()) {
+            startLocationUpdates();
+            showLocationFetching();
+        } else if (!checkPermissions()) {
+            RestaurantMenuEntryActivityPermissionsDispatcher.requestLocationUpdatesWithPermissionCheck(this);
+        }
+        //startQRScanner();
     }
 
     @Inject
@@ -100,7 +116,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG,"ON_CREATE");
+        Log.d(TAG, "ON_CREATE");
         setContentView(R.layout.activity_restaurant_menu_entry);
         ButterKnife.bind(this);
         resolveDaggerDependencies();
@@ -124,15 +140,15 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
                 mCurrentLocation = locationResult.getLastLocation();
-                if(mCurrentLocation!=null){
+                if (mCurrentLocation != null) {
                     presenter.handleLocationUpdates(locationResult);
-                    Log.d(TAG,"Provider: "+mCurrentLocation.getProvider());
-                    Log.d(TAG,"Accuracy: "+String.valueOf(mCurrentLocation.getAccuracy()));
-                    Log.d(TAG,"Altitude :"+String.valueOf(mCurrentLocation.getAltitude()));
-                    Log.d(TAG,"Speed: "+String.valueOf(mCurrentLocation.getSpeed()));
-                    Log.d(TAG,"Bearing :"+ String.valueOf(mCurrentLocation.getBearing()));
-                    Log.d(TAG,"Time: "+String.valueOf(mCurrentLocation.getTime()));
-                    Log.d(TAG,"CompleteObject: "+mCurrentLocation.toString());
+                    Log.d(TAG, "Provider: " + mCurrentLocation.getProvider());
+                    Log.d(TAG, "Accuracy: " + String.valueOf(mCurrentLocation.getAccuracy()));
+                    Log.d(TAG, "Altitude :" + String.valueOf(mCurrentLocation.getAltitude()));
+                    Log.d(TAG, "Speed: " + String.valueOf(mCurrentLocation.getSpeed()));
+                    Log.d(TAG, "Bearing :" + String.valueOf(mCurrentLocation.getBearing()));
+                    Log.d(TAG, "Time: " + String.valueOf(mCurrentLocation.getTime()));
+                    Log.d(TAG, "CompleteObject: " + mCurrentLocation.toString());
                 }
 
             }
@@ -150,7 +166,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     public void showProgressUI() {
         progressBar.setVisibility(View.VISIBLE);
         startLocation.setVisibility(View.GONE);
-        textView.setVisibility(View.VISIBLE);
+        // textView.setVisibility(View.VISIBLE);
 
     }
 
@@ -162,12 +178,12 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     }
 
     public void resolveDaggerDependencies() {
-        ((AppApplication)getApplication()).getApiComponent().inject(this);
+        ((AppApplication) getApplication()).getApiComponent().inject(this);
     }
 
 
     @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-    public void requestLocationUpdates(){
+    public void requestLocationUpdates() {
 
     }
 
@@ -215,31 +231,41 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG,"ON_RESUME");
+        Log.d(TAG, "ON_RESUME");
         presenter.attachView(this);
-        if(locationRequestMade){
-            if(checkPermissions()){
-                startLocationUpdates();
-                showProgressUI();
-            }else if(!checkPermissions()){
-                RestaurantMenuEntryActivityPermissionsDispatcher.requestLocationUpdatesWithPermissionCheck(this);
+//        if (QR_SCANNER_SHOWN) {
+//            stopLocationUpdates();
+//            showFetchLocation();
+//        } else {
+            if (locationRequestMade) {
+                if (checkPermissions()) {
+                    startLocationUpdates();
+                    //showProgressUI();
+                    showLocationFetching();
+                } else if (!checkPermissions()) {
+                    RestaurantMenuEntryActivityPermissionsDispatcher.requestLocationUpdatesWithPermissionCheck(this);
+                }
             }
-        }
+      //  }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG,"ON_ACTIVITY_RESULT");
+        Log.d(TAG, "ON_ACTIVITY_RESULT");
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null) {
-            if(result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+        if (result != null) {
+            if (result.getContents() == null) {
+                stopLocationUpdates();
+                locationRequestMade = false;
+                showFetchLocation();
             } else {
                 presenter.handleQRContent(result.getContents());
-                hideProgressUI();
+               // hideProgressUI();
             }
         } else {
-            super.onActivityResult(requestCode, resultCode, data);
+            //super.onActivityResult(requestCode, resultCode, data);
+            stopLocationUpdates();
+            showFetchLocation();
         }
         switch (requestCode) {
             case REQUEST_CHECK_SETTINGS:
@@ -263,23 +289,46 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     }
 
     @Override
-    public void redirectDineInActivity() {
+    public void redirectDineInActivity(Restaurant restaurant) {
         Intent intent = new Intent(RestaurantMenuEntryActivity.this, DineInActivity.class);
-        //intent.putExtra()
+        intent.putExtra("RESTAURANT", restaurant);
         startActivity(intent);
         finish();
     }
 
     @Override
-    public void showMalformedQRCode(){
+    public void showMalformedQRCode() {
         Toast.makeText(this, "You seem to have scanned a wrong qr code.", Toast.LENGTH_SHORT).show();
+        stopLocationUpdates();
+        showFetchLocation();
+        locationRequestMade = false;
     }
 
     @Override
-    public void redirectNonDineActivity() {
-        Intent intent = new Intent(RestaurantMenuEntryActivity.this,NonDineRestaurantDetailsActivity.class);
+    public void redirectNonDineActivity(Restaurant restaurant) {
+        Intent intent = new Intent(RestaurantMenuEntryActivity.this, NonDineRestaurantDetailsActivity.class);
+        intent.putExtra("RESTAURANT", restaurant);
         startActivity(intent);
         finish();
+    }
+
+
+    public void showLocationFetching() {
+        requestLocation.setVisibility(View.GONE);
+        showVerifying.setVisibility(View.VISIBLE);
+        showGettingMenu.setVisibility(View.GONE);
+    }
+
+    public void showFetchLocation() {
+        requestLocation.setVisibility(View.VISIBLE);
+        showVerifying.setVisibility(View.GONE);
+        showGettingMenu.setVisibility(View.GONE);
+    }
+
+    public void showGettingMenu(){
+        showGettingMenu.setVisibility(View.VISIBLE);
+        requestLocation.setVisibility(View.GONE);
+        showVerifying.setVisibility(View.GONE);
     }
 
 
@@ -287,6 +336,8 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     public void showTableOccupiedError() {
         hideProgressUI();
         Toast.makeText(RestaurantMenuEntryActivity.this, "This table is occupied", Toast.LENGTH_SHORT).show();
+        showFetchLocation();
+        stopLocationUpdates();
     }
 
 
@@ -297,8 +348,8 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
                 setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES).
                 setCaptureActivity(CustomQRView.class).
                 initiateScan();
-//        Intent intent = new Intent(RestaurantMenuEntryActivity.this,SimpleScannerActivity.class);
-//        startActivityForResult(intent,100);
+        QR_SCANNER_SHOWN = true;
+        locationRequestMade = false;
     }
 
     private boolean checkPermissions() {
@@ -332,7 +383,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Log.d(TAG,"Location updates stopped");
+                        Log.d(TAG, "Location updates stopped");
 
                     }
                 });
@@ -341,15 +392,16 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(TAG,"ON_PAUSE");
+        Log.d(TAG, "ON_PAUSE");
         stopLocationUpdates();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG,"ON_DESTROY");
+        Log.d(TAG, "ON_DESTROY");
         presenter.detachView();
+        stopLocationUpdates();
     }
 
     @Override

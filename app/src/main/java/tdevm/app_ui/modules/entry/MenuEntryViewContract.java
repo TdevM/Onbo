@@ -1,5 +1,6 @@
 package tdevm.app_ui.modules.entry;
 
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.base.BaseView;
 
 /**
@@ -9,11 +10,12 @@ import tdevm.app_ui.base.BaseView;
 public interface MenuEntryViewContract {
 
     interface RestaurantMenuEntryView extends BaseView {
-        void redirectDineInActivity();
-        void redirectNonDineActivity();
+        void redirectDineInActivity(Restaurant restaurant);
+        void redirectNonDineActivity(Restaurant restaurant);
         void showTableOccupiedError();
         void startQRScanner();
         void showMalformedQRCode();
         void stopLocationUpdates();
+        void showGettingMenu();
     }
 }

@@ -1,20 +1,26 @@
 package tdevm.app_ui.modules.dinein;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.modules.dinein.fragments.RunningOrderEmptyFragment;
 import tdevm.app_ui.modules.dinein.fragments.MenuItemsFragment;
 import tdevm.app_ui.modules.payment.PaymentActivity;
@@ -24,14 +30,18 @@ import tdevm.app_ui.modules.dinein.fragments.MergedOrderFragment;
 
 public class DineInActivity extends AppCompatActivity implements DineInViewContract.DineInActivity {
 
-    static {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-    }
+    public static final String TAG = DineInActivity.class.getSimpleName();
+
     @Inject
     DineInActivityPresenter presenter;
 
     FragmentTransaction fragmentTransaction;
-    Toolbar toolbarDineIn;
+
+    @BindView(R.id.toolbar_dine_in_activity)
+    Toolbar toolbar;
+
+    Restaurant restaurant;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -73,17 +83,15 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dine_in_home);
         resolveDaggerDependencies();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        MenuItemsFragment dishMenuFragment = new MenuItemsFragment();
-        transaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);
-        transaction.commit();
+        ButterKnife.bind(this);
+        showMenuFragment();
 
-        Toolbar toolbar = findViewById(R.id.toolbar_dine_in_activity);
-        toolbar.setTitle(R.string.rest_name);
-        toolbar.inflateMenu(R.menu.menu_dine_in_main);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Dine in");
+        restaurant = getIntent().getParcelableExtra("RESTAURANT");
+
+        if (restaurant != null) {
+            toolbar.setTitle(restaurant.getRestaurant_name());
+            toolbar.inflateMenu(R.menu.menu_dine_in_main);
+            setSupportActionBar(toolbar);
         }
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -91,14 +99,46 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
 
     }
 
+    private void showMenuFragment() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        MenuItemsFragment dishMenuFragment = new MenuItemsFragment();
+        transaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);
+        transaction.commit();
+    }
+
     @Override
     public void showProgressUI() {
 
     }
 
+
+    private void closeRunningOrder() {
+        new AlertDialog.Builder(this)
+                .setTitle("Exit " + restaurant.getRestaurant_name())
+                .setMessage("Are you sure you want to leave?")
+                .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d(TAG,"Exit cancelled");
+                dialog.cancel();
+            }
+        }).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        closeRunningOrder();
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_dine_in_main,menu);
+        getMenuInflater().inflate(R.menu.menu_dine_in_main, menu);
         return true;
     }
 
@@ -108,14 +148,14 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
         return super.onOptionsItemSelected(item);
     }
 
-    public void showCartEmptyFragment(){
+    public void showCartEmptyFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         CartFragment cartFragment = new CartFragment();
         transaction.replace(R.id.frame_layout_dine_in, cartFragment);
         transaction.commit();
     }
 
-    public void showEmptyRunningOrderFragment(){
+    public void showEmptyRunningOrderFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         RunningOrderEmptyFragment emptyFragment = new RunningOrderEmptyFragment();
         transaction.replace(R.id.frame_layout_dine_in, emptyFragment);
@@ -131,9 +171,9 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
         ((AppApplication) getApplication()).getApiComponent().inject(this);
     }
 
-    public void startPaymentActivity(String orderId){
+    public void startPaymentActivity(String orderId) {
         Intent intent = new Intent(DineInActivity.this, PaymentActivity.class);
-        intent.putExtra("ORDER_ID",orderId);
+        intent.putExtra("ORDER_ID", orderId);
         startActivity(intent);
     }
 
