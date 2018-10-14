@@ -7,6 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import tdevm.app_ui.api.models.request.User;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.RestaurantTable;
 
 public class TOrder {
@@ -46,6 +47,23 @@ public class TOrder {
     @Expose
     private RestaurantTable restaurantTable;
 
+    private Restaurant restaurant;
+
+    public List<TOrderKot> gettOrderKots() {
+        return tOrderKots;
+    }
+
+    public void settOrderKots(List<TOrderKot> tOrderKots) {
+        this.tOrderKots = tOrderKots;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
 
     @SerializedName("user")
     @Expose

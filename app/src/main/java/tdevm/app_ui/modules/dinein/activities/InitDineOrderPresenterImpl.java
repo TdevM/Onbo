@@ -61,7 +61,7 @@ public class InitDineOrderPresenterImpl extends BasePresenter implements DineInP
     public void checkCurrentOrderDetails() {
         Log.d(TAG, "Checking order...");
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
+        //map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         Log.d(TAG, convertCartTOJSON().toString());
         Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<TOrder>>() {
