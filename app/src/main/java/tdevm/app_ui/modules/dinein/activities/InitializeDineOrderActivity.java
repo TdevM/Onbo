@@ -19,7 +19,7 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.fragments.InitializeOrderFragment;
-import tdevm.app_ui.modules.dinein.fragments.TempOrderFragment;
+import tdevm.app_ui.modules.dinein.fragments.OrderSuccessFragment;
 
 
 public class InitializeDineOrderActivity extends AppCompatActivity implements DineInViewContract.PlaceTempOrderView {
@@ -118,7 +118,7 @@ public class InitializeDineOrderActivity extends AppCompatActivity implements Di
     @Override
     public void onOrderItemsAdded() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        TempOrderFragment fragment = new TempOrderFragment();
+        OrderSuccessFragment fragment = new OrderSuccessFragment();
         transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();
         placeTempOrderPresenter.clearCart();
@@ -127,7 +127,7 @@ public class InitializeDineOrderActivity extends AppCompatActivity implements Di
     @Override
     public void onNewOrderCreated() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        TempOrderFragment fragment = new TempOrderFragment();
+        OrderSuccessFragment fragment = new OrderSuccessFragment();
         transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();
         placeTempOrderPresenter.clearCart();

@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
+import tdevm.app_ui.modules.payment.fragments.CashPickupFragment;
 import tdevm.app_ui.modules.payment.fragments.CheckoutFragment;
 import tdevm.app_ui.modules.payment.fragments.PaymentFragment;
 
@@ -26,6 +27,8 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     PaymentActivityPresenter paymentActivityPresenter;
 
     private String orderId;
+    private Boolean paymentPending;
+    private FOrder fOrder;
 
     @Override
     protected void onResume() {
@@ -39,17 +42,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         resolveDaggerDependencies();
         setContentView(R.layout.activity_payments);
         Checkout.preload(getApplicationContext());
-        try {
-            Intent intent = getIntent();
-            orderId = intent.getStringExtra("ORDER_ID");
-            Log.d(TAG, "ORDER_ID_RECEIVED: " + orderId);
-            showCheckout(orderId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("getStringExtra_EX", e + "");
-        }
-
-
+        handlePaymentView();
     }
 
     @Override
@@ -89,9 +82,41 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         transaction.commit();
     }
 
+    public void showCashPickupScreen() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        CashPickupFragment fragment = new CashPickupFragment();
+        transaction.replace(R.id.frame_layout_payments, fragment);
+        transaction.commit();
+    }
+
     @Override
     public void showProgressUI() {
 
+    }
+
+    public void handlePaymentView() {
+        try {
+            Intent intent = getIntent();
+            paymentPending = intent.getBooleanExtra("PAYMENT_PENDING", false);
+            if (paymentPending) {
+                orderId = intent.getStringExtra("ORDER_ID");
+                fOrder = intent.getParcelableExtra("F_ORDER");
+                if (fOrder != null) {
+                    showMakePayment(fOrder);
+                }
+                Log.d(TAG, "PAYMENT Pending" + String.valueOf(paymentPending));
+                Log.d(TAG, "F_ORDER_ID: " + fOrder.getOrder_id());
+
+            } else {
+                orderId = intent.getStringExtra("ORDER_ID");
+                Log.d(TAG, "PAYMENT Pending" + String.valueOf(paymentPending));
+                Log.d(TAG, "ORDER_ID_RECEIVED FROM Activity: " + orderId);
+                showCheckout(orderId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("getStringExtra_EX", e + "");
+        }
     }
 
     @Override
@@ -114,6 +139,11 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     protected void onDestroy() {
         super.onDestroy();
         paymentActivityPresenter.detachView();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override

@@ -174,6 +174,7 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
     public void startPaymentActivity(String orderId) {
         Intent intent = new Intent(DineInActivity.this, PaymentActivity.class);
         intent.putExtra("ORDER_ID", orderId);
+        intent.putExtra("PAYMENT_PENDING",false);
         startActivity(intent);
     }
 

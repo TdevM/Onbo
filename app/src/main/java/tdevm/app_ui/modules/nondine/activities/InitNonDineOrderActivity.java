@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
-import tdevm.app_ui.modules.dinein.fragments.TempOrderFragment;
+import tdevm.app_ui.modules.dinein.fragments.OrderSuccessFragment;
 import tdevm.app_ui.modules.nondine.NonDineViewContract;
 import tdevm.app_ui.modules.nondine.fragments.DigitalPaymentOptionsFragment;
 import tdevm.app_ui.modules.nondine.fragments.NDOrderCashFragment;
@@ -138,7 +138,7 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
     @Override
     public void onPaymentCaptured() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        TempOrderFragment fragment = new TempOrderFragment();
+        OrderSuccessFragment fragment = new OrderSuccessFragment();
         transaction.replace(R.id.frame_layout_place_non_dine_order, fragment);
         transaction.commit();
         presenter.clearCart();

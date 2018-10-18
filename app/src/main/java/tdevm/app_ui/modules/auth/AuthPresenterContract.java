@@ -22,6 +22,8 @@ public interface AuthPresenterContract {
         void attachView(AuthViewContract.AuthLoginView view);
         void detachView();
         void loginUser(final Long phone, final String password);
+        void checkCurrentOrderDetails();
+        void fetchClosedOrder(String tOrderId);
     }
 
     interface AuthRegisterPresenter extends BasePresenterMVP<AuthViewContract.AuthRegisterView>{

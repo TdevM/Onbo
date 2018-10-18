@@ -2,6 +2,9 @@ package tdevm.app_ui.modules.auth.fragments;
 
 import android.util.Log;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
@@ -12,6 +15,8 @@ import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.request.User;
+import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
+import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.auth.AuthPresenterContract;
 import tdevm.app_ui.modules.auth.AuthViewContract;
@@ -56,7 +61,7 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
                     Log.d(TAG,response.body().toString());
                     preferenceUtils.saveAuthTransaction(response.headers().get("X-auth"),phone,true);
                     authLoginView.loginSuccess();
-                    authLoginView.hideProgressUI();
+
                 }
             }
 
@@ -73,6 +78,83 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
             }
         });
 
+    }
+
+
+
+    @Override
+    public void checkCurrentOrderDetails() {
+        Log.d(TAG, "Checking order...");
+        Map<String, String> map = new HashMap<>();
+        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(preferenceUtils.getAuthLoginToken(), map);
+        subscribe(observable, new Observer<Response<TOrder>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(Response<TOrder> arrayListResponse) {
+                Log.d(TAG, "onNext RAN");
+                if (arrayListResponse.isSuccessful()) {
+                    if (arrayListResponse.code() == 200) {
+                        authLoginView.onDineOrderRunning(arrayListResponse.body());
+                        Log.d(TAG, "Add items to Order RAN");
+                    }
+                } else if (arrayListResponse.code() == 404) {
+                    // No order running
+                    Log.d(TAG, "No Order running");
+                    authLoginView.onNoDineOrderRunning();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                authLoginView.onOrderFetchFailure();
+            }
+
+            @Override
+            public void onComplete() {
+                authLoginView.hideProgressUI();
+            }
+        });
+    }
+
+
+
+    @Override
+    public void fetchClosedOrder(String tOrderId){
+        Map<String,String> map = new HashMap<>();
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
+        map.put("t_order_id", tOrderId);
+        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder(preferenceUtils.getAuthLoginToken(),map);
+        subscribe(observable, new Observer<Response<FOrder>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(Response<FOrder> fOrderResponse) {
+                if(fOrderResponse.isSuccessful()){
+                    if(fOrderResponse.body()!=null){
+                        authLoginView.onFOrderFetched(fOrderResponse.body());
+                    }
+                }else {
+                    authLoginView.onFOrderFetchFailure();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                authLoginView.onFOrderFetchFailure();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     @Override

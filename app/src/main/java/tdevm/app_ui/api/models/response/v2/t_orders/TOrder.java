@@ -39,6 +39,9 @@ public class TOrder {
     @SerializedName("is_del")
     @Expose
     private Boolean isDel;
+    @SerializedName("closed")
+    @Expose
+    private Boolean closed;
     @SerializedName("t_order_kots")
     @Expose
     private List<TOrderKot> tOrderKots = null;
@@ -48,6 +51,14 @@ public class TOrder {
     private RestaurantTable restaurantTable;
 
     private Restaurant restaurant;
+
+    public Boolean getClosed() {
+        return closed;
+    }
+
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
+    }
 
     public List<TOrderKot> gettOrderKots() {
         return tOrderKots;

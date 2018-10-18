@@ -7,8 +7,8 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="5dp">
+    app:cardCornerRadius="2dp "
+    app:cardElevation="2dp ">
 
 
     <RelativeLayout
@@ -50,11 +50,13 @@
             android:text="21 Sept, 9:30 PM" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/tv_orders_slug"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/tv_my_orders_order_time"
             android:layout_alignParentStart="true"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="Item 1, Item 2, Item 3..." />
 
     </RelativeLayout>

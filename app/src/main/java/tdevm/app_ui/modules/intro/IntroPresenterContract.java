@@ -9,5 +9,6 @@ public class IntroPresenterContract {
         void attachView(IntroViewContract.SplashView view);
         void detachView();
         void checkCurrentOrderDetails();
+        void fetchClosedOrder(String tOrderId);
     }
 }

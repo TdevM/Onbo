@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
 import com.razorpay.Checkout;
 
@@ -15,6 +16,7 @@ import org.json.JSONObject;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -34,12 +36,15 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
     private static String fOrderId;
     private static FOrder fOrder;
 
+    @BindView(R.id.rg_payment_fragment)
+    RadioGroup radioGroup;
+
     @Inject
     PaymentFragmentPresenter presenter;
 
     @OnClick(R.id.btn_pay)
-    void startRazorPay() {
-        startPayment();
+    void start() {
+        getRadioButtonInput();
     }
 
     public PaymentFragment() {
@@ -91,6 +96,18 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
     }
 
 
+    public void getRadioButtonInput() {
+        int selectedId = radioGroup.getCheckedRadioButtonId();
+        switch (selectedId) {
+            case R.id.radio_button_cash:
+                activity.showCashPickupScreen();
+                break;
+            case R.id.radio_button_online:
+                startPayment();
+                break;
+        }
+    }
+
     @Override
     public void onClosedOrderFetched(FOrder order) {
         fOrder = order;
@@ -130,8 +147,6 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
         ((AppApplication) getActivity().getApplication()).getApiComponent().inject(this);
 
     }
-
-
 
 
 }

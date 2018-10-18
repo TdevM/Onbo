@@ -11,12 +11,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.cart.MenuItem;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
+import tdevm.app_ui.api.models.response.v2.FOrder.FOrderItem;
+import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
+import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.modules.orders.callback.MyOrdersClickListener;
 
 public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrdersViewHolder> {
@@ -59,7 +64,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
             holder.localityName.setText(orderList.get(position).getRestaurant().getLocation().getLocation_locality());
         }
         holder.orderTime.setText(orderList.get(position).getTimestamp());
+        holder.orderSlug.setText(generateSlug(orderList.get(position)));
         holder.bind(orderList.get(position), myOrdersClickListener);
+
 
     }
 
@@ -78,6 +85,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
         @BindView(R.id.tv_my_orders_order_time)
         TextView orderTime;
 
+        @BindView(R.id.tv_orders_slug)
+        TextView orderSlug;
+
         @BindView(R.id.card_view_my_order_single)
         CardView cardView;
 
@@ -93,5 +103,21 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
             });
 
         }
+    }
+
+
+    private String generateSlug(FOrder fOrder) {
+        StringBuilder sb = new StringBuilder();
+        List<FOrderItem> fOrderItems = fOrder.getF_order_items();
+        Iterator<FOrderItem> fOrderItemIterator = fOrderItems.listIterator();
+        if (fOrderItems != null) {
+            while (fOrderItemIterator.hasNext()) {
+                FOrderItem item = fOrderItemIterator.next();
+                sb.append(item.getItem_name());
+                sb.append(", ");
+            }
+
+        }
+        return sb.toString();
     }
 }

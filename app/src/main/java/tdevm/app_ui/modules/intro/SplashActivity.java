@@ -10,11 +10,13 @@ import javax.inject.Inject;
 
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.RestaurantTable;
 import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.modules.dinein.DineInActivity;
+import tdevm.app_ui.modules.payment.PaymentActivity;
 import tdevm.app_ui.root.RootActivity;
 import tdevm.app_ui.utils.PreferenceUtils;
 
@@ -42,11 +44,13 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
             } else {
                 Intent i = new Intent(SplashActivity.this, AuthenticationActivity.class);
                 startActivity(i);
+                finish();
             }
 
         } else {
             Intent i = new Intent(SplashActivity.this, IntroActivity.class);
             startActivity(i);
+            finish();
         }
     }
 
@@ -84,15 +88,20 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
         String tableShortId = restaurant.getRestaurant_uuid() + "_" + table.getTable_number();
 
         preferenceUtils.saveDineQRTransaction(restaurant.getRestaurant_id(), restaurant.getRestaurant_uuid(), table.getRestaurant_table_id(), tableShortId, MODE_DINE_IN);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent i = new Intent(SplashActivity.this, DineInActivity.class);
-                i.putExtra("RESTAURANT",restaurant);
-                startActivity(i);
-                finish();
-            }
-        }, SPLASH_TIME_OUT);
+
+        if (tOrder.getClosed()) {
+            presenter.fetchClosedOrder(tOrder.getOrderId());
+        } else if (!tOrder.getClosed()) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent i = new Intent(SplashActivity.this, DineInActivity.class);
+                    i.putExtra("RESTAURANT", restaurant);
+                    startActivity(i);
+                    finish();
+                }
+            }, SPLASH_TIME_OUT);
+        }
 
 
     }
@@ -111,6 +120,22 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
 
     @Override
     public void onOrderFetchFailure() {
+        Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFOrderFetched(FOrder fOrder) {
+        Intent i = new Intent(SplashActivity.this, PaymentActivity.class);
+        i.putExtra("PAYMENT_PENDING", true);
+        i.putExtra("F_ORDER", fOrder);
+        i.putExtra("ORDER_ID", fOrder.getOrder_id());
+        startActivity(i);
+        finish();
+
+    }
+
+    @Override
+    public void onFOrderFetchFailure() {
         Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
     }
 }

@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.List;
 
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
@@ -61,7 +62,7 @@ public class FOrder implements Parcelable{
 
     private String discount;
 
-    private FOrderItem[] f_order_items;
+    private List<FOrderItem> f_order_items;
 
     private String guest_count;
 
@@ -80,6 +81,14 @@ public class FOrder implements Parcelable{
     private String order_type;
 
     private String t_order_id;
+
+    public List<FOrderItem> getF_order_items() {
+        return f_order_items;
+    }
+
+    public void setF_order_items(List<FOrderItem> f_order_items) {
+        this.f_order_items = f_order_items;
+    }
 
     protected FOrder(Parcel in) {
         created_from = in.readString();
@@ -271,13 +280,7 @@ public class FOrder implements Parcelable{
         this.discount = discount;
     }
 
-    public FOrderItem[] getF_order_items() {
-        return f_order_items;
-    }
 
-    public void setF_order_items(FOrderItem[] f_order_items) {
-        this.f_order_items = f_order_items;
-    }
 
     public String getGuest_count() {
         return guest_count;
@@ -415,7 +418,6 @@ public class FOrder implements Parcelable{
                 ", table_id='" + table_id + '\'' +
                 ", subtotal='" + subtotal + '\'' +
                 ", discount='" + discount + '\'' +
-                ", f_order_items=" + Arrays.toString(f_order_items) +
                 ", guest_count='" + guest_count + '\'' +
                 ", f_order_detail=" + f_order_detail +
                 ", user_msg='" + user_msg + '\'' +

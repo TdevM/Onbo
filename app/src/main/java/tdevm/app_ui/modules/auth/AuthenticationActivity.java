@@ -13,10 +13,15 @@ import android.view.WindowManager;
 
 import tdevm.app_ui.R;
 
+import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.modules.auth.fragments.AuthInitFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthLoginFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthRegisterFragment;
 import tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment;
+import tdevm.app_ui.modules.dinein.DineInActivity;
+import tdevm.app_ui.modules.intro.SplashActivity;
+import tdevm.app_ui.modules.payment.PaymentActivity;
 import tdevm.app_ui.root.RootActivity;
 
 //TODO back stack management.
@@ -79,5 +84,19 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
         startActivity(intent);
     }
 
+    public void showDinePaymentOptions(FOrder fOrder){
+        Intent i = new Intent(AuthenticationActivity.this, PaymentActivity.class);
+        i.putExtra("PAYMENT_PENDING", true);
+        i.putExtra("F_ORDER", fOrder);
+        i.putExtra("ORDER_ID", fOrder.getOrder_id());
+        startActivity(i);
+        finish();
+    }
+
+    public void showDineActivity(Restaurant restaurant){
+        Intent i = new Intent(AuthenticationActivity.this, DineInActivity.class);
+        i.putExtra("RESTAURANT",restaurant);
+        startActivity(i);
+    }
 
 }

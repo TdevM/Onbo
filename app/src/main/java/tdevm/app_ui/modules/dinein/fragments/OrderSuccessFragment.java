@@ -14,14 +14,14 @@ import tdevm.app_ui.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TempOrderFragment extends Fragment {
+public class OrderSuccessFragment extends Fragment {
 
 
     Unbinder unbinder;
 
 
 
-    public TempOrderFragment() {
+    public OrderSuccessFragment() {
         // Required empty public constructor
     }
 
@@ -30,7 +30,7 @@ public class TempOrderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_create_temp_order, container, false);
+        View view = inflater.inflate(R.layout.fragment_order_success, container, false);
         unbinder = ButterKnife.bind(this,view);
         return view;
     }
