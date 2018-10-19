@@ -110,6 +110,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 RecycledGridViewHolder holder = (RecycledGridViewHolder) viewHolder;
                 holder.dishName.setText(object.getMenuItem().getItemName());
                 holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, object.getMenuItem().getItemPrice() * 0.01));
+                holder.itemDescription.setText(object.getMenuItem().getDescription());
 
                 if (object.getMenuItem().getIsVeg()) {
                     holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.veg_symbol));
@@ -177,6 +178,9 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         IncDecButton incDecButton;
         @BindView(R.id.iv_veg_non_veg_grid)
         AppCompatImageView vegNonVegIndicator;
+
+        @BindView(R.id.tv_si_item_description)
+        TextView itemDescription;
 
         public RecycledGridViewHolder(View itemView) {
             super(itemView);

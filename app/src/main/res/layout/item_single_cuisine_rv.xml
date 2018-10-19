@@ -11,17 +11,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginBottom="@dimen/size_4_dp"
         android:text="Italian"
-        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="8dp"
-        android:layout_marginRight="@dimen/default_space_10"
-        android:layout_marginEnd="@dimen/default_space_10"
-        android:background="@color/LightGrey" />
+        android:background="@color/LightGrey"
+        android:visibility="invisible" />
 
 
 </LinearLayout>

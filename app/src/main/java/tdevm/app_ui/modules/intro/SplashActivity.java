@@ -42,9 +42,7 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
             if (preferenceUtils.getAuthLoginState()) {
                 presenter.checkCurrentOrderDetails();
             } else {
-                Intent i = new Intent(SplashActivity.this, AuthenticationActivity.class);
-                startActivity(i);
-                finish();
+              showAuthenticationSplash();
             }
 
         } else {
@@ -112,6 +110,17 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
             @Override
             public void run() {
                 Intent i = new Intent(SplashActivity.this, RootActivity.class);
+                startActivity(i);
+                finish();
+            }
+        }, SPLASH_TIME_OUT);
+    }
+
+    public void showAuthenticationSplash(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(SplashActivity.this, AuthenticationActivity.class);
                 startActivity(i);
                 finish();
             }

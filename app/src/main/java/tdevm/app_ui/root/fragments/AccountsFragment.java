@@ -16,6 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ahmadrosid.svgloader.SvgLoader;
+import com.bumptech.glide.Glide;
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -49,6 +53,9 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
     TextView userMobile;
     @BindView(R.id.tv_logged_user_name)
     TextView userName;
+
+    @BindView(R.id.shimmer_fragment_profile_section)
+    ShimmerFrameLayout shimmerFrameLayout;
 
     @OnClick(R.id.cardView_text_favorites)
     void showFavourites() {
@@ -111,6 +118,7 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
     public void onResume() {
         super.onResume();
         presenter.attachView(this);
+        presenter.fetchUser();
     }
 
     @Override
@@ -125,7 +133,6 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
         Log.d("AccountsFragment", "onCreateView() Called");
         resolveDaggerDependencies();
         View view;
-        presenter.fetchUser();
         view = inflater.inflate(R.layout.fragment_accounts, container, false);
         unbinder = ButterKnife.bind(this, view);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -156,17 +163,24 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
         userName.setText(userApp.getUserName());
         userEmail.setText(userApp.getUserEmail());
         userMobile.setText(userApp.getUserMobile());
+//        SvgLoader.pluck()
+//                .with(getActivity())
+//                .setPlaceHolder(R.mipmap.ic_launcher, R.mipmap.ic_launcher)
+//                .load(userApp.getUserImageUrl(), userProfileImage);
+
         Log.d(TAG, "user details fetched");
     }
 
     @Override
     public void showProgressUI() {
-
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void hideProgressUI() {
-
+        shimmerFrameLayout.setVisibility(View.GONE);
+        shimmerFrameLayout.stopShimmer();
     }
 
     @Override

@@ -50,6 +50,7 @@ public class AccountsFragmentPresenter extends BasePresenter implements Navigati
           @Override
           public void onSubscribe(Disposable d) {
               compositeDisposable.add(d);
+              fragmentView.showProgressUI();
           }
 
           @Override
@@ -70,7 +71,7 @@ public class AccountsFragmentPresenter extends BasePresenter implements Navigati
 
           @Override
           public void onComplete() {
-
+              fragmentView.hideProgressUI();
           }
       });
     }

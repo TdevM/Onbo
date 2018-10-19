@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -7,7 +8,7 @@
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/android_custom_gridview_layout"
+        android:id="@+id/cardView_menu_item_single"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="false"
@@ -17,59 +18,70 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_si_dish_name"
-                android:layout_width="wrap_content"
+                android:layout_width="275dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/iv_veg_non_veg_grid"
-                android:layout_marginLeft="32dp"
-                android:layout_marginStart="32dp"
-                android:text="Tiramisu"
+                android:layout_marginStart="4dp"
+                android:layout_toEndOf="@+id/iv_veg_non_veg_grid"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/tv_si_item_description"
+                android:layout_width="275dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_si_dish_name"
+                android:layout_marginStart="@dimen/default_space_32"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="@dimen/size_8_dp"
+                android:layout_toStartOf="@+id/btn_id_item_dish_grid"
+                android:ellipsize="end"
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/tv_si_dish_price"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/tv_si_dish_name"
-                android:text="220"
-                android:textSize="13sp"
-                android:layout_alignLeft="@+id/tv_si_dish_name" />
+                android:layout_below="@+id/tv_si_item_description"
+                android:layout_marginStart="@dimen/default_space_32"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="13sp" />
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/iv_veg_non_veg_grid"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/veg_non_veg"
-                android:scaleType="fitXY"
-                android:src="@drawable/veg_symbol" />
+                android:scaleType="fitXY" />
 
             <tdevm.app_ui.widgets.IncDecButton
                 android:id="@+id/btn_id_item_dish_grid"
                 android:layout_width="80dp"
                 android:layout_height="30dp"
+                android:layout_alignTop="@+id/tv_si_dish_name"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="@dimen/default_space_10"
-                android:layout_centerVertical="true"
                 android:layout_gravity="end"
+                android:layout_marginStart="@dimen/size_8_dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/size_8_dp"
                 app:backGroundColor="@android:color/holo_blue_dark"
                 app:textSize="7sp">
 
             </tdevm.app_ui.widgets.IncDecButton>
+
 
         </RelativeLayout>
 

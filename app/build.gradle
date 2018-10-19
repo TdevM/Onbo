@@ -68,6 +68,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.onesignal:OneSignal:3.10.0'
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0'
+    implementation 'com.github.ar-android:AndroidSvgLoader:1.0.1'
     implementation 'com.xwray:groupie:2.1.0'
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     implementation 'android.arch.persistence.room:rxjava2:1.1.1'

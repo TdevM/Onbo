@@ -151,4 +151,5 @@
     <string name="failed_to_verify_your_exact_location_please_retry">Failed to verify your exact location, please retry.</string>
     <string name="failed_to_verify_qr_authenticity_please_retry">Failed to verify QR Authenticity, please retry.</string>
     <string name="this_table_is_occupied_sorry_for_your_luck">This table is occupied. Sorry for your luck</string>
+    <string name="image_design_random">image</string>
 </resources>
