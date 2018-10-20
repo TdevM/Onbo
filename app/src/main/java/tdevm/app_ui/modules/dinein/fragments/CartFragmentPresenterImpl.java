@@ -64,7 +64,7 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
         if (cartHelper.getCartTotalItems() == 0) {
             showCartEmpty();
         }
-        CartItem item = cartHelper.cartItemDao.getCartItemByHashNT(itemHash);
+        CartItem item = cartHelper.getCartItemByHashNew(itemHash);
         if(item!=null) {
             if (item.getQuantity() == 1) {
                 fetchCartItems();

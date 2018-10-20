@@ -116,6 +116,24 @@ public class CartHelper extends BasePresenter {
         return cartTotal;
     }
 
+    public CartItem getCartItemByHashNew(String itemHash){
+        Single<CartItem> cartItemSingle = cartItemDao.getCartItemByHash(itemHash);
+        cartItemSingle.subscribe(new DisposableSingleObserver<CartItem>() {
+            @Override
+            public void onSuccess(CartItem c) {
+                if (c != null) {
+                   item = c;
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "ITEM WAS NULL");
+            }
+        });
+        return item;
+    }
+
     //Mutations
     public void addItemToCart(MenuItem menuItem, int itemPrice, String itemHash) {
         Single<CartItem> cartItemSingle = cartItemDao.getCartItemByHash(itemHash);
