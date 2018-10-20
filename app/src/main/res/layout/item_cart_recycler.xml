@@ -1,89 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:weightSum="10">
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:orientation="vertical"
+        app:cardCornerRadius="0dp">
 
-        <RelativeLayout
-            android:id="@+id/rl_start_cart_single"
-            android:layout_width="0dp"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="6">
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="10">
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/iv_veg_non_veg_cart"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:contentDescription="@string/veg_non_veg" />
+            <RelativeLayout
+                android:id="@+id/rl_start_cart_single"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6">
 
-
-            <TextView
-                android:id="@+id/cart_item_tv_dish_name"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:layout_toEndOf="@id/iv_veg_non_veg_cart"
-                android:text="@string/spaghetti"
-                android:textSize="16sp" />
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/iv_veg_non_veg_cart"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/size_8_dp"
+                    android:layout_marginTop="@dimen/size_8_dp"
+                    android:contentDescription="@string/veg_non_veg" />
 
 
-            <TextView
-                android:id="@+id/tv_cart_slug"
-                android:layout_width="190dp"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="@dimen/default_space_32"
-                android:layout_marginBottom="4dp"
-                android:text="Half"
-                android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/cart_item_tv_dish_name"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="@dimen/size_8_dp"
+                    android:layout_marginBottom="@dimen/size_2_dp"
+                    android:layout_toEndOf="@id/iv_veg_non_veg_cart"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Item @string/intro_text_1"
+                    android:textSize="16sp" />
 
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_cart_slug"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cart_item_tv_dish_name"
+                    android:layout_marginStart="@dimen/default_space_32"
+                    android:layout_marginBottom="@dimen/size_4_dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Half"
+                    android:textSize="14sp" />
 
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4">
+            </RelativeLayout>
 
 
-            <TextView
-                android:id="@+id/cart_item_tv_dish_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="4dp"
-                android:text="@string/_400"
-                android:textSize="16sp" />
-
-            <tdevm.app_ui.widgets.IncDecButton
-                android:id="@+id/cart_item_qty_widget"
-                android:layout_width="70dp"
-                android:layout_height="25dp"
-                android:layout_alignTop="@+id/cart_item_tv_dish_price"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="8dp "
-                app:backGroundColor="@android:color/holo_blue_dark"
-                app:textSize="7sp"></tdevm.app_ui.widgets.IncDecButton>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4">
 
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/cart_item_tv_dish_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8_dp"
+                    android:layout_marginEnd="@dimen/size_4_dp"
+                    android:layout_toStartOf="@+id/cart_item_qty_widget"
+                    android:text="220"
+                    android:maxLines="1"
+                    android:textSize="16sp" />
 
-    </LinearLayout>
+                <tdevm.app_ui.widgets.IncDecButton
+                    android:id="@+id/cart_item_qty_widget"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/size_8_dp"
+                    android:layout_marginTop="@dimen/size_8_dp"
+                    android:layout_marginEnd="@dimen/size_8_dp"
+                    app:backGroundColor="@android:color/holo_blue_dark"
+                    app:textSize="7sp" />
 
-</android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

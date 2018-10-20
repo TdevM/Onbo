@@ -25,6 +25,9 @@ public interface CartItemDao {
     @Query("SELECT * FROM cart_items WHERE item_hash = :itemHash")
     Single<CartItem> getCartItemByHash(String itemHash);
 
+    @Query("SELECT * FROM cart_items WHERE item_hash = :itemHash")
+    CartItem getCartItemByHashNT(String itemHash);
+
     @Insert
     void addItemToCart(CartItem cartItem);
 

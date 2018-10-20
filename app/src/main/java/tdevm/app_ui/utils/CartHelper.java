@@ -39,7 +39,7 @@ public class CartHelper extends BasePresenter {
     public static final String TAG = CartHelper.class.getSimpleName();
 
     private CompositeDisposable compositeDisposable;
-    private CartItemDao cartItemDao;
+    public CartItemDao cartItemDao;
     private CartSelectionDao cartSelectionDao;
     private CartListener listener;
 
