@@ -8,9 +8,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -59,12 +68,30 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
     @Override
     public void onBindViewHolder(@NonNull MyOrdersViewHolder holder, int position) {
         holder.restaurantName.setText(orderList.get(position).getRestaurant().getRestaurant_name());
-        holder.orderTotal.setText(orderList.get(position).getGrand_total());
+        //holder.orderTotal.setText(orderList.get(position).getGrand_total());
+        holder.orderTotal.setText(context.getString(R.string.rupee_symbol, Double.parseDouble(orderList.get(position).getGrand_total()) * 0.01));
         if (orderList.get(position).getRestaurant().getLocation() != null) {
             holder.localityName.setText(orderList.get(position).getRestaurant().getLocation().getLocation_locality());
         }
-        holder.orderTime.setText(orderList.get(position).getTimestamp());
+
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Date date = null;
+        try {
+            date = dateFormat.parse(orderList.get(position).getTimestamp());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(date);
+        holder.orderTime.setText(date.toString());
         holder.orderSlug.setText(generateSlug(orderList.get(position)));
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(10));
+        Glide.with(context)
+                .load(orderList.get(position).getRestaurant().getImage())
+                .apply(requestOptions)
+                .into(holder.restaurantImage);
+        holder.orderStatus.setText(orderList.get(position).getStatus());
         holder.bind(orderList.get(position), myOrdersClickListener);
 
 
@@ -88,8 +115,14 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
         @BindView(R.id.tv_orders_slug)
         TextView orderSlug;
 
+        @BindView(R.id.iv_my_orders_restaurant_image)
+        ImageView restaurantImage;
+
         @BindView(R.id.card_view_my_order_single)
         CardView cardView;
+
+        @BindView(R.id.tv_my_orders_order_status)
+        TextView orderStatus;
 
         public MyOrdersViewHolder(View itemView) {
             super(itemView);

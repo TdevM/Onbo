@@ -152,4 +152,6 @@
     <string name="failed_to_verify_qr_authenticity_please_retry">Failed to verify QR Authenticity, please retry.</string>
     <string name="this_table_is_occupied_sorry_for_your_luck">This table is occupied. Sorry for your luck</string>
     <string name="image_design_random">image</string>
+    <string name="items">ITEMS</string>
+    <string name="ordered_on">ORDERED ON</string>
 </resources>

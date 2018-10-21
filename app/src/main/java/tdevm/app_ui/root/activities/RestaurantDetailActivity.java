@@ -1,33 +1,26 @@
 package tdevm.app_ui.root.activities;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.bumptech.glide.Glide;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
-import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
 import tdevm.app_ui.root.NavigationHomeViewContract;
 import tdevm.app_ui.root.adapters.MenuAdapterRestaurantDetail;
 
@@ -52,12 +45,12 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Navig
     RestaurantDetailPresenter presenter;
 
 
-    @OnClick(R.id.btn_res_detail_start_order)
-    void startScan(){
-        Intent intent = new Intent(this, RestaurantMenuEntryActivity.class);
-        startActivity(intent);
-        finish();
-    }
+//    @OnClick(R.id.btn_res_detail_start_order)
+//    void startScan(){
+//        Intent intent = new Intent(this, RestaurantMenuEntryActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 
     private Restaurant restaurant;
 

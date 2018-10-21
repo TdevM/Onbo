@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view_my_order_single"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,66 +9,147 @@
     app:cardElevation="2dp">
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="8dp">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_my_orders_restaurant_name"
-            android:layout_width="280dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/tv_my_orders_order_time"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="TdevM's Palace" />
+            android:layout_marginBottom="@dimen/size_8_dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_my_orders_order_time"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/iv_my_orders_restaurant_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="@dimen/size_8_dp"
+                android:layout_marginTop="@dimen/size_2_dp"
+                android:layout_toEndOf="@+id/iv_my_orders_restaurant_image"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_my_orders_restaurant_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="TdevM's Palace"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_my_orders_restaurant_locality_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_2_dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Rohini, New Delhi"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View style="@style/dividerHorizontal" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="21 Sept, 9:30 PM" />
+            android:layout_marginTop="@dimen/size_8_dp"
+            android:layout_marginBottom="@dimen/size_8_dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_my_orders_restaurant_locality_name"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_my_orders_restaurant_name"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="5dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Rohini, New Delhi" />
 
-        <TextView
-            android:id="@+id/tv_my_orders_order_total"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="$ 2440" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/items"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/tv_orders_slug"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/tv_my_orders_order_total"
-            android:layout_below="@+id/tv_my_orders_restaurant_locality_name"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="11dp"
-            android:layout_marginBottom="8dp"
-            android:maxLines="1"
-            android:text="Item 1, Item 2, Item 3..." />
+            <TextView
+                android:id="@+id/tv_orders_slug"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_2_dp"
+                android:layout_marginTop="@dimen/size_2_dp"
+                android:layout_marginBottom="8dp"
+                android:maxLines="1"
+                android:text="Item 1, Item 2, Item 3..."
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
-    </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ordered_on"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_my_orders_order_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_2_dp"
+                android:layout_marginTop="@dimen/size_2_dp"
+                android:layout_marginBottom="@dimen/size_8_dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="21 Sept, 9:30 PM"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TOTAL AMOUNT"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/tv_my_orders_order_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_2_dp"
+                android:layout_marginTop="@dimen/size_2_dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="$ 2440"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <View style="@style/dividerHorizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/size_8_dp"
+            android:layout_marginBottom="@dimen/size_8_dp">
+
+            <TextView
+                android:id="@+id/tv_my_orders_order_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_2_dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="PREPARING"
+                tools:textColor="@color/DarkGray" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>
 
