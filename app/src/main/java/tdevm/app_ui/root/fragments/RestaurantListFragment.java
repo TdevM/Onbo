@@ -4,10 +4,10 @@ package tdevm.app_ui.root.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +27,8 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.root.RootActivity;
 import tdevm.app_ui.root.NavigationHomeViewContract;
+import tdevm.app_ui.root.adapters.EqualSpacingItemDecoration;
+import tdevm.app_ui.root.adapters.ItemOffsetDecoration;
 import tdevm.app_ui.root.adapters.RestaurantListAdapter;
 import tdevm.app_ui.root.callbacks.RestaurantItemClickListener;
 
@@ -87,7 +89,10 @@ public class RestaurantListFragment extends Fragment
         adapter = new RestaurantListAdapter(getContext());
         unbinder = ButterKnife.bind(this, view);
         recyclerView.setLayoutManager(layoutManager);
-       // recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+
+        recyclerView.addItemDecoration(new EqualSpacingItemDecoration(16));
+
+
         recyclerView.setAdapter(adapter);
         adapter.setRestaurantItemClickedListener(this);
         presenter.fetchRestaurants("118");

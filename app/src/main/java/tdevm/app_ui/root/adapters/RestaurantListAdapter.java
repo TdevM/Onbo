@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +63,11 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantListViewHolder holder, int position) {
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(16));
         Glide.with(context)
                 .load(restaurants.get(position).getImage())
+                .apply(requestOptions)
                 .into(holder.restaurantImageView);
         holder.restaurantName.setText(restaurants.get(position).getRestaurant_name());
         holder.restaurantLocality.setText(restaurants.get(position).getLocation().getLocation_locality());

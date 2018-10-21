@@ -25,6 +25,7 @@ import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
 import tdevm.app_ui.modules.orders.RestaurantOrdersViewContract;
 import tdevm.app_ui.modules.orders.adapters.MyOrdersAdapter;
 import tdevm.app_ui.modules.orders.callback.MyOrdersClickListener;
+import tdevm.app_ui.root.adapters.EqualSpacingItemDecoration;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,6 +77,7 @@ public class MyOrdersFragment extends Fragment implements
         adapter = new MyOrdersAdapter(getContext());
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new EqualSpacingItemDecoration(16));
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
