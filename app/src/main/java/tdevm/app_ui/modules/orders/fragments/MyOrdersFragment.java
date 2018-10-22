@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -46,6 +48,10 @@ public class MyOrdersFragment extends Fragment implements
     @BindView(R.id.swipe_refresh_layout_my_orders)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @BindView(R.id.shimmer_fragment_my_orders)
+    ShimmerFrameLayout shimmerFrameLayout;
+
+
     @Inject
     MyOrdersFragmentPresenter presenter;
 
@@ -64,6 +70,7 @@ public class MyOrdersFragment extends Fragment implements
     public void onResume() {
         super.onResume();
         presenter.attachView(this);
+        presenter.fetchMyOrders();
     }
 
     @Override
@@ -81,7 +88,6 @@ public class MyOrdersFragment extends Fragment implements
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
-        presenter.fetchMyOrders();
         adapter.setOrderClickListener(this);
         return view;
     }
@@ -96,12 +102,13 @@ public class MyOrdersFragment extends Fragment implements
 
     @Override
     public void showProgressUI() {
-
+        shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void hideProgressUI() {
-
+        shimmerFrameLayout.stopShimmer();
+        shimmerFrameLayout.setVisibility(View.GONE);
     }
 
     @Override

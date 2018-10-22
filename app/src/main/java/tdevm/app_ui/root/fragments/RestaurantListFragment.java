@@ -90,7 +90,7 @@ public class RestaurantListFragment extends Fragment
         unbinder = ButterKnife.bind(this, view);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.addItemDecoration(new EqualSpacingItemDecoration(16));
+        recyclerView.addItemDecoration(new EqualSpacingItemDecoration(32));
 
 
         recyclerView.setAdapter(adapter);

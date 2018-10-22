@@ -10,21 +10,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_margin="8dp "
-        android:orientation="vertical"
-        android:weightSum="5">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3.5">
+            android:layout_height="wrap_content">
 
 
             <ImageView
                 android:id="@+id/iv_restaurant_image"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:contentDescription="@string/restaurant_image"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/restaurant" />
@@ -34,43 +32,48 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-
                 <TextView
                     android:id="@+id/tv_restaurant_name"
-                    android:layout_width="210dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginStart="@dimen/size_8_dp"
+                    android:layout_marginTop="@dimen/size_4_dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="TdevM's Palace"
-                    android:textSize="18sp" />
+                    android:textColor="@color/heading_color"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_restaurant_cuisine"
-                    android:layout_width="210dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_restaurant_locality"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/size_8_dp"
+                    android:layout_marginTop="@dimen/size_4_dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Italian"
-                    android:textSize="15sp" />
+                    android:textColor="@color/color_sub_heading"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_restaurant_locality"
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_restaurant_name"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/size_8_dp"
+                    android:layout_marginTop="@dimen/size_4_dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Hudson Lane, GTB Nagar"
+                    android:textColor="@color/color_sub_heading"
                     android:textSize="12sp" />
 
                 <TextView
@@ -78,31 +81,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/tv_restaurant_name"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="0dp"
-                    android:layout_marginEnd="37dp"
+                    android:layout_marginEnd="@dimen/size_8_dp"
+                    android:layout_toStartOf="@+id/imageView15"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="4.2"
-                    android:textSize="18sp" />
+                    android:textColor="@color/heading_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
                 <ImageView
                     android:id="@+id/imageView15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignBottom="@+id/tv_restaurant_name"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="7dp"
                     app:srcCompat="@drawable/ic_star" />
 
 
                 <View
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="100dp"
+                    android:layout_below="@id/tv_restaurant_cuisine"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/size_8_dp"
+                    android:layout_marginTop="@dimen/size_8_dp"
                     android:background="@color/LightGrey" />
 
             </RelativeLayout>
@@ -112,8 +117,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8_dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -121,7 +126,6 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 app:srcCompat="@drawable/res_strokexxhdpi" />
 
             <TextView
@@ -129,17 +133,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginTop="@dimen/size_2_dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Self Ordering" />
+                android:text="Self Ordering"
+                android:textColor="@color/heading_color"
+                android:textSize="12sp" />
 
             <ImageView
                 android:id="@+id/imageView16"
                 android:layout_width="20dp"
                 android:layout_height="18dp"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="@dimen/padding_10"
                 android:paddingTop="2dp"
                 app:srcCompat="@drawable/rupee_strokexxhdpi" />
 
@@ -148,17 +153,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginTop="@dimen/size_2_dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="600 for two" />
+                android:text="600 for two"
+                android:textColor="@color/heading_color"
+                android:textSize="12sp" />
 
             <ImageView
                 android:id="@+id/imageView17"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="@dimen/padding_10"
                 app:srcCompat="@drawable/qr_strokexxhdpi" />
 
             <TextView
@@ -166,10 +172,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginTop="@dimen/size_2_dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="QR Enabled" />
+                android:text="QR Enabled"
+                android:textColor="@color/heading_color"
+                android:textSize="12sp" />
 
 
         </LinearLayout>

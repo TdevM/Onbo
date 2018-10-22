@@ -26,11 +26,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.cart.MenuItem;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrderItem;
-import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
-import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.modules.orders.callback.MyOrdersClickListener;
 
 public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrdersViewHolder> {

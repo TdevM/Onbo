@@ -139,7 +139,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         while (cuisineListIterator.hasNext()) {
             Cuisine cuisine = cuisineListIterator.next();
             stringBuilder.append(cuisine.getCuisine_name());
-            stringBuilder.append(",");
+            stringBuilder.append(", ");
         }
         return stringBuilder.toString();
     }

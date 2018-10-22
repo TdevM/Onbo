@@ -44,6 +44,7 @@ public class MyOrdersFragmentPresenter extends BasePresenter implements Restaura
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
+                fragmentView.showProgressUI();
             }
 
             @Override
