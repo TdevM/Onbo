@@ -84,7 +84,7 @@ public class MyOrdersFragment extends Fragment implements
         adapter = new MyOrdersAdapter(getContext());
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new EqualSpacingItemDecoration(16));
+        recyclerView.addItemDecoration(new EqualSpacingItemDecoration(32));
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);

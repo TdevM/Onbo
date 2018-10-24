@@ -20,7 +20,7 @@ public class ItemData {
 
     private String item_id;
 
-    private String is_veg;
+    private Boolean is_veg;
 
     private String restaurant_id;
 
@@ -93,12 +93,12 @@ public class ItemData {
         this.item_id = item_id;
     }
 
-    public String getIs_veg ()
+    public Boolean getIs_veg ()
     {
         return is_veg;
     }
 
-    public void setIs_veg (String is_veg)
+    public void setIs_veg (Boolean is_veg)
     {
         this.is_veg = is_veg;
     }

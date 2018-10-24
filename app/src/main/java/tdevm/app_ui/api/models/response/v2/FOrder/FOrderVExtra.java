@@ -1,9 +1,12 @@
 package tdevm.app_ui.api.models.response.v2.FOrder;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class FOrderVExtra {
+public class FOrderVExtra implements Parcelable {
 
     @SerializedName("f_o_v_e_id")
     @Expose
@@ -20,6 +23,30 @@ public class FOrderVExtra {
     @SerializedName("extra_id")
     @Expose
     private String extraId;
+
+    protected FOrderVExtra(Parcel in) {
+        tExtraId = in.readString();
+        optionExtra = in.readString();
+        if (in.readByte() == 0) {
+            price = null;
+        } else {
+            price = in.readInt();
+        }
+        orderDetailId = in.readString();
+        extraId = in.readString();
+    }
+
+    public static final Creator<FOrderVExtra> CREATOR = new Creator<FOrderVExtra>() {
+        @Override
+        public FOrderVExtra createFromParcel(Parcel in) {
+            return new FOrderVExtra(in);
+        }
+
+        @Override
+        public FOrderVExtra[] newArray(int size) {
+            return new FOrderVExtra[size];
+        }
+    };
 
     public String gettExtraId() {
         return tExtraId;
@@ -59,5 +86,24 @@ public class FOrderVExtra {
 
     public void setExtraId(String extraId) {
         this.extraId = extraId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(tExtraId);
+        dest.writeString(optionExtra);
+        if (price == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(price);
+        }
+        dest.writeString(orderDetailId);
+        dest.writeString(extraId);
     }
 }

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,8 +47,62 @@ public class FOrder implements Parcelable{
 
     private String completed;
 
+
+    protected FOrder(Parcel in) {
+        created_from = in.readString();
+        txn_mode = in.readString();
+        offer_id = in.readString();
+        packing_chrg = in.readString();
+        order_id = in.readString();
+        restaurant_id = in.readString();
+        restaurant = in.readParcelable(Restaurant.class.getClassLoader());
+        timestamp = in.readString();
+        txn_status = in.readString();
+        txn_id = in.readString();
+        order_source = in.readString();
+        user_id = in.readString();
+        grand_total = in.readString();
+        completed = in.readString();
+        status = in.readString();
+        table_id = in.readString();
+        subtotal = in.readString();
+        discount = in.readString();
+        f_order_items = in.createTypedArrayList(FOrderItem.CREATOR);
+        guest_count = in.readString();
+        f_order_detail = in.readParcelable(FOrderDetail.class.getClassLoader());
+        user_msg = in.readString();
+        conv_chrg = in.readString();
+        dlv_chrg = in.readString();
+        user = in.readParcelable(User.class.getClassLoader());
+        taxes = in.readString();
+        order_type = in.readString();
+        t_order_id = in.readString();
+    }
+
+    public static final Creator<FOrder> CREATOR = new Creator<FOrder>() {
+        @Override
+        public FOrder createFromParcel(Parcel in) {
+            return new FOrder(in);
+        }
+
+        @Override
+        public FOrder[] newArray(int size) {
+            return new FOrder[size];
+        }
+    };
+
     public Restaurant getRestaurant() {
         return restaurant;
+    }
+
+
+
+    public String getT_order_id() {
+        return t_order_id;
+    }
+
+    public void setT_order_id(String t_order_id) {
+        this.t_order_id = t_order_id;
     }
 
     public void setRestaurant(Restaurant restaurant) {
@@ -90,43 +145,6 @@ public class FOrder implements Parcelable{
         this.f_order_items = f_order_items;
     }
 
-    protected FOrder(Parcel in) {
-        created_from = in.readString();
-        txn_mode = in.readString();
-        offer_id = in.readString();
-        packing_chrg = in.readString();
-        order_id = in.readString();
-        timestamp = in.readString();
-        txn_status = in.readString();
-        txn_id = in.readString();
-        order_source = in.readString();
-        user_id = in.readString();
-        grand_total = in.readString();
-        completed = in.readString();
-        status = in.readString();
-        restaurant_id = in.readString();
-        table_id = in.readString();
-        subtotal = in.readString();
-        discount = in.readString();
-        guest_count = in.readString();
-        user_msg = in.readString();
-        conv_chrg = in.readString();
-        dlv_chrg = in.readString();
-        taxes = in.readString();
-        order_type = in.readString();
-    }
-
-    public static final Creator<FOrder> CREATOR = new Creator<FOrder>() {
-        @Override
-        public FOrder createFromParcel(Parcel in) {
-            return new FOrder(in);
-        }
-
-        @Override
-        public FOrder[] newArray(int size) {
-            return new FOrder[size];
-        }
-    };
 
     public String getCreated_from() {
         return created_from;
@@ -351,49 +369,6 @@ public class FOrder implements Parcelable{
 //        return "ClassPojo [created_from = " + created_from + ", txn_mode = " + txn_mode + ", offer_id = " + offer_id + ", packing_chrg = " + packing_chrg + ", txn_data = " + txn_data + ", order_id = " + order_id + ", timestamp = " + timestamp + ", restaurant_table = " + restaurant_table + ", txn_status = " + txn_status + ", txn_id = " + txn_id + ", order_source = " + order_source + ", user_id = " + user_id + ", grand_total = " + grand_total + ", completed = " + completed + ", status = " + status + ", restaurant_id = " + restaurant_id + ", table_id = " + table_id + ", subtotal = " + subtotal + ", discount = " + discount + ", f_order_items = " + f_order_items + ", guest_count = " + guest_count + ", f_order_detail = " + f_order_detail + ", user_msg = " + user_msg + ", conv_chrg = " + conv_chrg + ", dlv_chrg = " + dlv_chrg + ", user = " + user + ", taxes = " + taxes + ", order_type = " + order_type + "]";
 //    }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public String getT_order_id() {
-        return t_order_id;
-    }
-
-    public void setT_order_id(String t_order_id) {
-        this.t_order_id = t_order_id;
-    }
-
-    public static Creator<FOrder> getCREATOR() {
-        return CREATOR;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(created_from);
-        dest.writeString(txn_mode);
-        dest.writeString(offer_id);
-        dest.writeString(packing_chrg);
-        dest.writeString(order_id);
-        dest.writeString(timestamp);
-        dest.writeString(txn_status);
-        dest.writeString(txn_id);
-        dest.writeString(order_source);
-        dest.writeString(user_id);
-        dest.writeString(grand_total);
-        dest.writeString(completed);
-        dest.writeString(status);
-        dest.writeString(restaurant_id);
-        dest.writeString(table_id);
-        dest.writeString(subtotal);
-        dest.writeString(discount);
-        dest.writeString(guest_count);
-        dest.writeString(user_msg);
-        dest.writeString(conv_chrg);
-        dest.writeString(dlv_chrg);
-        dest.writeString(taxes);
-        dest.writeString(order_type);
-    }
 
     @Override
     public String toString() {
@@ -428,5 +403,43 @@ public class FOrder implements Parcelable{
                 ", order_type='" + order_type + '\'' +
                 ", t_order_id='" + t_order_id + '\'' +
                 '}';
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(created_from);
+        dest.writeString(txn_mode);
+        dest.writeString(offer_id);
+        dest.writeString(packing_chrg);
+        dest.writeString(order_id);
+        dest.writeString(restaurant_id);
+        dest.writeParcelable(restaurant, flags);
+        dest.writeString(timestamp);
+        dest.writeString(txn_status);
+        dest.writeString(txn_id);
+        dest.writeString(order_source);
+        dest.writeString(user_id);
+        dest.writeString(grand_total);
+        dest.writeString(completed);
+        dest.writeString(status);
+        dest.writeString(table_id);
+        dest.writeString(subtotal);
+        dest.writeString(discount);
+        dest.writeTypedList(f_order_items);
+        dest.writeString(guest_count);
+        dest.writeParcelable(f_order_detail, flags);
+        dest.writeString(user_msg);
+        dest.writeString(conv_chrg);
+        dest.writeString(dlv_chrg);
+        dest.writeParcelable(user, flags);
+        dest.writeString(taxes);
+        dest.writeString(order_type);
+        dest.writeString(t_order_id);
     }
 }

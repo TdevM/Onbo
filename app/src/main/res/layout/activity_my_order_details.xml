@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
@@ -9,7 +9,7 @@
     tools:context="tdevm.app_ui.modules.orders.fragments.MyOrderDetailActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/appbar_my_order_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -29,5 +29,192 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_below="@id/appbar_my_order_details"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-</android.support.design.widget.CoordinatorLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/size_8_dp">
+
+                    <TextView
+                        android:id="@+id/tv_merged_order_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView16"
+                        android:layout_marginBottom="@dimen/size_8_dp"
+                        android:text="240"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_merged_order_table_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView17"
+                        android:layout_alignBaseline="@+id/tv_merged_order_id"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/size_4_dp"
+                        android:text="111"
+                        android:textSize="14sp"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/tv_merged_order_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView18"
+                        android:layout_alignParentStart="true"
+                        android:text="20-8-2018"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginBottom="@dimen/size_4_dp"
+                        android:text="ORDER NUMBER"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView16"
+                        android:layout_alignBaseline="@+id/textView16"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="@dimen/size_8_dp"
+                        android:text="TABLE NUMBER"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_merged_order_id"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginBottom="@dimen/size_4_dp"
+                        android:text="DATE"
+                        android:textSize="10sp" />
+
+                </RelativeLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_my_order_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4_dp"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/size_8_dp">
+
+                        <TextView
+                            android:id="@+id/tv_merged_subtotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/subtotal"
+                            android:layout_alignParentEnd="true"
+                            android:text="2900"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/taxes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/subtotal"
+                            android:layout_marginBottom="@dimen/size_8_dp"
+                            android:text="Taxes"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/total"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/taxes"
+                            android:text="Total"
+                            android:textSize="16sp" />
+
+
+                        <TextView
+                            android:id="@+id/subtotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginBottom="@dimen/size_8_dp"
+                            android:text="Subtotal"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_merged_taxes"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/taxes"
+                            android:layout_alignParentEnd="true"
+                            android:text="500 "
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_merged_total"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_merged_taxes"
+                            android:layout_alignBaseline="@+id/total"
+                            android:layout_alignParentEnd="true"
+                            android:text="3400"
+                            android:textSize="16sp" />
+
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+</RelativeLayout>

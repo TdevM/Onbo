@@ -1,4 +1,4 @@
-package tdevm.app_ui.modules.dinein.adapters;
+package tdevm.app_ui.modules.orders.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -16,46 +16,41 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.FOrder.FOrderItem;
 import tdevm.app_ui.api.models.response.v2.merged.MergedItems;
 import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
 
-public class MergedOrderAdapter extends RecyclerView.Adapter<MergedOrderAdapter.MergedOrderViewHolder> {
+public class MyOrderItemsAdapter extends RecyclerView.Adapter<MyOrderItemsAdapter.MyOrderItemsViewHolder> {
 
-    public static final String TAG = MergedOrderAdapter.class.getSimpleName();
+    public static final String TAG = MyOrderItemsAdapter.class.getSimpleName();
     private Context context;
-    private MergedOrder mergedOrder;
-    private List<MergedItems> mergedItemsList;
+    private List<FOrderItem> mergedItemsList;
 
-    public MergedOrderAdapter(Context context) {
+    public MyOrderItemsAdapter(Context context, List<FOrderItem> orderItems) {
         this.context = context;
-        mergedItemsList = new ArrayList<>();
-    }
-
-    public void onMergedOrderFetched(MergedOrder mergedOrder) {
-        this.mergedOrder = mergedOrder;
-        this.mergedItemsList.addAll(mergedOrder.getMergedItems());
-        Log.d(TAG, "Merged order adapter updated");
+        this.mergedItemsList = orderItems;
         notifyDataSetChanged();
     }
 
+
     @NonNull
     @Override
-    public MergedOrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyOrderItemsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_rv_merged_order_inner, parent, false);
-        return new MergedOrderViewHolder(view);
+        return new MyOrderItemsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MergedOrderViewHolder holder, int position) {
-        holder.itemName.setText(mergedItemsList.get(position).getItem_data().getItem_name());
+    public void onBindViewHolder(@NonNull MyOrderItemsViewHolder holder, int position) {
+        holder.itemName.setText(mergedItemsList.get(position).getItem_name());
         holder.itemPrice.setText(String.valueOf(Integer.parseInt(mergedItemsList.get(position).getItem_total()) * 0.01));
         holder.qty.setText(mergedItemsList.get(position).getItem_qty());
         holder.itemTotal.setText(String.valueOf(Integer.parseInt(mergedItemsList.get(position).getItem_q_total()) * 0.01));
-        if (mergedItemsList.get(position).getItem_data().getIs_veg()) {
+        if (mergedItemsList.get(position).getMenu_item().getIsVeg()) {
             holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg_indicator));
-        } else if (!mergedItemsList.get(position).getItem_data().getIs_veg()) {
+        } else if (!mergedItemsList.get(position).getMenu_item().getIsVeg()) {
             holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.non_veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg_indicator));
         }
@@ -68,14 +63,14 @@ public class MergedOrderAdapter extends RecyclerView.Adapter<MergedOrderAdapter.
         return mergedItemsList.size();
     }
 
-    public class MergedOrderViewHolder extends RecyclerView.ViewHolder {
+    public class MyOrderItemsViewHolder extends RecyclerView.ViewHolder {
         TextView itemName, itemPrice, qty, itemTotal, slug;
         @BindView(R.id.iv_veg_non_veg_merged_order)
         AppCompatImageView imageView;
 
-        public MergedOrderViewHolder(View itemView) {
+        public MyOrderItemsViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             itemName = itemView.findViewById(R.id.tv_rv_item_inner_item_name);
             itemPrice = itemView.findViewById(R.id.tv_rv_item_inner_item_price);
             qty = itemView.findViewById(R.id.tv_rv_item_inner_item_qty);

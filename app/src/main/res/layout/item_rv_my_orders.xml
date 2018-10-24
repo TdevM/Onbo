@@ -43,7 +43,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="TdevM's Palace"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/heading_color"
                     android:textSize="18sp" />
 
                 <TextView
@@ -86,7 +86,7 @@
                 android:layout_marginBottom="8dp"
                 android:maxLines="1"
                 android:text="Item 1, Item 2, Item 3..."
-                android:textColor="@android:color/black"
+                android:textColor="@color/heading_color"
                 android:textSize="14sp" />
 
 
@@ -106,7 +106,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="21 Sept, 9:30 PM"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/heading_color" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -124,7 +124,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="$ 2440"
-                android:textColor="@android:color/black"
+                android:textColor="@color/heading_color"
                 android:textSize="14sp" />
 
         </LinearLayout>

@@ -4,8 +4,10 @@ package tdevm.app_ui.root.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -31,6 +33,9 @@ import tdevm.app_ui.root.adapters.EqualSpacingItemDecoration;
 import tdevm.app_ui.root.adapters.ItemOffsetDecoration;
 import tdevm.app_ui.root.adapters.RestaurantListAdapter;
 import tdevm.app_ui.root.callbacks.RestaurantItemClickListener;
+import tdevm.app_ui.utils.SizeUtils;
+
+import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,8 +94,10 @@ public class RestaurantListFragment extends Fragment
         adapter = new RestaurantListAdapter(getContext());
         unbinder = ButterKnife.bind(this, view);
         recyclerView.setLayoutManager(layoutManager);
+        //DividerItemDecoration decoration = new DividerItemDecoration(getContext(), VERTICAL);
 
-        recyclerView.addItemDecoration(new EqualSpacingItemDecoration(32));
+        recyclerView.addItemDecoration(new EqualSpacingItemDecoration(dpToPx(12)));
+        //recyclerView.addItemDecoration(decoration);
 
 
         recyclerView.setAdapter(adapter);
@@ -111,6 +118,10 @@ public class RestaurantListFragment extends Fragment
     @Override
     public void onRestaurantsFetchFailure() {
         Toast.makeText(getContext(), "Failed to fetch restaurants", Toast.LENGTH_SHORT).show();
+    }
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
     @Override
@@ -142,6 +153,8 @@ public class RestaurantListFragment extends Fragment
         Log.d(TAG, "Clicked restaurant: " + restaurant.getRestaurant_name());
         activity.showRestaurantDetailsActivity(restaurant);
     }
+
+
 
     @Override
     public void onRefresh() {

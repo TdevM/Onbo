@@ -43,8 +43,7 @@
                     android:maxLines="1"
                     android:text="TdevM's Palace"
                     android:textColor="@color/heading_color"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/tv_restaurant_cuisine"
@@ -54,11 +53,11 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/size_8_dp"
-                    android:layout_marginTop="@dimen/size_4_dp"
+                    android:layout_marginTop="@dimen/size_8_dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Italian"
-                    android:textColor="@color/color_sub_heading"
+                    android:textColor="@color/sub_heading_color_light"
                     android:textSize="12sp" />
 
                 <TextView
@@ -69,11 +68,11 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/size_8_dp"
-                    android:layout_marginTop="@dimen/size_4_dp"
+                    android:layout_marginTop="@dimen/size_8_dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Hudson Lane, GTB Nagar"
-                    android:textColor="@color/color_sub_heading"
+                    android:textColor="@color/sub_heading_color_light"
                     android:textSize="12sp" />
 
                 <TextView
@@ -88,8 +87,7 @@
                     android:maxLines="1"
                     android:text="4.2"
                     android:textColor="@color/heading_color"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
 
                 <ImageView
@@ -118,66 +116,91 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_8_dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="@dimen/default_height_12"
+            android:weightSum="3">
 
-            <ImageView
-                android:id="@+id/imageView14"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="8dp"
-                app:srcCompat="@drawable/res_strokexxhdpi" />
 
-            <TextView
-                android:id="@+id/tv_self_ordering"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="@dimen/size_2_dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Self Ordering"
-                android:textColor="@color/heading_color"
-                android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imageView16"
-                android:layout_width="20dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="15dp"
-                android:paddingTop="2dp"
-                app:srcCompat="@drawable/rupee_strokexxhdpi" />
 
-            <TextView
-                android:id="@+id/tv_cost_for_two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="@dimen/size_2_dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="600 for two"
-                android:textColor="@color/heading_color"
-                android:textSize="12sp" />
+                <ImageView
+                    android:id="@+id/imageView14"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="@dimen/size_8_dp"
+                    app:srcCompat="@drawable/res_strokexxhdpi" />
 
-            <ImageView
-                android:id="@+id/imageView17"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="15dp"
-                app:srcCompat="@drawable/qr_strokexxhdpi" />
+                <TextView
+                    android:id="@+id/tv_self_ordering"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_8_dp"
+                    android:layout_marginTop="@dimen/size_2_dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Self Order "
+                    android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/tv_qr_enabled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="@dimen/size_2_dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="QR Enabled"
-                android:textColor="@color/heading_color"
-                android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageView16"
+                    android:layout_width="20dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="@dimen/size_4_dp"
+                    android:layout_marginTop="0dp"
+                    android:paddingTop="2dp"
+                    app:srcCompat="@drawable/rupee_strokexxhdpi" />
+
+                <TextView
+                    android:id="@+id/tv_cost_for_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_8_dp"
+                    android:layout_marginTop="@dimen/size_2_dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="600 for two"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+
+                <ImageView
+                    android:id="@+id/imageView17"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="@dimen/size_4_dp"
+                    app:srcCompat="@drawable/qr_strokexxhdpi" />
+
+                <TextView
+                    android:id="@+id/tv_qr_enabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_8_dp"
+                    android:layout_marginTop="@dimen/size_2_dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="QR Enabled"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
 
         </LinearLayout>

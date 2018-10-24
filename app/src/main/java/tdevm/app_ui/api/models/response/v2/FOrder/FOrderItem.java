@@ -1,6 +1,11 @@
 package tdevm.app_ui.api.models.response.v2.FOrder;
 
-public class FOrderItem {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
+
+public class FOrderItem implements Parcelable {
 
     private String item_q_total;
 
@@ -35,6 +40,53 @@ public class FOrderItem {
     private String item_total;
 
     private String item_hash;
+
+    private MenuItem menu_item;
+
+    public MenuItem getMenu_item() {
+        return menu_item;
+    }
+
+    public void setMenu_item(MenuItem menu_item) {
+        this.menu_item = menu_item;
+    }
+
+    public static Creator<FOrderItem> getCREATOR() {
+        return CREATOR;
+    }
+
+    protected FOrderItem(Parcel in) {
+        item_q_total = in.readString();
+        f_o_i_id = in.readString();
+        item_price = in.readString();
+        f_o_id = in.readString();
+        restaurant_id = in.readString();
+        f_order_addons = in.createTypedArray(FOrderAddOn.CREATOR);
+        f_order_v_extras = in.createTypedArray(FOrderVExtra.CREATOR);
+        tax_total = in.readString();
+        item_slug = in.readString();
+        item_name = in.readString();
+        item_id = in.readString();
+        tax_id = in.readString();
+        item_qty = in.readString();
+        f_order_variants = in.createTypedArray(FOrderVariant.CREATOR);
+        item_tax = in.readString();
+        item_total = in.readString();
+        item_hash = in.readString();
+        menu_item = in.readParcelable(MenuItem.class.getClassLoader());
+    }
+
+    public static final Creator<FOrderItem> CREATOR = new Creator<FOrderItem>() {
+        @Override
+        public FOrderItem createFromParcel(Parcel in) {
+            return new FOrderItem(in);
+        }
+
+        @Override
+        public FOrderItem[] newArray(int size) {
+            return new FOrderItem[size];
+        }
+    };
 
     public String getItem_q_total() {
         return item_q_total;
@@ -175,5 +227,32 @@ public class FOrderItem {
     @Override
     public String toString() {
         return "ClassPojo [item_q_total = " + item_q_total + ", f_o_i_id = " + f_o_i_id + ", item_price = " + item_price + ", f_o_id = " + f_o_id + ", restaurant_id = " + restaurant_id + ", f_order_addons = " + f_order_addons + ", f_order_v_extras = " + f_order_v_extras + ", tax_total = " + tax_total + ", item_slug = " + item_slug + ", item_name = " + item_name + ", item_id = " + item_id + ", tax_id = " + tax_id + ", item_qty = " + item_qty + ", f_order_variants = " + f_order_variants + ", item_tax = " + item_tax + ", item_total = " + item_total + ", item_hash = " + item_hash + "]";
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(item_q_total);
+        dest.writeString(f_o_i_id);
+        dest.writeString(item_price);
+        dest.writeString(f_o_id);
+        dest.writeString(restaurant_id);
+        dest.writeTypedArray(f_order_addons, flags);
+        dest.writeTypedArray(f_order_v_extras, flags);
+        dest.writeString(tax_total);
+        dest.writeString(item_slug);
+        dest.writeString(item_name);
+        dest.writeString(item_id);
+        dest.writeString(tax_id);
+        dest.writeString(item_qty);
+        dest.writeTypedArray(f_order_variants, flags);
+        dest.writeString(item_tax);
+        dest.writeString(item_total);
+        dest.writeString(item_hash);
+        dest.writeParcelable(menu_item, flags);
     }
 }

@@ -85,6 +85,13 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         if (restaurants.get(position).getCuisines() != null) {
             holder.restaurantCuisines.setText(generateCuisineSlug(restaurants.get(position).getCuisines()));
         }
+        if(restaurants.get(position).getRestaurant_mode()!=null){
+            if(restaurants.get(position).getRestaurant_mode().equals("DINE_IN")){
+                holder.selfOrdering.setText(context.getString(R.string.dine_id));
+            }else {
+                holder.selfOrdering.setText(context.getString(R.string.quick_serve));
+            }
+        }
         holder.bind(restaurants.get(position), listener);
     }
 

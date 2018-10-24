@@ -1,12 +1,15 @@
 package tdevm.app_ui.api.models.request;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Tridev on 06-06-2017.
  */
 
-public class User {
+public class User implements Parcelable {
 
     @SerializedName("name")
     private String name;
@@ -22,6 +25,28 @@ public class User {
     private long user_mobile;
     @SerializedName(value = "mobile")
     private long mobile;
+
+    protected User(Parcel in) {
+        name = in.readString();
+        email = in.readString();
+        password = in.readString();
+        userName = in.readString();
+        userGender = in.readString();
+        user_mobile = in.readLong();
+        mobile = in.readLong();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public long getMobile() {
         return mobile;
@@ -98,5 +123,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(email);
+        dest.writeString(password);
+        dest.writeString(userName);
+        dest.writeString(userGender);
+        dest.writeLong(user_mobile);
+        dest.writeLong(mobile);
     }
 }

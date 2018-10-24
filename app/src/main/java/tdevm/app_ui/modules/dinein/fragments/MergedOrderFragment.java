@@ -53,11 +53,11 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     @BindView(R.id.tv_merged_order_date)
     TextView tvDate;
 
-    @BindView(R.id.shimmer_fragment_running_order)
-    ShimmerFrameLayout shimmerFrameLayout;
+//    @BindView(R.id.shimmer_fragment_running_order)
+//    ShimmerFrameLayout shimmerFrameLayout;
 
-    @BindView(R.id.scroll_view_fragment_running_order)
-    ScrollView scrollView;
+//    @BindView(R.id.scroll_view_fragment_running_order)
+//    ScrollView scrollView;
 
     MergedOrderAdapter mergedOrderAdapter;
     @Inject
@@ -96,6 +96,8 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
         unbinder = ButterKnife.bind(this, view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewTempOrder.setLayoutManager(mLayoutManager);
+        recyclerViewTempOrder.setNestedScrollingEnabled(false);
+
         mergedOrderAdapter = new MergedOrderAdapter(getContext());
         recyclerViewTempOrder.setAdapter(mergedOrderAdapter);
         presenter.fetchTempRunningOrder();
@@ -104,14 +106,14 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
 
     @Override
     public void showProgressUI() {
-        shimmerFrameLayout.startShimmer();
+        //shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void hideProgressUI() {
-        shimmerFrameLayout.stopShimmer();
-        shimmerFrameLayout.setVisibility(View.GONE);
-        scrollView.setVisibility(View.VISIBLE);
+        //shimmerFrameLayout.stopShimmer();
+        //shimmerFrameLayout.setVisibility(View.GONE);
+        //scrollView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -132,8 +134,8 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
         fetchedOrder = mergedOrder;
         Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
         Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
-        tableNo.setText("Table no: " + String.valueOf(mergedOrder.getRestaurantTable().getTable_number()));
-        tempOrderId.setText("Order ID: " + mergedOrder.getOrderId());
+        tableNo.setText(String.valueOf(mergedOrder.getRestaurantTable().getTable_number()));
+        tempOrderId.setText(mergedOrder.getOrderId());
         tvDate.setText(mergedOrder.getTimestamp());
         subTotal.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getSubtotal()) * 0.01));
         taxes.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getTaxes()) * 0.01));

@@ -179,8 +179,9 @@
     <color name="dot_light_screen2">#8cf9eb</color>
     <color name="dot_light_screen3">#93c6fd</color>
     <color name="dot_light_screen4">#e4b5fc</color>
-    <color name="heading_color">#666</color>
-    <color name="color_sub_heading">#999</color>
+    <color name="heading_color">#282C3F</color>
+    <color name="sub_heading_color">#686b78</color>
+    <color name="sub_heading_color_light">#888</color>
 
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>

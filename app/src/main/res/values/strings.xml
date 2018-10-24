@@ -154,4 +154,6 @@
     <string name="image_design_random">image</string>
     <string name="items">ITEMS</string>
     <string name="ordered_on">ORDERED ON</string>
+    <string name="dine_id">Dine In</string>
+    <string name="quick_serve">Quick serve</string>
 </resources>

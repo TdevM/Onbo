@@ -1,6 +1,9 @@
 package tdevm.app_ui.api.models.response.v2.FOrder;
 
-public class FOrderDetail {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class FOrderDetail implements Parcelable {
 
     private String dlv_by;
 
@@ -21,6 +24,31 @@ public class FOrderDetail {
     private String dlv_at;
 
     private String dlv_promise;
+
+    protected FOrderDetail(Parcel in) {
+        dlv_by = in.readString();
+        f_o_d_id = in.readString();
+        dlv_from = in.readString();
+        address = in.readString();
+        f_o_id = in.readString();
+        tat = in.readString();
+        cust_ip = in.readString();
+        cust_location = in.readString();
+        dlv_at = in.readString();
+        dlv_promise = in.readString();
+    }
+
+    public static final Creator<FOrderDetail> CREATOR = new Creator<FOrderDetail>() {
+        @Override
+        public FOrderDetail createFromParcel(Parcel in) {
+            return new FOrderDetail(in);
+        }
+
+        @Override
+        public FOrderDetail[] newArray(int size) {
+            return new FOrderDetail[size];
+        }
+    };
 
     public String getDlv_by() {
         return dlv_by;
@@ -105,5 +133,24 @@ public class FOrderDetail {
     @Override
     public String toString() {
         return "ClassPojo [dlv_by = " + dlv_by + ", f_o_d_id = " + f_o_d_id + ", dlv_from = " + dlv_from + ", address = " + address + ", f_o_id = " + f_o_id + ", tat = " + tat + ", cust_ip = " + cust_ip + ", cust_location = " + cust_location + ", dlv_at = " + dlv_at + ", dlv_promise = " + dlv_promise + "]";
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(dlv_by);
+        dest.writeString(f_o_d_id);
+        dest.writeString(dlv_from);
+        dest.writeString(address);
+        dest.writeString(f_o_id);
+        dest.writeString(tat);
+        dest.writeString(cust_ip);
+        dest.writeString(cust_location);
+        dest.writeString(dlv_at);
+        dest.writeString(dlv_promise);
     }
 }
