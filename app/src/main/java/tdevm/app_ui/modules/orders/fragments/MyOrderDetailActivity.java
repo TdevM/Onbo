@@ -14,6 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -45,6 +49,18 @@ public class MyOrderDetailActivity extends AppCompatActivity implements Restaura
     TextView total;
     @BindView(R.id.tv_merged_order_date)
     TextView tvDate;
+
+    @BindView(R.id.show_table_text)
+    TextView showTable;
+
+    @BindView(R.id.tv_my_order_details_restaurant_address)
+    TextView restaurantAddress;
+
+    @BindView(R.id.tv_my_order_details_restaurant_name)
+    TextView restaurantName;
+
+    @BindView(R.id.tv_my_order_details_restaurant_type)
+    TextView restaurantType;
 
     @Inject
     MyOrderDetailPresenter presenter;
@@ -81,7 +97,7 @@ public class MyOrderDetailActivity extends AppCompatActivity implements Restaura
         fOrder = intent.getParcelableExtra("ORDER");
 
         if (fOrder != null) {
-            if(fOrder.getF_order_items()!=null){
+            if (fOrder.getF_order_items() != null) {
                 adapter = new MyOrderItemsAdapter(this, fOrder.getF_order_items());
                 recyclerView.setAdapter(adapter);
                 updateCardDetails(fOrder);
@@ -90,16 +106,39 @@ public class MyOrderDetailActivity extends AppCompatActivity implements Restaura
         }
 
 
-
     }
 
     private void updateCardDetails(FOrder fOrder) {
         //tableNo.setText(String.valueOf(fOrder.getRestaurant_table().getTable_number()));
-        orderId.setText(fOrder.getOrder_id());
-        tvDate.setText(fOrder.getTimestamp());
-        subTotal.setText(String.valueOf(Integer.parseInt(fOrder.getSubtotal()) * 0.01));
-        taxes.setText(String.valueOf(Integer.parseInt(fOrder.getTaxes()) * 0.01));
-        total.setText(String.valueOf(Integer.parseInt(fOrder.getGrand_total()) * 0.01));
+        if (fOrder.getRestaurant_table() != null) {
+            showTable.setVisibility(View.VISIBLE);
+            tableNo.setText(this.getString(R.string.show_number_pound_symbol, (String.valueOf(fOrder.getRestaurant_table().getTable_number()))));
+        } else {
+            showTable.setVisibility(View.GONE);
+            tableNo.setVisibility(View.GONE);
+        }
+        restaurantName.setText(fOrder.getRestaurant().getRestaurant_name());
+        if (fOrder.getRestaurant().getRestaurant_mode() != null) {
+            if (fOrder.getRestaurant().getRestaurant_mode().equals("DINE_IN")) {
+                restaurantType.setText(getString(R.string.dine_in_2));
+            } else {
+                restaurantType.setText(getString(R.string.quick_serve_2));
+            }
+        }
+        orderId.setText(this.getString(R.string.show_number_pound_symbol, fOrder.getOrder_id()));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Date date = null;
+        try {
+            date = dateFormat.parse(fOrder.getTimestamp());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(date);
+        tvDate.setText(date.toString());
+        restaurantAddress.setText(fOrder.getRestaurant().getAddress_complete());
+        subTotal.setText(this.getString(R.string.rupee_symbol, String.valueOf(Integer.parseInt(fOrder.getSubtotal()) * 0.01)));
+        taxes.setText(this.getString(R.string.rupee_symbol, String.valueOf(Integer.parseInt(fOrder.getTaxes()) * 0.01)));
+        total.setText(this.getString(R.string.rupee_symbol, String.valueOf(Integer.parseInt(fOrder.getGrand_total()) * 0.01)));
     }
 
     @Override

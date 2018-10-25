@@ -1,10 +1,13 @@
 package tdevm.app_ui.api.models.response.v2;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Tridev on 19-08-2017.
  */
 
-public class RestaurantTable {
+public class RestaurantTable implements Parcelable {
 
     private String short_id;
     private String restaurant_uuid;
@@ -18,6 +21,36 @@ public class RestaurantTable {
     private String restaurant_id;
     private Boolean is_deleetd;
 
+
+    protected RestaurantTable(Parcel in) {
+        short_id = in.readString();
+        restaurant_uuid = in.readString();
+        byte tmpOccupancy_status = in.readByte();
+        occupancy_status = tmpOccupancy_status == 0 ? null : tmpOccupancy_status == 1;
+        byte tmpOrder_status = in.readByte();
+        order_status = tmpOrder_status == 0 ? null : tmpOrder_status == 1;
+        byte tmpBooking_status = in.readByte();
+        booking_status = tmpBooking_status == 0 ? null : tmpBooking_status == 1;
+        restaurant_table_id = in.readString();
+        table_number = in.readInt();
+        table_layout_id = in.readString();
+        qr_encode_id = in.readString();
+        restaurant_id = in.readString();
+        byte tmpIs_deleetd = in.readByte();
+        is_deleetd = tmpIs_deleetd == 0 ? null : tmpIs_deleetd == 1;
+    }
+
+    public static final Creator<RestaurantTable> CREATOR = new Creator<RestaurantTable>() {
+        @Override
+        public RestaurantTable createFromParcel(Parcel in) {
+            return new RestaurantTable(in);
+        }
+
+        @Override
+        public RestaurantTable[] newArray(int size) {
+            return new RestaurantTable[size];
+        }
+    };
 
     public String getShort_id() {
         return short_id;
@@ -97,5 +130,25 @@ public class RestaurantTable {
 
     public void setRestaurant_id(String restaurant_id) {
         this.restaurant_id = restaurant_id;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(short_id);
+        dest.writeString(restaurant_uuid);
+        dest.writeByte((byte) (occupancy_status == null ? 0 : occupancy_status ? 1 : 2));
+        dest.writeByte((byte) (order_status == null ? 0 : order_status ? 1 : 2));
+        dest.writeByte((byte) (booking_status == null ? 0 : booking_status ? 1 : 2));
+        dest.writeString(restaurant_table_id);
+        dest.writeInt(table_number);
+        dest.writeString(table_layout_id);
+        dest.writeString(qr_encode_id);
+        dest.writeString(restaurant_id);
+        dest.writeByte((byte) (is_deleetd == null ? 0 : is_deleetd ? 1 : 2));
     }
 }

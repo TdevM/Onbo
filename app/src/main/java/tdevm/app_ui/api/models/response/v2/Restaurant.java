@@ -30,7 +30,50 @@ public class Restaurant implements Parcelable {
     private RestaurantType restaurant_type;
     private Rating rating;
     private Boolean qr_active;
+    private String address_complete;
     private List<Cuisine> cuisines;
+
+
+    protected Restaurant(Parcel in) {
+        restaurant_id = in.readString();
+        byte tmpDoes_bookings = in.readByte();
+        does_bookings = tmpDoes_bookings == 0 ? null : tmpDoes_bookings == 1;
+        location = in.readParcelable(Location.class.getClassLoader());
+        avg_cost_for_two = in.readInt();
+        image = in.readString();
+        restaurant_name = in.readString();
+        restaurant_uuid = in.readString();
+        type_id = in.readInt();
+        table_count = in.readInt();
+        currency = in.readString();
+        location_id = in.readInt();
+        restaurant_mode = in.readString();
+        opens_at = in.readString();
+        closes_at = in.readString();
+        byte tmpQr_active = in.readByte();
+        qr_active = tmpQr_active == 0 ? null : tmpQr_active == 1;
+        address_complete = in.readString();
+    }
+
+    public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(Parcel in) {
+            return new Restaurant(in);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
+
+    public String getAddress_complete() {
+        return address_complete;
+    }
+
+    public void setAddress_complete(String address_complete) {
+        this.address_complete = address_complete;
+    }
 
     public List<Cuisine> getCuisines() {
         return cuisines;
@@ -56,35 +99,6 @@ public class Restaurant implements Parcelable {
         this.rating = rating;
     }
 
-    protected Restaurant(Parcel in) {
-        restaurant_id = in.readString();
-        byte tmpDoes_bookings = in.readByte();
-        does_bookings = tmpDoes_bookings == 0 ? null : tmpDoes_bookings == 1;
-        avg_cost_for_two = in.readInt();
-        image = in.readString();
-        restaurant_name = in.readString();
-        restaurant_uuid = in.readString();
-        type_id = in.readInt();
-        table_count = in.readInt();
-        currency = in.readString();
-        location_id = in.readInt();
-        restaurant_mode = in.readString();
-        opens_at = in.readString();
-        closes_at = in.readString();
-    }
-
-    public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
-        @Override
-        public Restaurant createFromParcel(Parcel in) {
-            return new Restaurant(in);
-        }
-
-        @Override
-        public Restaurant[] newArray(int size) {
-            return new Restaurant[size];
-        }
-    };
-
     @Override
     public int describeContents() {
         return 0;
@@ -94,6 +108,7 @@ public class Restaurant implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(restaurant_id);
         dest.writeByte((byte) (does_bookings == null ? 0 : does_bookings ? 1 : 2));
+        dest.writeParcelable(location, flags);
         dest.writeInt(avg_cost_for_two);
         dest.writeString(image);
         dest.writeString(restaurant_name);
@@ -105,7 +120,10 @@ public class Restaurant implements Parcelable {
         dest.writeString(restaurant_mode);
         dest.writeString(opens_at);
         dest.writeString(closes_at);
+        dest.writeByte((byte) (qr_active == null ? 0 : qr_active ? 1 : 2));
+        dest.writeString(address_complete);
     }
+
 
     public class RestaurantType {
         private String type_id;
@@ -140,10 +158,6 @@ public class Restaurant implements Parcelable {
         public void setRestaurant_avg_rating(String restaurant_avg_rating) {
             this.restaurant_avg_rating = restaurant_avg_rating;
         }
-    }
-
-    public static Creator<Restaurant> getCREATOR() {
-        return CREATOR;
     }
 
 

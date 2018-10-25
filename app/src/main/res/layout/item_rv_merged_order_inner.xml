@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:padding="5dp">
 
     <LinearLayout
@@ -17,8 +19,8 @@
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/iv_veg_non_veg_merged_order"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_marginEnd="@dimen/size_8_dp"
                 android:contentDescription="@string/veg_non_veg"
                 android:scaleType="fitXY" />
@@ -34,7 +36,10 @@
                     android:layout_height="wrap_content"
 
                     android:text="Choco Lava Cake"
-                    android:textSize="16sp" />
+                    android:textColor="@color/heading_color"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="14sp" />
 
 
                 <TextView
@@ -42,6 +47,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_4_dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:text="Slug "
                     android:textSize="12sp" />
             </LinearLayout>
@@ -63,7 +70,8 @@
                 android:layout_marginStart="@dimen/default_space_30"
                 android:layout_marginRight="@dimen/size_16_dp"
                 android:text="₹40"
-                android:textSize="16sp" />
+                android:textColor="@color/heading_color"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_rv_item_inner_item_qty"
@@ -72,7 +80,8 @@
                 android:layout_marginStart="@dimen/size_8_dp"
                 android:layout_toRightOf="@+id/textView20"
                 android:text="2"
-                android:textSize="16sp" />
+                android:textColor="@color/heading_color"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_rv_item_inner_item_total"
@@ -80,7 +89,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:text="₹80"
-                android:textSize="16sp" />
+                android:textColor="@color/heading_color"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/textView20"
@@ -88,7 +98,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_8_dp"
                 android:layout_toEndOf="@id/tv_rv_item_inner_item_price"
-                android:text="x " />
+                android:text="x "
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
@@ -96,4 +107,4 @@
     </LinearLayout>
 
 
-</android.support.v7.widget.CardView>
+</LinearLayout>

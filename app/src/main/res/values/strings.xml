@@ -8,6 +8,7 @@
     <string name="title_account">Account</string>
     <string name="add">ADD</string>
     <string name="rupee_symbol">₹ %1$s</string>
+    <string name="show_number_pound_symbol"># %1$s</string>
     <string name="title_menu">Menu</string>
     <string name="title_cart">Cart</string>
     <string name="title_favourites">Favourites</string>
@@ -156,4 +157,6 @@
     <string name="ordered_on">ORDERED ON</string>
     <string name="dine_id">Dine In</string>
     <string name="quick_serve">Quick serve</string>
+    <string name="dine_in_2">DINE IN</string>
+    <string name="quick_serve_2">QUICK SERVE</string>
 </resources>

@@ -57,6 +57,7 @@ public class FOrder implements Parcelable{
         restaurant_id = in.readString();
         restaurant = in.readParcelable(Restaurant.class.getClassLoader());
         timestamp = in.readString();
+        restaurant_table = in.readParcelable(RestaurantTable.class.getClassLoader());
         txn_status = in.readString();
         txn_id = in.readString();
         order_source = in.readString();
@@ -421,6 +422,7 @@ public class FOrder implements Parcelable{
         dest.writeString(restaurant_id);
         dest.writeParcelable(restaurant, flags);
         dest.writeString(timestamp);
+        dest.writeParcelable(restaurant_table, flags);
         dest.writeString(txn_status);
         dest.writeString(txn_id);
         dest.writeString(order_source);

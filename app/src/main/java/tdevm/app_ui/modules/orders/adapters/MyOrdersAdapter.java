@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,7 +67,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
     public void onBindViewHolder(@NonNull MyOrdersViewHolder holder, int position) {
         holder.restaurantName.setText(orderList.get(position).getRestaurant().getRestaurant_name());
         //holder.orderTotal.setText(orderList.get(position).getGrand_total());
-        holder.orderTotal.setText(context.getString(R.string.rupee_symbol, Double.parseDouble(orderList.get(position).getGrand_total()) * 0.01));
+        holder.orderTotal.setText(context.getString(R.string.rupee_symbol, String.valueOf(Integer.parseInt(orderList.get(position).getGrand_total()) * 0.01)));
         if (orderList.get(position).getRestaurant().getLocation() != null) {
             holder.localityName.setText(orderList.get(position).getRestaurant().getLocation().getLocation_locality());
         }

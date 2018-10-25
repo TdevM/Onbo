@@ -3,6 +3,8 @@ package tdevm.app_ui.api.models.response.v2.FOrder;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 
 public class FOrderItem implements Parcelable {
@@ -17,9 +19,9 @@ public class FOrderItem implements Parcelable {
 
     private String restaurant_id;
 
-    private FOrderAddOn[] f_order_addons;
+    private List<FOrderAddOn> f_order_addons;
 
-    private FOrderVExtra[] f_order_v_extras;
+    private List<FOrderVExtra> f_order_v_extras;
 
     private String tax_total;
 
@@ -33,7 +35,7 @@ public class FOrderItem implements Parcelable {
 
     private String item_qty;
 
-    private FOrderVariant[] f_order_variants;
+    private List<FOrderVariant> f_order_variants;
 
     private String item_tax;
 
@@ -43,33 +45,21 @@ public class FOrderItem implements Parcelable {
 
     private MenuItem menu_item;
 
-    public MenuItem getMenu_item() {
-        return menu_item;
-    }
-
-    public void setMenu_item(MenuItem menu_item) {
-        this.menu_item = menu_item;
-    }
-
-    public static Creator<FOrderItem> getCREATOR() {
-        return CREATOR;
-    }
-
     protected FOrderItem(Parcel in) {
         item_q_total = in.readString();
         f_o_i_id = in.readString();
         item_price = in.readString();
         f_o_id = in.readString();
         restaurant_id = in.readString();
-        f_order_addons = in.createTypedArray(FOrderAddOn.CREATOR);
-        f_order_v_extras = in.createTypedArray(FOrderVExtra.CREATOR);
+        f_order_addons = in.createTypedArrayList(FOrderAddOn.CREATOR);
+        f_order_v_extras = in.createTypedArrayList(FOrderVExtra.CREATOR);
         tax_total = in.readString();
         item_slug = in.readString();
         item_name = in.readString();
         item_id = in.readString();
         tax_id = in.readString();
         item_qty = in.readString();
-        f_order_variants = in.createTypedArray(FOrderVariant.CREATOR);
+        f_order_variants = in.createTypedArrayList(FOrderVariant.CREATOR);
         item_tax = in.readString();
         item_total = in.readString();
         item_hash = in.readString();
@@ -87,6 +77,17 @@ public class FOrderItem implements Parcelable {
             return new FOrderItem[size];
         }
     };
+
+    public MenuItem getMenu_item() {
+        return menu_item;
+    }
+
+    public void setMenu_item(MenuItem menu_item) {
+        this.menu_item = menu_item;
+    }
+
+
+
 
     public String getItem_q_total() {
         return item_q_total;
@@ -128,21 +129,7 @@ public class FOrderItem implements Parcelable {
         this.restaurant_id = restaurant_id;
     }
 
-    public FOrderAddOn[] getF_order_addons() {
-        return f_order_addons;
-    }
 
-    public void setF_order_addons(FOrderAddOn[] f_order_addons) {
-        this.f_order_addons = f_order_addons;
-    }
-
-    public FOrderVExtra[] getF_order_v_extras() {
-        return f_order_v_extras;
-    }
-
-    public void setF_order_v_extras(FOrderVExtra[] f_order_v_extras) {
-        this.f_order_v_extras = f_order_v_extras;
-    }
 
     public String getTax_total() {
         return tax_total;
@@ -192,13 +179,6 @@ public class FOrderItem implements Parcelable {
         this.item_qty = item_qty;
     }
 
-    public FOrderVariant[] getF_order_variants() {
-        return f_order_variants;
-    }
-
-    public void setF_order_variants(FOrderVariant[] f_order_variants) {
-        this.f_order_variants = f_order_variants;
-    }
 
     public String getItem_tax() {
         return item_tax;
@@ -229,6 +209,30 @@ public class FOrderItem implements Parcelable {
         return "ClassPojo [item_q_total = " + item_q_total + ", f_o_i_id = " + f_o_i_id + ", item_price = " + item_price + ", f_o_id = " + f_o_id + ", restaurant_id = " + restaurant_id + ", f_order_addons = " + f_order_addons + ", f_order_v_extras = " + f_order_v_extras + ", tax_total = " + tax_total + ", item_slug = " + item_slug + ", item_name = " + item_name + ", item_id = " + item_id + ", tax_id = " + tax_id + ", item_qty = " + item_qty + ", f_order_variants = " + f_order_variants + ", item_tax = " + item_tax + ", item_total = " + item_total + ", item_hash = " + item_hash + "]";
     }
 
+    public List<FOrderAddOn> getF_order_addons() {
+        return f_order_addons;
+    }
+
+    public void setF_order_addons(List<FOrderAddOn> f_order_addons) {
+        this.f_order_addons = f_order_addons;
+    }
+
+    public List<FOrderVExtra> getF_order_v_extras() {
+        return f_order_v_extras;
+    }
+
+    public void setF_order_v_extras(List<FOrderVExtra> f_order_v_extras) {
+        this.f_order_v_extras = f_order_v_extras;
+    }
+
+    public List<FOrderVariant> getF_order_variants() {
+        return f_order_variants;
+    }
+
+    public void setF_order_variants(List<FOrderVariant> f_order_variants) {
+        this.f_order_variants = f_order_variants;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -241,15 +245,15 @@ public class FOrderItem implements Parcelable {
         dest.writeString(item_price);
         dest.writeString(f_o_id);
         dest.writeString(restaurant_id);
-        dest.writeTypedArray(f_order_addons, flags);
-        dest.writeTypedArray(f_order_v_extras, flags);
+        dest.writeTypedList(f_order_addons);
+        dest.writeTypedList(f_order_v_extras);
         dest.writeString(tax_total);
         dest.writeString(item_slug);
         dest.writeString(item_name);
         dest.writeString(item_id);
         dest.writeString(tax_id);
         dest.writeString(item_qty);
-        dest.writeTypedArray(f_order_variants, flags);
+        dest.writeTypedList(f_order_variants);
         dest.writeString(item_tax);
         dest.writeString(item_total);
         dest.writeString(item_hash);
