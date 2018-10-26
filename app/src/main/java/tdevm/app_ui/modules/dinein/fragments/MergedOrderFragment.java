@@ -9,10 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.facebook.shimmer.ShimmerFrameLayout;
 
 import javax.inject.Inject;
 
@@ -27,6 +24,7 @@ import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.adapters.MergedOrderAdapter;
+import tdevm.app_ui.utils.GeneralUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -134,12 +132,13 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
         fetchedOrder = mergedOrder;
         Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
         Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
-        tableNo.setText(String.valueOf(mergedOrder.getRestaurantTable().getTable_number()));
-        tempOrderId.setText(mergedOrder.getOrderId());
-        tvDate.setText(mergedOrder.getTimestamp());
-        subTotal.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getSubtotal()) * 0.01));
-        taxes.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getTaxes()) * 0.01));
-        total.setText(String.valueOf(Integer.parseInt(mergedOrder.getOrderTotal().getGrand_total()) * 0.01));
+        tableNo.setText(getContext().getString(R.string.show_number_pound_symbol,String.valueOf(mergedOrder.getRestaurantTable().getTable_number())));
+        tempOrderId.setText(getContext().getString(R.string.show_number_pound_symbol,mergedOrder.getOrderId()));
+
+        tvDate.setText(GeneralUtils.parseTime(mergedOrder.getTimestamp()));
+        subTotal.setText(getContext().getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getSubtotal())));
+        taxes.setText(getContext().getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getTaxes())));
+        total.setText(getContext().getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getGrand_total())));
     }
 
     @Override

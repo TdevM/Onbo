@@ -9,26 +9,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.modules.orders.RestaurantOrdersViewContract;
 import tdevm.app_ui.modules.orders.adapters.MyOrderItemsAdapter;
-import tdevm.app_ui.root.adapters.EqualSpacingItemDecoration;
+import tdevm.app_ui.utils.GeneralUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -126,19 +119,12 @@ public class MyOrderDetailActivity extends AppCompatActivity implements Restaura
             }
         }
         orderId.setText(this.getString(R.string.show_number_pound_symbol, fOrder.getOrder_id()));
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-        Date date = null;
-        try {
-            date = dateFormat.parse(fOrder.getTimestamp());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.println(date);
-        tvDate.setText(date.toString());
+
+        tvDate.setText(GeneralUtils.parseTime(fOrder.getTimestamp()));
         restaurantAddress.setText(fOrder.getRestaurant().getAddress_complete());
-        subTotal.setText(this.getString(R.string.rupee_symbol, String.valueOf(Integer.parseInt(fOrder.getSubtotal()) * 0.01)));
-        taxes.setText(this.getString(R.string.rupee_symbol, String.valueOf(Integer.parseInt(fOrder.getTaxes()) * 0.01)));
-        total.setText(this.getString(R.string.rupee_symbol, String.valueOf(Integer.parseInt(fOrder.getGrand_total()) * 0.01)));
+        subTotal.setText(this.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(fOrder.getSubtotal())));
+        taxes.setText(this.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(fOrder.getTaxes())));
+        total.setText(this.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(fOrder.getGrand_total())));
     }
 
     @Override

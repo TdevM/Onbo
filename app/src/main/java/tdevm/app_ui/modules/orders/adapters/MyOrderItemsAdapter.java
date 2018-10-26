@@ -27,6 +27,7 @@ import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.api.models.response.v2.merged.MergedItems;
 import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
+import tdevm.app_ui.utils.GeneralUtils;
 
 public class MyOrderItemsAdapter extends RecyclerView.Adapter<MyOrderItemsAdapter.MyOrderItemsViewHolder> {
 
@@ -52,9 +53,9 @@ public class MyOrderItemsAdapter extends RecyclerView.Adapter<MyOrderItemsAdapte
     @Override
     public void onBindViewHolder(@NonNull MyOrderItemsViewHolder holder, int position) {
         holder.itemName.setText(mergedItemsList.get(position).getItem_name());
-        holder.itemPrice.setText(context.getString(R.string.rupee_symbol, String.valueOf(Integer.parseInt(mergedItemsList.get(position).getItem_total()) * 0.01)));
+        holder.itemPrice.setText(context.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedItemsList.get(position).getItem_price())));
         holder.qty.setText(mergedItemsList.get(position).getItem_qty());
-        holder.itemTotal.setText(context.getString(R.string.rupee_symbol, String.valueOf(Integer.parseInt(mergedItemsList.get(position).getItem_q_total()) * 0.01)));
+        holder.itemTotal.setText(context.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedItemsList.get(position).getItem_q_total())));
         if (mergedItemsList.get(position).getMenu_item().getIsVeg()) {
             holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg_indicator));

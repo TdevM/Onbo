@@ -16,13 +16,9 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +26,7 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrderItem;
 import tdevm.app_ui.modules.orders.callback.MyOrdersClickListener;
+import tdevm.app_ui.utils.GeneralUtils;
 
 public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrdersViewHolder> {
 
@@ -67,21 +64,13 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
     public void onBindViewHolder(@NonNull MyOrdersViewHolder holder, int position) {
         holder.restaurantName.setText(orderList.get(position).getRestaurant().getRestaurant_name());
         //holder.orderTotal.setText(orderList.get(position).getGrand_total());
-        holder.orderTotal.setText(context.getString(R.string.rupee_symbol, String.valueOf(Integer.parseInt(orderList.get(position).getGrand_total()) * 0.01)));
+        holder.orderTotal.setText(context.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(orderList.get(position).getGrand_total())));
         if (orderList.get(position).getRestaurant().getLocation() != null) {
             holder.localityName.setText(orderList.get(position).getRestaurant().getLocation().getLocation_locality());
         }
 
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-        Date date = null;
-        try {
-            date = dateFormat.parse(orderList.get(position).getTimestamp());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.println(date);
-        holder.orderTime.setText(date.toString());
+        holder.orderTime.setText(GeneralUtils.parseTime(orderList.get(position).getTimestamp()));
         holder.orderSlug.setText(generateSlug(orderList.get(position)));
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(10));

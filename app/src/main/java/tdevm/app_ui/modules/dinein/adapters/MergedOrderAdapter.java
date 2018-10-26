@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.merged.MergedItems;
 import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
+import tdevm.app_ui.utils.GeneralUtils;
 
 public class MergedOrderAdapter extends RecyclerView.Adapter<MergedOrderAdapter.MergedOrderViewHolder> {
 
@@ -49,9 +50,9 @@ public class MergedOrderAdapter extends RecyclerView.Adapter<MergedOrderAdapter.
     @Override
     public void onBindViewHolder(@NonNull MergedOrderViewHolder holder, int position) {
         holder.itemName.setText(mergedItemsList.get(position).getItem_data().getItem_name());
-        holder.itemPrice.setText(String.valueOf(Integer.parseInt(mergedItemsList.get(position).getItem_total()) * 0.01));
+        holder.itemPrice.setText(context.getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(mergedItemsList.get(position).getItem_total())));
         holder.qty.setText(mergedItemsList.get(position).getItem_qty());
-        holder.itemTotal.setText(String.valueOf(Integer.parseInt(mergedItemsList.get(position).getItem_q_total()) * 0.01));
+        holder.itemTotal.setText(context.getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(mergedItemsList.get(position).getItem_q_total())));
         if (mergedItemsList.get(position).getItem_data().getIs_veg()) {
             holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg_indicator));
