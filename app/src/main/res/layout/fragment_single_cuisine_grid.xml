@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
 
@@ -13,9 +14,10 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_dishes_grid_single"
             android:layout_width="match_parent"
-            android:clipToPadding="false"
             android:layout_height="match_parent"
-            android:overScrollMode="never">
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingBottom="@dimen/size_16_dp">
 
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
