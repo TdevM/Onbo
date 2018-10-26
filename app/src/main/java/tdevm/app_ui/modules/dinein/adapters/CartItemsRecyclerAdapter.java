@@ -23,6 +23,7 @@ import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.modules.dinein.callbacks.CartItemClickListener;
 import tdevm.app_ui.modules.dinein.fragments.CartFragmentPresenterImpl;
 import tdevm.app_ui.utils.CartHelper;
+import tdevm.app_ui.utils.GeneralUtils;
 import tdevm.app_ui.widgets.IncDecButton;
 
 
@@ -70,15 +71,18 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
         Log.d("Cart", String.valueOf(cartHelper.getCartTotalItems()));
         MenuItem item = cartItemArrayList.get(position).getMenuItem();
         holder.dishName.setText(item.getItemName());
-        holder.dishPrice.setText(String.valueOf(context.getString(R.string.rupee_symbol, cartItemArrayList.get(position).getPrice() * 0.01)));
+        holder.dishPrice.setText(context.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(String.valueOf(cartItemArrayList.get(position).getPrice()))));
         holder.incDecButton.setNumber(cartItemArrayList.get(position).getQuantity(), true);
         if (item.getVeg()) {
             holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
         } else if (!item.getVeg()) {
             holder.vegNonVegIndicator.setImageDrawable(context.getResources().getDrawable(R.drawable.non_veg_symbol));
         }
-
-        holder.cartSlug.setText(generateSlug(item));
+        if(item.getCustomizable()){
+            holder.cartSlug.setText(generateSlug(item));
+        }else {
+            holder.cartSlug.setVisibility(View.GONE);
+        }
         holder.bind(cartItemArrayList.get(position).getMenuItem(), cartItemArrayList.get(position).getItem_hash(), cartItemClickListener);
     }
 

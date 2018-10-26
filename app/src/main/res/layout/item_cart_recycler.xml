@@ -16,6 +16,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/size_16_dp"
+            android:layout_marginTop="@dimen/size_16_dp"
+            android:layout_marginEnd="@dimen/size_16_dp"
             android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="10">
@@ -24,43 +27,56 @@
                 android:id="@+id/rl_start_cart_single"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="6">
+                android:layout_weight="8">
 
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/iv_veg_non_veg_cart"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="@dimen/size_8_dp"
-                    android:layout_marginTop="@dimen/size_8_dp"
+                    android:layout_marginTop="@dimen/size_4_dp"
                     android:contentDescription="@string/veg_non_veg" />
 
 
                 <TextView
                     android:id="@+id/cart_item_tv_dish_name"
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="@dimen/size_8_dp"
-                    android:layout_marginBottom="@dimen/size_2_dp"
+                    android:layout_marginStart="@dimen/size_8_dp"
+                    android:layout_marginBottom="@dimen/size_4_dp"
                     android:layout_toEndOf="@id/iv_veg_non_veg_cart"
                     android:ellipsize="end"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:text="Item @string/intro_text_1"
+                    android:textColor="@color/heading_color"
                     android:textSize="16sp" />
 
 
                 <TextView
                     android:id="@+id/tv_cart_slug"
-                    android:layout_width="190dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/cart_item_tv_dish_name"
                     android:layout_marginStart="@dimen/default_space_32"
-                    android:layout_marginBottom="@dimen/size_4_dp"
+                    android:layout_marginEnd="@dimen/size_16_dp"
                     android:ellipsize="end"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:text="Half"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/cart_item_tv_dish_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_cart_slug"
+                    android:layout_marginStart="@dimen/default_space_32"
+                    android:layout_marginTop="@dimen/size_4_dp"
+                    android:layout_marginEnd="@dimen/size_16_dp"
+                    android:maxLines="1"
+                    android:text="220"
+                    android:textColor="@color/heading_color"
+                    android:textSize="12sp" />
 
 
             </RelativeLayout>
@@ -69,28 +85,13 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="4">
-
-
-                <TextView
-                    android:id="@+id/cart_item_tv_dish_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_8_dp"
-                    android:layout_marginEnd="@dimen/size_4_dp"
-                    android:layout_toStartOf="@+id/cart_item_qty_widget"
-                    android:text="220"
-                    android:maxLines="1"
-                    android:textSize="16sp" />
+                android:layout_weight="2">
 
                 <tdevm.app_ui.widgets.IncDecButton
                     android:id="@+id/cart_item_qty_widget"
-                    android:layout_width="70dp"
+                    android:layout_width="80dp"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/size_8_dp"
-                    android:layout_marginTop="@dimen/size_8_dp"
-                    android:layout_marginEnd="@dimen/size_8_dp"
                     app:backGroundColor="@android:color/holo_blue_dark"
                     app:textSize="7sp" />
 

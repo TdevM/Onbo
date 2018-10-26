@@ -12,12 +12,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:layout_marginBottom="@dimen/size_8_dp"
             android:orientation="horizontal">
 
@@ -31,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
+                android:background="@color/white"
                 android:layout_marginLeft="@dimen/size_8_dp"
                 android:layout_marginTop="@dimen/size_2_dp"
                 android:layout_toEndOf="@+id/iv_my_orders_restaurant_image"
@@ -65,6 +67,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:background="@color/white"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_8_dp"
             android:layout_marginBottom="@dimen/size_8_dp"
@@ -134,6 +137,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:layout_marginTop="@dimen/size_8_dp"
             android:layout_marginBottom="@dimen/size_8_dp">
 

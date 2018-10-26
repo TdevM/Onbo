@@ -35,6 +35,7 @@ import tdevm.app_ui.modules.dinein.adapters.CartItemsRecyclerAdapter;
 import tdevm.app_ui.modules.dinein.callbacks.CartItemClickListener;
 import tdevm.app_ui.modules.nondine.NonDineActivity;
 import tdevm.app_ui.modules.nondine.activities.InitNonDineOrderActivity;
+import tdevm.app_ui.utils.GeneralUtils;
 import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
@@ -144,7 +145,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     @Override
     public void updateBottomSheet(int totalItems, int cartTotal) {
-        tvTotalBillAmt.setText(String.valueOf(getActivity().getApplication().getString(R.string.rupee_symbol, String.valueOf(cartTotal*0.01) )));
+        tvTotalBillAmt.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(String.valueOf(cartTotal*0.01))));
         tvTotalQuantities.setText(String.valueOf(totalItems));
     }
 
