@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -31,8 +33,15 @@ public class InitializeOrderFragment extends Fragment {
     private InitializeDineOrderActivity initializeDineOrderActivity;
     Unbinder unbinder;
 
-    @BindView(R.id.toolbar_guest_fragment)
-    Toolbar toolbar;
+
+    @OnClick(R.id.iv_back_btn_guest_picker)
+    void goBack(){
+        initializeDineOrderActivity.onBackPressed();
+    }
+
+
+    @BindView(R.id.relative_layout_show_guest_counter)
+    RelativeLayout relativeLayoutGuestPicker;
 
     @BindView(R.id.progress_bar_place_t_order)
     ProgressBar progressBar;
@@ -62,7 +71,9 @@ public class InitializeOrderFragment extends Fragment {
     @OnClick(R.id.btn_minus_guest_count)
     void decreaseGuestCount(){
         int count =  Integer.parseInt(guestCount.getText().toString());
-        count = count-1;
+        if(count>1){
+            count = count-1;
+        }
         guestCount.setText(String.valueOf(count));
     }
 
@@ -91,7 +102,8 @@ public class InitializeOrderFragment extends Fragment {
             orderRunning = getArguments().getBoolean(ORDER_RUNNING_STATUS);
         }
         if(orderRunning){
-            guestPicker.setVisibility(View.GONE);
+           // guestPicker.setVisibility(View.GONE);
+            relativeLayoutGuestPicker.setVisibility(View.GONE);
         }
 
         return view;

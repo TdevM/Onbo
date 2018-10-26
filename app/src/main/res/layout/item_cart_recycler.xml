@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
@@ -19,6 +20,7 @@
             android:layout_marginStart="@dimen/size_16_dp"
             android:layout_marginTop="@dimen/size_16_dp"
             android:layout_marginEnd="@dimen/size_16_dp"
+            android:background="@color/white"
             android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="10">
@@ -26,6 +28,7 @@
             <RelativeLayout
                 android:id="@+id/rl_start_cart_single"
                 android:layout_width="0dp"
+                android:background="@color/white"
                 android:layout_height="match_parent"
                 android:layout_weight="8">
 
@@ -85,6 +88,7 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:background="@color/white"
                 android:layout_weight="2">
 
                 <tdevm.app_ui.widgets.IncDecButton

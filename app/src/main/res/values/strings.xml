@@ -159,4 +159,9 @@
     <string name="quick_serve">Quick serve</string>
     <string name="dine_in_2">DINE IN</string>
     <string name="quick_serve_2">QUICK SERVE</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="default_counter_text">1</string>
+    <string name="place_order">PLACE ORDER</string>
+    <string name="you_re_almost_done">You\'re almost done!</string>
 </resources>
