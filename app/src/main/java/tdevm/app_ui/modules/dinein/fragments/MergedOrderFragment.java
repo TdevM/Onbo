@@ -3,6 +3,7 @@ package tdevm.app_ui.modules.dinein.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,10 +30,10 @@ import tdevm.app_ui.utils.GeneralUtils;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MergedOrderFragment extends Fragment implements DineInViewContract.MergedOrderView {
+public class MergedOrderFragment extends Fragment implements DineInViewContract.MergedOrderView,
+        SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = MergedOrderFragment.class.getCanonicalName();
-
 
 
     Unbinder unbinder;
@@ -56,6 +57,11 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
 
 //    @BindView(R.id.scroll_view_fragment_running_order)
 //    ScrollView scrollView;
+
+
+    @BindView(R.id.swipe_refresh_my_running_orders)
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
     MergedOrderAdapter mergedOrderAdapter;
     @Inject
@@ -96,6 +102,10 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
         recyclerViewTempOrder.setLayoutManager(mLayoutManager);
         recyclerViewTempOrder.setNestedScrollingEnabled(false);
 
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
+
         mergedOrderAdapter = new MergedOrderAdapter(getContext());
         recyclerViewTempOrder.setAdapter(mergedOrderAdapter);
         presenter.fetchTempRunningOrder();
@@ -129,16 +139,17 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     @Override
     public void onMergedOrderFetched(MergedOrder mergedOrder) {
         mergedOrderAdapter.onMergedOrderFetched(mergedOrder);
+        swipeRefreshLayout.setRefreshing(false);
         fetchedOrder = mergedOrder;
         Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
         Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
-        tableNo.setText(getContext().getString(R.string.show_number_pound_symbol,String.valueOf(mergedOrder.getRestaurantTable().getTable_number())));
-        tempOrderId.setText(getContext().getString(R.string.show_number_pound_symbol,mergedOrder.getOrderId()));
+        tableNo.setText(getContext().getString(R.string.show_number_pound_symbol, String.valueOf(mergedOrder.getRestaurantTable().getTable_number())));
+        tempOrderId.setText(getContext().getString(R.string.show_number_pound_symbol, mergedOrder.getOrderId()));
 
         tvDate.setText(GeneralUtils.parseTime(mergedOrder.getTimestamp()));
-        subTotal.setText(getContext().getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getSubtotal())));
-        taxes.setText(getContext().getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getTaxes())));
-        total.setText(getContext().getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getGrand_total())));
+        subTotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getSubtotal())));
+        taxes.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getTaxes())));
+        total.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getGrand_total())));
     }
 
     @Override
@@ -147,7 +158,7 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     }
 
     public void startPaymentActivity() {
-        if(fetchedOrder!=null){
+        if (fetchedOrder != null) {
             dineInActivity.startPaymentActivity(fetchedOrder.getOrderId());
         }
     }
@@ -157,5 +168,10 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
         super.onDestroy();
         presenter.detachView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.fetchTempRunningOrder();
     }
 }

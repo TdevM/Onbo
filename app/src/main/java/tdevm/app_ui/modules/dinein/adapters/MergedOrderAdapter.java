@@ -34,6 +34,7 @@ public class MergedOrderAdapter extends RecyclerView.Adapter<MergedOrderAdapter.
 
     public void onMergedOrderFetched(MergedOrder mergedOrder) {
         this.mergedOrder = mergedOrder;
+        this.mergedItemsList.clear();
         this.mergedItemsList.addAll(mergedOrder.getMergedItems());
         Log.d(TAG, "Merged order adapter updated");
         notifyDataSetChanged();

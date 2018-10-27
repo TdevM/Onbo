@@ -1,30 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:weightSum="10"
-    android:background="@color/Orange">
+    android:weightSum="10">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_weight="9"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:src="@drawable/intro_screen_1" />
+        android:layout_weight="7"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:contentDescription="@string/image_design_random"
+                android:layout_weight="1"
+                android:src="@drawable/intro_light_1xxhdpi" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:contentDescription="@string/image_design_random"
+                android:layout_weight="1"
+                android:paddingBottom="@dimen/dimen_text_24"
+                android:src="@drawable/intro_light_1xxhdpi" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:contentDescription="@string/image_design_random"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:src="@drawable/intro_light_1xxhdpi" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/image_design_random"
+            app:srcCompat="@drawable/ic_intros_1" />
+
+    </LinearLayout>
 
 
     <RelativeLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="3">
 
         <TextView
-            android:textSize="15sp"
-            android:padding="10sp"
-            android:textColor="#ffff"
+            android:id="@+id/tv_intro_1_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size_16_dp"
+            android:text="@string/say_bye_bye_to_those_old_days"
+            android:textColor="@color/primary_dark_app"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_intro_1_head"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size_8_dp"
+            android:maxLines="1"
             android:text="@string/intro_text_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:textAlignment="center"
+            android:textSize="14sp" />
     </RelativeLayout>
 
 </LinearLayout>
