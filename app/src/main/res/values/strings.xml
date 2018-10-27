@@ -126,8 +126,10 @@
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
-    <string name="intro_text_1">We know you are tired of standing in queue to order your meal</string>
-    <string name="intro_text_2">Break the Queue</string>
+    <string name="intro_text_1">We know you are tired of standing in queue to order \n your favourite meal</string>
+    <string name="intro_text_2_head">Scan QR to order and pay within seconds</string>
+    <string name="intro_text_2">No more queues at the restaurant</string>
+    <string name="intro_text_3_2">Sit back, and relax \n your food will be there on your table</string>
     <string name="intro_text_3">Scan the QR to order</string>
     <string name="how_many_of_you_are_here_today">How many of you are here today?</string>
     <string name="help_n_support"><![CDATA[Help & Support]]></string>
@@ -178,4 +180,7 @@
     <string name="yet_to_place_an_order">Yet to place an order</string>
     <string name="search_your_cravings_from_the_menu">Search your cravings from the menu</string>
     <string name="say_bye_bye_to_those_old_days">Say bye-bye to those old days!</string>
+
+    <string name="self_ordering_is_here">Self Ordering is here</string>
+    <string name="order_from_your_table">Order from your table</string>
 </resources>
