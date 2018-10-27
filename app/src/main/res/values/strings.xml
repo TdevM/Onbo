@@ -147,11 +147,11 @@
     <string name="half">Half</string>
     <string name="policies">Policies</string>
     <string name="about">About</string>
-    <string name="you_have_no_favourites">You have no favourites</string>
-    <string name="fetching_your_location">Fetching your location</string>
-    <string name="failed_to_verify_your_exact_location_please_retry">Failed to verify your exact location, please retry.</string>
+    <string name="you_have_no_favourites">No favourites yet</string>
+    <string name="fetching_your_location">Checking your presence at the premise</string>
+    <string name="failed_to_verify_your_exact_location_please_retry">Unable to verify your exact location, please retry.</string>
     <string name="failed_to_verify_qr_authenticity_please_retry">Failed to verify QR Authenticity, please retry.</string>
-    <string name="this_table_is_occupied_sorry_for_your_luck">This table is occupied. Sorry for your luck</string>
+    <string name="this_table_is_occupied_sorry_for_your_luck">Try scanning on a vacant table</string>
     <string name="image_design_random">image</string>
     <string name="items">ITEMS</string>
     <string name="ordered_on">ORDERED ON</string>
@@ -164,4 +164,17 @@
     <string name="default_counter_text">1</string>
     <string name="place_order">PLACE ORDER</string>
     <string name="you_re_almost_done">You\'re almost done!</string>
+    <string name="fetch_location">Fetch Location</string>
+    <string name="fetching_location_heading">Fetching location</string>
+    <string name="enable_your_location">Enable your location</string>
+    <string name="enable_your_location_to_verify_your_presence">Turn ON your location to verify your presence.</string>
+    <string name="retry">Retry</string>
+    <string name="oops">Oops!</string>
+    <string name="seems_like_you_re_flying">Seems like you\'re flying</string>
+    <string name="this_qr_doesn_t_look_good">This QR doesn\'t look good</string>
+    <string name="this_table_is_already_occupied">This table is already occupied</string>
+    <string name="empty_cart_hungry_stomach">Empty cart, hungry stomach?</string>
+    <string name="the_master_chef_is_waiting">The master chef is waiting</string>
+    <string name="yet_to_place_an_order">Yet to place an order</string>
+    <string name="search_your_cravings_from_the_menu">Search your cravings from the menu</string>
 </resources>

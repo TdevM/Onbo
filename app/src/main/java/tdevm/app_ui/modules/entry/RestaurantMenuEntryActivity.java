@@ -94,8 +94,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
     @BindView(R.id.btn_fetch_location)
     Button startLocation;
-    @BindView(R.id.pb_fetch_location)
-    ProgressBar progressBar;
+
     @BindView(R.id.tv_show_fetching)
     TextView textView;
 
@@ -191,7 +190,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
     @Override
     public void showProgressUI() {
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
         startLocation.setVisibility(View.GONE);
         // textView.setVisibility(View.VISIBLE);
 
@@ -199,7 +198,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
     @Override
     public void hideProgressUI() {
-        progressBar.setVisibility(View.GONE);
+        //progressBar.setVisibility(View.GONE);
         textView.setVisibility(View.GONE);
         startLocation.setVisibility(View.VISIBLE);
     }

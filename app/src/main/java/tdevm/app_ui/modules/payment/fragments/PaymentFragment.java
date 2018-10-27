@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 
 import com.razorpay.Checkout;
@@ -36,15 +39,42 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
     private static String fOrderId;
     private static FOrder fOrder;
 
-    @BindView(R.id.rg_payment_fragment)
-    RadioGroup radioGroup;
+    private static final String MODE_CASH = "MODE_CASH";
+    private static final String MODE_DIGITAL = "MODE_DIGITAL";
+    private String selectedPaymentMode;
+
+    @BindView(R.id.btn_pay_dine_order)
+    Button buttonContinue;
+
+    @BindView(R.id.progress_bar_order_payment_type_dine)
+    ProgressBar progressBar;
+
+    @BindView(R.id.check_btn_cash)
+    ImageView checkBtnCash;
+
+    @BindView(R.id.check_btn_digital)
+    ImageView checkBtnDigital;
+
+    @OnClick(R.id.iv_payment_option_cash)
+    void updateTypeCash() {
+        selectedPaymentMode = MODE_CASH;
+        showCashSelected();
+        buttonContinue.setEnabled(true);
+    }
+
+    @OnClick(R.id.iv_payment_option_digital)
+    void updateTypeDigital() {
+        selectedPaymentMode = MODE_DIGITAL;
+        showDigitalSelected();
+        buttonContinue.setEnabled(true);
+    }
 
     @Inject
     PaymentFragmentPresenter presenter;
 
-    @OnClick(R.id.btn_pay)
+    @OnClick(R.id.btn_pay_dine_order)
     void start() {
-        getRadioButtonInput();
+       handleOrderPaymentType();
     }
 
     public PaymentFragment() {
@@ -96,17 +126,26 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
     }
 
 
-    public void getRadioButtonInput() {
-        int selectedId = radioGroup.getCheckedRadioButtonId();
-        switch (selectedId) {
-            case R.id.radio_button_cash:
+    public void handleOrderPaymentType() {
+        if (selectedPaymentMode != null) {
+            if (selectedPaymentMode.equals(MODE_CASH)) {
                 activity.showCashPickupScreen();
-                break;
-            case R.id.radio_button_online:
+            } else if (selectedPaymentMode.equals(MODE_DIGITAL)) {
                 startPayment();
-                break;
+            }
         }
     }
+
+    public void showCashSelected() {
+        checkBtnDigital.setVisibility(View.GONE);
+        checkBtnCash.setVisibility(View.VISIBLE);
+    }
+
+    public void showDigitalSelected() {
+        checkBtnCash.setVisibility(View.GONE);
+        checkBtnDigital.setVisibility(View.VISIBLE);
+    }
+
 
     @Override
     public void onClosedOrderFetched(FOrder order) {
