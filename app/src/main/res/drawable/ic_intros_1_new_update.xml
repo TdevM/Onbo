@@ -229,6 +229,7 @@
         android:pathData="M148.44,5.51a17.29,4.05 0,1 0,34.58 0a17.29,4.05 0,1 0,-34.58 0z" android:strokeAlpha="0.85"/>
     <path android:fillAlpha="0.85"
         android:pathData="M168.71,5.47l-2.03,1.24l-4.56,-0.26l2.18,-0.79l4.41,-0.19z" android:strokeAlpha="0.85">
+
     </path>
     <path android:fillAlpha="0.85" android:fillColor="#e0a8af"
         android:pathData="M164.85,1.17l-0.48,0.44l0,3.82l0.77,0.62l2.6,-0.04l0.88,-0.58l0,-3.63l-0.43,-0.63l-3.34,0z" android:strokeAlpha="0.85"/>

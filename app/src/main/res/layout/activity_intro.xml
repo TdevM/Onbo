@@ -33,10 +33,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:background="@null"
         android:text="@string/next"
-        android:textColor="@android:color/white"
+        android:textColor="@color/primary_dark_app"
         android:layout_alignParentEnd="true" />
 
     <Button
@@ -44,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:visibility="invisible"
         android:background="@null"
         android:text="@string/skip"
         android:textColor="@android:color/white"

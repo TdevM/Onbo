@@ -1,16 +1,19 @@
 package tdevm.app_ui.modules.payment.fragments;
 
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import javax.inject.Inject;
@@ -22,27 +25,60 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
-import tdevm.app_ui.modules.payment.PaymentViewContract;
+import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
+import tdevm.app_ui.modules.dinein.DineInActivity;
+import tdevm.app_ui.modules.dinein.adapters.MergedOrderAdapter;
+import tdevm.app_ui.modules.dinein.fragments.MergedOrderPresenter;
 import tdevm.app_ui.modules.payment.PaymentActivity;
+import tdevm.app_ui.modules.payment.PaymentViewContract;
+import tdevm.app_ui.utils.GeneralUtils;
 
 
 public class CheckoutFragment extends Fragment implements PaymentViewContract.CheckoutFragmentView {
 
     public static final String TAG = CheckoutFragment.class.getSimpleName();
 
-    @OnClick(R.id.btn_checkout)
-    void checkout() {
+
+    Unbinder unbinder;
+    @BindView(R.id.rv_checkout_t1)
+    RecyclerView recyclerViewTempOrder;
+
+    @BindView(R.id.tv_merged_order_id)
+    TextView tempOrderId;
+    @BindView(R.id.tv_merged_order_table_no)
+    TextView tableNo;
+    @BindView(R.id.tv_merged_subtotal)
+    TextView subTotal;
+    @BindView(R.id.tv_merged_taxes)
+    TextView taxes;
+    @BindView(R.id.tv_merged_total)
+    TextView total;
+    @BindView(R.id.tv_merged_order_date)
+    TextView tvDate;
+
+
+    @OnClick(R.id.btn_checkout_t1_final)
+    void checkoutBtn(){
         closeRunningOrder();
     }
 
-    @BindView(R.id.pb_fragment_checkout)
-    ProgressBar progressBar;
-    @BindView(R.id.btn_checkout)
-    Button checkoutBtn;
+
+
+
     String orderId;
 
+    @BindView(R.id.toolbar_fragment_checkout_t1)
+    Toolbar toolbar;
+
     PaymentActivity paymentActivity;
-    Unbinder unbinder;
+
+
+
+    MergedOrderAdapter mergedOrderAdapter;
+
+
+    MergedOrder fetchedOrder;
+
 
     @Inject
     CheckoutPresenter checkoutPresenter;
@@ -77,10 +113,27 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
         View view = inflater.inflate(R.layout.fragment_checkout, container, false);
         paymentActivity = (PaymentActivity) getActivity();
         unbinder = ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity != null) {
+            activity.setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+            toolbar.setTitle("Order Summary");
+            toolbar.setNavigationOnClickListener(v -> activity.onBackPressed());
+        }
+
         if (getArguments() != null) {
             orderId = getArguments().getString("ORDER_ID");
             Log.d(TAG, "Got into checkout" + orderId);
             checkoutPresenter.fetchMergedOrder(orderId);
+
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+            recyclerViewTempOrder.setLayoutManager(mLayoutManager);
+            recyclerViewTempOrder.setNestedScrollingEnabled(false);
+
+
+            mergedOrderAdapter = new MergedOrderAdapter(getContext());
+            recyclerViewTempOrder.setAdapter(mergedOrderAdapter);
         }
         return view;
     }
@@ -109,14 +162,14 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
 
     @Override
     public void showProgressUI() {
-        progressBar.setVisibility(View.VISIBLE);
-        checkoutBtn.setVisibility(View.INVISIBLE);
+        // progressBar.setVisibility(View.VISIBLE);
+//        checkoutBtn.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void hideProgressUI() {
-        progressBar.setVisibility(View.INVISIBLE);
-        checkoutBtn.setVisibility(View.VISIBLE);
+        // progressBar.setVisibility(View.INVISIBLE);
+        //      checkoutBtn.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -127,8 +180,8 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
     @Override
     public void onOrderClosed(FOrder fOrder) {
         Toast.makeText(paymentActivity, "Order closed!", Toast.LENGTH_SHORT).show();
-        Log.d(TAG,fOrder.getOrder_id());
-        Log.d(TAG,fOrder.getT_order_id());
+        Log.d(TAG, fOrder.getOrder_id());
+        Log.d(TAG, fOrder.getT_order_id());
         paymentActivity.showMakePayment(fOrder);
     }
 
@@ -138,7 +191,17 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
     }
 
     @Override
-    public void onMergedOrderFetched(FOrder fOrder) {
-        Log.d(TAG, fOrder.toString());
+    public void onMergedOrderFetched(MergedOrder mergedOrder) {
+        mergedOrderAdapter.onMergedOrderFetched(mergedOrder);
+        fetchedOrder = mergedOrder;
+        Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
+        Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
+        tableNo.setText(getContext().getString(R.string.show_number_pound_symbol, String.valueOf(mergedOrder.getRestaurantTable().getTable_number())));
+        tempOrderId.setText(getContext().getString(R.string.show_number_pound_symbol, mergedOrder.getOrderId()));
+
+        tvDate.setText(GeneralUtils.parseTime(mergedOrder.getTimestamp()));
+        subTotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getSubtotal())));
+        taxes.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getTaxes())));
+        total.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getGrand_total())));
     }
 }

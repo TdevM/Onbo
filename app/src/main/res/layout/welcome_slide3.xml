@@ -22,24 +22,25 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:contentDescription="@string/image_design_random"
                 android:layout_weight="1"
+                android:contentDescription="@string/image_design_random"
+                android:src="@drawable/intro_light_1xxhdpi"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/image_design_random"
                 android:src="@drawable/intro_light_1xxhdpi" />
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:contentDescription="@string/image_design_random"
                 android:layout_weight="1"
-                android:paddingBottom="@dimen/dimen_text_24"
-                android:src="@drawable/intro_light_1xxhdpi" />
-
-            <ImageView
-                android:layout_width="0dp"
                 android:contentDescription="@string/image_design_random"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:src="@drawable/intro_light_1xxhdpi" />
+                android:src="@drawable/intro_light_1xxhdpi"
+                android:visibility="invisible" />
 
         </LinearLayout>
 

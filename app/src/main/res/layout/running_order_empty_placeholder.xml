@@ -5,55 +5,124 @@
     android:padding="@dimen/activity_padding">
 
     <View
-        android:id="@+id/thumbnail"
-        android:layout_width="@dimen/placeholder_image"
-        android:layout_height="@dimen/placeholder_image"
-        android:background="@color/placeholder_bg"
-        android:layout_marginEnd="@dimen/activity_padding" />
-
-    <View
         android:id="@+id/name"
         android:layout_width="150dp"
         android:layout_height="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/placeholder_bg"
-        android:layout_toEndOf="@id/thumbnail" />
+        android:layout_toEndOf="@id/thumbnail"
+        android:background="@color/placeholder_bg" />
 
     <View
+        android:id="@+id/view2"
         android:layout_width="100dp"
         android:layout_height="@dimen/placeholder_text_height"
         android:layout_below="@id/name"
-        android:background="@color/placeholder_bg"
-        android:layout_toEndOf="@id/thumbnail" />
+        android:layout_toEndOf="@id/thumbnail"
+        android:background="@color/placeholder_bg" />
+
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="80dp"
+        android:layout_height="@dimen/placeholder_text_height"
+        android:layout_alignParentEnd="true"
+        android:background="@color/placeholder_bg" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/thumbnail"
-        android:layout_marginBottom="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_below="@id/view2"
+        android:layout_marginTop="@dimen/dimen_text_24"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/placeholder_text_height"
-            android:background="@color/placeholder_bg"
-            android:layout_marginEnd="100dp" />
+        <include layout="@layout/menu_items_placeholder" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/placeholder_text_height"
-            android:layout_marginTop="10dp"
-            android:background="@color/placeholder_bg"
-            android:layout_marginEnd="50dp" />
+        <include layout="@layout/menu_items_placeholder" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/placeholder_text_height"
-            android:layout_marginTop="10dp"
-            android:background="@color/placeholder_bg"
-            android:layout_marginEnd="160dp" />
+        <include layout="@layout/menu_items_placeholder" />
+
+        <include layout="@layout/menu_items_placeholder" />
+
 
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/size_4_dp"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_16_dp">
+
+            <TextView
+                android:id="@+id/tv_merged_subtotal"
+                android:layout_width="@dimen/default_space_30"
+                android:layout_height="@dimen/placeholder_text_height"
+                android:layout_alignBaseline="@+id/subtotal"
+                android:layout_alignParentEnd="true"
+                android:background="@color/placeholder_bg" />
+
+            <TextView
+                android:id="@+id/taxes"
+                android:layout_width="@dimen/default_space_30"
+                android:layout_height="@dimen/placeholder_text_height"
+                android:layout_below="@+id/subtotal"
+                android:layout_marginBottom="@dimen/size_8_dp"
+                android:background="@color/placeholder_bg" />
+
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="50dp"
+                android:layout_height="@dimen/placeholder_text_height"
+                android:layout_below="@+id/taxes"
+                android:background="@color/placeholder_bg" />
+
+
+            <TextView
+                android:id="@+id/subtotal"
+                android:layout_width="50dp"
+                android:layout_height="@dimen/placeholder_text_height"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="@dimen/size_8_dp"
+                android:background="@color/placeholder_bg"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_merged_taxes"
+
+                android:layout_width="@dimen/default_space_30"
+                android:layout_height="@dimen/placeholder_text_height"
+                android:layout_alignBaseline="@+id/taxes"
+                android:layout_alignParentEnd="true"
+                android:background="@color/placeholder_bg" />
+
+            <TextView
+                android:id="@+id/tv_merged_total"
+                android:layout_width="@dimen/default_space_30"
+                android:layout_height="@dimen/placeholder_text_height"
+                android:layout_below="@+id/tv_merged_taxes"
+                android:layout_alignBaseline="@+id/total"
+                android:layout_alignParentEnd="true"
+                android:background="@color/placeholder_bg" />
+
+
+        </RelativeLayout>
+
+
+        <View
+            android:id="@+id/btn_close_order"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_space_30"
+            android:background="@color/placeholder_bg" />
+    </LinearLayout>
+
 
 </RelativeLayout>

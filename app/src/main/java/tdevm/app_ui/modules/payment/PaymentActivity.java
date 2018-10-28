@@ -2,6 +2,7 @@ package tdevm.app_ui.modules.payment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -141,9 +142,11 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         paymentActivityPresenter.detachView();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    @Override public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout_payments);
+        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
+            super.onBackPressed();
+        }
     }
 
     @Override

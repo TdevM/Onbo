@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -52,7 +54,7 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     @BindView(R.id.tv_merged_order_date)
     TextView tvDate;
 
-//    @BindView(R.id.shimmer_fragment_running_order)
+//    @BindView(R.id.shimmer_fragment_merged_order)
 //    ShimmerFrameLayout shimmerFrameLayout;
 
 //    @BindView(R.id.scroll_view_fragment_running_order)
@@ -87,6 +89,7 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     @Override
     public void onResume() {
         presenter.attachView(this);
+        presenter.fetchTempRunningOrder();
         super.onResume();
     }
 
@@ -108,20 +111,20 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
 
         mergedOrderAdapter = new MergedOrderAdapter(getContext());
         recyclerViewTempOrder.setAdapter(mergedOrderAdapter);
-        presenter.fetchTempRunningOrder();
+
         return view;
     }
 
     @Override
     public void showProgressUI() {
-        //shimmerFrameLayout.startShimmer();
+//        shimmerFrameLayout.setVisibility(View.VISIBLE);
+//        shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void hideProgressUI() {
-        //shimmerFrameLayout.stopShimmer();
-        //shimmerFrameLayout.setVisibility(View.GONE);
-        //scrollView.setVisibility(View.VISIBLE);
+//        shimmerFrameLayout.stopShimmer();
+//        shimmerFrameLayout.setVisibility(View.GONE);
     }
 
     @Override

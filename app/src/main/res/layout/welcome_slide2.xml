@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/image_design_random"
-            app:srcCompat="@drawable/intros_2xxhdpi" />
+            app:srcCompat="@drawable/ic_intros_2_new_updated" />
 
     </LinearLayout>
 

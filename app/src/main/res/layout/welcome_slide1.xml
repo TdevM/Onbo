@@ -22,9 +22,10 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:contentDescription="@string/image_design_random"
                 android:layout_weight="1"
-                android:src="@drawable/intro_light_1xxhdpi" />
+                android:contentDescription="@string/image_design_random"
+                android:src="@drawable/intro_light_1xxhdpi"
+                android:visibility="invisible" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -47,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/image_design_random"
-            app:srcCompat="@drawable/ic_intros_1" />
+            app:srcCompat="@drawable/ic_intros_1_new_update" />
 
     </LinearLayout>
 

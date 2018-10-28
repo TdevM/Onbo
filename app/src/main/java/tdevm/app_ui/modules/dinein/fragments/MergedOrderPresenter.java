@@ -48,6 +48,7 @@ public class MergedOrderPresenter extends BasePresenter implements DineInPresent
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
+                view.showProgressUI();
 
             }
 
@@ -89,7 +90,6 @@ public class MergedOrderPresenter extends BasePresenter implements DineInPresent
                 view.showProgressUI();
                 if (arrayListResponse.isSuccessful()) {
                     view.onMergedOrderFetched(arrayListResponse.body());
-                    view.hideProgressUI();
 
                 } else if (arrayListResponse.code() == 404) {
                     view.showNoRunningOrder();

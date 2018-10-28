@@ -4,6 +4,7 @@ package tdevm.app_ui.modules.payment.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +27,13 @@ import butterknife.Unbinder;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
+import tdevm.app_ui.modules.payment.IOnBackPressed;
 import tdevm.app_ui.modules.payment.PaymentActivity;
 import tdevm.app_ui.modules.payment.PaymentViewContract;
 
 
-public class PaymentFragment extends Fragment implements PaymentViewContract.PaymentFragmentView {
+public class PaymentFragment extends Fragment implements PaymentViewContract.PaymentFragmentView,
+        IOnBackPressed {
 
     public static final String TAG = PaymentFragment.class.getSimpleName();
     Unbinder unbinder;
@@ -54,6 +57,8 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
 
     @BindView(R.id.check_btn_digital)
     ImageView checkBtnDigital;
+
+
 
     @OnClick(R.id.iv_payment_option_cash)
     void updateTypeCash() {
@@ -159,8 +164,8 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
         if (fOrder != null) {
             try {
                 JSONObject options = new JSONObject();
-                options.put("name", "tdevm's palace");
-                options.put("description", "Order ID" + fOrder.getOrder_id());
+                options.put("name", fOrder.getRestaurant().getRestaurant_name());
+                options.put("description", "ORDER NO # " + fOrder.getOrder_id());
                 options.put("currency", "INR");
                 options.put("amount", fOrder.getGrand_total());
                 checkout.open(activity, options);
@@ -169,6 +174,21 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
             }
         }
     }
+
+    private void showPaymentWarning() {
+        new AlertDialog.Builder(activity)
+                .setTitle("Payment pending")
+                .setMessage("Please complete your payment.")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    if (orderId != null) {
+                       // checkoutPresenter.closeRunningOrder(orderId);
+                    }
+                    Log.d(TAG, "Sending close order");
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> Log.d(TAG, "Aborting close order..."))
+                .show();
+    }
+
 
 
     @Override
@@ -188,4 +208,9 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
     }
 
 
+    @Override
+    public boolean onBackPressed() {
+        showPaymentWarning();
+        return true;
+    }
 }
