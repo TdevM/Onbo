@@ -31,7 +31,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/view2"
         android:layout_marginTop="@dimen/dimen_text_24"
         android:orientation="vertical">
@@ -45,84 +45,14 @@
         <include layout="@layout/menu_items_placeholder" />
 
 
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/size_4_dp"
-        android:gravity="bottom"
-        android:orientation="vertical">
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/size_16_dp">
-
-            <TextView
-                android:id="@+id/tv_merged_subtotal"
-                android:layout_width="@dimen/default_space_30"
-                android:layout_height="@dimen/placeholder_text_height"
-                android:layout_alignBaseline="@+id/subtotal"
-                android:layout_alignParentEnd="true"
-                android:background="@color/placeholder_bg" />
-
-            <TextView
-                android:id="@+id/taxes"
-                android:layout_width="@dimen/default_space_30"
-                android:layout_height="@dimen/placeholder_text_height"
-                android:layout_below="@+id/subtotal"
-                android:layout_marginBottom="@dimen/size_8_dp"
-                android:background="@color/placeholder_bg" />
-
-            <TextView
-                android:id="@+id/total"
-                android:layout_width="50dp"
-                android:layout_height="@dimen/placeholder_text_height"
-                android:layout_below="@+id/taxes"
-                android:background="@color/placeholder_bg" />
-
-
-            <TextView
-                android:id="@+id/subtotal"
-                android:layout_width="50dp"
-                android:layout_height="@dimen/placeholder_text_height"
-                android:layout_alignParentTop="true"
-                android:layout_marginBottom="@dimen/size_8_dp"
-                android:background="@color/placeholder_bg"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tv_merged_taxes"
-
-                android:layout_width="@dimen/default_space_30"
-                android:layout_height="@dimen/placeholder_text_height"
-                android:layout_alignBaseline="@+id/taxes"
-                android:layout_alignParentEnd="true"
-                android:background="@color/placeholder_bg" />
-
-            <TextView
-                android:id="@+id/tv_merged_total"
-                android:layout_width="@dimen/default_space_30"
-                android:layout_height="@dimen/placeholder_text_height"
-                android:layout_below="@+id/tv_merged_taxes"
-                android:layout_alignBaseline="@+id/total"
-                android:layout_alignParentEnd="true"
-                android:background="@color/placeholder_bg" />
-
-
-        </RelativeLayout>
-
-
         <View
             android:id="@+id/btn_close_order"
             android:layout_width="match_parent"
             android:layout_height="@dimen/default_space_30"
+            android:layout_marginTop="@dimen/default_height_112"
             android:background="@color/placeholder_bg" />
-    </LinearLayout>
 
+
+    </LinearLayout>
 
 </RelativeLayout>

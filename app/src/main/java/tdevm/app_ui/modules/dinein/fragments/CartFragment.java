@@ -145,7 +145,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     @Override
     public void updateBottomSheet(int totalItems, int cartTotal) {
-        tvTotalBillAmt.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(String.valueOf(cartTotal*0.01))));
+        tvTotalBillAmt.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(String.valueOf(cartTotal))));
         tvTotalQuantities.setText(String.valueOf(totalItems));
     }
 
@@ -158,6 +158,18 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     @Override
     public void showNonDineEmptyCart() {
         nonDineActivity.showCartEmptyFragment();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        if(cartFragmentPresenter.cartItemsExists()){
+//            cartFragmentPresenter.fetchCartItems();
+//        }else {
+//            showDineCartEmpty();
+//        }
+
+
     }
 
     @Override

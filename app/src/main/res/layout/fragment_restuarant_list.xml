@@ -16,13 +16,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/running_order_empty_placeholder" />
+            <include layout="@layout/restaurant_list_item_placeholder" />
 
-            <include layout="@layout/running_order_empty_placeholder" />
+            <include layout="@layout/restaurant_list_item_placeholder" />
 
-            <include layout="@layout/running_order_empty_placeholder" />
+            <include layout="@layout/restaurant_list_item_placeholder" />
 
-            <include layout="@layout/running_order_empty_placeholder" />
+            <include layout="@layout/restaurant_list_item_placeholder" />
 
         </LinearLayout>
 

@@ -54,11 +54,8 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     @BindView(R.id.tv_merged_order_date)
     TextView tvDate;
 
-//    @BindView(R.id.shimmer_fragment_merged_order)
-//    ShimmerFrameLayout shimmerFrameLayout;
-
-//    @BindView(R.id.scroll_view_fragment_running_order)
-//    ScrollView scrollView;
+    @BindView(R.id.shimmer_fragment_merged_order)
+    ShimmerFrameLayout shimmerFrameLayout;
 
 
     @BindView(R.id.swipe_refresh_my_running_orders)
@@ -117,14 +114,14 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
 
     @Override
     public void showProgressUI() {
-//        shimmerFrameLayout.setVisibility(View.VISIBLE);
-//        shimmerFrameLayout.startShimmer();
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void hideProgressUI() {
-//        shimmerFrameLayout.stopShimmer();
-//        shimmerFrameLayout.setVisibility(View.GONE);
+        shimmerFrameLayout.stopShimmer();
+        shimmerFrameLayout.setVisibility(View.GONE);
     }
 
     @Override

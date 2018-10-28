@@ -1,8 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_fragment_menu_items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_16_dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+
+            <View
+                android:layout_width="@dimen/size_168_dp"
+                android:layout_height="@dimen/default_height_20"
+                android:layout_marginTop="@dimen/size_16_dp"
+                android:layout_marginBottom="@dimen/default_space_32"
+                android:background="@color/placeholder_bg" />
+
+
+            <include layout="@layout/menu_items_placeholder_2" />
+
+            <include layout="@layout/menu_items_placeholder_2" />
+
+            <include layout="@layout/menu_items_placeholder_2" />
+
+            <include layout="@layout/menu_items_placeholder_2" />
+
+            <include layout="@layout/menu_items_placeholder_2" />
+
+            <include layout="@layout/menu_items_placeholder_2" />
+
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 
     <android.support.v4.widget.SwipeRefreshLayout

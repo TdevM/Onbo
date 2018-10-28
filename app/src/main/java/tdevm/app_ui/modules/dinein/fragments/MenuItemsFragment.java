@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -71,6 +73,9 @@ public class MenuItemsFragment extends Fragment
     @BindView(R.id.swipe_refresh_menu_items_fragment)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @BindView(R.id.shimmer_fragment_menu_items)
+    ShimmerFrameLayout shimmerFrameLayout;
+
     public static MenuItemsFragment newInstance(String restaurantUUID) {
         Bundle args = new Bundle();
         args.putLong(CUISINE_ID, 4);
@@ -88,6 +93,7 @@ public class MenuItemsFragment extends Fragment
     @Override
     public void onResume() {
         menuItemsPresenter.attachView(this);
+        menuItemsPresenter.fetchMenuItems(fetchDishesMap);
         super.onResume();
     }
 
@@ -107,7 +113,6 @@ public class MenuItemsFragment extends Fragment
         menuAdapter = new MenuAdapter(getContext(), cartHelper);
         menuAdapter.setDishItemClickListenerCallback(this);
         recyclerViewGridSingle.setAdapter(menuAdapter);
-        menuItemsPresenter.fetchMenuItems(fetchDishesMap);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
         logSelections();
@@ -116,12 +121,14 @@ public class MenuItemsFragment extends Fragment
 
     @Override
     public void showProgressUI() {
-
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void hideProgressUI() {
-
+        shimmerFrameLayout.stopShimmer();
+        shimmerFrameLayout.setVisibility(View.GONE);
     }
 
     public void resolveDaggerDependencies() {

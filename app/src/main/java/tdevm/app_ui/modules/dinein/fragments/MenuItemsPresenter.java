@@ -82,6 +82,7 @@ public class MenuItemsPresenter extends BasePresenter
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
+                singleCuisineGridView.showProgressUI();
             }
 
             @Override
@@ -104,7 +105,7 @@ public class MenuItemsPresenter extends BasePresenter
 
             @Override
             public void onComplete() {
-
+                singleCuisineGridView.hideProgressUI();
             }
         });
     }
