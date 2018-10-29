@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +33,7 @@ import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity;
 import tdevm.app_ui.modules.dinein.adapters.CartItemsRecyclerAdapter;
+import tdevm.app_ui.modules.dinein.bottomsheets.section_r_view.MenuItemCustomizationSheet;
 import tdevm.app_ui.modules.dinein.callbacks.CartItemClickListener;
 import tdevm.app_ui.modules.nondine.NonDineActivity;
 import tdevm.app_ui.modules.nondine.activities.InitNonDineOrderActivity;
@@ -244,6 +246,18 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     @Override
     public void onCustomizableItemClicked(tdevm.app_ui.api.models.cart.MenuItem menuItem, int flag) {
+        if (flag == 1) {
+            ItemHash object = generateItemHash(menuItem);
+            cartFragmentPresenter.addItemToCart(menuItem, object.getItemPrice(), object.getItemHash());
+            Log.d(TAG, "ADDED TO CART: " + menuItem.getItemName());
+            Log.d(TAG, "ITEM_HASH: " + object.getItemHash());
+        } else if (flag == 0) {
+            ItemHash object = generateItemHash(menuItem);
+            cartFragmentPresenter.updateCartItem(menuItem, object.getItemPrice(), object.getItemHash());
+            Log.d(TAG, "REMOVED FROM CART: " + menuItem.getItemName());
+            Log.d(TAG, "ITEM_HASH: " + object.getItemHash());
+            Log.d(TAG, menuItem.getItemName());
+        }
 
     }
 }

@@ -134,9 +134,9 @@ public class IncDecButton extends RelativeLayout {
                         e.printStackTrace();
                     }
                 }else {
-                    if(num>1){
+                    if(num>=1){
                         mOnButtonsClickedListener.onMinusClicked(num-1);
-                    }else if(num==1) {
+                    }else if(num==0) {
                         mOnButtonsClickedListener.onMinusClicked(num-1);
                         viewSwitcher.setDisplayedChild(0);
                     }
