@@ -15,6 +15,8 @@ import tdevm.app_ui.api.cart.CartSelection;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
+import tdevm.app_ui.modules.dinein.callbacks.CartHelperCallback;
+import tdevm.app_ui.utils.CartListener;
 import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
@@ -22,7 +24,7 @@ import tdevm.app_ui.utils.CartHelper;
  * Created by Tridev on 06-01-2018.
  */
 
-public class CartFragmentPresenterImpl extends BasePresenter implements DineInPresenterContract.CartFragmentPresenter {
+public class CartFragmentPresenterImpl extends BasePresenter implements DineInPresenterContract.CartFragmentPresenter, CartListener {
 
     public static final String TAG = CartFragmentPresenterImpl.class.getSimpleName();
     private CartHelper cartHelper;
@@ -36,6 +38,7 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
     public CartFragmentPresenterImpl(CartHelper cartHelper, PreferenceUtils preferenceUtils) {
         this.cartHelper = cartHelper;
         this.preferenceUtils = preferenceUtils;
+        this.cartHelper.setCartListener(this);
         this.compositeDisposable = new CompositeDisposable();
     }
 
@@ -50,27 +53,14 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
     public void addItemToCart(tdevm.app_ui.api.models.cart.MenuItem menuItem, int itemTotal, String itemHash) {
         cartHelper.addItemToCart(menuItem, itemTotal, itemHash);
         cartHelper.addItemToSelection(menuItem.getItemId());
-        fetchCartItems();
-        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(),cartHelper.getCartTotal());
-        logSelections();
+        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
     }
 
     @Override
     public void updateCartItem(tdevm.app_ui.api.models.cart.MenuItem menuItem, int itemTotal, String itemHash) {
         cartHelper.updateCartItem(menuItem, itemTotal, itemHash);
         cartHelper.updateSelectionItem(menuItem);
-        fetchCartItems();
         cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
-        if (cartHelper.getCartTotalItems() == 0) {
-            showCartEmpty();
-        }
-        CartItem item = cartHelper.getCartItemByHashNew(itemHash);
-        if(item!=null) {
-            if (item.getQuantity() == 1) {
-                fetchCartItems();
-            }
-        }
-        logSelections();
     }
 
 
@@ -193,5 +183,23 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
             }
         });
 
+    }
+
+    @Override
+    public void onCartItemAdded() {
+        Log.d(TAG, "Cart item added LISTENER");
+        fetchCartItems();
+        logSelections();
+
+    }
+
+    @Override
+    public void onCartItemUpdated() {
+        Log.d(TAG, "Cart item updated");
+        fetchCartItems();
+        logSelections();
+        if (cartHelper.getCartTotalItems() == 0) {
+            showCartEmpty();
+        }
     }
 }

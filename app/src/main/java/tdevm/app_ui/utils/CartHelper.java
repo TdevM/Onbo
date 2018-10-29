@@ -58,6 +58,15 @@ public class CartHelper extends BasePresenter {
     }
 
 
+    interface cartModifications {
+
+        void onItemAdded();
+
+        void onItemUpdated();
+
+    }
+
+
     public void setCartListener(CartListener cartListener) {
         this.listener = cartListener;
     }
@@ -116,13 +125,13 @@ public class CartHelper extends BasePresenter {
         return cartTotal;
     }
 
-    public CartItem getCartItemByHashNew(String itemHash){
+    public CartItem getCartItemByHashNew(String itemHash) {
         Single<CartItem> cartItemSingle = cartItemDao.getCartItemByHash(itemHash);
         cartItemSingle.subscribe(new DisposableSingleObserver<CartItem>() {
             @Override
             public void onSuccess(CartItem c) {
                 if (c != null) {
-                   item = c;
+                    item = c;
                 }
             }
 
@@ -146,6 +155,8 @@ public class CartHelper extends BasePresenter {
                         Log.d(TAG, "ITEM WAS NOTTTT NULL");
                         CartItem item = new CartItem(cartItem.getId(), itemHash, menuItem, cartItem.getQuantity() + 1, (cartItem.getQuantity() + 1) * itemPrice, menuItem.getCustomizable());
                         cartItemDao.updateCartItem(item);
+                        listener.onCartItemUpdated();
+
                     }
                 }
             }
@@ -154,6 +165,7 @@ public class CartHelper extends BasePresenter {
             public void onError(Throwable e) {
                 Log.d(TAG, "ITEM WAS NULL");
                 insertCartItem(menuItem, itemPrice, itemHash);
+                listener.onCartItemAdded();
             }
         });
     }
@@ -164,7 +176,7 @@ public class CartHelper extends BasePresenter {
             @Override
             public void onSuccess(CartItem cartItem) {
                 if (cartItem != null) {
-                   mutateCartItem(menuItem,itemPrice,itemHash,cartItem);
+                    mutateCartItem(menuItem, itemPrice, itemHash, cartItem);
                 }
             }
 
@@ -293,6 +305,7 @@ public class CartHelper extends BasePresenter {
             @Override
             public void onComplete() {
                 Log.d(TAG, "Inserted to cart");
+                listener.onCartItemAdded();
             }
 
             @Override
@@ -304,33 +317,37 @@ public class CartHelper extends BasePresenter {
 
     }
 
-    private void mutateCartItem(MenuItem menuItem, int itemPrice, String itemHash,CartItem cartItem){
+    private void mutateCartItem(MenuItem menuItem, int itemPrice, String itemHash, CartItem cartItem) {
 
-        Completable.fromAction(new Action() {
-            @Override
-            public void run() throws Exception {
-                CartItem item = new CartItem(cartItem.getId(), itemHash, menuItem, cartItem.getQuantity() - 1, (cartItem.getQuantity() - 1) * itemPrice, menuItem.getCustomizable());
-                cartItemDao.updateCartItem(item);
-                if (cartItem.getQuantity() == 1) {
-                    cartItemDao.deleteItemFromCart(cartItem);
+        if (cartItem.getQuantity() == 1) {
+            cartItemDao.deleteItemFromCart(cartItem);
+            listener.onCartItemUpdated();
+        } else {
+            Completable.fromAction(new Action() {
+                @Override
+                public void run() throws Exception {
+                    CartItem item = new CartItem(cartItem.getId(), itemHash, menuItem, cartItem.getQuantity() - 1, (cartItem.getQuantity() - 1) * itemPrice, menuItem.getCustomizable());
+                    cartItemDao.updateCartItem(item);
                 }
-            }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                compositeDisposable.add(d);
-            }
+            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                    compositeDisposable.add(d);
+                }
 
-            @Override
-            public void onComplete() {
+                @Override
+                public void onComplete() {
+                    listener.onCartItemUpdated();
 
-            }
+                }
 
-            @Override
-            public void onError(Throwable e) {
+                @Override
+                public void onError(Throwable e) {
 
-            }
-        });
+                }
+            });
+        }
+
 
     }
 
@@ -350,7 +367,6 @@ public class CartHelper extends BasePresenter {
             @Override
             public void onComplete() {
                 Log.d(TAG, "Inserted to selection");
-                listener.onCartSelectionUpdated();
             }
 
             @Override

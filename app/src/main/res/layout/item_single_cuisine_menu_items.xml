@@ -42,7 +42,7 @@
                     android:layout_marginTop="@dimen/size_4_dp"
                     android:contentDescription="@string/veg_non_veg"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_veg_indicator" />
+                    />
 
                 <TextView
                     android:id="@+id/tv_si_dish_name"

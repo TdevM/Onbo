@@ -26,6 +26,7 @@ import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
 import tdevm.app_ui.api.models.response.v2.menu.MenuItem;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.utils.CartHelper;
+import tdevm.app_ui.utils.GeneralUtils;
 import tdevm.app_ui.widgets.IncDecButton;
 
 public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -109,7 +110,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (object.getMenuItem() != null) {
                 RecycledGridViewHolder holder = (RecycledGridViewHolder) viewHolder;
                 holder.dishName.setText(object.getMenuItem().getItemName());
-                holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, object.getMenuItem().getItemPrice() * 0.01));
+                holder.dishPrice.setText(mContext.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(String.valueOf(object.getMenuItem().getItemPrice()))));
                 holder.itemDescription.setText(object.getMenuItem().getDescription());
 
                 if (object.getMenuItem().getIsVeg()) {

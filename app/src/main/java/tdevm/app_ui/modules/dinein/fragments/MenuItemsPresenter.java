@@ -198,17 +198,7 @@ public class MenuItemsPresenter extends BasePresenter
         logSelections();
     }
 
-    @Override
-    public void onCartSelectionAdded() {
-        singleCuisineGridView.updateAdapter();
-        logSelections();
-    }
 
-    @Override
-    public void onCartSelectionUpdated() {
-        singleCuisineGridView.updateAdapter();
-        logSelections();
-    }
 
     @Override
     public void onCartItemUpdated() {
