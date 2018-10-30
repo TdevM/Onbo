@@ -1,32 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White"
-    tools:context="tdevm.app_ui.modules.dinein.fragments.OrderSuccessFragment">
+    tools:context=".modules.payment.fragments.CashPickupFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
-    <ImageView
-        android:id="@+id/iv_load_gif"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp" />
+        android:layout_below="@id/appbar_layout_edit_account_details"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:weightSum="10">
 
-    <TextView
-        android:id="@+id/textView"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="136dp"
-        android:text="Order sent to the Kitchen! \nThe chef's got work to do."
-        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/size_16_dp"
+            android:layout_weight="7"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_16_dp"
+                    android:layout_marginEnd="@dimen/size_16_dp"
+                    android:layout_marginTop="@dimen/size_16_dp"
+                    android:textAlignment="center"
+                    android:text="Order placed successfully!"
+                    android:textColor="@color/primary_dark_app"
+                    android:textSize="24sp" />
+
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_16_dp"
+                    android:layout_marginEnd="@dimen/size_16_dp"
+                    android:text="Waiter will be collecting cash shortly."
+                    android:textColor="@color/sub_heading_color" />
+
+            </LinearLayout>
+
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <ImageView
+                    android:id="@+id/iv_animate_final_cash_pickup"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/image_design_random"
+                    android:layout_margin="@dimen/default_space_48"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView25"
+                    app:srcCompat="@drawable/anim_success_t1" />
+
+                <ImageView
+                    android:id="@+id/imageView25"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/default_width_64"
+                    android:contentDescription="@string/image_design_random"
+                    app:srcCompat="@drawable/ic_accept_cash_t1" />
+
+
+            </android.support.constraint.ConstraintLayout>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:background="@color/white">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/tv_order_success_order_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_cash_pickup_order_amount"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentBottom="false"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size_16_dp"
+                android:text="@string/please_keep_cash_ready" />
+
+            <TextView
+                android:id="@+id/tv_cash_pickup_order_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="false"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/size_16_dp"
+                android:layout_marginTop="@dimen/default_space_48"
+                android:layout_marginEnd="@dimen/size_16_dp"
+                android:layout_toEndOf="@id/textView26"
+                android:text="225"
+                android:textColor="@color/heading_color"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>

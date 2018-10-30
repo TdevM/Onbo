@@ -76,6 +76,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         PaymentFragment fragment = new PaymentFragment();
         Bundle bundle = new Bundle();
+        bundle.putParcelable("ORDER",fOrder);
         bundle.putString("F_ORDER_ID", fOrder.getOrder_id());
         bundle.putString("ORDER_ID", fOrder.getT_order_id());
         fragment.setArguments(bundle);
@@ -83,9 +84,14 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         transaction.commit();
     }
 
-    public void showCashPickupScreen() {
+    public void showCashPickupScreen(FOrder fOrder) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         CashPickupFragment fragment = new CashPickupFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("ORDER",fOrder);
+        bundle.putString("F_ORDER_ID", fOrder.getOrder_id());
+        bundle.putString("ORDER_ID", fOrder.getT_order_id());
+        fragment.setArguments(bundle);
         transaction.replace(R.id.frame_layout_payments, fragment);
         transaction.commit();
     }

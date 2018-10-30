@@ -59,7 +59,6 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
     ImageView checkBtnDigital;
 
 
-
     @OnClick(R.id.iv_payment_option_cash)
     void updateTypeCash() {
         selectedPaymentMode = MODE_CASH;
@@ -79,7 +78,7 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
 
     @OnClick(R.id.btn_pay_dine_order)
     void start() {
-       handleOrderPaymentType();
+        handleOrderPaymentType();
     }
 
     public PaymentFragment() {
@@ -105,6 +104,8 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
         if (getArguments() != null) {
             orderId = getArguments().getString("ORDER_ID");
             fOrderId = getArguments().getString("F_ORDER_ID");
+            fOrder = getArguments().getParcelable("ORDER");
+            ;
             Log.d(TAG, "Got into PaymentFragment" + orderId + " " + fOrderId);
 
         }
@@ -134,7 +135,17 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
     public void handleOrderPaymentType() {
         if (selectedPaymentMode != null) {
             if (selectedPaymentMode.equals(MODE_CASH)) {
-                activity.showCashPickupScreen();
+
+                if (getArguments() != null) {
+
+                    fOrder = getArguments().getParcelable("ORDER");
+                    if (fOrder != null) {
+                        activity.showCashPickupScreen(fOrder);
+                    }
+                    Log.d(TAG, "Got into PaymentFragment" + "f_order" + " " + fOrder);
+
+                }
+
             } else if (selectedPaymentMode.equals(MODE_DIGITAL)) {
                 startPayment();
             }
@@ -181,14 +192,13 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
                 .setMessage("Please complete your payment.")
                 .setPositiveButton("OK", (dialog, which) -> {
                     if (orderId != null) {
-                       // checkoutPresenter.closeRunningOrder(orderId);
+                        // checkoutPresenter.closeRunningOrder(orderId);
                     }
                     Log.d(TAG, "Sending close order");
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> Log.d(TAG, "Aborting close order..."))
                 .show();
     }
-
 
 
     @Override

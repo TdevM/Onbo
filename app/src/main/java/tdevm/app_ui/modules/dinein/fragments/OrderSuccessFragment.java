@@ -23,8 +23,8 @@ public class OrderSuccessFragment extends Fragment {
 
     Unbinder unbinder;
 
-    @BindView(R.id.iv_load_gif)
-    ImageView imageView;
+//    @BindView(R.id.iv_load_gif)
+//    ImageView imageView;
 
 
     public OrderSuccessFragment() {
@@ -38,9 +38,9 @@ public class OrderSuccessFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order_success, container, false);
         unbinder = ButterKnife.bind(this,view);
-        Glide.with(getContext())
-                .load("https://mir-s3-cdn-cf.behance.net/project_modules/disp/a7a7b120588211.56042b16edecd.gif")
-                .into(imageView);
+//        Glide.with(getContext())
+//                .load("https://mir-s3-cdn-cf.behance.net/project_modules/disp/a7a7b120588211.56042b16edecd.gif")
+//                .into(imageView);
         return view;
     }
 

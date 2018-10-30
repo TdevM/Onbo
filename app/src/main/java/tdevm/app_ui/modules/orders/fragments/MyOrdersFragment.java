@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -51,6 +52,9 @@ public class MyOrdersFragment extends Fragment implements
     @BindView(R.id.shimmer_fragment_my_orders)
     ShimmerFrameLayout shimmerFrameLayout;
 
+
+    @BindView(R.id.frame_layout_my_orders_empty)
+    FrameLayout emptyOrder;
 
     @Inject
     MyOrdersFragmentPresenter presenter;
@@ -124,6 +128,7 @@ public class MyOrdersFragment extends Fragment implements
 
     @Override
     public void onMyOrdersEmpty() {
+        emptyOrder.setVisibility(View.VISIBLE);
 
     }
 

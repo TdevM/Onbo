@@ -53,8 +53,8 @@ public class MyOrdersFragmentPresenter extends BasePresenter implements Restaura
                     if(fOrderResponse.body()!=null){
                         fragmentView.onMyOrderFetched(fOrderResponse.body());
                     }
-                }else {
-                    fragmentView.onFetchingOrdersFailure();
+                }else if(fOrderResponse.code() ==404){
+                    fragmentView.onMyOrdersEmpty();
                 }
             }
 

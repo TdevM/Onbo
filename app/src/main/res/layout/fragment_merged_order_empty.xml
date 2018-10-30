@@ -18,7 +18,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/default_space_48"
+            android:layout_margin="@dimen/default_space_48"
             android:contentDescription="@string/image_design_random"
             app:srcCompat="@drawable/ic_empty_running" />
 

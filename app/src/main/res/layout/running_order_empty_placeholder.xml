@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:padding="@dimen/activity_padding">
 
     <View
@@ -31,7 +32,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/view2"
         android:layout_marginTop="@dimen/dimen_text_24"
         android:orientation="vertical">
@@ -44,13 +45,6 @@
 
         <include layout="@layout/menu_items_placeholder" />
 
-
-        <View
-            android:id="@+id/btn_close_order"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/default_space_30"
-            android:layout_marginTop="@dimen/default_height_112"
-            android:background="@color/placeholder_bg" />
 
 
     </LinearLayout>
