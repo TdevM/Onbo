@@ -66,6 +66,7 @@ public class NonDineActivity extends AppCompatActivity implements
         }
 
         numberBadgeItem = new TextBadgeItem();
+        numberBadgeItem.setBackgroundColorResource(R.color.primary_dark_app);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_local_dining_black_24dp, "Menu"));
         bottomNavigationBar.addItem(

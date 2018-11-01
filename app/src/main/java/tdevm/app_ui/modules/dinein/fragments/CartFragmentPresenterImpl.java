@@ -53,14 +53,18 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
     public void addItemToCart(tdevm.app_ui.api.models.cart.MenuItem menuItem, int itemTotal, String itemHash) {
         cartHelper.addItemToCart(menuItem, itemTotal, itemHash);
         cartHelper.addItemToSelection(menuItem.getItemId());
-        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
+        if (cartHelper.getCartTotalItems() != 0 && cartHelper.getCartTotal() != null) {
+            cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
+        }
     }
 
     @Override
     public void updateCartItem(tdevm.app_ui.api.models.cart.MenuItem menuItem, int itemTotal, String itemHash) {
         cartHelper.updateCartItem(menuItem, itemTotal, itemHash);
         cartHelper.updateSelectionItem(menuItem);
-        cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
+        if (cartHelper.getCartTotalItems() != 0 && cartHelper.getCartTotal() != null) {
+            cartFragmentView.updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
+        }
     }
 
 

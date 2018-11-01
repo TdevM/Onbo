@@ -6,15 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="6"
     tools:context="tdevm.app_ui.modules.dinein.DineInActivity">
 
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -29,18 +27,17 @@
 
 
     <FrameLayout
-        android:layout_weight="5"
         android:id="@+id/frame_layout_dine_in"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
     </FrameLayout>
 
-    <android.support.design.widget.BottomNavigationView
+    <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/navigation"
-        android:layout_weight="0.5"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
         app:labelVisibilityMode="labeled"

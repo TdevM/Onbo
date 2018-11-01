@@ -28,6 +28,12 @@ public class DineInActivityPresenter extends BasePresenter implements DineInPres
     }
 
 
+
+    public Integer getCartItemsCount() {
+        return cartHelper.getCartTotalItems();
+    }
+
+
     @Override
     public void attachView(DineInViewContract.DineInActivity view) {
         this.dineInActivityView = view;
