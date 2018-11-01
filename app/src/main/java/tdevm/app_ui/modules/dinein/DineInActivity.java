@@ -87,6 +87,7 @@ public class DineInActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         presenter.attachView(this);
+        onCartItemUpdated(0);
         super.onResume();
     }
 
@@ -118,7 +119,6 @@ public class DineInActivity extends AppCompatActivity implements
                 .setFirstSelectedPosition(0)
                 .initialise();
 
-        onCartItemUpdated(0);
         bottomNavigationBar.setTabSelectedListener(this);
 
     }

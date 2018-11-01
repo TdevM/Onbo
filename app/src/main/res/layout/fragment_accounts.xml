@@ -79,6 +79,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/tridev_mishra"
+                                android:textColor="@color/heading_color"
                                 android:textSize="20sp" />
 
                             <TextView
@@ -86,6 +87,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/_919560447160"
+                                android:textColor="@color/sub_heading_color"
                                 android:textSize="12sp" />
 
                             <TextView
@@ -93,6 +95,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/tridevtga_gmail_com"
+                                android:textColor="@color/sub_heading_color"
                                 android:textSize="12sp" />
 
                             <TextView
@@ -173,6 +176,7 @@
                         android:minLines="1"
                         android:text="@string/my_orders"
                         android:textAlignment="viewStart"
+                        android:textColor="@color/heading_color"
                         android:textSize="16sp" />
                 </RelativeLayout>
 
@@ -209,6 +213,7 @@
                         android:minLines="1"
                         android:text="@string/my_favourites"
                         android:textAlignment="viewStart"
+                        android:textColor="@color/heading_color"
                         android:textSize="16sp" />
                 </RelativeLayout>
 
@@ -247,6 +252,7 @@
                         android:minLines="1"
                         android:text="@string/change_password"
                         android:textAlignment="viewStart"
+                        android:textColor="@color/heading_color"
                         android:textSize="16sp" />
                 </RelativeLayout>
 
@@ -290,6 +296,7 @@
                         android:maxLines="1"
                         android:text="@string/help_n_support"
                         android:textAlignment="viewStart"
+                        android:textColor="@color/heading_color"
                         android:textSize="16sp" />
                 </RelativeLayout>
 

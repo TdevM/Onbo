@@ -1,10 +1,13 @@
 
 package tdevm.app_ui.api.models.response.v2.t_orders;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TOrderVariant {
+public class TOrderVariant implements Parcelable {
 
     @SerializedName("order_variant_id")
     @Expose
@@ -21,6 +24,30 @@ public class TOrderVariant {
     @SerializedName("option_id")
     @Expose
     private String optionId;
+
+    protected TOrderVariant(Parcel in) {
+        orderVariantId = in.readString();
+        optionName = in.readString();
+        if (in.readByte() == 0) {
+            price = null;
+        } else {
+            price = in.readInt();
+        }
+        orderDetailId = in.readString();
+        optionId = in.readString();
+    }
+
+    public static final Creator<TOrderVariant> CREATOR = new Creator<TOrderVariant>() {
+        @Override
+        public TOrderVariant createFromParcel(Parcel in) {
+            return new TOrderVariant(in);
+        }
+
+        @Override
+        public TOrderVariant[] newArray(int size) {
+            return new TOrderVariant[size];
+        }
+    };
 
     public String getOrderVariantId() {
         return orderVariantId;
@@ -68,4 +95,22 @@ public class TOrderVariant {
         return "ClassPojo [price = "+price+", option_name = "+optionName+", order_detail_id = "+orderDetailId+", option_id = "+optionId+", order_variant_id = "+orderVariantId+"]";
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(orderVariantId);
+        dest.writeString(optionName);
+        if (price == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(price);
+        }
+        dest.writeString(orderDetailId);
+        dest.writeString(optionId);
+    }
 }

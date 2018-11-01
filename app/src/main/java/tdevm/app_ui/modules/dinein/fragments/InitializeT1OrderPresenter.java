@@ -1,4 +1,4 @@
-package tdevm.app_ui.modules.dinein.activities;
+package tdevm.app_ui.modules.dinein.fragments;
 
 import android.util.Log;
 
@@ -26,44 +26,116 @@ import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.modules.dinein.DineInPresenterContract;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
-import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
+import tdevm.app_ui.utils.PreferenceUtils;
 
-/**
- * Created by Tridev on 29-12-2017.
- */
+public class InitializeT1OrderPresenter extends BasePresenter implements DineInPresenterContract.InitializeT1OrderPresenterContract {
 
-public class InitDineOrderPresenterImpl extends BasePresenter implements DineInPresenterContract.PlaceTempOrderPresenter {
 
-    public static final String TAG = InitDineOrderPresenterImpl.class.getSimpleName();
+    public static final String TAG = InitializeT1OrderPresenter.class.getSimpleName();
+
 
     private APIService apiService;
+    private CartHelper cartHelper;
+
     private PreferenceUtils preferenceUtils;
+
     private CompositeDisposable compositeDisposable;
-    private DineInViewContract.PlaceTempOrderView placeTempOrderView;
-    private CartHelper cart;
+    private DineInViewContract.InitializeT1OrderView initializeT1OrderView;
 
     @Inject
-    public InitDineOrderPresenterImpl(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cartHelper) {
+    public InitializeT1OrderPresenter(APIService apiService, CartHelper cartHelper, PreferenceUtils preferenceUtils) {
         this.apiService = apiService;
-        this.cart = cartHelper;
+        this.cartHelper = cartHelper;
         this.preferenceUtils = preferenceUtils;
         this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override
-    public void attachView(DineInViewContract.PlaceTempOrderView view) {
-        this.placeTempOrderView = view;
+    public void attachView(DineInViewContract.InitializeT1OrderView view) {
+        this.initializeT1OrderView = view;
+    }
+
+    @Override
+    public void detachView() {
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable.clear();
+        }
     }
 
 
-    public void clearCart(){
-        cart.clearCart();
+    @Override
+    public void addItemsToOrder(String userMessage, TOrder tOrder) {
+        RestaurantOrder order = new RestaurantOrder(preferenceUtils.getScannedRestaurantId(), tOrder.getOrderId(), userMessage, convertCartTOJSON().toString());
+        Observable<Response<TOrder>> observable = apiService.addItemsToTempOrder(preferenceUtils.getAuthLoginToken(), order);
+        subscribe(observable, new Observer<Response<TOrder>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+                initializeT1OrderView.showProgressUI();
+            }
+
+            @Override
+            public void onNext(Response<TOrder> objectResponse) {
+                if (objectResponse.isSuccessful()) {
+                    if (objectResponse.code() == 200) {
+                        initializeT1OrderView.onOrderItemsAdded(objectResponse.body());
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                initializeT1OrderView.hideProgressUI();
+            }
+        });
     }
+
+    public void clearCart() {
+        cartHelper.clearCart();
+    }
+
+
+    @Override
+    public void createNewOrder(int guest, String message) {
+        RestaurantOrder order = new RestaurantOrder(preferenceUtils.getScannedRestaurantId(), preferenceUtils.getFetchedRestaurantTableId(), message, convertCartTOJSON().toString(), guest);
+        Observable<Response<TOrder>> observable = apiService.createNewTempOrder(preferenceUtils.getAuthLoginToken(), order);
+        subscribe(observable, new Observer<Response<TOrder>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+                initializeT1OrderView.showProgressUI();
+            }
+
+            @Override
+            public void onNext(Response<TOrder> objectResponse) {
+                if (objectResponse.isSuccessful()) {
+                    initializeT1OrderView.onNewOrderCreated(objectResponse.body());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                initializeT1OrderView.hideProgressUI();
+            }
+        });
+    }
+
 
     public JSONArray convertCartTOJSON() {
         JSONArray root = new JSONArray();
-        Single<List<CartItem>> cartItems = cart.getCartItems();
+        Single<List<CartItem>> cartItems = cartHelper.getCartItems();
         cartItems.subscribe(new SingleObserver<List<CartItem>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -136,54 +208,4 @@ public class InitDineOrderPresenterImpl extends BasePresenter implements DineInP
 
         return root;
     }
-
-    @Override
-    public void detachView() {
-        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
-            compositeDisposable.dispose();
-            compositeDisposable.clear();
-        }
-    }
-
-    @Override
-    public void checkCurrentOrderDetails() {
-        Log.d(TAG, "Checking order...");
-        Map<String, String> map = new HashMap<>();
-        //map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
-
-        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(preferenceUtils.getAuthLoginToken(), map);
-        subscribe(observable, new Observer<Response<TOrder>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                compositeDisposable.add(d);
-                placeTempOrderView.showProgressUI();
-            }
-
-            @Override
-            public void onNext(Response<TOrder> arrayListResponse) {
-                Log.d(TAG, "onNext RAN");
-                if (arrayListResponse.isSuccessful()) {
-                    if (arrayListResponse.code() == 200) {
-                        placeTempOrderView.showGetMessage(arrayListResponse);
-                        Log.d(TAG, "Add items to Order RAN");
-                    }
-                } else if (!arrayListResponse.isSuccessful() && arrayListResponse.code() == 404) {
-                    //Create new Order
-                    Log.d(TAG, "Create Order RAN");
-                    placeTempOrderView.showGetGuestMessage();
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-                placeTempOrderView.hideProgressUI();
-            }
-        });
-    }
-
 }

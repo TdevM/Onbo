@@ -1,12 +1,15 @@
 
 package tdevm.app_ui.api.models.response.v2.t_orders;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class TOrderItem {
+public class TOrderItem implements Parcelable {
 
     @SerializedName("detail_id")
     @Expose
@@ -62,6 +65,64 @@ public class TOrderItem {
     @SerializedName("t_order_add_ons")
     @Expose
     private List<TOrderAddOn> tOrderAddOns = null;
+
+    protected TOrderItem(Parcel in) {
+        detailId = in.readString();
+        orderId = in.readString();
+        itemName = in.readString();
+        if (in.readByte() == 0) {
+            itemPrice = null;
+        } else {
+            itemPrice = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            itemQty = null;
+        } else {
+            itemQty = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            itemTotal = null;
+        } else {
+            itemTotal = in.readInt();
+        }
+        itemId = in.readString();
+        restaurantId = in.readString();
+        kotId = in.readString();
+        if (in.readByte() == 0) {
+            itemTax = null;
+        } else {
+            itemTax = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            taxTotal = null;
+        } else {
+            taxTotal = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            itemQTotal = null;
+        } else {
+            itemQTotal = in.readInt();
+        }
+        byte tmpIsDel = in.readByte();
+        isDel = tmpIsDel == 0 ? null : tmpIsDel == 1;
+        itemHash = in.readString();
+        itemSlug = in.readString();
+        tOrderVariants = in.createTypedArrayList(TOrderVariant.CREATOR);
+        tOrderVExtras = in.createTypedArrayList(TOrderVExtra.CREATOR);
+        tOrderAddOns = in.createTypedArrayList(TOrderAddOn.CREATOR);
+    }
+
+    public static final Creator<TOrderItem> CREATOR = new Creator<TOrderItem>() {
+        @Override
+        public TOrderItem createFromParcel(Parcel in) {
+            return new TOrderItem(in);
+        }
+
+        @Override
+        public TOrderItem[] newArray(int size) {
+            return new TOrderItem[size];
+        }
+    };
 
     public String getDetailId() {
         return detailId;
@@ -213,4 +274,60 @@ public class TOrderItem {
         return "ClassPojo [item_q_total = "+itemQTotal+", t_order_v_extras = "+tOrderVExtras+", detail_id = "+detailId+", item_price = "+itemPrice+", kot_id = "+kotId+", restaurant_id = "+restaurantId+", order_id = "+orderId+", t_order_add_ons = "+tOrderAddOns+", t_order_variants = "+tOrderVariants+", tax_total = "+taxTotal+", item_slug = "+itemSlug+", item_name = "+itemName+", item_id = "+itemId+", is_del = "+isDel+", item_qty = "+itemQty+", item_tax = "+itemTax+", item_hash = "+itemHash+", item_total = "+itemTotal+"]";
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(detailId);
+        dest.writeString(orderId);
+        dest.writeString(itemName);
+        if (itemPrice == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(itemPrice);
+        }
+        if (itemQty == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(itemQty);
+        }
+        if (itemTotal == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(itemTotal);
+        }
+        dest.writeString(itemId);
+        dest.writeString(restaurantId);
+        dest.writeString(kotId);
+        if (itemTax == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(itemTax);
+        }
+        if (taxTotal == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(taxTotal);
+        }
+        if (itemQTotal == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(itemQTotal);
+        }
+        dest.writeByte((byte) (isDel == null ? 0 : isDel ? 1 : 2));
+        dest.writeString(itemHash);
+        dest.writeString(itemSlug);
+        dest.writeTypedList(tOrderVariants);
+        dest.writeTypedList(tOrderVExtras);
+        dest.writeTypedList(tOrderAddOns);
+    }
 }

@@ -23,47 +23,61 @@ public interface DineInViewContract {
         void onCuisinesFetched(ArrayList<Cuisine> arrayList);
     }
 
-    interface TopRatedView extends BaseView{
+    interface TopRatedView extends BaseView {
 
     }
 
-    interface CartFragmentView extends BaseView{
+    interface CartFragmentView extends BaseView {
         void updateBottomSheet(int totalItems, int cartTotal);
+
         void updateAdapter();
+
         void showNonDineEmptyCart();
+
         void onCartItemsFetched(List<CartItem> cartItems);
+
         void showDineCartEmpty();
+
         void startNonDineOrderActivity();
+
         void startDineOrderActivity();
     }
 
-    interface SingleCuisineGridView extends BaseView{
+    interface SingleCuisineGridView extends BaseView {
         void onMenuItemsFetchedV2(List<CuisineMenuItems> cuisineMenuItems);
+
         void onMenuItemFetchFailure();
+
         void updateAdapter(int cartItemsCount);
     }
 
-    interface DineInActivity extends BaseView{
+    interface DineInActivity extends BaseView {
 
     }
 
-    interface MergedOrderView extends BaseView{
+    interface MergedOrderView extends BaseView {
         void onRunningOrderFetched(TOrder tOrder);
+
         void onMergedOrderFetched(MergedOrder mergedOrder);
+
         void showNoRunningOrder();
     }
 
-    interface PlaceTempOrderView extends BaseView{
-        void onOrderItemsAdded();
-        void onNewOrderCreated();
+    interface PlaceTempOrderView extends BaseView {
         void showGetMessage(Response<TOrder> arrayListResponse);
-        void createOrder(int guest, String userMessage);
+        void onOrderItemsAdded(TOrder tOrder);
+        void onNewOrderCreated(TOrder tOrder);
         void showGetGuestMessage();
-        void addItemsToOrder(String userMessage);
+
     }
 
-    interface DishReviewsSheetView extends BaseView{
+    interface DishReviewsSheetView extends BaseView {
         void onDishReviewsFetched(ArrayList<DishReviews> body);
+    }
+
+    interface InitializeT1OrderView extends BaseView {
+        void onOrderItemsAdded(TOrder tOrder);
+        void onNewOrderCreated(TOrder tOrder);
     }
 
 }

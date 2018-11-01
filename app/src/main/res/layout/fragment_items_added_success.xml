@@ -17,10 +17,11 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_t1_success_"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/size_16_dp"
-            android:layout_weight="6"
+            android:layout_weight="7"
             android:background="@color/white"
             android:orientation="vertical">
 
@@ -33,9 +34,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_16_dp"
+                    android:layout_marginTop="@dimen/size_16_dp"
                     android:layout_marginEnd="@dimen/size_16_dp"
-                    android:text="Order payment"
-                    android:textAlignment="textStart"
+                    android:text="@string/items_added_to_order_successfully"
+                    android:textAlignment="center"
                     android:textColor="@color/primary_dark_app"
                     android:textSize="24sp" />
 
@@ -44,11 +46,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_16_dp"
-                    android:layout_marginTop="@dimen/size_8_dp"
                     android:layout_marginEnd="@dimen/size_16_dp"
-                    android:text="Your order has been created successfully"
+                    android:text="Waiter will be collecting cash shortly."
                     android:textColor="@color/sub_heading_color"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -59,26 +60,16 @@
 
 
                 <ImageView
-                    android:id="@+id/iv_animate_final_cash_pickup"
+                    android:id="@+id/iv_animate_t1_success"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/default_space_48"
-                    android:contentDescription="@string/image_design_random"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView25"
-                    app:srcCompat="@drawable/animation_payment_screen" />
-
-                <ImageView
-                    android:id="@+id/imageView25"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/default_width_64"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/image_design_random"
-                    android:visibility="visible"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_accept_t2_cash_new" />
+                    app:srcCompat="@drawable/avd_anim_successtick" />
 
 
             </android.support.constraint.ConstraintLayout>
@@ -89,64 +80,65 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:background="@color/white">
 
 
             <TextView
-                android:id="@+id/tv_order_id_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="@dimen/default_space_32"
-                android:layout_marginTop="24dp"
-                android:text="ORDER NO"
-                android:textColor="@color/sub_heading_color" />
-
-            <TextView
-                android:id="@+id/tv_order_amt_show"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_order_id_show"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="false"
-                android:layout_marginStart="@dimen/default_space_32"
-                android:layout_marginTop="@dimen/size_16_dp"
-                android:text="ORDER AMOUNT"
-                android:textColor="@color/sub_heading_color" />
-
-            <TextView
-                android:id="@+id/tv_nd_cash_order_id_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/tv_order_id_show"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="@dimen/default_space_32"
-                android:textColor="@color/heading_color"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tv_nd_cash_order_amount_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_nd_cash_order_id_value"
-                android:layout_alignBaseline="@+id/tv_order_amt_show"
-                android:layout_alignStart="@+id/tv_nd_cash_order_id_value"
-                android:layout_alignParentTop="false"
-                android:textColor="@color/heading_color" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/default_width_64"
-                android:text="Walk up to the cash counter to make your payment"
+                android:layout_marginTop="@dimen/size_16_dp" />
+
+            <TextView
+                android:id="@+id/tv_order_success_order_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_order_success_table_no"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentBottom="false"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size_16_dp"
+                android:text="@string/please_keep_cash_ready"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_order_success_table_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="false"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/size_16_dp"
+                android:layout_marginTop="@dimen/default_space_48"
+                android:layout_marginEnd="@dimen/size_16_dp"
+                android:layout_toEndOf="@id/textView26"
+                android:text="225"
+                android:textColor="@color/heading_color"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size_16_dp"
+                android:text="@string/thanks_again"
                 android:textColor="@color/heading_color"
                 android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="0dp"
+                android:background="@drawable/gradient_6"
+                android:text="View Order Details"
+                android:textColor="@color/white" />
 
 
         </RelativeLayout>
@@ -156,4 +148,3 @@
 
 
 </RelativeLayout>
-

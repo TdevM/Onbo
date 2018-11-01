@@ -13,71 +13,47 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import tdevm.app_ui.R;
-import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.modules.orders.callback.CartBadgeListener;
-import tdevm.app_ui.utils.CartListener;
-
-import static tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity.ORDER_RUNNING_STATUS;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OrderSuccessFragment extends Fragment {
+public class ItemsAddedSuccessFragment extends Fragment {
 
 
     Unbinder unbinder;
 
 
-    private CartBadgeListener cartBadgeListener;
-
     @BindView(R.id.iv_animate_t1_success)
     ImageView imageView;
 
-    @BindView(R.id.tv_t1_order_success_order_id)
-    TextView orderIdSuccess;
+    CartBadgeListener cartBadgeListener;
 
-    @BindView(R.id.tv_t1_order_success_table_no)
-    TextView tableNoSuccess;
-
-    TOrder tOrder;
-
-    public OrderSuccessFragment() {
+    public ItemsAddedSuccessFragment() {
         // Required empty public constructor
     }
 
-
-    public static OrderSuccessFragment getInstance() {
-        return new OrderSuccessFragment();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_order_success, container, false);
+        View view = inflater.inflate(R.layout.fragment_items_added_success, container, false);
         unbinder = ButterKnife.bind(this, view);
         animate(imageView);
-        if(getArguments()!=null){
-            tOrder = getArguments().getParcelable("T_ORDER");
-            showOrderDetails(getArguments().getParcelable("T_ORDER"));
-
-        }
-
         return view;
+
     }
 
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         unbinder.unbind();
     }
 
@@ -101,13 +77,6 @@ public class OrderSuccessFragment extends Fragment {
         animatedVector.start();
     }
 
-    void showOrderDetails(TOrder tOrder){
-        if(tOrder!=null){
-            orderIdSuccess.setText(getContext().getString(R.string.show_number_pound_symbol,tOrder.getOrderId()));
-            tableNoSuccess.setText(getContext().getString(R.string.show_number_pound_symbol,String.valueOf(tOrder.getRestaurantTable().getTable_number())));
-        }
-
-    }
 
     @Override
     public void onAttach(Context context) {

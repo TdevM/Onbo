@@ -115,5 +115,7 @@ public interface APIService {
     @POST("m/f/payment")
     Observable<Response<FOrder>> captureNonDineOrderPayment(@Header("x-auth") String token, @Body PaymentCapture paymentCapture);
 
+    @GET("m/f/orders/unpaid")
+    Observable<Response<FOrder>> fetchUnpaidOrders(@Header("x-auth") String token, @Body NonDineOrder nonDineOrder);
 
 }

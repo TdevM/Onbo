@@ -1,12 +1,15 @@
 
 package tdevm.app_ui.api.models.response.v2.t_orders;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class TOrderKot {
+public class TOrderKot implements Parcelable {
 
     @SerializedName("kot_id")
     @Expose
@@ -32,6 +35,57 @@ public class TOrderKot {
     @SerializedName("t_order_items")
     @Expose
     private List<TOrderItem> tOrderItems = null;
+
+    protected TOrderKot(Parcel in) {
+        kotId = in.readString();
+        orderId = in.readString();
+        if (in.readByte() == 0) {
+            kotNo = null;
+        } else {
+            kotNo = in.readInt();
+        }
+        tStamp = in.readString();
+        byte tmpIsDel = in.readByte();
+        isDel = tmpIsDel == 0 ? null : tmpIsDel == 1;
+        byte tmpCompleted = in.readByte();
+        completed = tmpCompleted == 0 ? null : tmpCompleted == 1;
+        kotMessage = in.readString();
+        tOrderItems = in.createTypedArrayList(TOrderItem.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(kotId);
+        dest.writeString(orderId);
+        if (kotNo == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(kotNo);
+        }
+        dest.writeString(tStamp);
+        dest.writeByte((byte) (isDel == null ? 0 : isDel ? 1 : 2));
+        dest.writeByte((byte) (completed == null ? 0 : completed ? 1 : 2));
+        dest.writeString(kotMessage);
+        dest.writeTypedList(tOrderItems);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<TOrderKot> CREATOR = new Creator<TOrderKot>() {
+        @Override
+        public TOrderKot createFromParcel(Parcel in) {
+            return new TOrderKot(in);
+        }
+
+        @Override
+        public TOrderKot[] newArray(int size) {
+            return new TOrderKot[size];
+        }
+    };
 
     public String getKotId() {
         return kotId;

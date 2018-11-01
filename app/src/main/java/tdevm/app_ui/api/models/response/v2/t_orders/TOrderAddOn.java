@@ -1,10 +1,13 @@
 
 package tdevm.app_ui.api.models.response.v2.t_orders;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TOrderAddOn {
+public class TOrderAddOn implements Parcelable {
 
     @SerializedName("order_add_on_id")
     @Expose
@@ -21,6 +24,30 @@ public class TOrderAddOn {
     @SerializedName("add_on_id")
     @Expose
     private String addOnId;
+
+    protected TOrderAddOn(Parcel in) {
+        orderAddOnId = in.readString();
+        addOnName = in.readString();
+        if (in.readByte() == 0) {
+            price = null;
+        } else {
+            price = in.readInt();
+        }
+        orderDetailId = in.readString();
+        addOnId = in.readString();
+    }
+
+    public static final Creator<TOrderAddOn> CREATOR = new Creator<TOrderAddOn>() {
+        @Override
+        public TOrderAddOn createFromParcel(Parcel in) {
+            return new TOrderAddOn(in);
+        }
+
+        @Override
+        public TOrderAddOn[] newArray(int size) {
+            return new TOrderAddOn[size];
+        }
+    };
 
     public String getOrderAddOnId() {
         return orderAddOnId;
@@ -66,5 +93,24 @@ public class TOrderAddOn {
     public String toString()
     {
         return "ClassPojo [price = "+price+", order_add_on_id = "+orderAddOnId+", order_detail_id = "+orderDetailId+", add_on_name = "+addOnName+", add_on_id = "+addOnId+"]";
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(orderAddOnId);
+        dest.writeString(addOnName);
+        if (price == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(price);
+        }
+        dest.writeString(orderDetailId);
+        dest.writeString(addOnId);
     }
 }

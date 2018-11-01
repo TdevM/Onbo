@@ -45,14 +45,10 @@ public interface DineInPresenterContract {
 
     interface PlaceTempOrderPresenter extends BasePresenterMVP<DineInViewContract.PlaceTempOrderView> {
         void attachView(DineInViewContract.PlaceTempOrderView view);
-
+        void checkCurrentOrderDetails();
         void detachView();
 
-        void checkCurrentOrderDetails();
 
-        void addItemsToOrder(String userMessage, TOrder tOrder);
-
-        void createNewOrder(int guest, String message);
     }
 
     interface CartFragmentPresenter extends BasePresenterMVP<DineInViewContract.CartFragmentView> {
@@ -88,5 +84,19 @@ public interface DineInPresenterContract {
         void detachView();
 
         void fetchMenuItemReview(Long dishId);
+    }
+
+    interface InitializeT1OrderPresenterContract extends BasePresenterMVP<DineInViewContract.InitializeT1OrderView>{
+        @Override
+        void attachView(DineInViewContract.InitializeT1OrderView view);
+
+        @Override
+        void detachView();
+
+
+
+        void addItemsToOrder(String userMessage, TOrder tOrder);
+
+        void createNewOrder(int guest, String message);
     }
 }

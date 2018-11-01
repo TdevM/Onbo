@@ -1,6 +1,9 @@
 
 package tdevm.app_ui.api.models.response.v2.t_orders;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
@@ -10,7 +13,7 @@ import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.RestaurantTable;
 
-public class TOrder {
+public class TOrder implements Parcelable {
 
     @SerializedName("order_id")
     @Expose
@@ -51,6 +54,42 @@ public class TOrder {
     private RestaurantTable restaurantTable;
 
     private Restaurant restaurant;
+
+    protected TOrder(Parcel in) {
+        orderId = in.readString();
+        timestamp = in.readString();
+        byte tmpOrderStatus = in.readByte();
+        orderStatus = tmpOrderStatus == 0 ? null : tmpOrderStatus == 1;
+        restaurantId = in.readString();
+        createdFrom = in.readString();
+        if (in.readByte() == 0) {
+            guestCount = null;
+        } else {
+            guestCount = in.readInt();
+        }
+        userId = in.readString();
+        tableId = in.readString();
+        byte tmpIsDel = in.readByte();
+        isDel = tmpIsDel == 0 ? null : tmpIsDel == 1;
+        byte tmpClosed = in.readByte();
+        closed = tmpClosed == 0 ? null : tmpClosed == 1;
+        tOrderKots = in.createTypedArrayList(TOrderKot.CREATOR);
+        restaurantTable = in.readParcelable(RestaurantTable.class.getClassLoader());
+        restaurant = in.readParcelable(Restaurant.class.getClassLoader());
+        user = in.readParcelable(User.class.getClassLoader());
+    }
+
+    public static final Creator<TOrder> CREATOR = new Creator<TOrder>() {
+        @Override
+        public TOrder createFromParcel(Parcel in) {
+            return new TOrder(in);
+        }
+
+        @Override
+        public TOrder[] newArray(int size) {
+            return new TOrder[size];
+        }
+    };
 
     public Boolean getClosed() {
         return closed;
@@ -189,4 +228,31 @@ public class TOrder {
         return "ClassPojo [t_order_kots = " + tOrderKots + ", created_from = " + createdFrom + ", timestamp = " + timestamp + ", guest_count = " + guestCount + ", restaurant_id = " + restaurantId + ", is_del = " + isDel + ", table_id = " + tableId + ", user_id = " + userId + ", order_id = " + orderId + ", order_status = " + orderStatus + "]";
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(orderId);
+        dest.writeString(timestamp);
+        dest.writeByte((byte) (orderStatus == null ? 0 : orderStatus ? 1 : 2));
+        dest.writeString(restaurantId);
+        dest.writeString(createdFrom);
+        if (guestCount == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(guestCount);
+        }
+        dest.writeString(userId);
+        dest.writeString(tableId);
+        dest.writeByte((byte) (isDel == null ? 0 : isDel ? 1 : 2));
+        dest.writeByte((byte) (closed == null ? 0 : closed ? 1 : 2));
+        dest.writeTypedList(tOrderKots);
+        dest.writeParcelable(restaurantTable, flags);
+        dest.writeParcelable(restaurant, flags);
+        dest.writeParcelable(user, flags);
+    }
 }

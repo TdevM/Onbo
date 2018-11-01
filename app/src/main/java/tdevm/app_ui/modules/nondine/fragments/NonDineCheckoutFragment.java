@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,8 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
     @BindView(R.id.tv_merged_subtotal)
     TextView subtotal;
 
+    @BindView(R.id.toolbar_fragment_checkout_t2)
+    Toolbar toolbar;
 
     NonDineCheckoutAdapter adapter;
 
@@ -88,6 +91,12 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
         activity = (InitNonDineOrderActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_non_dine_order_summary, container, false);
         unbinder = ButterKnife.bind(this, view);
+        if (activity != null) {
+            activity.setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+            toolbar.setTitle("Checkout");
+            toolbar.setNavigationOnClickListener(v -> activity.onBackPressed());
+        }
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewCheckout.setLayoutManager(mLayoutManager);
         recyclerViewCheckout.setNestedScrollingEnabled(false);
