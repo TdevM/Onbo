@@ -11,7 +11,7 @@ import tdevm.app_ui.base.BaseView;
 
 public interface NonDineViewContract {
 
-    interface NonDineActivityView{
+    interface NonDineActivityView extends BaseView{
 
     }
 
@@ -44,4 +44,6 @@ public interface NonDineViewContract {
         void onNDPaidOrderCreated(FOrder fOrder);
         void onOrderCreationFailure();
     }
+
+
 }

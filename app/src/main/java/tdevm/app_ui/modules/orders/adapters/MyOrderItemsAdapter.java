@@ -53,7 +53,7 @@ public class MyOrderItemsAdapter extends RecyclerView.Adapter<MyOrderItemsAdapte
     @Override
     public void onBindViewHolder(@NonNull MyOrderItemsViewHolder holder, int position) {
         holder.itemName.setText(mergedItemsList.get(position).getItem_name());
-        holder.itemPrice.setText(context.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedItemsList.get(position).getItem_price())));
+        holder.itemPrice.setText(context.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedItemsList.get(position).getItem_total())));
         holder.qty.setText(mergedItemsList.get(position).getItem_qty());
         holder.itemTotal.setText(context.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedItemsList.get(position).getItem_q_total())));
         if (mergedItemsList.get(position).getMenu_item().getIsVeg()) {

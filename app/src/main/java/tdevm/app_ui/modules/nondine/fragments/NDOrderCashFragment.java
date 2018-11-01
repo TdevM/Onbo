@@ -1,15 +1,18 @@
 package tdevm.app_ui.modules.nondine.fragments;
 
 import android.content.Context;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.graphics.drawable.Animatable2Compat;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.facebook.shimmer.ShimmerFrameLayout;
 
 import javax.inject.Inject;
 
@@ -20,6 +23,7 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.modules.nondine.NonDineViewContract;
+import tdevm.app_ui.utils.GeneralUtils;
 
 
 public class NDOrderCashFragment extends Fragment implements NonDineViewContract.PlaceNDOrderCashView {
@@ -39,8 +43,10 @@ public class NDOrderCashFragment extends Fragment implements NonDineViewContract
     @BindView(R.id.tv_nd_cash_order_amount_value)
     TextView orderAmount;
 
-    @BindView(R.id.shimmer_fragment_create_nd_cash_order)
-    ShimmerFrameLayout shimmerFrameLayout;
+
+    @BindView(R.id.iv_animate_final_cash_pickup)
+    ImageView imageView;
+
 
     @Inject
     NDOrderCashPresenter NDOrderCashPresenter;
@@ -76,9 +82,9 @@ public class NDOrderCashFragment extends Fragment implements NonDineViewContract
         View view = inflater.inflate(R.layout.fragment_pay_cash_terminal, container, false);
         unbinder = ButterKnife.bind(this, view);
         showOrderDetails();
+        animate(imageView);
         return view;
     }
-
 
 
     @Override
@@ -92,26 +98,14 @@ public class NDOrderCashFragment extends Fragment implements NonDineViewContract
 
     }
 
-    @Override
-    public void showProgressUI() {
-        shimmerFrameLayout.setVisibility(View.VISIBLE);
-        shimmerFrameLayout.startShimmer();
-    }
-
-    @Override
-    public void hideProgressUI() {
-        shimmerFrameLayout.stopShimmer();
-        shimmerFrameLayout.setVisibility(View.GONE);
-    }
-
 
     public void showOrderDetails() {
 
         if (getArguments() != null) {
             FOrder order = getArguments().getParcelable(CREATED_ORDER_ND_CASH);
             if (order != null) {
-                orderId.setText(order.getOrder_id());
-                orderAmount.setText(String.valueOf(Integer.parseInt(order.getGrand_total()) * 0.01));
+                orderId.setText(getContext().getString(R.string.show_number_pound_symbol,order.getOrder_id()));
+                orderAmount.setText(getContext().getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(order.getGrand_total())));
             }
 
 
@@ -123,6 +117,35 @@ public class NDOrderCashFragment extends Fragment implements NonDineViewContract
         super.onDestroyView();
         unbinder.unbind();
         NDOrderCashPresenter.detachView();
+    }
+
+    @Override
+    public void showProgressUI() {
+
+    }
+
+    @Override
+    public void hideProgressUI() {
+
+    }
+
+    public void animate(View view) {
+        ImageView v = (ImageView) view;
+        Drawable d = v.getDrawable();
+        AnimatedVectorDrawableCompat animatedVector = (AnimatedVectorDrawableCompat) d;
+        final Handler mainHandler = new Handler(Looper.getMainLooper());
+        animatedVector.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
+            @Override
+            public void onAnimationEnd(final Drawable drawable) {
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        animatedVector.start();
+                    }
+                });
+            }
+        });
+        animatedVector.start();
     }
 
     @Override

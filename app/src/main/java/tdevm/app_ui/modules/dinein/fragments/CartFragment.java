@@ -1,6 +1,7 @@
 package tdevm.app_ui.modules.dinein.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -37,6 +38,7 @@ import tdevm.app_ui.modules.dinein.bottomsheets.section_r_view.MenuItemCustomiza
 import tdevm.app_ui.modules.dinein.callbacks.CartItemClickListener;
 import tdevm.app_ui.modules.nondine.NonDineActivity;
 import tdevm.app_ui.modules.nondine.activities.InitNonDineOrderActivity;
+import tdevm.app_ui.modules.orders.callback.CartBadgeListener;
 import tdevm.app_ui.utils.GeneralUtils;
 import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
@@ -64,6 +66,9 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     CartHelper cartHelper;
     @Inject
     PreferenceUtils preferenceUtils;
+
+    CartBadgeListener cartBadgeListener;
+
 
     @Inject
     CartFragmentPresenterImpl cartFragmentPresenter;
@@ -155,6 +160,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     @Override
     public void updateAdapter() {
         adapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -177,6 +183,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     @Override
     public void onCartItemsFetched(List<CartItem> cartItems) {
         adapter.onCartItemFetched(cartItems);
+        cartBadgeListener.onCartItemUpdated(0);
     }
 
     @Override
@@ -259,5 +266,22 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
             Log.d(TAG, menuItem.getItemName());
         }
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof CartBadgeListener) {
+            cartBadgeListener = (CartBadgeListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement CartBadgeListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        cartBadgeListener = null;
     }
 }

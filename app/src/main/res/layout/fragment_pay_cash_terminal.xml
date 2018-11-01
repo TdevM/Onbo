@@ -1,232 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".modules.nondine.fragments.NDOrderCashFragment">
+    tools:context=".modules.payment.fragments.CashPickupFragment">
 
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer_fragment_create_nd_cash_order"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        app:shimmer_clip_to_children="true">
+        android:layout_below="@id/appbar_layout_edit_account_details"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:weightSum="10">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/size_16_dp"
+            android:layout_weight="6"
+            android:background="@color/white"
             android:orientation="vertical">
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/activity_padding">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="101dp"
-                    android:orientation="vertical">
+                    android:layout_marginStart="@dimen/size_16_dp"
+                    android:layout_marginEnd="@dimen/size_16_dp"
+                    android:text="Order payment"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/primary_dark_app"
+                    android:textSize="24sp" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/placeholder_text_height"
-                        android:layout_marginEnd="100dp"
-                        android:layout_marginRight="100dp"
-                        android:background="@color/placeholder_bg" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/placeholder_text_height"
-                        android:layout_marginEnd="50dp"
-                        android:layout_marginRight="50dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/placeholder_bg" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/placeholder_text_height"
-                        android:layout_marginEnd="160dp"
-                        android:layout_marginRight="160dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/placeholder_bg" />
-
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/thumbnail"
-                    android:layout_width="@dimen/placeholder_image"
-                    android:layout_height="@dimen/placeholder_image"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="104dp"
-                    android:background="@color/placeholder_bg" />
-
-                <View
-                    android:id="@+id/name"
-                    android:layout_width="150dp"
-                    android:layout_height="10dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="254dp"
-                    android:background="@color/placeholder_bg" />
-
-                <View
-                    android:layout_width="100dp"
-                    android:layout_height="@dimen/placeholder_text_height"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="211dp"
-                    android:background="@color/placeholder_bg" />
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="208dp"
-                    android:orientation="vertical">
+                    android:layout_marginStart="@dimen/size_16_dp"
+                    android:layout_marginTop="@dimen/size_8_dp"
+                    android:layout_marginEnd="@dimen/size_16_dp"
+                    android:text="Your order has been created successfully"
+                    android:textColor="@color/sub_heading_color"
+                    android:visibility="visible" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/placeholder_text_height"
-                        android:layout_marginEnd="100dp"
-                        android:layout_marginRight="100dp"
-                        android:background="@color/placeholder_bg" />
+            </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/placeholder_text_height"
-                        android:layout_marginEnd="50dp"
-                        android:layout_marginRight="50dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/placeholder_bg" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/placeholder_text_height"
-                        android:layout_marginEnd="160dp"
-                        android:layout_marginRight="160dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/placeholder_bg" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </com.facebook.shimmer.ShimmerFrameLayout>
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:padding="10dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="5"
-            android:orientation="vertical">
-
-            <RelativeLayout
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_weight="2"
-                android:layout_height="0dp">
+                android:layout_height="match_parent">
+
 
                 <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    app:srcCompat="@drawable/ic_check" />
-
-
-                <TextView
+                    android:id="@+id/iv_animate_final_cash_pickup"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="120dp"
-                    android:text="@string/order_created_successfully"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large" />
-            </RelativeLayout>
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/default_space_48"
+                    android:contentDescription="@string/image_design_random"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView25"
+                    app:srcCompat="@drawable/animation_payment_screen" />
 
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3">
-
-
-
-
-                <Button
-                    android:id="@+id/btn_view_nd_cash_order_details"
-                    android:text="@string/view_details"
+                <ImageView
+                    android:id="@+id/imageView25"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true" />
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/default_width_64"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@string/image_design_random"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_accept_t2_cash_new" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="63dp"
-                    android:text="@string/please_make_your_payment_at_the_terminal_by_cash" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="11dp"
-                    android:layout_marginTop="24dp"
-                    android:text="Order ID"
-                    android:layout_marginLeft="11dp"
-                    android:layout_alignParentLeft="true" />
+            </android.support.constraint.ConstraintLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="11dp"
-                    android:layout_marginTop="55dp"
-                    android:text="Order amount" />
-
-                <TextView
-                    android:id="@+id/tv_nd_cash_order_id_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="34dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="34dp" />
-
-                <TextView
-                    android:id="@+id/tv_nd_cash_order_amount_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignStart="@+id/tv_nd_cash_order_id_value"
-                    android:layout_marginTop="62dp"
-                    android:layout_alignLeft="@+id/tv_nd_cash_order_id_value" />
-            </RelativeLayout>
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:background="@color/white">
 
-    </android.support.v4.widget.NestedScrollView>
+
+            <TextView
+                android:id="@+id/tv_order_id_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/default_space_32"
+                android:layout_marginTop="24dp"
+                android:text="ORDER NO"
+                android:textColor="@color/sub_heading_color" />
+
+            <TextView
+                android:id="@+id/tv_order_amt_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_order_id_show"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="false"
+                android:layout_marginStart="@dimen/default_space_32"
+                android:layout_marginTop="@dimen/size_16_dp"
+                android:text="ORDER AMOUNT"
+                android:textColor="@color/sub_heading_color" />
+
+            <TextView
+                android:id="@+id/tv_nd_cash_order_id_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_order_id_show"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="@dimen/default_space_32"
+                android:textColor="@color/heading_color"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_nd_cash_order_amount_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_nd_cash_order_id_value"
+                android:layout_alignBaseline="@+id/tv_order_amt_show"
+                android:layout_alignStart="@+id/tv_nd_cash_order_id_value"
+                android:layout_alignParentTop="false"
+                android:textColor="@color/heading_color" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/default_width_64"
+                android:text="Walk up to the cash counter to make your payment" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
 
 </RelativeLayout>
+

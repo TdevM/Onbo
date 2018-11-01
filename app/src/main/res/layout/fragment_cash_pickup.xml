@@ -43,6 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_16_dp"
+                    android:layout_marginTop="@dimen/size_8_dp"
                     android:layout_marginEnd="@dimen/size_16_dp"
                     android:text="Waiter will be collecting cash shortly."
                     android:textColor="@color/sub_heading_color" />

@@ -26,10 +26,16 @@ public class NonDineRestaurantDetailsActivity extends AppCompatActivity implemen
     @Inject
     NonDineRestDetailPresenter presenter;
 
+    private Restaurant restaurant;
+
     @OnClick(R.id.btn_start_order)
     void startActivity() {
-        Intent intent = new Intent(NonDineRestaurantDetailsActivity.this,NonDineActivity.class);
-        startActivity(intent);
+        if (restaurant != null) {
+            Intent intent = new Intent(NonDineRestaurantDetailsActivity.this, NonDineActivity.class);
+            intent.putExtra("RESTAURANT", restaurant);
+            startActivity(intent);
+        }
+
     }
 
     @BindView(R.id.tv_rest_name)
@@ -55,7 +61,8 @@ public class NonDineRestaurantDetailsActivity extends AppCompatActivity implemen
 
 
     @Override
-    public void onRestaurantDetailsFetched(Restaurant restaurant) {
+    public void onRestaurantDetailsFetched(Restaurant res) {
+        this.restaurant = res;
         textView.setText(restaurant.getRestaurant_name());
     }
 

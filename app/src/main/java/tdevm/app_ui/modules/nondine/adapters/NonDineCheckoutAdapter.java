@@ -2,6 +2,7 @@ package tdevm.app_ui.modules.nondine.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import butterknife.ButterKnife;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.Checkout;
 import tdevm.app_ui.api.models.response.v2.FOrder.OrderItem;
+import tdevm.app_ui.utils.GeneralUtils;
 
 public class NonDineCheckoutAdapter extends RecyclerView.Adapter<NonDineCheckoutAdapter.NonDineCheckoutAdapterVH> {
 
@@ -47,9 +49,24 @@ public class NonDineCheckoutAdapter extends RecyclerView.Adapter<NonDineCheckout
     @Override
     public void onBindViewHolder(@NonNull NonDineCheckoutAdapterVH holder, int position) {
         holder.itemName.setText(orderItemList.get(position).getItemName());
-        holder.itemPrice.setText(String.valueOf(Integer.parseInt(orderItemList.get(position).getItemPrice()) * 0.01));
+        holder.itemPrice.setText(context.getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(orderItemList.get(position).getItemPrice())));
         holder.itemQty.setText(orderItemList.get(position).getItemQty());
-        holder.itemTotal.setText(String.valueOf(Integer.parseInt(orderItemList.get(position).getItemQTotal()) * 0.01));
+        holder.itemTotal.setText(context.getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(orderItemList.get(position).getItemQTotal())));
+        if (orderItemList.get(position).getIsVeg()) {
+            holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
+            //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg_indicator));
+        } else if (!orderItemList.get(position).getIsVeg()) {
+            holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.non_veg_symbol));
+            //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg_indicator));
+        }
+        if(orderItemList.get(position).getItemSlug()!=null){
+            holder.slug.setText(orderItemList.get(position).getItemSlug());
+        }else {
+            holder.slug.setVisibility(View.GONE);
+        }
+
+
+
     }
 
     @Override
@@ -68,6 +85,12 @@ public class NonDineCheckoutAdapter extends RecyclerView.Adapter<NonDineCheckout
         TextView itemQty;
         @BindView(R.id.tv_rv_item_inner_item_total)
         TextView itemTotal;
+
+        @BindView(R.id.tv_rv_inner_item_slug)
+        TextView slug;
+
+        @BindView(R.id.iv_veg_non_veg_merged_order)
+        AppCompatImageView imageView;
 
         public NonDineCheckoutAdapterVH(View itemView) {
             super(itemView);

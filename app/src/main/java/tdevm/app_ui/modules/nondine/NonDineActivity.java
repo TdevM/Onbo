@@ -9,13 +9,25 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.ashokvarma.bottomnavigation.TextBadgeItem;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.MenuItemsFragment;
+import tdevm.app_ui.modules.nondine.activities.InitNonDineOrderPresenter;
+import tdevm.app_ui.modules.orders.callback.CartBadgeListener;
 
-public class NonDineActivity extends AppCompatActivity {
+public class NonDineActivity extends AppCompatActivity implements
+        BottomNavigationBar.OnTabSelectedListener, CartBadgeListener,
+        NonDineViewContract.NonDineActivityView {
 
 
     @BindView(R.id.toolbar_non_dine_activity)
@@ -24,32 +36,27 @@ public class NonDineActivity extends AppCompatActivity {
 
     FragmentTransaction fragmentTransaction;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    @BindView(R.id.navigation_non_dine_in)
+    BottomNavigationBar bottomNavigationBar;
+    TextBadgeItem numberBadgeItem;
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            switch (item.getItemId()) {
-                case R.id.navigation_dine_in_menu_t2:
-                    MenuItemsFragment menuItemsFragment = new MenuItemsFragment();
-                    fragmentTransaction.replace(R.id.frame_layout_non_dine_in, menuItemsFragment);
-                    fragmentTransaction.commit();
-                    return true;
-                case R.id.navigation_cart_t2:
-                    fragmentTransaction.replace(R.id.frame_layout_non_dine_in, new CartFragment());
-                    fragmentTransaction.commit();
-                    return true;
-            }
-            return false;
-        }
-    };
+    @Inject
+    NonDinePresenter presenter;
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.attachView(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_non_dine);
         showMenuFragment();
+        resolveDaggerDependencies();
+        ButterKnife.bind(this);
         restaurant = getIntent().getParcelableExtra("RESTAURANT");
 
         if (restaurant != null) {
@@ -58,8 +65,18 @@ public class NonDineActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 
-        BottomNavigationView navigation = findViewById(R.id.navigation_non_dine_in);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        numberBadgeItem = new TextBadgeItem();
+        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_local_dining_black_24dp, "Menu"));
+        bottomNavigationBar.addItem(
+                new BottomNavigationItem(R.drawable.ic_add_shopping_cart_black_24dp, "Cart")
+                        .setBadgeItem(numberBadgeItem).setActiveColorResource(R.color.primary_default_app))
+
+                .setFirstSelectedPosition(0)
+                .initialise();
+
+        onCartItemUpdated(0);
+        bottomNavigationBar.setTabSelectedListener(this);
     }
 
     private void showMenuFragment() {
@@ -78,4 +95,62 @@ public class NonDineActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onTabSelected(int position) {
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        switch (position) {
+            case 0:
+                MenuItemsFragment menuItemsFragment = new MenuItemsFragment();
+                fragmentTransaction.replace(R.id.frame_layout_non_dine_in, menuItemsFragment);
+                fragmentTransaction.commit();
+                break;
+            case 1:
+                fragmentTransaction.replace(R.id.frame_layout_non_dine_in, new CartFragment());
+                fragmentTransaction.commit();
+                break;
+        }
+
+    }
+
+    @Override
+    public void onTabUnselected(int position) {
+
+    }
+
+    @Override
+    public void onTabReselected(int position) {
+
+    }
+
+    @Override
+    public void onCartItemUpdated(int count) {
+        if(presenter.getCartItemsCount()==0){
+            numberBadgeItem.hide(false);
+        }else {
+            numberBadgeItem.show();
+            numberBadgeItem.setText(String.valueOf(presenter.getCartItemsCount()));
+        }
+
+    }
+
+    @Override
+    public void showProgressUI() {
+
+    }
+
+    @Override
+    public void hideProgressUI() {
+
+    }
+
+    @Override
+    public void resolveDaggerDependencies() {
+        ((AppApplication) getApplication()).getApiComponent().inject(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
+    }
 }

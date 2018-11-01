@@ -1,5 +1,6 @@
 package tdevm.app_ui.modules.dinein.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -37,6 +38,7 @@ import tdevm.app_ui.modules.dinein.bottomsheets.DishReviewsSheetFragment;
 import tdevm.app_ui.modules.dinein.bottomsheets.section_r_view.MenuItemCustomizationSheet;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemClickListener;
 import tdevm.app_ui.modules.dinein.callbacks.MenuItemOptionsSelected;
+import tdevm.app_ui.modules.orders.callback.CartBadgeListener;
 import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
@@ -68,6 +70,8 @@ public class MenuItemsFragment extends Fragment
 
     @Inject
     PreferenceUtils preferenceUtils;
+
+    CartBadgeListener cartBadgeListener;
 
 
     @BindView(R.id.swipe_refresh_menu_items_fragment)
@@ -149,8 +153,9 @@ public class MenuItemsFragment extends Fragment
     }
 
     @Override
-    public void updateAdapter() {
+    public void updateAdapter(int cartItemsCount) {
         menuAdapter.notifyDataSetChanged();
+        cartBadgeListener.onCartItemUpdated(cartItemsCount);
     }
 
 
@@ -280,7 +285,25 @@ public class MenuItemsFragment extends Fragment
     @Override
     public void onRefresh() {
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_id",preferenceUtils.getScannedRestaurantId());
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         menuItemsPresenter.fetchMenuItems(map);
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof CartBadgeListener) {
+            cartBadgeListener = (CartBadgeListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement CartBadgeListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        cartBadgeListener = null;
     }
 }

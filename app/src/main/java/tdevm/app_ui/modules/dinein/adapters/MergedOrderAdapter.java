@@ -51,9 +51,9 @@ public class MergedOrderAdapter extends RecyclerView.Adapter<MergedOrderAdapter.
     @Override
     public void onBindViewHolder(@NonNull MergedOrderViewHolder holder, int position) {
         holder.itemName.setText(mergedItemsList.get(position).getItem_data().getItem_name());
-        holder.itemPrice.setText(context.getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(mergedItemsList.get(position).getItem_total())));
+        holder.itemPrice.setText(context.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedItemsList.get(position).getItem_total())));
         holder.qty.setText(mergedItemsList.get(position).getItem_qty());
-        holder.itemTotal.setText(context.getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(mergedItemsList.get(position).getItem_q_total())));
+        holder.itemTotal.setText(context.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedItemsList.get(position).getItem_q_total())));
         if (mergedItemsList.get(position).getItem_data().getIs_veg()) {
             holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_veg_indicator));
@@ -61,7 +61,12 @@ public class MergedOrderAdapter extends RecyclerView.Adapter<MergedOrderAdapter.
             holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.non_veg_symbol));
             //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg_indicator));
         }
-        holder.slug.setText(mergedItemsList.get(position).getItem_slug());
+        if (mergedItemsList.get(position).getItem_slug() != null) {
+            holder.slug.setText(mergedItemsList.get(position).getItem_slug());
+        } else {
+            holder.slug.setVisibility(View.GONE);
+        }
+
 
     }
 
@@ -77,7 +82,7 @@ public class MergedOrderAdapter extends RecyclerView.Adapter<MergedOrderAdapter.
 
         public MergedOrderViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             itemName = itemView.findViewById(R.id.tv_rv_item_inner_item_name);
             itemPrice = itemView.findViewById(R.id.tv_rv_item_inner_item_price);
             qty = itemView.findViewById(R.id.tv_rv_item_inner_item_qty);

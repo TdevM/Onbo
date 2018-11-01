@@ -23,6 +23,7 @@ import tdevm.app_ui.api.models.response.v2.FOrder.Checkout;
 import tdevm.app_ui.modules.nondine.NonDineViewContract;
 import tdevm.app_ui.modules.nondine.activities.InitNonDineOrderActivity;
 import tdevm.app_ui.modules.nondine.adapters.NonDineCheckoutAdapter;
+import tdevm.app_ui.utils.GeneralUtils;
 
 
 public class NonDineCheckoutFragment extends Fragment implements NonDineViewContract.NonDineCheckoutView {
@@ -34,7 +35,7 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
     Unbinder unbinder;
 
     @OnClick(R.id.btn_proceed_payment_type)
-    void showPaymentTypeFragment(){
+    void showPaymentTypeFragment() {
         activity.showOrderPaymentType();
     }
 
@@ -42,11 +43,13 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
 
     @BindView(R.id.rv_nd_checkout)
     RecyclerView recyclerViewCheckout;
-    @BindView(R.id.tv_checkout_total)
+
+
+    @BindView(R.id.tv_merged_total)
     TextView orderTotal;
-    @BindView(R.id.tv_checkout_taxes)
+    @BindView(R.id.tv_merged_taxes)
     TextView taxes;
-    @BindView(R.id.tv_checkout_subtotal)
+    @BindView(R.id.tv_merged_subtotal)
     TextView subtotal;
 
 
@@ -84,9 +87,10 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
         resolveDaggerDependencies();
         activity = (InitNonDineOrderActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_non_dine_order_summary, container, false);
-        unbinder = ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewCheckout.setLayoutManager(mLayoutManager);
+        recyclerViewCheckout.setNestedScrollingEnabled(false);
         adapter = new NonDineCheckoutAdapter(getContext());
         recyclerViewCheckout.setAdapter(adapter);
         presenter.checkoutOrderSummary();
@@ -110,10 +114,10 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
 
     }
 
-    public void updateOrderCharges(Checkout checkout){
-        orderTotal.setText(String.valueOf(Integer.parseInt(checkout.getOrderTotal().getGrandTotal()) * 0.01));
-        subtotal.setText(String.valueOf(Integer.parseInt(checkout.getOrderTotal().getSubtotal()) * 0.01));
-        taxes.setText(String.valueOf(Integer.parseInt(checkout.getOrderTotal().getTaxes()) * 0.01));
+    public void updateOrderCharges(Checkout checkout) {
+        orderTotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(checkout.getOrderTotal().getGrandTotal())));
+        subtotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(checkout.getOrderTotal().getSubtotal())));
+        taxes.setText(getContext().getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(checkout.getOrderTotal().getTaxes())));
     }
 
     @Override
@@ -123,13 +127,13 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
 
     @Override
     public void onCheckoutDataFetched(Checkout checkout) {
-        Log.d(TAG,"Checkout data fetched :  " + checkout.toString());
+        Log.d(TAG, "Checkout data fetched :  " + checkout.toString());
         adapter.onCheckoutDataFetched(checkout);
         updateOrderCharges(checkout);
     }
 
     @Override
     public void onCheckoutResponseFailure() {
-        Log.d(TAG,"Failed to checkout");
+        Log.d(TAG, "Failed to checkout");
     }
 }

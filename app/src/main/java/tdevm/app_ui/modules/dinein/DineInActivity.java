@@ -23,12 +23,13 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.modules.dinein.fragments.RunningOrderEmptyFragment;
 import tdevm.app_ui.modules.dinein.fragments.MenuItemsFragment;
+import tdevm.app_ui.modules.orders.callback.CartBadgeListener;
 import tdevm.app_ui.modules.payment.PaymentActivity;
 import tdevm.app_ui.modules.dinein.fragments.CartFragment;
 import tdevm.app_ui.modules.dinein.fragments.BellFragment;
 import tdevm.app_ui.modules.dinein.fragments.MergedOrderFragment;
 
-public class DineInActivity extends AppCompatActivity implements DineInViewContract.DineInActivity {
+public class DineInActivity extends AppCompatActivity implements DineInViewContract.DineInActivity, CartBadgeListener {
 
     public static final String TAG = DineInActivity.class.getSimpleName();
 
@@ -182,5 +183,10 @@ public class DineInActivity extends AppCompatActivity implements DineInViewContr
     protected void onDestroy() {
         super.onDestroy();
         presenter.detachView();
+    }
+
+    @Override
+    public void onCartItemUpdated(int count) {
+
     }
 }
