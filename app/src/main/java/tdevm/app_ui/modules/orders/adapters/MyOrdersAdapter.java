@@ -78,8 +78,44 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
                 .load(orderList.get(position).getRestaurant().getImage())
                 .apply(requestOptions)
                 .into(holder.restaurantImage);
-        holder.orderStatus.setText(orderList.get(position).getStatus());
-        holder.bind(orderList.get(position), myOrdersClickListener);
+
+
+        if (orderList.get(holder.getAdapterPosition()).getStatus() != null) {
+
+            switch (orderList.get(holder.getAdapterPosition()).getStatus()) {
+                case "COMPLETED":
+                    holder.orderStatusImage.setImageResource(R.drawable.ic_filled_circle_completed);
+                    holder.orderStatus.setText(context.getString(R.string.order_status_completed));
+                    break;
+                case "PAYMENT_PENDING":
+                    holder.orderStatusImage.setImageResource(R.drawable.anim_payment_pending);
+                    holder.orderStatus.setText(context.getString(R.string.order_status_pending_payment));
+                    GeneralUtils.animate(holder.orderStatusImage);
+                    break;
+                case "PREPARING":
+                    holder.orderStatusImage.setImageResource(R.drawable.anim_preparing);
+                    holder.orderStatus.setText(context.getString(R.string.order_status_preparing));
+                    GeneralUtils.animate(holder.orderStatusImage);
+                    break;
+                case "CANCELLED":
+                    holder.orderStatusImage.setImageResource(R.drawable.ic_filled_circle_payment_failed_cancelled);
+                    holder.orderStatus.setText(context.getString(R.string.order_status_cancelled));
+                    break;
+                case "PAYMENT_FAILED":
+                    holder.orderStatusImage.setImageResource(R.drawable.ic_filled_circle_payment_failed_cancelled);
+                    holder.orderStatus.setText(context.getString(R.string.order_status_payment_failed));
+                    break;
+                case "PREPARED":
+                    holder.orderStatusImage.setImageResource(R.drawable.ic_filled_circle_completed);
+                    holder.orderStatus.setText(context.getString(R.string.order_status_prepared));
+                    GeneralUtils.animate(holder.orderStatusImage);
+                    break;
+
+            }
+        }
+
+
+        holder.bind(orderList.get(holder.getAdapterPosition()), myOrdersClickListener);
 
 
     }
@@ -98,6 +134,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
         TextView localityName;
         @BindView(R.id.tv_my_orders_order_time)
         TextView orderTime;
+
+        @BindView(R.id.iv_my_orders_order_status_image)
+        ImageView orderStatusImage;
 
         @BindView(R.id.tv_orders_slug)
         TextView orderSlug;

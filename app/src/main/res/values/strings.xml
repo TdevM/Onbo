@@ -193,4 +193,12 @@
     <string name="items_added_to_order_successfully">Items added to order successfully!</string>
     <string name="thanks_again">Thanks again!</string>
     <string name="thank_you_for_your_order">Thank you for your order</string>
+
+    <string name="order_status_completed">COMPLETED</string>
+    <string name="order_status_pending_payment">PAYMENT PENDING</string>
+    <string name="order_status_preparing">PREPARING</string>
+    <string name="order_status_cancelled">CANCELLED</string>
+    <string name="order_status_prepared">PREPARED</string>
+    <string name="order_status_payment_failed">PAYMENT FAILED</string>
+
 </resources>

@@ -1,0 +1,41 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="24dp"
+            android:height="24dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+            <path
+                android:name="path"
+                android:pathData="M 12 3 C 9.614 3 7.323 3.949 5.636 5.636 C 3.949 7.323 3 9.614 3 12 C 3 14.386 3.949 16.677 5.636 18.364 C 7.323 20.051 9.614 21 12 21 C 14.386 21 16.677 20.051 18.364 18.364 C 20.051 16.677 21 14.386 21 12 C 21 9.614 20.051 7.323 18.364 5.636 C 16.677 3.949 14.386 3 12 3 Z"
+                android:fillColor="#0984e3"
+                android:strokeColor="#0984e3"
+                android:strokeWidth="0.75"
+                android:strokeMiterLimit="10"/>
+        </vector>
+    </aapt:attr>
+    <target android:name="path">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:duration="1000"
+                    android:valueFrom="M 12 3 C 9.614 3 7.323 3.949 5.636 5.636 C 3.949 7.323 3 9.614 3 12 C 3 14.386 3.949 16.677 5.636 18.364 C 7.323 20.051 9.614 21 12 21 C 14.386 21 16.677 20.051 18.364 18.364 C 20.051 16.677 21 14.386 21 12 C 21 9.614 20.051 7.323 18.364 5.636 C 16.677 3.949 14.386 3 12 3 Z"
+                    android:valueTo="M 12 10.5 C 11.602 10.5 11.221 10.658 10.939 10.939 C 10.658 11.221 10.5 11.602 10.5 12 C 10.5 12.398 10.658 12.779 10.939 13.061 C 11.221 13.342 11.602 13.5 12 13.5 C 12.398 13.5 12.779 13.342 13.061 13.061 C 13.342 12.779 13.5 12.398 13.5 12 C 13.5 11.602 13.342 11.221 13.061 10.939 C 12.779 10.658 12.398 10.5 12 10.5 Z"
+                    android:valueType="pathType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:startOffset="1000"
+                    android:duration="1000"
+                    android:valueFrom="M 12 10.5 C 11.602 10.5 11.221 10.658 10.939 10.939 C 10.658 11.221 10.5 11.602 10.5 12 C 10.5 12.398 10.658 12.779 10.939 13.061 C 11.221 13.342 11.602 13.5 12 13.5 C 12.398 13.5 12.779 13.342 13.061 13.061 C 13.342 12.779 13.5 12.398 13.5 12 C 13.5 11.602 13.342 11.221 13.061 10.939 C 12.779 10.658 12.398 10.5 12 10.5 Z"
+                    android:valueTo="M 12 3 C 9.614 3 7.323 3.949 5.636 5.636 C 3.949 7.323 3 9.614 3 12 C 3 14.386 3.949 16.677 5.636 18.364 C 7.323 20.051 9.614 21 12 21 C 14.386 21 16.677 20.051 18.364 18.364 C 20.051 16.677 21 14.386 21 12 C 21 9.614 20.051 7.323 18.364 5.636 C 16.677 3.949 14.386 3 12 3 Z"
+                    android:valueType="pathType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>

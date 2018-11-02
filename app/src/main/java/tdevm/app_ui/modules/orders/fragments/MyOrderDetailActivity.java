@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -42,6 +43,12 @@ public class MyOrderDetailActivity extends AppCompatActivity implements Restaura
     TextView total;
     @BindView(R.id.tv_merged_order_date)
     TextView tvDate;
+
+    @BindView(R.id.iv_my_order_details_order_status)
+    ImageView orderStatusImage;
+
+    @BindView(R.id.tv_my_order_details_order_status)
+    TextView orderStatus;
 
     @BindView(R.id.show_table_text)
     TextView showTable;
@@ -125,6 +132,38 @@ public class MyOrderDetailActivity extends AppCompatActivity implements Restaura
         subTotal.setText(this.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(fOrder.getSubtotal())));
         taxes.setText(this.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(fOrder.getTaxes())));
         total.setText(this.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(fOrder.getGrand_total())));
+
+        if (fOrder.getStatus() != null)
+            switch (fOrder.getStatus()) {
+                case "COMPLETED":
+                    orderStatusImage.setImageResource(R.drawable.ic_filled_circle_completed);
+                    orderStatus.setText(this.getString(R.string.order_status_completed));
+                    break;
+                case "PAYMENT_PENDING":
+                    orderStatusImage.setImageResource(R.drawable.anim_payment_pending);
+                    orderStatus.setText(this.getString(R.string.order_status_pending_payment));
+                    GeneralUtils.animate(orderStatusImage);
+                    break;
+                case "PREPARING":
+                    orderStatusImage.setImageResource(R.drawable.anim_preparing);
+                    orderStatus.setText(this.getString(R.string.order_status_preparing));
+                    GeneralUtils.animate(orderStatusImage);
+                    break;
+                case "CANCELLED":
+                    orderStatusImage.setImageResource(R.drawable.ic_filled_circle_payment_failed_cancelled);
+                    orderStatus.setText(this.getString(R.string.order_status_cancelled));
+                    break;
+                case "PAYMENT_FAILED":
+                    orderStatusImage.setImageResource(R.drawable.ic_filled_circle_payment_failed_cancelled);
+                    orderStatus.setText(this.getString(R.string.order_status_payment_failed));
+                    break;
+                case "PREPARED":
+                    orderStatusImage.setImageResource(R.drawable.ic_filled_circle_completed);
+                    orderStatus.setText(this.getString(R.string.order_status_prepared));
+                    GeneralUtils.animate(orderStatusImage);
+                    break;
+
+            }
     }
 
     @Override

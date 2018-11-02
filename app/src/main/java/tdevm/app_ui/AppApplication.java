@@ -3,7 +3,6 @@ package tdevm.app_ui;
 import android.support.multidex.MultiDexApplication;
 
 import com.onesignal.OneSignal;
-import com.squareup.leakcanary.LeakCanary;
 
 import tdevm.app_ui.di.components.APIComponent;
 import tdevm.app_ui.di.components.ApplicationComponent;

@@ -141,6 +141,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/textView18"
                             android:layout_alignParentStart="true"
+                            android:layout_marginBottom="@dimen/size_16_dp"
                             android:text="20-8-2018"
                             android:textColor="@color/heading_color"
                             android:textSize="16sp" />
@@ -177,6 +178,42 @@
                             android:layout_marginBottom="@dimen/size_4_dp"
                             android:text="DATE"
                             android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/textView19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_merged_order_date"
+                            android:layout_marginTop="@dimen/size_16_dp"
+                            android:text="ORDER STATUS"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:layout_below="@id/tv_merged_order_date"
+                            style="@style/dividerHorizontal" />
+
+                        <ImageView
+                            android:id="@+id/iv_my_order_details_order_status"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_below="@id/textView19"
+                            android:layout_marginTop="@dimen/size_8_dp"
+
+                            android:contentDescription="@string/image_design_random"
+                            app:srcCompat="@drawable/ic_filled_circle_preparing" />
+
+                        <TextView
+                            android:id="@+id/tv_my_order_details_order_status"
+                            android:layout_below="@id/textView19"
+                            android:layout_marginStart="@dimen/size_8_dp"
+                            android:layout_marginTop="@dimen/size_4_dp"
+                            android:text="PREPARING"
+                            android:layout_toEndOf="@id/iv_my_order_details_order_status"
+                            android:textColor="@color/heading_color"
+                            android:layout_alignBaseline="@id/iv_my_order_details_order_status"
+                            android:textSize="16sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
                     </RelativeLayout>
 

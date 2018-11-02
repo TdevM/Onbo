@@ -1,5 +1,15 @@
 package tdevm.app_ui.utils;
 
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.graphics.drawable.Animatable2Compat;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.xwray.groupie.ViewHolder;
+
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,4 +37,43 @@ public class GeneralUtils {
         lowest = Double.parseDouble(new DecimalFormat("##.##").format(lowest));
         return String.valueOf(lowest);
     }
+
+
+    public static void animate(View view) {
+        ImageView v = (ImageView) view;
+        Drawable d = v.getDrawable();
+        AnimatedVectorDrawableCompat animatedVector = (AnimatedVectorDrawableCompat) d;
+        final Handler mainHandler = new Handler(Looper.getMainLooper());
+        animatedVector.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
+            @Override
+            public void onAnimationEnd(final Drawable drawable) {
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        animatedVector.start();
+                    }
+                });
+            }
+        });
+        animatedVector.start();
+    }
+
+//    public static void animateViewHolder(ViewHolder view) {
+//        ImageView v = (ImageView) view;
+//        Drawable d = v.getDrawable();
+//        AnimatedVectorDrawableCompat animatedVector = (AnimatedVectorDrawableCompat) d;
+//        final Handler mainHandler = new Handler(Looper.getMainLooper());
+//        animatedVector.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
+//            @Override
+//            public void onAnimationEnd(final Drawable drawable) {
+//                mainHandler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        animatedVector.start();
+//                    }
+//                });
+//            }
+//        });
+//        animatedVector.start();
+//    }
 }
