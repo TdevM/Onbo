@@ -49,6 +49,7 @@ public class NonDineCheckoutPresenter extends BasePresenter implements NonDinePr
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
+                summaryView.showProgressUI();
             }
 
             @Override
@@ -69,7 +70,7 @@ public class NonDineCheckoutPresenter extends BasePresenter implements NonDinePr
 
             @Override
             public void onComplete() {
-
+                summaryView.hideProgressUI();
             }
         });
     }

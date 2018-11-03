@@ -1,5 +1,6 @@
 package tdevm.app_ui.root.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
+import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
 import tdevm.app_ui.root.NavigationHomeViewContract;
 import tdevm.app_ui.root.adapters.MenuAdapterRestaurantDetail;
 
@@ -47,12 +49,12 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Navig
     RestaurantDetailPresenter presenter;
 
 
-//    @OnClick(R.id.btn_res_detail_start_order)
-//    void startScan(){
-//        Intent intent = new Intent(this, RestaurantMenuEntryActivity.class);
-//        startActivity(intent);
-//        finish();
-//    }
+    @OnClick(R.id.btn_res_detail_start_order)
+    void startScan(){
+        Intent intent = new Intent(this, RestaurantMenuEntryActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     private Restaurant restaurant;
 
@@ -81,7 +83,7 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Navig
         if (restaurant != null) {
             presenter.fetchMenuItems(restaurant);
             collapsingToolbarLayout.setTitle(restaurant.getRestaurant_name());
-            // collapsingToolbarLayout.
+
             Glide.with(this).load(restaurant.getImage()).into(imageViewRestaurant);
         }
 

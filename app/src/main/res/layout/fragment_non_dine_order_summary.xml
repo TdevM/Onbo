@@ -29,6 +29,25 @@
     </android.support.design.widget.AppBarLayout>
 
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_fragment_checkout_t2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <include layout="@layout/running_order_empty_placeholder" />
+
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -56,6 +58,9 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
     @BindView(R.id.toolbar_fragment_checkout_t2)
     Toolbar toolbar;
 
+    @BindView(R.id.shimmer_fragment_checkout_t2)
+    ShimmerFrameLayout shimmerFrameLayout;
+
     NonDineCheckoutAdapter adapter;
 
     public NonDineCheckoutFragment() {
@@ -74,6 +79,7 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
     public void onResume() {
         super.onResume();
         presenter.attachView(this);
+        presenter.checkoutOrderSummary();
     }
 
     @Override
@@ -83,6 +89,8 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
 
         }
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,7 +110,7 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
         recyclerViewCheckout.setNestedScrollingEnabled(false);
         adapter = new NonDineCheckoutAdapter(getContext());
         recyclerViewCheckout.setAdapter(adapter);
-        presenter.checkoutOrderSummary();
+
         return view;
     }
 
@@ -115,12 +123,14 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
 
     @Override
     public void showProgressUI() {
-
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void hideProgressUI() {
-
+        shimmerFrameLayout.stopShimmer();
+        shimmerFrameLayout.setVisibility(View.GONE);
     }
 
     public void updateOrderCharges(Checkout checkout) {

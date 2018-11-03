@@ -20,6 +20,7 @@ import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.HeterogeneousObject;
 import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
 import tdevm.app_ui.utils.CartHelper;
+import tdevm.app_ui.utils.GeneralUtils;
 
 public class MenuAdapterRestaurantDetail extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -94,7 +95,7 @@ public class MenuAdapterRestaurantDetail extends RecyclerView.Adapter<RecyclerVi
             if (object.getMenuItem() != null) {
                 RecycledGridViewHolder holder = (RecycledGridViewHolder) viewHolder;
                 holder.itemName.setText(object.getMenuItem().getItemName());
-                holder.itemPrice.setText(mContext.getString(R.string.rupee_symbol, object.getMenuItem().getItemPrice() * 0.01));
+                holder.itemPrice.setText(mContext.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(String.valueOf(object.getMenuItem().getItemPrice()))));
 
                 if (object.getMenuItem().getIsVeg()) {
                     holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.veg_symbol));

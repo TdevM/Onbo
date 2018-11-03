@@ -160,7 +160,6 @@ public class MyOrderDetailActivity extends AppCompatActivity implements Restaura
                 case "PREPARED":
                     orderStatusImage.setImageResource(R.drawable.ic_filled_circle_completed);
                     orderStatus.setText(this.getString(R.string.order_status_prepared));
-                    GeneralUtils.animate(orderStatusImage);
                     break;
 
             }

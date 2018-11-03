@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -57,12 +59,14 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
     TextView tvDate;
 
 
+    @BindView(R.id.shimmer_fragment_checkout_t1)
+    ShimmerFrameLayout shimmerFrameLayout;
+
+
     @OnClick(R.id.btn_checkout_t1_final)
-    void checkoutBtn(){
+    void checkoutBtn() {
         closeRunningOrder();
     }
-
-
 
 
     String orderId;
@@ -71,7 +75,6 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
     Toolbar toolbar;
 
     PaymentActivity paymentActivity;
-
 
 
     MergedOrderAdapter mergedOrderAdapter;
@@ -99,6 +102,11 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
     public void onResume() {
         super.onResume();
         checkoutPresenter.attachView(this);
+        if (getArguments() != null) {
+            orderId = getArguments().getString("ORDER_ID");
+            Log.d(TAG, "Got into checkout" + orderId);
+            checkoutPresenter.fetchMergedOrder(orderId);
+        }
     }
 
     @Override
@@ -113,7 +121,6 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
         View view = inflater.inflate(R.layout.fragment_checkout, container, false);
         paymentActivity = (PaymentActivity) getActivity();
         unbinder = ButterKnife.bind(this, view);
-        unbinder = ButterKnife.bind(this, view);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
@@ -123,10 +130,6 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
         }
 
         if (getArguments() != null) {
-            orderId = getArguments().getString("ORDER_ID");
-            Log.d(TAG, "Got into checkout" + orderId);
-            checkoutPresenter.fetchMergedOrder(orderId);
-
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
             recyclerViewTempOrder.setLayoutManager(mLayoutManager);
             recyclerViewTempOrder.setNestedScrollingEnabled(false);
@@ -162,14 +165,14 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
 
     @Override
     public void showProgressUI() {
-        // progressBar.setVisibility(View.VISIBLE);
-//        checkoutBtn.setVisibility(View.INVISIBLE);
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void hideProgressUI() {
-        // progressBar.setVisibility(View.INVISIBLE);
-        //      checkoutBtn.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.stopShimmer();
+        shimmerFrameLayout.setVisibility(View.GONE);
     }
 
     @Override

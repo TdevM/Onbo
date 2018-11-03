@@ -108,7 +108,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
                 case "PREPARED":
                     holder.orderStatusImage.setImageResource(R.drawable.ic_filled_circle_completed);
                     holder.orderStatus.setText(context.getString(R.string.order_status_prepared));
-                    GeneralUtils.animate(holder.orderStatusImage);
                     break;
 
             }

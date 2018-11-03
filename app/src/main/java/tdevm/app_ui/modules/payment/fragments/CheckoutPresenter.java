@@ -82,6 +82,7 @@ public class CheckoutPresenter extends BasePresenter implements PaymentPresenter
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
+                view.showProgressUI();
 
             }
 
@@ -90,7 +91,6 @@ public class CheckoutPresenter extends BasePresenter implements PaymentPresenter
                 view.showProgressUI();
                 if (arrayListResponse.isSuccessful()) {
                     view.onMergedOrderFetched(arrayListResponse.body());
-                    view.hideProgressUI();
                 } else if (arrayListResponse.code() == 404) {
                     //view.showNoRunningOrder();
                 }
