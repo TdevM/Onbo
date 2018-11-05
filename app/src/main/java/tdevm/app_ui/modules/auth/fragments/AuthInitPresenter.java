@@ -2,7 +2,6 @@ package tdevm.app_ui.modules.auth.fragments;
 
 import android.util.Log;
 
-import org.reactivestreams.Subscription;
 
 import javax.inject.Inject;
 

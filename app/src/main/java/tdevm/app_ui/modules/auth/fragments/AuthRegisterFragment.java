@@ -75,7 +75,10 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
         if (TextUtils.isEmpty(editTextName.getText())) {
             Toast.makeText(getActivity(), "Fill all details", Toast.LENGTH_SHORT).show();
         } else {
-            User user = new User(editTextName.getText().toString(), editTextEmail.getText().toString(), phoneNumber, editTextPassword.getText().toString());
+            User user = new User(
+                    editTextName.getText().toString(),
+                    editTextEmail.getText().toString(),
+                    phoneNumber, editTextPassword.getText().toString());
             authRegisterPresenter.registerUser(user);
         }
     }
@@ -181,10 +184,11 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
         super.onDestroy();
     }
 
+
     ClickableSpan termsPolicy = new ClickableSpan() {
         @Override
         public void onClick(View view) {
-
+            authenticationActivity.showTNCContent("Terms of Service", 0);
         }
 
     };
@@ -192,7 +196,7 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
     ClickableSpan privacyPolicy = new ClickableSpan() {
         @Override
         public void onClick(View view) {
-
+            authenticationActivity.showTNCContent("Privacy Policy", 1);
         }
 
     };
@@ -200,7 +204,7 @@ public class AuthRegisterFragment extends Fragment implements AuthViewContract.A
     ClickableSpan refundPolicy = new ClickableSpan() {
         @Override
         public void onClick(View view) {
-
+            authenticationActivity.showTNCContent("Refund Policy", 2);
         }
 
 

@@ -1,110 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_7"
+    android:orientation="vertical"
     tools:context="tdevm.app_ui.modules.auth.AuthenticationActivity">
 
-    <TextView
-        android:id="@+id/text_login_home"
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView3"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentTop="false"
-        android:layout_marginStart="@dimen/size_16_dp"
-        android:layout_marginTop="@dimen/default_space_32"
-        android:layout_marginEnd="@dimen/size_16_dp"
-        android:text="@string/lets_get_started"
-        android:textColor="@color/heading_color"
-        android:textSize="24sp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:baselineAligned="false">
 
-    <tdevm.app_ui.widgets.PhoneEditText
-        android:id="@+id/et_init_phone_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_login_home"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentBottom="false"
-        android:layout_marginStart="@dimen/size_16_dp"
-        android:layout_marginTop="@dimen/default_space_48"
-        android:layout_marginEnd="@dimen/size_16_dp"
-        android:gravity="bottom"
-        android:inputType="phone"
-        android:tag="+91"
-        android:textSize="16sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/ll_2_register_image_set"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="0dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/image_design_random"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/auth_init_1xxhdpi" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignBottom="@+id/imageView3"
+                    android:layout_alignParentTop="false"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="0dp"
+                    android:adjustViewBounds="false"
+                    android:contentDescription="@string/image_design_random"
+                    android:scaleType="fitEnd"
+                    app:srcCompat="@drawable/auth_init_2xxhdpi" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="@dimen/default_space_32"
+                android:layout_marginEnd="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_login_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_space_48"
+                    android:text="@string/lets_get_started"
+                    android:textColor="@color/heading_color"
+                    android:textSize="24sp" />
+
+                <tdevm.app_ui.widgets.PhoneEditText
+                    android:id="@+id/et_init_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:inputType="phone"
+                    android:tag="+91"
+                    android:textSize="16sp" />
 
 
+            </LinearLayout>
 
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/default_width_64"
+                android:layout_gravity="end"
+                android:layout_marginBottom="@dimen/default_width_64"
+                android:contentDescription="@string/image_design_random"
+                android:scaleType="fitEnd"
+                app:srcCompat="@drawable/auth_init_3xxhdpi" />
+        </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/image_design_random"
-        android:scaleType="fitStart"
-        app:srcCompat="@drawable/auth_init_1xxhdpi" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignBottom="@+id/imageView3"
-        android:layout_alignParentTop="false"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="0dp"
-        android:adjustViewBounds="false"
-        android:contentDescription="@string/image_design_random"
-        android:scaleType="fitEnd"
-        app:srcCompat="@drawable/auth_init_2xxhdpi" />
+    </android.support.v4.widget.NestedScrollView>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/et_init_phone_number"
-        android:layout_alignParentBottom="true">
-
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/btn_login_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
             android:background="@drawable/gradient_6"
             android:text="@string/auth_next"
             android:textColor="@color/white" />
+
 
         <ProgressBar
             android:id="@+id/progress_bar_auth_init"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="0dp"
             android:visibility="invisible" />
 
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentEnd="true"
-
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/default_width_64"
-            android:contentDescription="@string/image_design_random"
-            android:scaleType="fitEnd"
-            app:srcCompat="@drawable/auth_init_3xxhdpi" />
-
     </RelativeLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

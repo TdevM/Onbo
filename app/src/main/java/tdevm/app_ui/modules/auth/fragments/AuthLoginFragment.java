@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import javax.inject.Inject;
@@ -49,8 +50,10 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
     @Inject
     PreferenceUtils preferenceUtils;
 
-    @BindView(R.id.et_login_phone_number)
-    EditText loginPhone;
+    @BindView(R.id.tv_login_phone_number)
+    TextView loginPhoneNumber;
+
+
     @BindView(R.id.et_login_password)
     EditText loginPassword;
     @BindView(R.id.btn_login)
@@ -103,9 +106,8 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
         authenticationActivity = (AuthenticationActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_auth_login, container, false);
         unbinder = ButterKnife.bind(this, view);
-        loginPhone.setText(getString(R.string.otp_sent_mobile_number, String.valueOf(phoneNumber)));
-        loginPhone.setFocusable(false);
-        loginPhone.setClickable(false);
+        loginPhoneNumber.setText(getString(R.string.otp_sent_mobile_number, String.valueOf(phoneNumber)));
+
         return view;
     }
 
@@ -146,9 +148,9 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
         String tableShortId = restaurant.getRestaurant_uuid() + "_" + table.getTable_number();
         preferenceUtils.saveDineQRTransaction(restaurant.getRestaurant_id(), restaurant.getRestaurant_uuid(), table.getRestaurant_table_id(), tableShortId, MODE_DINE_IN);
         // Check payment
-        if(tOrder.getClosed()){
+        if (tOrder.getClosed()) {
             authLoginPresenter.fetchClosedOrder(tOrder.getOrderId());
-        }else {
+        } else {
             authenticationActivity.showDineActivity(restaurant);
             authenticationActivity.finish();
         }

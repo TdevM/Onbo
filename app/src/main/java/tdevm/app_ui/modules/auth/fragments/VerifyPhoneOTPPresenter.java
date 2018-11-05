@@ -67,7 +67,7 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
 
             @Override
             public void onComplete() {
-
+                authOTPView.hideProgressUI();
             }
         });
 
@@ -82,6 +82,7 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
             @Override
             public void onSubscribe(@NonNull Disposable d) {
               compositeDisposable.add(d);
+              authOTPView.showProgressUI();
             }
 
             @Override

@@ -105,7 +105,7 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
 
     public void startPayment(FOrder fOrder) {
         Checkout checkout = new Checkout();
-        checkout.setImage(R.drawable.done);
+        //checkout.setImage(R.drawable.done);
         fOrderDigital = fOrder;
         final Activity activity = this;
         if (fOrder != null) {

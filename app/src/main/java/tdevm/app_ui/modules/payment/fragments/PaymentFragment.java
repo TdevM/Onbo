@@ -170,7 +170,7 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
 
     public void startPayment() {
         Checkout checkout = new Checkout();
-        checkout.setImage(R.drawable.done);
+        //checkout.setImage(R.drawable.done);
         final Activity activity = getActivity();
         if (fOrder != null) {
             try {

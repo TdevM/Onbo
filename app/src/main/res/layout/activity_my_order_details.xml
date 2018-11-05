@@ -200,7 +200,7 @@
                             android:layout_marginTop="@dimen/size_8_dp"
 
                             android:contentDescription="@string/image_design_random"
-                            app:srcCompat="@drawable/ic_filled_circle_preparing" />
+                             />
 
                         <TextView
                             android:id="@+id/tv_my_order_details_order_status"

@@ -6,7 +6,7 @@
     android:background="@color/white"
     tools:context="tdevm.app_ui.modules.dinein.fragments.InitializeOrderFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
 
     <Button
         android:id="@+id/btn_temp_order_init"

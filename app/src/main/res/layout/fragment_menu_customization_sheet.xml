@@ -6,7 +6,6 @@
     android:orientation="vertical"
     tools:context=".modules.dinein.bottomsheets.section_r_view.MenuItemCustomizationSheet">
 
-    <!-- TODO: Update blank fragment layout -->
 
 
     <android.support.v7.widget.RecyclerView

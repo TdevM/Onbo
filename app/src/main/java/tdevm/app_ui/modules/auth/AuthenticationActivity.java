@@ -44,34 +44,39 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
 
     public void showOTPVerificationFragment(Long phone) {
         VerifyPhoneOTPFragment verifyPhoneOTPFragment = VerifyPhoneOTPFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putLong("PHONE", phone);
         verifyPhoneOTPFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(R.id.frame_layout_auth_activity, verifyPhoneOTPFragment).commit();
+        transaction
+                .replace(R.id.frame_layout_auth_activity, verifyPhoneOTPFragment, "OTP_VERIFICATION")
+                .addToBackStack("OTP_VERIFICATION")
+                .commit();
 
     }
 
     public void showLoginFragment(Long phone) {
         AuthLoginFragment authLoginFragment = AuthLoginFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putLong("PHONE", phone);
         authLoginFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(R.id.frame_layout_auth_activity, authLoginFragment).commit();
+
+        transaction.replace(R.id.frame_layout_auth_activity, authLoginFragment, "LOGIN")
+                .addToBackStack("LOGIN")
+                .commit();
 
     }
 
     public void showRegisterFragment(Long phone) {
         AuthRegisterFragment authRegisterFragment = AuthRegisterFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putLong("PHONE", phone);
         authRegisterFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(R.id.frame_layout_auth_activity, authRegisterFragment).commit();
+
+        transaction.replace(R.id.frame_layout_auth_activity, authRegisterFragment, "REGISTER")
+                .commit();
     }
 
     @Override
@@ -81,12 +86,12 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
 
     //public
 
-    public void showRootActivity(){
+    public void showRootActivity() {
         Intent intent = new Intent(this, RootActivity.class);
         startActivity(intent);
     }
 
-    public void showDinePaymentOptions(FOrder fOrder){
+    public void showDinePaymentOptions(FOrder fOrder) {
         Intent i = new Intent(AuthenticationActivity.this, PaymentActivity.class);
         i.putExtra("PAYMENT_PENDING", true);
         i.putExtra("F_ORDER", fOrder);
@@ -95,10 +100,17 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
         finish();
     }
 
-    public void showDineActivity(Restaurant restaurant){
+    public void showDineActivity(Restaurant restaurant) {
         Intent i = new Intent(AuthenticationActivity.this, DineInActivity.class);
-        i.putExtra("RESTAURANT",restaurant);
+        i.putExtra("RESTAURANT", restaurant);
         startActivity(i);
+    }
+
+    public void showTNCContent(String title, int value) {
+        Intent intent = new Intent(AuthenticationActivity.this, AuthTnCActivity.class);
+        intent.putExtra("TITLE", title);
+        intent.putExtra("VALUE", value);
+        startActivity(intent);
     }
 
 }

@@ -1,170 +1,168 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_7"
     android:orientation="vertical"
-    tools:context="tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment">
+    tools:context="tdevm.app_ui.modules.auth.AuthenticationActivity">
 
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignBaseline="@id/imageView7"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/imageView7"
-        android:contentDescription="@string/otp_message"
-        app:srcCompat="@drawable/otp_2xxhdpi" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout_fragment_verify_otp"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/textView13"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="false"
-        android:layout_marginTop="@dimen/size_16_dp"
-        android:orientation="vertical"
-        android:weightSum="5">
-
-
-        <TextView
-            android:id="@+id/textView_please_wait"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/size_16_dp"
-            android:layout_marginEnd="@dimen/size_16_dp"
-            android:layout_marginBottom="@dimen/size_8_dp"
-            android:layout_weight="1"
-            android:paddingEnd="0dp"
-            android:paddingRight="0dp"
-            android:text="@string/please_wait_for_otp_complete"
-            android:textColor="@color/sub_heading_color" />
-
-        <TextView
-            android:id="@+id/tv_otp_mobile_number"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/size_16_dp"
-            android:layout_marginEnd="@dimen/size_16_dp"
-            android:layout_marginBottom="@dimen/size_8_dp"
-            android:layout_weight="1"
-            android:paddingEnd="0dp"
-            android:paddingRight="0dp"
-            android:text="@string/otp_sent_mobile_number"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/et_otp_view"
-            style="@style/Widget.AppCompat.EditText"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/size_16_dp"
-            android:layout_marginEnd="@dimen/size_16_dp"
-            android:layout_weight="1"
-            android:autofillHints=""
-            android:fontFamily="monospace"
-            android:hint="@string/enter_6_digit_code"
-            android:inputType="number"
-            android:paddingEnd="0dp"
-            android:paddingRight="0dp"
-            android:textAlignment="gravity"
-            android:textSize="14sp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/size_16_dp"
-            android:layout_marginEnd="@dimen/size_16_dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/ll_2_register_image_set"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="0dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/image_design_random"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/otp_1xxhdpi" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignBottom="@+id/imageView3"
+                    android:layout_alignParentTop="false"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="0dp"
+                    android:adjustViewBounds="false"
+                    android:contentDescription="@string/image_design_random"
+                    android:scaleType="fitEnd"
+                    app:srcCompat="@drawable/otp_2xxhdpi" />
+
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingEnd="0dp"
-                android:paddingRight="0dp"
-                android:text="@string/didnt_got_otp" />
+                android:layout_marginStart="@dimen/size_16_dp"
+                android:layout_marginTop="@dimen/default_space_32"
+                android:layout_marginEnd="@dimen/size_16_dp"
+                android:text="@string/verification"
+                android:textColor="@color/heading_color"
+                android:textSize="24sp" />
 
-            <Button
-                android:id="@+id/btn_otp_resend_otp"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearLayout_fragment_verify_otp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_8_dp"
                 android:layout_marginTop="@dimen/size_16_dp"
-                android:text="@string/resend_otp"
-                android:textColor="@color/primary_default_app" />
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/textView_please_wait"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_16_dp"
+                    android:layout_marginEnd="@dimen/size_16_dp"
+                    android:layout_marginBottom="@dimen/size_8_dp"
+                    android:text="@string/please_wait_for_otp_complete"
+                    android:textColor="@color/sub_heading_color" />
+
+                <TextView
+                    android:id="@+id/tv_otp_mobile_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_16_dp"
+                    android:layout_marginEnd="@dimen/size_16_dp"
+                    android:layout_marginBottom="@dimen/size_8_dp"
+                    android:text="@string/otp_sent_mobile_number"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_otp_view"
+                    style="@style/Widget.AppCompat.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_16_dp"
+                    android:layout_marginEnd="@dimen/size_16_dp"
+                    android:fontFamily="monospace"
+                    android:hint="@string/enter_6_digit_code"
+                    android:inputType="number"
+
+                    android:textAlignment="gravity"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_16_dp"
+                    android:layout_marginTop="@dimen/size_8_dp"
+                    android:layout_marginEnd="@dimen/size_16_dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_16_dp"
+                        android:text="@string/didnt_got_otp" />
+
+                    <Button
+                        android:id="@+id/btn_otp_resend_otp"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_8_dp"
+                        android:layout_marginTop="@dimen/size_16_dp"
+                        android:text="@string/resend_otp"
+                        android:textColor="@color/primary_default_app" />
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 
-    <Button
-        android:id="@+id/btn_otp_verify_mobile"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/gradient_6"
-        android:text="@string/verify_number"
-        android:textAllCaps="false"
-        android:textColor="@color/white" />
+        android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/progressBar_otp_view"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="519dp"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/textView13"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView7"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentTop="false"
-        android:layout_marginStart="@dimen/size_16_dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="@dimen/default_space_32"
-        android:layout_marginEnd="@dimen/size_16_dp"
-        android:text="@string/verification"
-        android:textColor="@color/heading_color"
-        android:textSize="24sp" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/default_width_64"
-        android:scaleType="fitEnd"
-        android:src="@drawable/otp_3xxhdpi" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:scaleType="fitStart"
-        android:src="@drawable/otp_1xxhdpi"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="0dp" />
+        <Button
+            android:id="@+id/btn_otp_verify_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/gradient_6"
+            android:text="@string/verify_number"
+            android:textColor="@color/white" />
 
 
-</RelativeLayout>
+        <ProgressBar
+            android:id="@+id/progressBar_otp_view"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="0dp"
+            android:visibility="invisible" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

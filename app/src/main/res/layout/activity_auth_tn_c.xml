@@ -7,9 +7,10 @@
     tools:context=".modules.account.activities.HelpSupportActivity">
 
     <FrameLayout
-        android:id="@+id/frame_layout_help_n_support"
+        android:id="@+id/frame_layout_auth_t_n_c"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent">
+    </FrameLayout>
 
 
 </LinearLayout>

@@ -6,7 +6,6 @@
     android:orientation="vertical"
     tools:context="tdevm.app_ui.modules.dinein.fragments.CartFragment">
 
-    <!-- TODO: Update blank fragmlayout_inc_decyout -->
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
