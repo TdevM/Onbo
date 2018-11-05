@@ -19,6 +19,7 @@ import javax.inject.Inject;
 
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.ScrollingActivity;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;

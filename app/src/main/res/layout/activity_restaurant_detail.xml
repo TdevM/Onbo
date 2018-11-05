@@ -53,14 +53,15 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view_res_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="false"
+        android:fitsSystemWindows="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
@@ -79,87 +80,25 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/size_8_dp">
-
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:src="@drawable/rupee_fillxxhdpi" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/size_8_dp"
-                                    android:text="400 For two"
-                                    android:textSize="12sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/size_8_dp">
-
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:src="@drawable/qr_fillxxhdpi" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/size_8_dp"
-                                    android:text="QR Enabled"
-                                    android:textSize="12sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:src="@drawable/res_fillxxhdpi" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/size_8_dp"
-                                    android:text="Dine in"
-                                    android:textSize="12sp" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/size_16_dp">
+                            android:layout_height="wrap_content">
 
                             <TextView
                                 android:id="@+id/tv_restaurant_name"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
+                                android:layout_alignParentEnd="true"
                                 android:layout_marginStart="@dimen/size_8_dp"
                                 android:layout_marginTop="@dimen/size_4_dp"
+                                android:layout_marginEnd="@dimen/default_width_64"
                                 android:ellipsize="end"
-                                android:maxLines="1"
+                                android:maxLines="2"
                                 android:text="TdevM's Palace"
                                 android:textColor="@color/heading_color"
-                                android:textSize="16dp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/tv_restaurant_cuisine"
@@ -169,7 +108,7 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginStart="@dimen/size_8_dp"
-                                android:layout_marginTop="@dimen/size_8_dp"
+                                android:layout_marginTop="@dimen/size_16_dp"
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="Italian"
@@ -189,12 +128,14 @@
                                 android:maxLines="1"
                                 android:text="Hudson Lane, GTB Nagar"
                                 android:textColor="@color/sub_heading_color_light"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/tv_restaurant_rating_start"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+
                                 android:layout_alignTop="@+id/tv_restaurant_name"
                                 android:layout_marginTop="0dp"
                                 android:layout_marginEnd="@dimen/size_8_dp"
@@ -203,15 +144,15 @@
                                 android:maxLines="1"
                                 android:text="4.2"
                                 android:textColor="@color/heading_color"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
 
                             <ImageView
                                 android:id="@+id/imageView15"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_alignBottom="@+id/tv_restaurant_name"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
                                 android:layout_alignParentEnd="true"
+                                android:layout_marginTop="@dimen/size_4_dp"
                                 app:srcCompat="@drawable/ic_star" />
 
 
@@ -233,8 +174,80 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_16_dp"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/size_8_dp"
+                            android:layout_marginEnd="@dimen/size_8_dp"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/rupee_fillxxhdpi" />
+
+                            <TextView
+                                android:id="@+id/tv_cost_for_two"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/size_8_dp"
+                                android:text="400 For two"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/size_8_dp"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/qr_fillxxhdpi" />
+
+                            <TextView
+                                android:id="@+id/tv_qr_enabled"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/size_8_dp"
+                                android:text="QR Enabled"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/res_fillxxhdpi" />
+
+                            <TextView
+                                android:id="@+id/tv_self_ordering"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/size_8_dp"
+                                android:text="Dine in"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_16_dp"
                         android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <Button
                             android:layout_width="0dp"
@@ -262,31 +275,24 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_restaurant_menu"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
-    <RelativeLayout
+
+
+    <Button
+        android:id="@+id/btn_res_detail_start_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-
-        <Button
-            android:id="@+id/btn_res_detail_start_order"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="bottom"
-            android:background="@drawable/gradient_6"
-            android:text="Start Order"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
-    </RelativeLayout>
+        android:layout_gravity="bottom"
+        android:background="@drawable/gradient_6"
+        android:text="Start Order"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
 
 
 </android.support.design.widget.CoordinatorLayout>

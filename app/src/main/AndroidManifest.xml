@@ -21,11 +21,11 @@
     <application
         android:name=".AppApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.gms.version"
@@ -100,18 +100,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".modules.account.activities.ChangePasswordActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".modules.account.activities.EditAccountDetailsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".modules.account.activities.FavouritesActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".modules.account.activities.HelpSupportActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".modules.account.activities.AboutActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".modules.orders.fragments.MyOrderDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".modules.account.activities.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.account.activities.EditAccountDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.account.activities.FavouritesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.account.activities.HelpSupportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.account.activities.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.orders.fragments.MyOrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

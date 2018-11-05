@@ -21,6 +21,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="collapsingToolbarLayoutTitleColor" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/primary_default_app</item>
+    </style>
+
+    <style name="collapsingToolbarLayoutTitleWhite" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
         <item name="android:textColor">@android:color/holo_orange_dark</item>
     </style>
@@ -52,13 +64,15 @@
     </style>
 
     <style name="dividerBase">
-        <item name="android:background">?android:attr/listDivider</item> //you can give your color here. that will change all divider color in your app.
+        <item name="android:background">?android:attr/listDivider</item>
+        //you can give your color here. that will change all divider color in your app.
     </style>
 
 
     <style name="dividerHorizontal" parent="dividerBase">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item> // You can change thickness here.
+        <item name="android:layout_height">1dp</item>
+        // You can change thickness here.
 
     </style>
 </resources>

@@ -9,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.inject.Inject;
 
@@ -23,6 +25,7 @@ import butterknife.OnClick;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
+import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
 import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
 import tdevm.app_ui.root.NavigationHomeViewContract;
@@ -48,6 +51,25 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Navig
     @Inject
     RestaurantDetailPresenter presenter;
 
+
+    @BindView(R.id.tv_restaurant_name)
+    TextView restaurantAddress;
+
+
+    @BindView(R.id.tv_restaurant_cuisine)
+    TextView restaurantCuisines;
+
+    @BindView(R.id.tv_restaurant_rating_start)
+    TextView starRating;
+
+    @BindView(R.id.tv_cost_for_two)
+    TextView costForTwo;
+
+    @BindView(R.id.tv_self_ordering)
+    TextView selfOrdering;
+
+    @BindView(R.id.tv_qr_enabled)
+    TextView qrEnabled;
 
     @OnClick(R.id.btn_res_detail_start_order)
     void startScan(){
@@ -83,6 +105,31 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Navig
         if (restaurant != null) {
             presenter.fetchMenuItems(restaurant);
             collapsingToolbarLayout.setTitle(restaurant.getRestaurant_name());
+            collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleWhite);
+            collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleColor);
+
+            restaurantAddress.setText(restaurant.getAddress_complete());
+            costForTwo.setText(String.format("%s for two", String.valueOf(restaurant.getAvg_cost_for_two())));
+            if (restaurant.getRating() != null) {
+                Double d = Double.parseDouble(restaurant.getRating().getRestaurant_avg_rating());
+                double roundOff = Math.round(d * 100.0) / 100.0;
+                starRating.setText(String.valueOf(roundOff));
+            }
+            if (restaurant.getQr_active()) {
+               qrEnabled.setText("QR Active");
+            } else {
+                qrEnabled.setText("QR Inactive");
+            }
+            if (restaurant.getCuisines() != null) {
+                restaurantCuisines.setText(generateCuisineSlug(restaurant.getCuisines()));
+            }
+            if(restaurant.getRestaurant_mode()!=null){
+                if(restaurant.getRestaurant_mode().equals("DINE_IN")){
+                    selfOrdering.setText(this.getString(R.string.dine_id));
+                }else {
+                    selfOrdering.setText(this.getString(R.string.quick_serve));
+                }
+            }
 
             Glide.with(this).load(restaurant.getImage()).into(imageViewRestaurant);
         }
@@ -119,5 +166,16 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Navig
     public void resolveDaggerDependencies() {
         ((AppApplication) getApplication()).getApiComponent().inject(this);
 
+    }
+
+    public String generateCuisineSlug(List<Cuisine> cuisines) {
+        ListIterator<Cuisine> cuisineListIterator = cuisines.listIterator();
+        StringBuilder stringBuilder = new StringBuilder();
+        while (cuisineListIterator.hasNext()) {
+            Cuisine cuisine = cuisineListIterator.next();
+            stringBuilder.append(cuisine.getCuisine_name());
+            stringBuilder.append(", ");
+        }
+        return stringBuilder.toString();
     }
 }

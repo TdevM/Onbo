@@ -50,9 +50,11 @@ public class Restaurant implements Parcelable {
         restaurant_mode = in.readString();
         opens_at = in.readString();
         closes_at = in.readString();
+        rating = in.readParcelable(Rating.class.getClassLoader());
         byte tmpQr_active = in.readByte();
         qr_active = tmpQr_active == 0 ? null : tmpQr_active == 1;
         address_complete = in.readString();
+        cuisines = in.createTypedArrayList(Cuisine.CREATOR);
     }
 
     public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
@@ -120,8 +122,10 @@ public class Restaurant implements Parcelable {
         dest.writeString(restaurant_mode);
         dest.writeString(opens_at);
         dest.writeString(closes_at);
+        dest.writeParcelable(rating, flags);
         dest.writeByte((byte) (qr_active == null ? 0 : qr_active ? 1 : 2));
         dest.writeString(address_complete);
+        dest.writeTypedList(cuisines);
     }
 
 
@@ -147,18 +151,7 @@ public class Restaurant implements Parcelable {
         }
     }
 
-    public class Rating{
-        private String restaurant_avg_rating;
 
-
-        public String getRestaurant_avg_rating() {
-            return restaurant_avg_rating;
-        }
-
-        public void setRestaurant_avg_rating(String restaurant_avg_rating) {
-            this.restaurant_avg_rating = restaurant_avg_rating;
-        }
-    }
 
 
 

@@ -79,6 +79,8 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
 
     }
 
+    //public
+
     public void showRootActivity(){
         Intent intent = new Intent(this, RootActivity.class);
         startActivity(intent);
