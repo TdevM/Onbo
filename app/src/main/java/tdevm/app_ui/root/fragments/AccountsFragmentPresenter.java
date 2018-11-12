@@ -37,49 +37,48 @@ public class AccountsFragmentPresenter extends BasePresenter implements Navigati
     }
 
 
-
     @Override
     public void attachView(NavigationHomeViewContract.AccountsFragmentView view) {
-       this.fragmentView = view;
+        this.fragmentView = view;
     }
 
     @Override
     public void fetchUser() {
-      Observable<Response<UserApp>> appObservable = apiService.fetchUser(preferenceUtils.getAuthLoginToken());
-      subscribe(appObservable, new Observer<Response<UserApp>>() {
-          @Override
-          public void onSubscribe(Disposable d) {
-              compositeDisposable.add(d);
-              fragmentView.showProgressUI();
-          }
+        Observable<Response<UserApp>> appObservable = apiService.fetchUser("Bearer " + preferenceUtils.getAuthLoginToken());
+        subscribe(appObservable, new Observer<Response<UserApp>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+                fragmentView.showProgressUI();
+            }
 
-          @Override
-          public void onNext(Response<UserApp> userAppResponse) {
-              if(userAppResponse.isSuccessful()){
-                  if(userAppResponse.body()!=null){
-                      fragmentView.onUserFetched(userAppResponse.body());
-                  }
-              }else {
-                  fragmentView.onUserFetchFailure();
-              }
-          }
+            @Override
+            public void onNext(Response<UserApp> userAppResponse) {
+                if (userAppResponse.isSuccessful()) {
+                    if (userAppResponse.body() != null) {
+                        fragmentView.onUserFetched(userAppResponse.body());
+                    }
+                } else {
+                    fragmentView.onUserFetchFailure();
+                }
+            }
 
-          @Override
-          public void onError(Throwable e) {
-              fragmentView.onUserFetchFailure();
-          }
+            @Override
+            public void onError(Throwable e) {
+                fragmentView.onUserFetchFailure();
+            }
 
-          @Override
-          public void onComplete() {
-              fragmentView.hideProgressUI();
-          }
-      });
+            @Override
+            public void onComplete() {
+                fragmentView.hideProgressUI();
+            }
+        });
     }
 
 
     @Override
     public void fetchUserEdit() {
-        Observable<Response<UserApp>> appObservable = apiService.fetchUser(preferenceUtils.getAuthLoginToken());
+        Observable<Response<UserApp>> appObservable = apiService.fetchUser("Bearer " + preferenceUtils.getAuthLoginToken());
         subscribe(appObservable, new Observer<Response<UserApp>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -88,11 +87,11 @@ public class AccountsFragmentPresenter extends BasePresenter implements Navigati
 
             @Override
             public void onNext(Response<UserApp> userAppResponse) {
-                if(userAppResponse.isSuccessful()){
-                    if(userAppResponse.body()!=null){
+                if (userAppResponse.isSuccessful()) {
+                    if (userAppResponse.body() != null) {
                         fragmentView.allowEdit(userAppResponse.body());
                     }
-                }else {
+                } else {
                     fragmentView.onUserFetchFailure();
                 }
             }
@@ -111,7 +110,7 @@ public class AccountsFragmentPresenter extends BasePresenter implements Navigati
 
     @Override
     public void logOutUser() {
-      fragmentView.onLoggedOut();
+        fragmentView.onLoggedOut();
     }
 
     @Override

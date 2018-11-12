@@ -40,7 +40,7 @@ public class PaymentActivityPresenter extends BasePresenter implements PaymentPr
     @Override
     public void captureOrderPayment(String paymentId, String orderId) {
         PaymentCapture capture = new PaymentCapture(orderId,paymentId, preferenceUtils.getScannedRestaurantId());
-        Observable<Response<FOrder>> observable = apiService.payOrder(preferenceUtils.getAuthLoginToken(), capture);
+        Observable<Response<FOrder>> observable = apiService.payOrder("Bearer "+ preferenceUtils.getAuthLoginToken(), capture);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

@@ -51,7 +51,7 @@ public class MenuItemsPresenter extends BasePresenter
 
     @Override
     public void fetchMenuItemsByCuisine(Map<String, String> map) {
-        Observable<ArrayList<MenuItem>> dishesOfCuisineObservable = apiService.fetchMenuItemsByCuisine(preferenceUtils.getAuthLoginToken(), map);
+        Observable<ArrayList<MenuItem>> dishesOfCuisineObservable = apiService.fetchMenuItemsByCuisine("Bearer " + preferenceUtils.getAuthLoginToken(), map);
         subscribe(dishesOfCuisineObservable, new Observer<ArrayList<MenuItem>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -77,7 +77,7 @@ public class MenuItemsPresenter extends BasePresenter
 
     @Override
     public void fetchMenuItems(Map<String, String> map) {
-        Observable<Response<List<CuisineMenuItems>>> cuisineItem = apiService.fetchMenuItems(preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<List<CuisineMenuItems>>> cuisineItem = apiService.fetchMenuItems("Bearer " + preferenceUtils.getAuthLoginToken(), map);
         subscribe(cuisineItem, new Observer<Response<List<CuisineMenuItems>>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -87,13 +87,13 @@ public class MenuItemsPresenter extends BasePresenter
 
             @Override
             public void onNext(Response<List<CuisineMenuItems>> listResponse) {
-                Log.d(TAG,"SUccess response");
-                if (listResponse.isSuccessful()){
-                    if(listResponse.code() == 200){
+                Log.d(TAG, "SUccess response");
+                if (listResponse.isSuccessful()) {
+                    if (listResponse.code() == 200) {
                         singleCuisineGridView.onMenuItemsFetchedV2(listResponse.body());
-                        Log.d(TAG,"Presenter fetch menu V2");
+                        Log.d(TAG, "Presenter fetch menu V2");
                     }
-                }else {
+                } else {
                     singleCuisineGridView.onMenuItemFetchFailure();
                 }
             }
@@ -197,7 +197,6 @@ public class MenuItemsPresenter extends BasePresenter
     public void onCartItemAdded() {
         logSelections();
     }
-
 
 
     @Override

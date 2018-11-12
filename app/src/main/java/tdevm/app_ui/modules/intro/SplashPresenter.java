@@ -56,7 +56,7 @@ public class SplashPresenter extends BasePresenter implements IntroPresenterCont
     public void checkCurrentOrderDetails() {
         Log.d(TAG, "Checking order...");
         Map<String, String> map = new HashMap<>();
-        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(utils.getAuthLoginToken(), map);
+        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder("Bearer " + utils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -91,11 +91,11 @@ public class SplashPresenter extends BasePresenter implements IntroPresenterCont
     }
 
     @Override
-    public void fetchClosedOrder(String tOrderId){
-        Map<String,String> map = new HashMap<>();
+    public void fetchClosedOrder(String tOrderId) {
+        Map<String, String> map = new HashMap<>();
         map.put("restaurant_id", utils.getScannedRestaurantId());
         map.put("t_order_id", tOrderId);
-        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder(utils.getAuthLoginToken(),map);
+        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer " + utils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -104,11 +104,11 @@ public class SplashPresenter extends BasePresenter implements IntroPresenterCont
 
             @Override
             public void onNext(Response<FOrder> fOrderResponse) {
-                if(fOrderResponse.isSuccessful()){
-                    if(fOrderResponse.body()!=null){
+                if (fOrderResponse.isSuccessful()) {
+                    if (fOrderResponse.body() != null) {
                         splashView.onFOrderFetched(fOrderResponse.body());
                     }
-                }else {
+                } else {
                     splashView.onFOrderFetchFailure();
                 }
             }

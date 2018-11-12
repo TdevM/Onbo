@@ -132,6 +132,7 @@
     <string name="intro_text_2_head">Scan QR to order and pay within seconds</string>
     <string name="intro_text_2">No more queues at the restaurant</string>
     <string name="intro_text_3_2">Sit back, and relax \n your food will be there on your table</string>
+    <string name="intro_text_4_2">Dine in to thousands of restaurants with just one app</string>
     <string name="intro_text_3">Scan the QR to order</string>
     <string name="how_many_of_you_are_here_today">How many of you are here today?</string>
     <string name="help_n_support"><![CDATA[Help & Support]]></string>
@@ -187,6 +188,7 @@
 
     <string name="self_ordering_is_here">Self Ordering is here</string>
     <string name="order_from_your_table">Order from your table</string>
+    <string name="dine_into_thousand">1 App. 1000s of Restaurants.</string>
     <string name="finish">Finish</string>
     <string name="please_keep_cash_ready">Please keep cash ready</string>
     <string name="to_pay_cash_pick">To pay</string>

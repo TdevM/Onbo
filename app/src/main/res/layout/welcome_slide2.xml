@@ -46,6 +46,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/default_space_32"
+            android:layout_marginEnd="@dimen/default_space_32"
             android:contentDescription="@string/image_design_random"
             app:srcCompat="@drawable/ic_intros_2_new_updated" />
 
@@ -86,7 +88,7 @@
             android:layout_below="@id/tv_intro_2_2"
             android:layout_alignParentStart="false"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/size_8_dp"
+
             android:maxLines="1"
             android:text="@string/intro_text_2_head"
             android:textAlignment="center"

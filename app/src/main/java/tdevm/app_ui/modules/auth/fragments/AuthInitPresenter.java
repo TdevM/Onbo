@@ -51,10 +51,10 @@ public class AuthInitPresenter extends BasePresenter implements AuthPresenterCon
             public void onNext(@NonNull Response<Object> response) {
                 authInitView.hideProgressUI();
                 if(response!=null){
-                    if(response.code() == 206){
+                    if(response.code() == 200){
                         Log.d(TAG,"data: "+response.body());
                         authInitView.showLoginFragment(phone);
-                    }else if(response.code() ==200){
+                    }else if(response.code() ==206){
                         Log.d(TAG,response.body().toString());
                         authInitView.showOTPVerificationScreen(phone);
                     }

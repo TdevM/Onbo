@@ -108,7 +108,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
         view.showGettingMenu();
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_uuid", qrObjectRestaurant.getUuid());
-        Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map, preferenceUtils.getAuthLoginToken());
+        Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map, "Bearer "+preferenceUtils.getAuthLoginToken());
         subscribe(observable, new Observer<Response<Restaurant>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -172,7 +172,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
         Map<String, String> getRestData = new HashMap<>();
         getRestData.put("short_id", qrObjectRestaurant.getUuid() + "_" + qrObjectRestaurant.getData().getTable());
         getRestData.put("restaurant_uuid", qrObjectRestaurant.getUuid());
-        Observable<Response<RestaurantTable>> observable = apiService.verifyTableVacancy(preferenceUtils.getAuthLoginToken(), getRestData);
+        Observable<Response<RestaurantTable>> observable = apiService.verifyTableVacancy("Bearer "+preferenceUtils.getAuthLoginToken(), getRestData);
         subscribe(observable, new Observer<Response<RestaurantTable>>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
@@ -209,7 +209,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
         view.showGettingMenu();
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_uuid", qrObjectRestaurant.getUuid());
-        Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map, preferenceUtils.getAuthLoginToken());
+        Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map, "Bearer "+preferenceUtils.getAuthLoginToken());
         subscribe(observable, new Observer<Response<Restaurant>>() {
             @Override
             public void onSubscribe(Disposable d) {

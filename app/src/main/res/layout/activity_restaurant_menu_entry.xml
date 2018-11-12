@@ -33,8 +33,9 @@
                     android:id="@+id/imageView28"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_space_32"
                     android:layout_marginTop="@dimen/default_width_64"
-                    android:layout_marginEnd="0dp"
+                    android:layout_marginEnd="@dimen/default_space_32"
                     app:srcCompat="@drawable/location_askxxhdpi" />
 
 
@@ -113,8 +114,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
+                    android:layout_marginStart="@dimen/default_space_32"
                     android:layout_marginTop="@dimen/default_space_48"
-                    android:layout_marginEnd="0dp"
+                    android:layout_marginEnd="@dimen/default_space_32"
                     app:srcCompat="@drawable/location_verifyxxhdpi" />
 
             </LinearLayout>
@@ -235,7 +237,9 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_space_32"
                     android:layout_marginTop="@dimen/default_space_48"
+                    android:layout_marginEnd="@dimen/default_space_32"
                     android:src="@drawable/err_locationxxhdpi" />
 
 
@@ -334,7 +338,9 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_space_32"
                     android:layout_marginTop="@dimen/default_space_48"
+                    android:layout_marginEnd="@dimen/default_space_32"
                     android:contentDescription="@string/image_design_random"
                     android:src="@drawable/err_qrxxhdpi" />
 
@@ -430,7 +436,9 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_16_dp"
+                    android:layout_marginStart="@dimen/default_space_32"
+                    android:layout_marginTop="@dimen/default_space_48"
+                    android:layout_marginEnd="@dimen/default_space_32"
                     android:src="@drawable/err_table_occupyxxhdpi" />
 
             </LinearLayout>

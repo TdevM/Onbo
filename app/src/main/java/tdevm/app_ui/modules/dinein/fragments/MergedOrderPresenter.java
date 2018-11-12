@@ -43,7 +43,7 @@ public class MergedOrderPresenter extends BasePresenter implements DineInPresent
     public void fetchTempRunningOrder() {
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
-        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -58,7 +58,7 @@ public class MergedOrderPresenter extends BasePresenter implements DineInPresent
                 if (arrayListResponse.isSuccessful()) {
                     view.onRunningOrderFetched(arrayListResponse.body());
                 } else if (arrayListResponse.code() == 404) {
-                     view.showNoRunningOrder();
+                    view.showNoRunningOrder();
                 }
             }
 
@@ -78,7 +78,7 @@ public class MergedOrderPresenter extends BasePresenter implements DineInPresent
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("order_id", tOrder.getOrderId());
-        Observable<Response<MergedOrder>> observable = apiService.fetchMergedOrder(preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<MergedOrder>> observable = apiService.fetchMergedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<MergedOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

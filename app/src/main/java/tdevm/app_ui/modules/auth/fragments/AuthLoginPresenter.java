@@ -59,7 +59,7 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
                     authLoginView.showLoginError();
                 }else if(response.code() ==200){
                     Log.d(TAG,response.body().toString());
-                    preferenceUtils.saveAuthTransaction(response.headers().get("X-auth"),phone,true);
+                    preferenceUtils.saveAuthTransaction(response.headers().get("Authorization"),phone,true);
                     authLoginView.loginSuccess();
 
                 }
@@ -86,7 +86,7 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
     public void checkCurrentOrderDetails() {
         Log.d(TAG, "Checking order...");
         Map<String, String> map = new HashMap<>();
-        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder("Bearer "+preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -127,7 +127,7 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
         Map<String,String> map = new HashMap<>();
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("t_order_id", tOrderId);
-        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder(preferenceUtils.getAuthLoginToken(),map);
+        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer "+preferenceUtils.getAuthLoginToken(),map);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
