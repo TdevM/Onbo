@@ -44,6 +44,10 @@ public interface APIService {
     @POST("m/user/register")
     Observable<Response<Object>> registerUser(@Body User user);
 
+    //User
+    @PATCH("m/user/register")
+    Observable<Response<Object>> registerUserUpdate(@Body User user);
+
     @GET("verify/mobile/otp")
     Observable<Response<Object>> getMobileOTP(@Header("phone") Long phone);
 

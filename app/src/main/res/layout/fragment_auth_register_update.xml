@@ -166,7 +166,7 @@
 
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/textInputLayout"
+                        android:id="@+id/textInputLayout_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/size_8_dp"
@@ -197,12 +197,14 @@
                             android:textSize="14sp" />
 
                         <RadioButton
+                            android:id="@+id/radio_button_gender_male"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/size_16_dp"
                             android:text="@string/male" />
 
                         <RadioButton
+                            android:id="@+id/radio_button_gender_female"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/size_16_dp"
@@ -213,6 +215,16 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/size_16_dp"
                             android:text="@string/others"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tv_choose_gender_error"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/size_16_dp"
+                            android:text="@string/choose_gender"
+                            android:textColor="#F95828"
+                            android:textSize="12sp"
                             android:visibility="gone" />
 
                     </RadioGroup>

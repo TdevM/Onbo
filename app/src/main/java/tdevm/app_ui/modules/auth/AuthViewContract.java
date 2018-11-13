@@ -50,6 +50,15 @@ public interface AuthViewContract {
 
     }
 
+    interface AuthRegisterUpdateView extends BaseView {
+        void showGenericError();
+
+        void emailInUseError();
+
+        void showRegistrationSuccess();
+
+    }
+
     interface AuthOTPView extends BaseView {
         void showOTPSentSuccess();
 

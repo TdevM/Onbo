@@ -81,8 +81,8 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
                 .commit();
     }
 
-    public void showRegisterUdpateFragment(UserApp userApp) {
-        AuthRegisterFragment authRegisterFragment = AuthRegisterUpdate.newInstance();
+    public void showRegisterUpdateFragment(UserApp userApp) {
+        AuthRegisterUpdate authRegisterFragment = AuthRegisterUpdate.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putParcelable("USER", userApp);

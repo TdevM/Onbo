@@ -8,6 +8,7 @@ import tdevm.app_ui.modules.account.activities.EditAccountDetailsActivity;
 import tdevm.app_ui.modules.auth.fragments.AuthInitFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthLoginFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthRegisterFragment;
+import tdevm.app_ui.modules.auth.fragments.AuthRegisterUpdate;
 import tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity;
@@ -77,4 +78,5 @@ public interface APIComponent {
     void inject(ChangePasswordActivity activity);
     void inject(RestaurantDetailActivity activity);
     void inject(InitializeOrderFragment orderFragment);
+    void inject(AuthRegisterUpdate fragment);
 }

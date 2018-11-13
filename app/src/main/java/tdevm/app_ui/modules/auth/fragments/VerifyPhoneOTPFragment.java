@@ -179,7 +179,8 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
 
     @Override
     public void onRegisteredUserFetched(UserApp userApp) {
-        //authenticationActivity
+        authenticationActivity.showRegisterUpdateFragment(userApp);
+        Toast.makeText(authenticationActivity, "Verified!", Toast.LENGTH_SHORT).show();
     }
 
 
