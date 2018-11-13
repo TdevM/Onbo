@@ -1,4 +1,5 @@
 package tdevm.app_ui.modules.auth.fragments;
+
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,12 +27,13 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.APIService;
 
+import tdevm.app_ui.api.models.response.UserApp;
 import tdevm.app_ui.modules.auth.AuthViewContract;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.utils.SMSListener;
 
 //TODO 30 Seconds Resend
-public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract.AuthOTPView, SMSListener.SMSReceived{
+public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract.AuthOTPView, SMSListener.SMSReceived {
 
     public static final String TAG = VerifyPhoneOTPFragment.class.getSimpleName();
     private static final String PHONE = "PHONE";
@@ -58,20 +60,20 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     IntentFilter intentFilter;
 
     @OnClick(R.id.btn_otp_resend_otp)
-    public void onButtonClick(){
-            verifyPhoneOTPPresenter.resendOTP(phoneNumber);
+    public void onButtonClick() {
+        verifyPhoneOTPPresenter.resendOTP(phoneNumber);
     }
 
     @OnClick(R.id.btn_otp_verify_mobile) //Manual verification
-    public void onButtonClickedVerify(){
-       verifyOTP();
+    public void onButtonClickedVerify() {
+        verifyOTP();
     }
 
     public VerifyPhoneOTPFragment() {
         // Required empty public constructor
     }
 
-    public static VerifyPhoneOTPFragment newInstance(){
+    public static VerifyPhoneOTPFragment newInstance() {
 
         return new VerifyPhoneOTPFragment();
     }
@@ -83,7 +85,8 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
             phoneNumber = getArguments().getLong(PHONE);
         }
     }
-    public void resolveDaggerDependencies(){
+
+    public void resolveDaggerDependencies() {
         ((AppApplication) getActivity().getApplication()).getApiComponent().inject(this);
     }
 
@@ -100,21 +103,21 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
         smsListener = new SMSListener();
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
-        View view  = inflater.inflate(R.layout.fragment_verify_phone_otp, container, false);
-        unbinder = ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.fragment_verify_phone_otp, container, false);
+        unbinder = ButterKnife.bind(this, view);
         resolveDaggerDependencies();
-        textViewOTPNumber.setText(getString(R.string.otp_sent_mobile_number,String.valueOf(phoneNumber)));
+        textViewOTPNumber.setText(getString(R.string.otp_sent_mobile_number, String.valueOf(phoneNumber)));
         authenticationActivity = (AuthenticationActivity) getActivity();
-        editTextOTP.setFilters(new InputFilter[] {new InputFilter.LengthFilter(6)});
+        editTextOTP.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
         return view;
     }
 
 
-    public void verifyOTP(){
-        if(TextUtils.isEmpty(editTextOTP.getText())){
-            Toast.makeText(getActivity(), "Enter OTP", Toast.LENGTH_SHORT).show();
-        }else {
-            verifyPhoneOTPPresenter.verifyOTP(phoneNumber,Long.parseLong(editTextOTP.getText().toString()));
+    public void verifyOTP() {
+        if (TextUtils.isEmpty(editTextOTP.getText())) {
+            editTextOTP.setError("Enter OTP");
+        } else {
+            verifyPhoneOTPPresenter.verifyOTP(phoneNumber, Long.parseLong(editTextOTP.getText().toString()));
         }
     }
 
@@ -143,12 +146,13 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(smsListener);
+        verifyPhoneOTPPresenter.detachView();
     }
 
     @Override
     public void hideProgressUI() {
-      progressBarOTP.setVisibility(View.GONE);
-      buttonVerifyOTP.setVisibility(View.VISIBLE);
+        progressBarOTP.setVisibility(View.GONE);
+        buttonVerifyOTP.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -163,25 +167,38 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
 
     @Override
     public void showVerificationFailure() {
-        Toast.makeText(getActivity(), "Incorrect OTP!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Incorrect OTP!", Toast.LENGTH_SHORT).show();
+        editTextOTP.setError("Incorrect OTP");
     }
 
     @Override
-    public void showVerificationSuccess(Long phone) {
+    public void showVerificationSuccessRegister(Long phone) {
         authenticationActivity.showRegisterFragment(phone);
         Toast.makeText(getActivity(), "Verified!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRegisteredUserFetched(UserApp userApp) {
+        //authenticationActivity
+    }
+
+
+    @Override
+    public void showGenericError() {
+        Toast.makeText(authenticationActivity, "Something went wrong! please try again later", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDestroy() {
         verifyPhoneOTPPresenter.detachView();
 //        getActivity().unregisterReceiver(smsListener);
+
         super.onDestroy();
     }
 
     @Override
     public void onSMSReceived(String sender, String body) {
         //Toast.makeText(authenticationActivity, sender+" "+body, Toast.LENGTH_SHORT).show();
-        verifyPhoneOTPPresenter.parseSMS(sender,body,phoneNumber);
+        verifyPhoneOTPPresenter.parseSMS(sender, body, phoneNumber);
     }
 }

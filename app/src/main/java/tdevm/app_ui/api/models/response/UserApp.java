@@ -17,7 +17,7 @@ public class UserApp implements Parcelable {
     private String userName;
     @SerializedName("user_gender")
     @Expose
-    private Object userGender;
+    private String userGender;
     @SerializedName("user_email")
     @Expose
     private String userEmail;
@@ -26,7 +26,7 @@ public class UserApp implements Parcelable {
     private String userMobile;
     @SerializedName("user_username")
     @Expose
-    private Object userUsername;
+    private String userUsername;
     @SerializedName("user_is_verified_email")
     @Expose
     private Boolean userIsVerifiedEmail;
@@ -37,10 +37,19 @@ public class UserApp implements Parcelable {
     @Expose
     private String userImageUrl;
 
+
+    //Update user details
+    public UserApp(String userName, String userEmail) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+    }
+
     protected UserApp(Parcel in) {
         userName = in.readString();
+        userGender = in.readString();
         userEmail = in.readString();
         userMobile = in.readString();
+        userUsername = in.readString();
         byte tmpUserIsVerifiedEmail = in.readByte();
         userIsVerifiedEmail = tmpUserIsVerifiedEmail == 0 ? null : tmpUserIsVerifiedEmail == 1;
         byte tmpUserIsVerifiedMobile = in.readByte();
@@ -60,12 +69,6 @@ public class UserApp implements Parcelable {
         }
     };
 
-    //Update user details
-    public UserApp(String userName, String userEmail) {
-        this.userName = userName;
-        this.userEmail = userEmail;
-    }
-
     public String getUserName() {
         return userName;
     }
@@ -78,9 +81,6 @@ public class UserApp implements Parcelable {
         return userGender;
     }
 
-    public void setUserGender(Object userGender) {
-        this.userGender = userGender;
-    }
 
     public String getUserEmail() {
         return userEmail;
@@ -102,9 +102,6 @@ public class UserApp implements Parcelable {
         return userUsername;
     }
 
-    public void setUserUsername(Object userUsername) {
-        this.userUsername = userUsername;
-    }
 
     public Boolean getUserIsVerifiedEmail() {
         return userIsVerifiedEmail;
@@ -145,6 +142,7 @@ public class UserApp implements Parcelable {
                 '}';
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -153,8 +151,10 @@ public class UserApp implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(userName);
+        dest.writeString(userGender);
         dest.writeString(userEmail);
         dest.writeString(userMobile);
+        dest.writeString(userUsername);
         dest.writeByte((byte) (userIsVerifiedEmail == null ? 0 : userIsVerifiedEmail ? 1 : 2));
         dest.writeByte((byte) (userIsVerifiedMobile == null ? 0 : userIsVerifiedMobile ? 1 : 2));
         dest.writeString(userImageUrl);

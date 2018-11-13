@@ -2,8 +2,11 @@ package tdevm.app_ui.modules.auth.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +57,9 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
     TextView loginPhoneNumber;
 
 
+    @BindView(R.id.textInputLayout_password)
+    TextInputLayout passwordWrapper;
+
     @BindView(R.id.et_login_password)
     EditText loginPassword;
     @BindView(R.id.btn_login)
@@ -64,7 +70,7 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
     @OnClick(R.id.btn_login)
     public void onButtonClick() {
         if (TextUtils.isEmpty(loginPassword.getText())) {
-            Toast.makeText(getActivity(), "Enter password", Toast.LENGTH_SHORT).show();
+            passwordWrapper.setError("Enter your password");
         } else {
             authLoginPresenter.loginUser(phoneNumber, loginPassword.getText().toString());
         }
@@ -107,7 +113,26 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
         View view = inflater.inflate(R.layout.fragment_auth_login, container, false);
         unbinder = ButterKnife.bind(this, view);
         loginPhoneNumber.setText(getString(R.string.otp_sent_mobile_number, String.valueOf(phoneNumber)));
+        loginPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(loginPassword.getText())) {
+                    passwordWrapper.setError("Enter your password");
+                } else {
+                    passwordWrapper.setErrorEnabled(false);
+                }
+            }
+        });
         return view;
     }
 
@@ -133,12 +158,19 @@ public class AuthLoginFragment extends Fragment implements AuthViewContract.Auth
     @Override
     public void showLoginError() {
         loginPassword.setText("");
-        Toast.makeText(getActivity(), "Log in failed.", Toast.LENGTH_SHORT).show();
+        passwordWrapper.setError("Password incorrect");
+        //Toast.makeText(getActivity(), "Password incorrect", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void loginSuccess() {
         authLoginPresenter.checkCurrentOrderDetails();
+    }
+
+    @Override
+    public void showGenericError() {
+        loginPassword.setText("");
+        Toast.makeText(getActivity(), "Something went wrong!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -210,7 +210,11 @@
     <string name="others">Others</string>
     <string name="i_m_a">I\'m a</string>
     <string name="and_experience_the_future_of_ordering">And experience the future of ordering!</string>
+    <string name="please_fill_your_details">Please fill your details to proceed</string>
+
     <string name="phone_number">Phone Number</string>
     <string name="_919560447160">+919560447160</string>
+    <string name="hi_welcome_back">Hi ! Welcome back</string>
+    <string name="choose_gender">Choose gender</string>
 
 </resources>

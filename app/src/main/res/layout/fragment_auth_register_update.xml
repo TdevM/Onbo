@@ -62,7 +62,7 @@
                 android:layout_marginStart="@dimen/size_16_dp"
                 android:layout_marginTop="@dimen/default_space_32"
                 android:layout_marginEnd="@dimen/size_16_dp"
-                android:text="@string/sign_up"
+                android:text="@string/hi_welcome_back"
                 android:textColor="@color/heading_color"
                 android:textSize="24sp" />
 
@@ -73,7 +73,7 @@
                 android:layout_marginStart="@dimen/size_16_dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="@dimen/size_16_dp"
-                android:text="@string/and_experience_the_future_of_ordering"
+                android:text="@string/please_fill_your_details"
                 android:textColor="@color/sub_heading_color"
                 android:textSize="12sp" />
 
@@ -165,11 +165,8 @@
                     </android.support.design.widget.TextInputLayout>
 
 
-
-
-
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/textInputLayout_password"
+                        android:id="@+id/textInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/size_8_dp"
@@ -200,14 +197,12 @@
                             android:textSize="14sp" />
 
                         <RadioButton
-                            android:id="@+id/radio_button_gender_male"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/size_16_dp"
                             android:text="@string/male" />
 
                         <RadioButton
-                            android:id="@+id/radio_button_gender_female"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/size_16_dp"
@@ -219,16 +214,6 @@
                             android:layout_marginStart="@dimen/size_16_dp"
                             android:text="@string/others"
                             android:visibility="gone" />
-
-                        <TextView
-                            android:id="@+id/tv_choose_gender_error"
-                            android:layout_width="wrap_content"
-                            android:layout_marginStart="@dimen/size_16_dp"
-                            android:textSize="12sp"
-                            android:visibility="gone"
-                            android:textColor="#F95828"
-                            android:text="@string/choose_gender"
-                            android:layout_height="wrap_content" />
 
                     </RadioGroup>
 

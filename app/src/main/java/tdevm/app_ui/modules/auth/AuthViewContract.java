@@ -1,5 +1,6 @@
 package tdevm.app_ui.modules.auth;
 
+import tdevm.app_ui.api.models.response.UserApp;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.base.BaseView;
@@ -26,6 +27,8 @@ public interface AuthViewContract {
 
         void loginSuccess();
 
+        void showGenericError();
+
         void onDineOrderRunning(TOrder tOrder);
 
         void onNoDineOrderRunning();
@@ -39,11 +42,12 @@ public interface AuthViewContract {
     }
 
     interface AuthRegisterView extends BaseView {
-        void showRegistrationError(String error);
+        void showGenericError();
+
+        void emailInUseError();
 
         void showRegistrationSuccess();
 
-        void showDuplicationError(String message);
     }
 
     interface AuthOTPView extends BaseView {
@@ -53,7 +57,11 @@ public interface AuthViewContract {
 
         void showVerificationFailure();
 
-        void showVerificationSuccess(Long phone);
+        void showVerificationSuccessRegister(Long phone);
+
+        void onRegisteredUserFetched(UserApp userApp);
+
+        void showGenericError();
     }
 
 }

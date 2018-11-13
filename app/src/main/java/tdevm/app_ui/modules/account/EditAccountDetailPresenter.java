@@ -46,7 +46,7 @@ public class EditAccountDetailPresenter extends BasePresenter implements Account
 
     @Override
     public void updateUser(UserApp userApp) {
-        Observable<Response<Object>> observable = apiService.updateUser("Bearer "+ preferenceUtils.getAuthLoginToken(),userApp);
+        Observable<Response<Object>> observable = apiService.updateUser("Bearer " + preferenceUtils.getAuthLoginToken(), userApp);
         subscribe(observable, new Observer<Response<Object>>() {
             @Override
             public void onSubscribe(Disposable disposable) {
@@ -56,9 +56,9 @@ public class EditAccountDetailPresenter extends BasePresenter implements Account
 
             @Override
             public void onNext(Response<Object> objectResponse) {
-                if(objectResponse.isSuccessful()){
+                if (objectResponse.code() == 200) {
                     editAccountView.onAccountDetailsUpdated(objectResponse.body());
-                }else if(objectResponse.code()!=200){
+                } else {
                     editAccountView.onAccountDetailsUpdateFailure();
                 }
             }

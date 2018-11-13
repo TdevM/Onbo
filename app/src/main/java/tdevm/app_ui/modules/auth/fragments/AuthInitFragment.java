@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -46,6 +49,16 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     Unbinder unbinder;
     private AuthInitInteractionListener mListener;
 
+    private static final String PHONE_PATTERN = "^[6-9]\\d{9}$";
+    private Pattern pattern = Pattern.compile(PHONE_PATTERN);
+    private Matcher matcher;
+
+    public boolean validatePhone(String phone) {
+        matcher = pattern.matcher(phone);
+        return matcher.matches();
+    }
+
+
     @Inject
     AuthInitPresenter authInitPresenter;
 
@@ -60,7 +73,9 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     @OnClick(R.id.btn_login_next)
     public void onButtonClick() {
         if (TextUtils.isEmpty(phoneNumberInit.getText())) {
-            Toast.makeText(getActivity(), "Enter phone number", Toast.LENGTH_SHORT).show();
+            phoneNumberInit.setError("Enter a valid 10 digit number");
+        } else if (!validatePhone(phoneNumberInit.getText().toString())) {
+            phoneNumberInit.setError("Enter a valid 10 digit number");
         } else {
             AuthInitFragmentPermissionsDispatcher.sendOTPDetectSMSWithPermissionCheck(this);
         }
@@ -99,8 +114,8 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
         View view = inflater.inflate(R.layout.fragment_auth_init, container, false);
         unbinder = ButterKnife.bind(this, view);
         phoneNumberInit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
-       // final Animation myAnim = AnimationUtils.loadAnimation(getContext(), R.anim.cycle7);
-       // btnLoginInit.startAnimation(myAnim);
+        // final Animation myAnim = AnimationUtils.loadAnimation(getContext(), R.anim.cycle7);
+        // btnLoginInit.startAnimation(myAnim);
         return view;
     }
 
@@ -130,7 +145,7 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
 
     @Override
     public void showError() {
-
+        Toast.makeText(authenticationActivity, "Something went wrong!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -13,11 +13,13 @@ import android.view.WindowManager;
 
 import tdevm.app_ui.R;
 
+import tdevm.app_ui.api.models.response.UserApp;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.modules.auth.fragments.AuthInitFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthLoginFragment;
 import tdevm.app_ui.modules.auth.fragments.AuthRegisterFragment;
+import tdevm.app_ui.modules.auth.fragments.AuthRegisterUpdate;
 import tdevm.app_ui.modules.auth.fragments.VerifyPhoneOTPFragment;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.intro.SplashActivity;
@@ -73,6 +75,17 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putLong("PHONE", phone);
+        authRegisterFragment.setArguments(bundle);
+
+        transaction.replace(R.id.frame_layout_auth_activity, authRegisterFragment, "REGISTER")
+                .commit();
+    }
+
+    public void showRegisterUdpateFragment(UserApp userApp) {
+        AuthRegisterFragment authRegisterFragment = AuthRegisterUpdate.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("USER", userApp);
         authRegisterFragment.setArguments(bundle);
 
         transaction.replace(R.id.frame_layout_auth_activity, authRegisterFragment, "REGISTER")

@@ -2,9 +2,14 @@ package tdevm.app_ui.modules.account.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -21,18 +26,31 @@ import tdevm.app_ui.modules.account.ChangePasswordPresenter;
 
 public class ChangePasswordActivity extends AppCompatActivity implements AccountViewContract.ChangePasswordView {
 
-    @BindView(R.id.et_old_password)
-    TextInputEditText oldPassword;
+    @BindView(R.id.textInputLayout_old_pass)
+    TextInputLayout oldPassword;
 
-    @BindView(R.id.et_new_password)
-    TextInputEditText newPassword;
+    @BindView(R.id.textInputLayout_new_pass)
+    TextInputLayout newPassword;
 
     @BindView(R.id.btn_confirm_password_change)
     Button confirmPasswordChange;
 
+    @BindView(R.id.et_old_password)
+    TextInputEditText oldPasswordEt;
+
+    @BindView(R.id.et_new_password)
+    TextInputEditText newPasswordEt;
+
     @OnClick(R.id.btn_confirm_password_change)
-    void callChangePassword(){
-        changeUserPassword();
+    void callChangePassword() {
+        if (TextUtils.isEmpty(oldPasswordEt.getText())) {
+            oldPassword.setError("Enter old password");
+        } else if (TextUtils.isEmpty(newPasswordEt.getText())) {
+            newPassword.setError("Enter new password");
+        } else if (validatePassword(newPasswordEt.getText().toString())) {
+            changeUserPassword();
+        }
+
     }
 
 
@@ -61,6 +79,60 @@ public class ChangePasswordActivity extends AppCompatActivity implements Account
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_close_black_24dp);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
+
+
+        oldPasswordEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(oldPasswordEt.getText())) {
+                    oldPassword.setError("Enter old password");
+                } else {
+                    oldPassword.setErrorEnabled(false);
+                }
+
+            }
+        });
+
+
+        newPasswordEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(newPasswordEt.getText())) {
+                    newPassword.setError("Enter new password");
+                } else if (!validatePassword(newPasswordEt.getText().toString())) {
+                    newPasswordEt.setError("Passwords must be 8 characters long");
+                } else {
+                    newPassword.setErrorEnabled(false);
+                }
+
+            }
+        });
+
+    }
+
+
+    public boolean validatePassword(String password) {
+        return password.length() > 7;
     }
 
     @Override
@@ -84,16 +156,22 @@ public class ChangePasswordActivity extends AppCompatActivity implements Account
     @Override
     public void onPasswordChangeSuccess(Object o) {
         Toast.makeText(this, "Password Changed", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
     public void onPasswordChangeFailure(Object o) {
-        Toast.makeText(this, "Failed to change password", Toast.LENGTH_SHORT).show();
+        oldPassword.setError("Incorrect password");
+    }
+
+    @Override
+    public void onGenericError() {
+        Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
     }
 
 
-    private void changeUserPassword(){
-        Password password = new Password(oldPassword.getText().toString(),newPassword.getText().toString());
+    private void changeUserPassword() {
+        Password password = new Password(oldPasswordEt.getText().toString(), newPasswordEt.getText().toString());
         passwordPresenter.changeUserPassword(password);
     }
 

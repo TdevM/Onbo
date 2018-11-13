@@ -27,7 +27,7 @@ public class ChangePasswordPresenter extends BasePresenter implements AccountPre
         this.apiService = apiService;
         this.preferenceUtils = preferenceUtils;
         this.cartHelper = cartHelper;
-        compositeDisposable = new CompositeDisposable() ;
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -35,8 +35,6 @@ public class ChangePasswordPresenter extends BasePresenter implements AccountPre
         this.changePasswordView = view;
 
     }
-
-
 
 
     @Override
@@ -49,7 +47,7 @@ public class ChangePasswordPresenter extends BasePresenter implements AccountPre
 
     @Override
     public void changeUserPassword(Password password) {
-        Observable<Response<Object>> changePass = apiService.changeUserPassword("Bearer "+ preferenceUtils.getAuthLoginToken(),password);
+        Observable<Response<Object>> changePass = apiService.changeUserPassword("Bearer " + preferenceUtils.getAuthLoginToken(), password);
         subscribe(changePass, new Observer<Response<Object>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -59,9 +57,9 @@ public class ChangePasswordPresenter extends BasePresenter implements AccountPre
 
             @Override
             public void onNext(Response<Object> objectResponse) {
-                if(objectResponse.isSuccessful()){
+                if (objectResponse.code() == 200) {
                     changePasswordView.onPasswordChangeSuccess(objectResponse.body());
-                }else if(objectResponse.code()!=200){
+                } else if (objectResponse.code() == 210) {
                     changePasswordView.onPasswordChangeFailure(objectResponse.body());
                 }
             }

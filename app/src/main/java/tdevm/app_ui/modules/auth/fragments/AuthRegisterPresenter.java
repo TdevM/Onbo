@@ -30,14 +30,14 @@ public class AuthRegisterPresenter extends BasePresenter implements AuthPresente
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    public AuthRegisterPresenter(APIService apiService,PreferenceUtils preferenceUtils) {
+    public AuthRegisterPresenter(APIService apiService, PreferenceUtils preferenceUtils) {
         this.apiService = apiService;
         this.preferenceUtils = preferenceUtils;
         this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override
-    public void registerUser(User user){
+    public void registerUser(User user) {
         Observable<Response<Object>> observable = apiService.registerUser(user);
         subscribe(observable, new Observer<Response<Object>>() {
             @Override
@@ -48,23 +48,22 @@ public class AuthRegisterPresenter extends BasePresenter implements AuthPresente
 
             @Override
             public void onNext(@NonNull Response<Object> response) {
-                if(response.code() == 206){
-                    authRegisterView.showRegistrationError("Forbidden");
-                    Log.d("RegisterPresenter",response.body().toString());
-                }else if(response.code() ==200){
-                    Log.d("RegisterPresenter",response.body().toString());
-                    preferenceUtils.saveAuthTransaction(response.headers().get("X-auth"),user.getMobile(),true);
+                if (response.code() == 209) {
+                    authRegisterView.showGenericError();
+                    Log.d("RegisterPresenter", response.body().toString());
+                } else if (response.code() == 200) {
+                    Log.d("RegisterPresenter", response.body().toString());
+                    preferenceUtils.saveAuthTransaction(response.headers().get("Authorization"), user.getMobile(), true);
                     authRegisterView.showRegistrationSuccess();
-                }else if(response.code() == 403){
-                    authRegisterView.showRegistrationError("Email is already in use");
+                } else if (response.code() == 211) {
+                    authRegisterView.emailInUseError();
                 }
 
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                authRegisterView.showDuplicationError(e.getMessage());
-                authRegisterView.hideProgressUI();
+                authRegisterView.showGenericError();
             }
 
             @Override
