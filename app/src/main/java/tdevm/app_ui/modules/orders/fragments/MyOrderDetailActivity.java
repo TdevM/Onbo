@@ -140,14 +140,14 @@ public class MyOrderDetailActivity extends AppCompatActivity implements Restaura
                     orderStatus.setText(this.getString(R.string.order_status_completed));
                     break;
                 case "PAYMENT_PENDING":
-                    orderStatusImage.setImageResource(R.drawable.anim_payment_pending);
+                    orderStatusImage.setImageResource(R.drawable.ic_filled_circle_payment_pending);
                     orderStatus.setText(this.getString(R.string.order_status_pending_payment));
-                    GeneralUtils.animate(orderStatusImage);
+                    //GeneralUtils.animate(orderStatusImage);
                     break;
                 case "PREPARING":
-                    orderStatusImage.setImageResource(R.drawable.anim_preparing);
+                    orderStatusImage.setImageResource(R.drawable.ic_filled_circle_preparing);
                     orderStatus.setText(this.getString(R.string.order_status_preparing));
-                    GeneralUtils.animate(orderStatusImage);
+                   // GeneralUtils.animate(orderStatusImage);
                     break;
                 case "CANCELLED":
                     orderStatusImage.setImageResource(R.drawable.ic_filled_circle_payment_failed_cancelled);

@@ -4,6 +4,7 @@ import java.util.List;
 
 import tdevm.app_ui.api.models.request.User;
 import tdevm.app_ui.api.models.response.UserApp;
+import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
 import tdevm.app_ui.base.BaseView;
@@ -19,6 +20,8 @@ public interface NavigationHomeViewContract {
         void showUserProfile();
         void redirectAuthActivity();
         void redirectEntryActivity();
+        void onUnpaidOrdersFetched(List<FOrder> unpaidOrders);
+        void noUnpaidOrders();
     }
 
     interface AccountsFragmentView extends BaseView {
@@ -37,7 +40,7 @@ public interface NavigationHomeViewContract {
 
     }
 
-    interface RestaurantDetailView extends BaseView{
+    interface RestaurantDetailView extends BaseView {
         void onMenuItemsFetchedV2(List<CuisineMenuItems> cuisineMenuItems);
         void onMenuItemsFetchFailure();
     }

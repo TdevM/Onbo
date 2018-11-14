@@ -2,6 +2,7 @@ package tdevm.app_ui.modules.dinein.fragments;
 
 
 import android.content.Context;
+import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,14 +17,17 @@ import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import tdevm.app_ui.R;
+import tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity;
 import tdevm.app_ui.modules.orders.callback.CartBadgeListener;
+import tdevm.app_ui.modules.payment.IOnBackPressed;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ItemsAddedSuccessFragment extends Fragment {
+public class ItemsAddedSuccessFragment extends Fragment implements IOnBackPressed {
 
 
     Unbinder unbinder;
@@ -32,7 +36,13 @@ public class ItemsAddedSuccessFragment extends Fragment {
     @BindView(R.id.iv_animate_t1_success)
     ImageView imageView;
 
+    @OnClick(R.id.btn_view_order_detail)
+    void showRunning() {
+        activity.showRunningOrderFragment();
+    }
+
     CartBadgeListener cartBadgeListener;
+    InitializeDineOrderActivity activity;
 
     public ItemsAddedSuccessFragment() {
         // Required empty public constructor
@@ -43,9 +53,10 @@ public class ItemsAddedSuccessFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        activity = (InitializeDineOrderActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_items_added_success, container, false);
         unbinder = ButterKnife.bind(this, view);
-        animate(imageView);
+        //animate(imageView);
         return view;
 
     }
@@ -61,19 +72,19 @@ public class ItemsAddedSuccessFragment extends Fragment {
     public void animate(View view) {
         ImageView v = (ImageView) view;
         Drawable d = v.getDrawable();
-        AnimatedVectorDrawableCompat animatedVector = (AnimatedVectorDrawableCompat) d;
-        final Handler mainHandler = new Handler(Looper.getMainLooper());
-        animatedVector.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
-            @Override
-            public void onAnimationEnd(final Drawable drawable) {
-                mainHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        animatedVector.start();
-                    }
-                });
-            }
-        });
+        Animatable animatedVector = (Animatable) d;
+        //final Handler mainHandler = new Handler(Looper.getMainLooper());
+//        animatedVector.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
+//            @Override
+//            public void onAnimationEnd(final Drawable drawable) {
+//                mainHandler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        animatedVector.start();
+//                    }
+//                });
+//            }
+//        });
         animatedVector.start();
     }
 
@@ -93,5 +104,11 @@ public class ItemsAddedSuccessFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         cartBadgeListener = null;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        activity.showRunningOrderFragment();
+        return true;
     }
 }

@@ -24,10 +24,11 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
+import tdevm.app_ui.modules.payment.IOnBackPressed;
 import tdevm.app_ui.utils.GeneralUtils;
 
 
-public class CashPickupFragment extends Fragment {
+public class CashPickupFragment extends Fragment implements IOnBackPressed {
 
 
     public static final String TAG = CashPickupFragment.class.getSimpleName();
@@ -75,7 +76,7 @@ public class CashPickupFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cash_pickup, container, false);
         ButterKnife.bind(this, view);
-        animate(imageViewCashPickup);
+        //animate(imageViewCashPickup);
         if (fOrder != null) {
             cashPickupAmt.setText(getContext().getString(R.string.rupee_symbol_to_pay, GeneralUtils.parseStringDouble(fOrder.getGrand_total())));
         }
@@ -115,4 +116,9 @@ public class CashPickupFragment extends Fragment {
         super.onDetach();
     }
 
+    @Override
+    public boolean onBackPressed() {
+
+        return false;
+    }
 }

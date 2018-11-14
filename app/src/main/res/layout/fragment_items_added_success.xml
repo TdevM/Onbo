@@ -69,7 +69,7 @@
                     android:contentDescription="@string/image_design_random"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/avd_anim_successtick" />
+                    app:srcCompat="@drawable/ic_order_success" />
 
 
             </android.support.constraint.ConstraintLayout>
@@ -130,7 +130,7 @@
                 android:textSize="16sp" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btn_view_order_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

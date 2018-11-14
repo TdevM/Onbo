@@ -104,7 +104,7 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
                     fetchUserPOS(phone);
 
                 } else if (response.code() == 209) {
-                   // Log.d(TAG, "Failed to verify OTP :" + response.errorBody().toString());
+                    // Log.d(TAG, "Failed to verify OTP :" + response.errorBody().toString());
                     authOTPView.showVerificationFailure();
                 }
             }
@@ -160,7 +160,11 @@ public class VerifyPhoneOTPPresenter extends BasePresenter implements AuthPresen
         Log.d(TAG, sender + body + phone);
         String otp = body.replaceAll("\\D", "");
         Log.d(TAG, "OTP is" + otp);
-        verifyOTP(phone, Long.parseLong(otp));
+        Long otpLong = Long.parseLong(otp);
+        if (otpLong != null) {
+            verifyOTP(phone, otpLong);
+        }
+
     }
 
 

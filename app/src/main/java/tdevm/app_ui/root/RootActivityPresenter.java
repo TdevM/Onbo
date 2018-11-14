@@ -1,9 +1,16 @@
 package tdevm.app_ui.root;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
+import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
@@ -39,6 +46,36 @@ public class RootActivityPresenter extends BasePresenter implements NavigationHo
             rootActivityView.redirectAuthActivity();
         }
     }
+
+    public void fetchUnpaidOrders() {
+        Observable<Response<List<FOrder>>> fetchUnpaidOrders = apiService.fetchUnpaidOrders("Bearer " + preferenceUtils.getAuthLoginToken());
+        subscribe(fetchUnpaidOrders, new Observer<Response<List<FOrder>>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(Response<List<FOrder>> listResponse) {
+                if (listResponse.code() == 200) {
+                    rootActivityView.onUnpaidOrdersFetched(listResponse.body());
+                } else if (listResponse.code() == 404) {
+                    rootActivityView.noUnpaidOrders();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
 
     @Override
     public void attachView(NavigationHomeViewContract.RootActivityView view) {

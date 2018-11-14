@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical"
-    android:weightSum="4">
+    android:orientation="vertical">
 
 
     <!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"-->
@@ -39,9 +38,11 @@
     <RadioGroup
         android:id="@+id/rg_variant_instance"
         android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/size_16_dp"
+        android:layout_marginEnd="@dimen/size_16_dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="3" />
+        android:layout_weight="1" />
 
 
 </LinearLayout>

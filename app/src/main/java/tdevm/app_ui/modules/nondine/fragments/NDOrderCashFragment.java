@@ -82,7 +82,7 @@ public class NDOrderCashFragment extends Fragment implements NonDineViewContract
         View view = inflater.inflate(R.layout.fragment_pay_cash_terminal, container, false);
         unbinder = ButterKnife.bind(this, view);
         showOrderDetails();
-        animate(imageView);
+        //animate(imageView);
         return view;
     }
 

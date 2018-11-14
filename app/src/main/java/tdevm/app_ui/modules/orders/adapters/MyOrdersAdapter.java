@@ -88,14 +88,14 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
                     holder.orderStatus.setText(context.getString(R.string.order_status_completed));
                     break;
                 case "PAYMENT_PENDING":
-                    holder.orderStatusImage.setImageResource(R.drawable.anim_payment_pending);
+                    holder.orderStatusImage.setImageResource(R.drawable.ic_filled_circle_payment_pending);
                     holder.orderStatus.setText(context.getString(R.string.order_status_pending_payment));
-                    GeneralUtils.animate(holder.orderStatusImage);
+                    //GeneralUtils.animate(holder.orderStatusImage);
                     break;
                 case "PREPARING":
-                    holder.orderStatusImage.setImageResource(R.drawable.anim_preparing);
+                    holder.orderStatusImage.setImageResource(R.drawable.ic_filled_circle_preparing);
                     holder.orderStatus.setText(context.getString(R.string.order_status_preparing));
-                    GeneralUtils.animate(holder.orderStatusImage);
+                    //GeneralUtils.animate(holder.orderStatusImage);
                     break;
                 case "CANCELLED":
                     holder.orderStatusImage.setImageResource(R.drawable.ic_filled_circle_payment_failed_cancelled);

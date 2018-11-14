@@ -216,5 +216,7 @@
     <string name="_919560447160">+919560447160</string>
     <string name="hi_welcome_back">Hi ! Welcome back</string>
     <string name="choose_gender">Choose gender</string>
+    <string name="notifications">Notifications</string>
+    <string name="add_to_cart">Add to cart</string>
 
 </resources>

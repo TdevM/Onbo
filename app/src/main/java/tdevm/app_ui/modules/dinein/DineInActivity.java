@@ -97,7 +97,15 @@ public class DineInActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_dine_in_home);
         resolveDaggerDependencies();
         ButterKnife.bind(this);
-        showMenuFragment();
+        String running_order = "RUNNING_ORDER_FRAGMENT";
+        String toOpen = getIntent().getStringExtra("FRAGMENT_TO_OPEN");
+        if (toOpen != null) {
+            if (toOpen.equals(running_order)) {
+                showRunningOrder();
+            }
+        } else {
+            showMenuFragment();
+        }
 
         restaurant = getIntent().getParcelableExtra("RESTAURANT");
 
@@ -127,6 +135,13 @@ public class DineInActivity extends AppCompatActivity implements
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         MenuItemsFragment dishMenuFragment = new MenuItemsFragment();
         transaction.replace(R.id.frame_layout_dine_in, dishMenuFragment);
+        transaction.commit();
+    }
+
+    private void showRunningOrder() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        MergedOrderFragment mergedOrderFragment = new MergedOrderFragment();
+        transaction.replace(R.id.frame_layout_dine_in, mergedOrderFragment);
         transaction.commit();
     }
 
@@ -160,10 +175,11 @@ public class DineInActivity extends AppCompatActivity implements
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_dine_in_main, menu);
-        return true;
+       // getMenuInflater().inflate(R.menu.menu_dine_in_main, menu);
+        return false;
     }
 
 

@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/navigation_dine_in_menu"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:id="@+id/navigation_menu_root_notifications"
+        android:icon="@drawable/ic_notifications_custom"
         app:showAsAction="always"
-        android:title="@string/title_menu" />
+        android:title="@string/notifications" />
 </menu>

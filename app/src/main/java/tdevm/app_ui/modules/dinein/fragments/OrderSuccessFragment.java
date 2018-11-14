@@ -2,6 +2,7 @@ package tdevm.app_ui.modules.dinein.fragments;
 
 
 import android.content.Context;
+import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,10 +21,13 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
+import tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity;
 import tdevm.app_ui.modules.orders.callback.CartBadgeListener;
+import tdevm.app_ui.modules.payment.IOnBackPressed;
 import tdevm.app_ui.utils.CartListener;
 
 import static tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity.ORDER_RUNNING_STATUS;
@@ -30,7 +35,7 @@ import static tdevm.app_ui.modules.dinein.activities.InitializeDineOrderActivity
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OrderSuccessFragment extends Fragment {
+public class OrderSuccessFragment extends Fragment implements IOnBackPressed {
 
 
     Unbinder unbinder;
@@ -47,7 +52,14 @@ public class OrderSuccessFragment extends Fragment {
     @BindView(R.id.tv_t1_order_success_table_no)
     TextView tableNoSuccess;
 
+    @OnClick(R.id.btn_order_success_t1_details)
+    void showRunningOrder() {
+        activity.showRunningOrderFragment();
+    }
+
     TOrder tOrder;
+
+    InitializeDineOrderActivity activity;
 
     public OrderSuccessFragment() {
         // Required empty public constructor
@@ -62,10 +74,11 @@ public class OrderSuccessFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        activity = (InitializeDineOrderActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_order_success, container, false);
         unbinder = ButterKnife.bind(this, view);
-        animate(imageView);
-        if(getArguments()!=null){
+        //animate(imageView);
+        if (getArguments() != null) {
             tOrder = getArguments().getParcelable("T_ORDER");
             showOrderDetails(getArguments().getParcelable("T_ORDER"));
 
@@ -85,26 +98,28 @@ public class OrderSuccessFragment extends Fragment {
     public void animate(View view) {
         ImageView v = (ImageView) view;
         Drawable d = v.getDrawable();
-        AnimatedVectorDrawableCompat animatedVector = (AnimatedVectorDrawableCompat) d;
-        final Handler mainHandler = new Handler(Looper.getMainLooper());
-        animatedVector.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
-            @Override
-            public void onAnimationEnd(final Drawable drawable) {
-                mainHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        animatedVector.start();
-                    }
-                });
-            }
-        });
+        Animatable animatedVector = (Animatable) d;
+//        final Handler mainHandler = new Handler(Looper.getMainLooper());
         animatedVector.start();
+
+//        animatedVector.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
+//            @Override
+//            public void onAnimationEnd(final Drawable drawable) {
+//                mainHandler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        animatedVector.start();
+//                    }
+//                });
+//            }
+//        });
+//        animatedVector.start();
     }
 
-    void showOrderDetails(TOrder tOrder){
-        if(tOrder!=null){
-            orderIdSuccess.setText(getContext().getString(R.string.show_number_pound_symbol,tOrder.getOrderId()));
-            tableNoSuccess.setText(getContext().getString(R.string.show_number_pound_symbol,String.valueOf(tOrder.getRestaurantTable().getTable_number())));
+    void showOrderDetails(TOrder tOrder) {
+        if (tOrder != null) {
+            orderIdSuccess.setText(getContext().getString(R.string.show_number_pound_symbol, tOrder.getOrderId()));
+            tableNoSuccess.setText(getContext().getString(R.string.show_number_pound_symbol, String.valueOf(tOrder.getRestaurantTable().getTable_number())));
         }
 
     }
@@ -124,5 +139,11 @@ public class OrderSuccessFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         cartBadgeListener = null;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        activity.showRunningOrderFragment();
+        return true;
     }
 }

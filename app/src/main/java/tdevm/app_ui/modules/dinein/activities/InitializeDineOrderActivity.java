@@ -2,9 +2,11 @@ package tdevm.app_ui.modules.dinein.activities;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,11 +23,13 @@ import retrofit2.Response;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
+import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
 import tdevm.app_ui.modules.dinein.fragments.InitializeOrderFragment;
 import tdevm.app_ui.modules.dinein.fragments.ItemsAddedSuccessFragment;
 import tdevm.app_ui.modules.dinein.fragments.OrderSuccessFragment;
 import tdevm.app_ui.modules.orders.callback.CartBadgeListener;
+import tdevm.app_ui.modules.payment.IOnBackPressed;
 
 
 public class InitializeDineOrderActivity extends AppCompatActivity
@@ -110,7 +114,7 @@ public class InitializeDineOrderActivity extends AppCompatActivity
         tOrder = arrayListResponse.body();
         Bundle bundle = new Bundle();
         bundle.putBoolean(ORDER_RUNNING_STATUS, true);
-        bundle.putParcelable("T_ORDER",arrayListResponse.body());
+        bundle.putParcelable("T_ORDER", arrayListResponse.body());
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         InitializeOrderFragment fragment = new InitializeOrderFragment();
         fragment.setArguments(bundle);
@@ -123,7 +127,7 @@ public class InitializeDineOrderActivity extends AppCompatActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ItemsAddedSuccessFragment fragment = new ItemsAddedSuccessFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("T_ORDER",tOrder);
+        bundle.putParcelable("T_ORDER", tOrder);
         fragment.setArguments(bundle);
         transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();
@@ -135,7 +139,7 @@ public class InitializeDineOrderActivity extends AppCompatActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         OrderSuccessFragment fragment = new OrderSuccessFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("T_ORDER",tOrder);
+        bundle.putParcelable("T_ORDER", tOrder);
         fragment.setArguments(bundle);
         transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();
@@ -143,10 +147,25 @@ public class InitializeDineOrderActivity extends AppCompatActivity
     }
 
 
+    public void showRunningOrderFragment() {
+        Intent intent = new Intent(InitializeDineOrderActivity.this, DineInActivity.class);
+        intent.putExtra("FRAGMENT_TO_OPEN", "RUNNING_ORDER_FRAGMENT");
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         placeTempOrderPresenter.detachView();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout_place_temp_order);
+        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
+            super.onBackPressed();
+        }
     }
 
     @Override
