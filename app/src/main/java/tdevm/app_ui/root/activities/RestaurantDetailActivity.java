@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -71,6 +73,10 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Navig
     @BindView(R.id.tv_qr_enabled)
     TextView qrEnabled;
 
+//    @BindView(R.id.ll_fling_res_detail)
+//    ViewGroup linearLayout;
+
+
     @OnClick(R.id.btn_res_detail_start_order)
     void startScan(){
         Intent intent = new Intent(this, RestaurantMenuEntryActivity.class);
@@ -96,6 +102,15 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Navig
         setContentView(R.layout.activity_restaurant_detail);
         ButterKnife.bind(this);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationOnClickListener(v -> {
+            onBackPressed();
+        });
+//        linearLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int view = v.getId();
+//            }
+//        });
         setSupportActionBar(toolbar);
         restaurant = getIntent().getParcelableExtra("RESTAURANT");
         adapter = new MenuAdapterRestaurantDetail(this);

@@ -58,7 +58,6 @@ public interface DineInPresenterContract {
 
         boolean cartItemsExists();
 
-        void showCartEmpty();
 
         void addItemToCart(tdevm.app_ui.api.models.cart.MenuItem menuItem, int itemTotal, String itemHash);
 

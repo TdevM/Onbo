@@ -27,7 +27,7 @@ import tdevm.app_ui.modules.payment.IOnBackPressed;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ItemsAddedSuccessFragment extends Fragment implements IOnBackPressed {
+public class ItemsAddedSuccessFragment extends Fragment  {
 
 
     Unbinder unbinder;
@@ -106,9 +106,9 @@ public class ItemsAddedSuccessFragment extends Fragment implements IOnBackPresse
         cartBadgeListener = null;
     }
 
-    @Override
-    public boolean onBackPressed() {
-        activity.showRunningOrderFragment();
-        return true;
-    }
+//    @Override
+//    public boolean onBackPressed() {
+//      //  activity.showRunningOrderFragment();
+//        return true;
+//    }
 }

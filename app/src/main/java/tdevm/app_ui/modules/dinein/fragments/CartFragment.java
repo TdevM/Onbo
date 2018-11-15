@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.browser.browseractions.BrowserActionsIntent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,6 +30,7 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.cart.CartItem;
 import tdevm.app_ui.api.models.ItemHash;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.menu.MenuAddOn;
 import tdevm.app_ui.api.models.response.v2.menu.MenuVOption;
 import tdevm.app_ui.modules.dinein.DineInActivity;
@@ -69,6 +72,9 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     CartBadgeListener cartBadgeListener;
 
+    @BindView(R.id.frame_layout_cart_empty)
+    FrameLayout cartEmptyFrameLayout;
+
 
     @Inject
     CartFragmentPresenterImpl cartFragmentPresenter;
@@ -76,6 +82,8 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     private CartItemsRecyclerAdapter adapter;
     DineInActivity activity;
     NonDineActivity nonDineActivity;
+
+    Restaurant restaurant;
 
     public CartFragment() {
     }
@@ -87,35 +95,31 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        resolveDaggerDependencies();
-        cartFragmentPresenter.attachView(this);
+        if (getArguments() != null) {
+            restaurant = getArguments().getParcelable("RESTAURANT");
+        }
+
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        resolveDaggerDependencies();
         if (preferenceUtils.getRestaurantMode().equals(MODE_DINE_IN)) {
             activity = (DineInActivity) getActivity();
         } else if (preferenceUtils.getRestaurantMode().equals(MODE_NON_DINE)) {
             nonDineActivity = (NonDineActivity) getActivity();
         }
-        View view;
-        if (cartFragmentPresenter.cartItemsExists()) {
-            view = inflater.inflate(R.layout.fragment_cart, container, false);
-            unbinder = ButterKnife.bind(this, view);
-            mLayoutManager = new LinearLayoutManager(getContext());
-            adapter = new CartItemsRecyclerAdapter(getActivity(), cartFragmentPresenter, cartHelper);
-            adapter.setOnCartItemClickListener(this);
-            recyclerViewCart.setLayoutManager(mLayoutManager);
-            recyclerViewCart.setAdapter(adapter);
-            cartFragmentPresenter.fetchCartItems();
-            //TODO Avoid Direct Model Access
-            updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
-            Log.d(TAG, String.valueOf(cartHelper.getCartTotalItems()));
-        } else {
-            view = inflater.inflate(R.layout.fragment_cart_empty, container, false);
-        }
+
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        mLayoutManager = new LinearLayoutManager(getContext());
+        adapter = new CartItemsRecyclerAdapter(getActivity(), cartFragmentPresenter, cartHelper);
+        adapter.setOnCartItemClickListener(this);
+        recyclerViewCart.setLayoutManager(mLayoutManager);
+        recyclerViewCart.setAdapter(adapter);
+
         return view;
 
     }
@@ -139,7 +143,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
         cartFragmentPresenter.clearCart();
     }
 
-    public void handleInitiateOrder(){
+    public void handleInitiateOrder() {
         cartFragmentPresenter.handleOrderInit();
     }
 
@@ -163,32 +167,25 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     }
 
-    @Override
-    public void showNonDineEmptyCart() {
-        nonDineActivity.showCartEmptyFragment();
-    }
 
     @Override
     public void onResume() {
         super.onResume();
-//        if(cartFragmentPresenter.cartItemsExists()){
-//            cartFragmentPresenter.fetchCartItems();
-//        }else {
-//            showDineCartEmpty();
-//        }
-
-
+        cartFragmentPresenter.attachView(this);
+        cartFragmentPresenter.fetchCartItems();
     }
 
     @Override
     public void onCartItemsFetched(List<CartItem> cartItems) {
         adapter.onCartItemFetched(cartItems);
+        updateBottomSheet(cartHelper.getCartTotalItems(), cartHelper.getCartTotal());
         cartBadgeListener.onCartItemUpdated(0);
     }
 
     @Override
-    public void showDineCartEmpty() {
-        activity.showCartEmptyFragment();
+    public void showCartEmpty() {
+        cartEmptyFrameLayout.setVisibility(View.VISIBLE);
+        cartBadgeListener.onCartItemUpdated(0);
     }
 
     @Override
@@ -200,6 +197,7 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
     @Override
     public void startDineOrderActivity() {
         Intent intent = new Intent(getContext(), InitializeDineOrderActivity.class);
+        intent.putExtra("RESTAURANT", restaurant);
         startActivity(intent);
     }
 

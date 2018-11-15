@@ -87,7 +87,7 @@ public class MyOrderDetailActivity extends AppCompatActivity implements Restaura
         resolveDaggerDependencies();
         setContentView(R.layout.activity_my_order_details);
         ButterKnife.bind(this);
-        toolbar.setTitle("Your Order");
+        toolbar.setTitle("Order Details");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());

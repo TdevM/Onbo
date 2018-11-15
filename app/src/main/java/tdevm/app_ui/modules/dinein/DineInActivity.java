@@ -99,13 +99,7 @@ public class DineInActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
         String running_order = "RUNNING_ORDER_FRAGMENT";
         String toOpen = getIntent().getStringExtra("FRAGMENT_TO_OPEN");
-        if (toOpen != null) {
-            if (toOpen.equals(running_order)) {
-                showRunningOrder();
-            }
-        } else {
-            showMenuFragment();
-        }
+
 
         restaurant = getIntent().getParcelableExtra("RESTAURANT");
 
@@ -122,12 +116,21 @@ public class DineInActivity extends AppCompatActivity implements
         bottomNavigationBar.addItem(
                 new BottomNavigationItem(R.drawable.ic_add_shopping_cart_black_24dp, "Cart")
                         .setBadgeItem(textBadgeItem).setActiveColorResource(R.color.primary_default_app));
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_receipt_black_24dp, "Running"));
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_add_alert_black_24dp, "Bell"))
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_receipt_black_24dp, "Running"))
+                //bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_add_alert_black_24dp, "Bell"))
                 .setFirstSelectedPosition(0)
                 .initialise();
 
         bottomNavigationBar.setTabSelectedListener(this);
+        if (toOpen != null) {
+            if (toOpen.equals(running_order)) {
+                showRunningOrder();
+
+                bottomNavigationBar.selectTab(2);
+            }
+        } else {
+            showMenuFragment();
+        }
 
     }
 
@@ -178,7 +181,7 @@ public class DineInActivity extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-       // getMenuInflater().inflate(R.menu.menu_dine_in_main, menu);
+        // getMenuInflater().inflate(R.menu.menu_dine_in_main, menu);
         return false;
     }
 
@@ -244,7 +247,11 @@ public class DineInActivity extends AppCompatActivity implements
                 fragmentTransaction.commit();
                 break;
             case 1:
-                fragmentTransaction.replace(R.id.frame_layout_dine_in, new CartFragment());
+                CartFragment fragment = new CartFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("RESTAURANT", restaurant);
+                fragment.setArguments(bundle);
+                fragmentTransaction.replace(R.id.frame_layout_dine_in, fragment);
                 fragmentTransaction.commit();
                 break;
             case 2:

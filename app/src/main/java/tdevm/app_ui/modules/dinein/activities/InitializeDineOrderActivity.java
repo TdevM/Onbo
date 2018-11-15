@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import retrofit2.Response;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
+import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.t_orders.TOrder;
 import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.DineInViewContract;
@@ -44,6 +45,8 @@ public class InitializeDineOrderActivity extends AppCompatActivity
     @BindView(R.id.pb_t1_init_order)
     ProgressBar progressBar;
 
+    Restaurant restaurant;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -58,7 +61,7 @@ public class InitializeDineOrderActivity extends AppCompatActivity
         resolveDaggerDependencies();
         setContentView(R.layout.activity_place_temp_order);
         ButterKnife.bind(this);
-
+        restaurant = getIntent().getParcelableExtra("RESTAURANT");
         Log.d(TAG, placeTempOrderPresenter.convertCartTOJSON().toString());
         Log.d(TAG, "Temp Order onCreate");
         //setStatusBarGradient(this);
@@ -149,7 +152,10 @@ public class InitializeDineOrderActivity extends AppCompatActivity
 
     public void showRunningOrderFragment() {
         Intent intent = new Intent(InitializeDineOrderActivity.this, DineInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
         intent.putExtra("FRAGMENT_TO_OPEN", "RUNNING_ORDER_FRAGMENT");
+        intent.putExtra("RESTAURANT", restaurant);
         startActivity(intent);
         finish();
     }
@@ -160,13 +166,13 @@ public class InitializeDineOrderActivity extends AppCompatActivity
         placeTempOrderPresenter.detachView();
     }
 
-    @Override
-    public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout_place_temp_order);
-        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+////        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout_place_temp_order);
+////        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
+////            super.onBackPressed();
+////        }
+//    }
 
     @Override
     public void onCartItemUpdated(int count) {

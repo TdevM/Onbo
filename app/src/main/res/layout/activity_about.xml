@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:visibility="gone"
         android:layout_marginBottom="8dp"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,15 +42,16 @@
         android:layout_height="300dp"
         android:layout_marginBottom="96dp"
         android:contentDescription="@string/image_design_random"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btn_start_anim"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/animation_payment_screen" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView30"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="116dp"
+        android:visibility="gone"
         android:layout_marginTop="92dp"
         app:layout_constraintStart_toStartOf="@+id/iv_show_anim"
         app:layout_constraintTop_toTopOf="@+id/iv_show_anim"

@@ -27,6 +27,7 @@ import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
+import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
 import tdevm.app_ui.root.activities.RestaurantDetailActivity;
 import tdevm.app_ui.root.fragments.AccountsFragment;
 import tdevm.app_ui.root.fragments.RestaurantListFragment;
@@ -101,6 +102,17 @@ public class RootActivity extends AppCompatActivity implements NavigationHomeVie
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.navigation_menu_root_notifications) {
+            Intent intent = new Intent(RootActivity.this, RestaurantOrdersActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void showRestaurantDetailsActivity(Restaurant restaurant) {
         Intent intent = new Intent(this, RestaurantDetailActivity.class);
         intent.putExtra("RESTAURANT", restaurant);
@@ -145,6 +157,14 @@ public class RootActivity extends AppCompatActivity implements NavigationHomeVie
     @Override
     public void noUnpaidOrders() {
 
+    }
+
+
+    public void logOutUser(){
+        rootActivityPresenter.logoutUser();
+        Intent intent = new Intent(RootActivity.this,AuthenticationActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public static void setBadgeCount(Context context, LayerDrawable icon, String count) {

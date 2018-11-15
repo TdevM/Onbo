@@ -36,6 +36,7 @@ import tdevm.app_ui.modules.account.activities.EditAccountDetailsActivity;
 import tdevm.app_ui.modules.account.activities.FavouritesActivity;
 import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
 import tdevm.app_ui.root.NavigationHomeViewContract;
+import tdevm.app_ui.root.RootActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +54,14 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
     TextView userMobile;
     @BindView(R.id.tv_logged_user_name)
     TextView userName;
+
+    RootActivity activity;
+
+    @OnClick(R.id.btn_logout_user)
+    void click() {
+        activity.logOutUser();
+    }
+
 
     @BindView(R.id.shimmer_fragment_profile_section)
     ShimmerFrameLayout shimmerFrameLayout;
@@ -134,6 +143,7 @@ public class AccountsFragment extends Fragment implements NavigationHomeViewCont
         resolveDaggerDependencies();
         View view;
         view = inflater.inflate(R.layout.fragment_accounts, container, false);
+        activity = (RootActivity) getActivity();
         unbinder = ButterKnife.bind(this, view);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);

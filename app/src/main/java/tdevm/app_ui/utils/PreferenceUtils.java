@@ -57,6 +57,12 @@ public class PreferenceUtils {
 
     }
 
+    public void clearAuth() {
+        sharedPreferences.remove(AUTH_LOGIN_TOKEN);
+        sharedPreferences.remove(AUTH_LOGIN_STATE);
+        sharedPreferences.remove(AUTH_LOGIN_PHONE);
+    }
+
     public Boolean getAuthLoginState() {
         return sharedPreferences.getDataBool(AUTH_LOGIN_STATE);
     }
@@ -69,11 +75,11 @@ public class PreferenceUtils {
         return sharedPreferences.getDataBool(INTRO_SCREEN_DISPLAYED);
     }
 
-    public void setIntroScreenDisplayed(Boolean b){
-        sharedPreferences.putDataBool(INTRO_SCREEN_DISPLAYED,b);
+    public void setIntroScreenDisplayed(Boolean b) {
+        sharedPreferences.putDataBool(INTRO_SCREEN_DISPLAYED, b);
     }
 
-    public void removeIntroScreenDisplayed(){
+    public void removeIntroScreenDisplayed() {
         sharedPreferences.remove(INTRO_SCREEN_DISPLAYED);
     }
 

@@ -20,9 +20,10 @@
 
     <application
         android:name=".AppApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
+        tools:replace="android:allowBackup"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -123,7 +124,11 @@
             android:name=".ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme" />
-        <activity android:name=".modules.auth.AuthTnCActivity"></activity>
+        <activity
+            android:name=".modules.auth.AuthTnCActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

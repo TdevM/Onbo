@@ -18,7 +18,7 @@
     <string name="create_bell_request">Bell</string>
     <string name="restaurant_image">Restaurant image</string>
     <string name="please_wait_for_otp_complete">Please wait while we verify your number.</string>
-    <string name="didnt_got_otp">Did\'nt got the code?</string>
+    <string name="didnt_got_otp">Didn\'t get the code?</string>
     <string name="choose_an_option">Choose a dish variation.</string>
     <string name="verify_number">Verify</string>
     <string name="start_order_t2">Start Order</string>

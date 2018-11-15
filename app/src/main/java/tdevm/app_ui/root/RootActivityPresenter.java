@@ -97,4 +97,8 @@ public class RootActivityPresenter extends BasePresenter implements NavigationHo
             rootActivityView.redirectAuthActivity();
         }
     }
+
+    public void logoutUser() {
+        preferenceUtils.clearAuth();
+    }
 }

@@ -70,23 +70,28 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
 
     @Override
     public void fetchCartItems() {
-        Single<List<CartItem>> single = cartHelper.getCartItems();
-        single.subscribe(new SingleObserver<List<CartItem>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                compositeDisposable.add(d);
-            }
+        if (cartHelper.cartItemsExist()) {
+            Single<List<CartItem>> single = cartHelper.getCartItems();
+            single.subscribe(new SingleObserver<List<CartItem>>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                    compositeDisposable.add(d);
+                }
 
-            @Override
-            public void onSuccess(List<CartItem> cartItems) {
-                cartFragmentView.onCartItemsFetched(cartItems);
-            }
+                @Override
+                public void onSuccess(List<CartItem> cartItems) {
+                    cartFragmentView.onCartItemsFetched(cartItems);
+                }
 
-            @Override
-            public void onError(Throwable e) {
+                @Override
+                public void onError(Throwable e) {
 
-            }
-        });
+                }
+            });
+        } else {
+            cartFragmentView.showCartEmpty();
+        }
+
     }
 
 
@@ -99,14 +104,6 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
         }
     }
 
-    @Override
-    public void showCartEmpty() {
-        if (preferenceUtils.getRestaurantMode().equals(MODE_DINE_IN)) {
-            cartFragmentView.showDineCartEmpty();
-        } else if (preferenceUtils.getRestaurantMode().equals(MODE_NON_DINE)) {
-            cartFragmentView.showNonDineEmptyCart();
-        }
-    }
 
     public void clearCart() {
         cartHelper.clearCart();
@@ -203,7 +200,7 @@ public class CartFragmentPresenterImpl extends BasePresenter implements DineInPr
         fetchCartItems();
         logSelections();
         if (cartHelper.getCartTotalItems() == 0) {
-            showCartEmpty();
+            cartFragmentView.showCartEmpty();
         }
     }
 }

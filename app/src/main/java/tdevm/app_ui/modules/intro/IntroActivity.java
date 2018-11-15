@@ -146,7 +146,7 @@ public class IntroActivity extends AppCompatActivity {
             } else {
                 // still pages are left
                 btnNext.setText(getString(R.string.next));
-                btnSkip.setVisibility(View.VISIBLE);
+                btnSkip.setVisibility(View.GONE);
             }
         }
 

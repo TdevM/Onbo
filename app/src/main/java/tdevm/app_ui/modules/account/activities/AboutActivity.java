@@ -23,7 +23,7 @@ public class AboutActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_start_anim)
     void startAnim(){
-        animate(imageView);
+      //  animate(imageView);
     }
 
     @BindView(R.id.iv_show_anim)
@@ -42,17 +42,17 @@ public class AboutActivity extends AppCompatActivity {
     }
 
 
-    public void animate(View view) {
-        ImageView v = (ImageView) view;
-        Drawable d = v.getDrawable();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (d instanceof AnimatedVectorDrawable) {
-                AnimatedVectorDrawable avd = (AnimatedVectorDrawable) d;
-                avd.start();
-            } else if (d instanceof AnimatedVectorDrawableCompat) {
-                AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) d;
-                avd.start();
-            }
-        }
-    }
+//    public void animate(View view) {
+//        ImageView v = (ImageView) view;
+//        Drawable d = v.getDrawable();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            if (d instanceof AnimatedVectorDrawable) {
+//                AnimatedVectorDrawable avd = (AnimatedVectorDrawable) d;
+//                avd.start();
+//            } else if (d instanceof AnimatedVectorDrawableCompat) {
+//                AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) d;
+//                avd.start();
+//            }
+//        }
+//    }
 }
