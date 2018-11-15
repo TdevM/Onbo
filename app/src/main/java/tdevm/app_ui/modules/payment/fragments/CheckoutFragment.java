@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +29,7 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.api.models.response.v2.merged.MergedOrder;
-import tdevm.app_ui.modules.dinein.DineInActivity;
 import tdevm.app_ui.modules.dinein.adapters.MergedOrderAdapter;
-import tdevm.app_ui.modules.dinein.fragments.MergedOrderPresenter;
 import tdevm.app_ui.modules.payment.PaymentActivity;
 import tdevm.app_ui.modules.payment.PaymentViewContract;
 import tdevm.app_ui.utils.GeneralUtils;
@@ -59,9 +58,16 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
     TextView tvDate;
 
 
+    @BindView(R.id.progress_bar_close_order_pb)
+    ProgressBar closeProgressBar;
+
+
     @BindView(R.id.shimmer_fragment_checkout_t1)
     ShimmerFrameLayout shimmerFrameLayout;
 
+
+    @BindView(R.id.btn_checkout_t1_final)
+    Button btnCloseOrderT1;
 
     @OnClick(R.id.btn_checkout_t1_final)
     void checkoutBtn() {
@@ -175,6 +181,7 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
         shimmerFrameLayout.setVisibility(View.GONE);
     }
 
+
     @Override
     public void resolveDaggerDependencies() {
         ((AppApplication) getActivity().getApplication()).getApiComponent().inject(this);
@@ -186,6 +193,19 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
         Log.d(TAG, fOrder.getOrder_id());
         Log.d(TAG, fOrder.getT_order_id());
         paymentActivity.showMakePayment(fOrder);
+    }
+
+    @Override
+    public void showCloseProgressUI() {
+        closeProgressBar.setVisibility(View.VISIBLE);
+        btnCloseOrderT1.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void hideCloseProgressUI() {
+        btnCloseOrderT1.setVisibility(View.VISIBLE);
+        closeProgressBar.setVisibility(View.GONE);
     }
 
     @Override

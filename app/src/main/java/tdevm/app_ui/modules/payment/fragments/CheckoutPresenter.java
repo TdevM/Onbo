@@ -39,21 +39,20 @@ public class CheckoutPresenter extends BasePresenter implements PaymentPresenter
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("order_id", orderId);
-        Observable<Response<FOrder>> closeRunningOrder = service.closeRunningOrder("Bearer "+ preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<FOrder>> closeRunningOrder = service.closeRunningOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
         subscribe(closeRunningOrder, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
+                view.showCloseProgressUI();
 
             }
 
             @Override
             public void onNext(Response<FOrder> fOrderResponse) {
-                view.showProgressUI();
-                if (fOrderResponse.isSuccessful()) {
+                if (fOrderResponse.code() == 200) {
                     if (fOrderResponse.body() != null) {
                         view.onOrderClosed(fOrderResponse.body());
-                        view.hideProgressUI();
                     }
                 } else {
                     view.onOrderClosedFailure();
@@ -68,7 +67,7 @@ public class CheckoutPresenter extends BasePresenter implements PaymentPresenter
 
             @Override
             public void onComplete() {
-
+                view.hideCloseProgressUI();
             }
         });
     }
@@ -77,7 +76,7 @@ public class CheckoutPresenter extends BasePresenter implements PaymentPresenter
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("order_id", orderId);
-        Observable<Response<MergedOrder>> observable = service.fetchMergedOrder("Bearer "+ preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<MergedOrder>> observable = service.fetchMergedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<MergedOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -56,6 +57,9 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
 
     @BindView(R.id.shimmer_fragment_merged_order)
     ShimmerFrameLayout shimmerFrameLayout;
+
+    @BindView(R.id.frame_layout_merged_order_empty)
+    FrameLayout mergedOrderEmpty;
 
 
     @BindView(R.id.swipe_refresh_my_running_orders)
@@ -134,11 +138,13 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     @Override
     public void onRunningOrderFetched(TOrder tOrder) {
         presenter.fetchMergedOrder(tOrder);
+
     }
 
     @Override
     public void onMergedOrderFetched(MergedOrder mergedOrder) {
         mergedOrderAdapter.onMergedOrderFetched(mergedOrder);
+        mergedOrderEmpty.setVisibility(View.GONE);
         swipeRefreshLayout.setRefreshing(false);
         fetchedOrder = mergedOrder;
         Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
@@ -154,7 +160,7 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
 
     @Override
     public void showNoRunningOrder() {
-        dineInActivity.showEmptyRunningOrderFragment();
+        mergedOrderEmpty.setVisibility(View.VISIBLE);
     }
 
     public void startPaymentActivity() {

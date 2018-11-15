@@ -2,14 +2,10 @@ package tdevm.app_ui.modules.dinein;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -26,7 +22,6 @@ import butterknife.ButterKnife;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
-import tdevm.app_ui.modules.dinein.fragments.RunningOrderEmptyFragment;
 import tdevm.app_ui.modules.dinein.fragments.MenuItemsFragment;
 import tdevm.app_ui.modules.orders.callback.CartBadgeListener;
 import tdevm.app_ui.modules.payment.PaymentActivity;
@@ -191,19 +186,6 @@ public class DineInActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    public void showCartEmptyFragment() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        CartFragment cartFragment = new CartFragment();
-        transaction.replace(R.id.frame_layout_dine_in, cartFragment);
-        transaction.commit();
-    }
-
-    public void showEmptyRunningOrderFragment() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        RunningOrderEmptyFragment emptyFragment = new RunningOrderEmptyFragment();
-        transaction.replace(R.id.frame_layout_dine_in, emptyFragment);
-        transaction.commit();
-    }
 
     @Override
     public void hideProgressUI() {

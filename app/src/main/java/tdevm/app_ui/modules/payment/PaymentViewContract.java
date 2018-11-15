@@ -9,7 +9,13 @@ public interface PaymentViewContract {
 
     interface CheckoutFragmentView extends BaseView {
         void onOrderClosed(FOrder fOrder);
+
+        void showCloseProgressUI();
+
+        void hideCloseProgressUI();
+
         void onMergedOrderFetched(MergedOrder fOrder);
+
         void onOrderClosedFailure();
     }
 
@@ -19,6 +25,7 @@ public interface PaymentViewContract {
 
     interface PaymentActivityView extends BaseView {
         void onPaymentCaptured();
+
         void onPaymentCaptureFailure();
     }
 }
