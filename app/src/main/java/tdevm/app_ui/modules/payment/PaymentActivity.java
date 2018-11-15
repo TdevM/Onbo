@@ -73,7 +73,13 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     @Override
     public void onPaymentError(int i, String s) {
         Log.d(TAG, "Payment Failed");
-        showPaymentError(fOrder);
+        Log.d(TAG,"VALUE OF F_ORDER"+ fOrder);
+        try {
+            showPaymentError(fOrder);
+        }catch (Exception c){
+            c.printStackTrace();
+        }
+
     }
 
 
@@ -90,6 +96,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     }
 
     public void showMakePayment(FOrder fOrder) {
+        this.fOrder = fOrder;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         PaymentFragment fragment = new PaymentFragment();
         Bundle bundle = new Bundle();
@@ -200,7 +207,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         bundle.putString("ORDER_ID", fOrder.getT_order_id());
         fragment.setArguments(bundle);
         transaction.replace(R.id.frame_layout_payments, fragment);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
     @Override
