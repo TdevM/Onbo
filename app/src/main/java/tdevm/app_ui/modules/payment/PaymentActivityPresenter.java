@@ -39,34 +39,35 @@ public class PaymentActivityPresenter extends BasePresenter implements PaymentPr
 
     @Override
     public void captureOrderPayment(String paymentId, String orderId) {
-        PaymentCapture capture = new PaymentCapture(orderId,paymentId, preferenceUtils.getScannedRestaurantId());
-        Observable<Response<FOrder>> observable = apiService.payOrder("Bearer "+ preferenceUtils.getAuthLoginToken(), capture);
+        PaymentCapture capture = new PaymentCapture(orderId, paymentId, preferenceUtils.getScannedRestaurantId());
+        Observable<Response<FOrder>> observable = apiService.payOrder("Bearer " + preferenceUtils.getAuthLoginToken(), capture);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
+                paymentActivityView.showPaymentCaptureProgressUI();
             }
 
             @Override
             public void onNext(Response<FOrder> fOrderResponse) {
-                if (fOrderResponse.isSuccessful()) {
+                if (fOrderResponse.code() == 200) {
                     if (fOrderResponse.body() != null) {
                         Log.d(TAG, fOrderResponse.body().toString());
-                        paymentActivityView.onPaymentCaptured();
+                        paymentActivityView.onPaymentCaptured(fOrderResponse.body());
                     }
                 } else {
-                    paymentActivityView.onPaymentCaptureFailure();
+                    paymentActivityView.onPaymentCaptureFailure(fOrderResponse.body());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                paymentActivityView.onPaymentCaptureFailure();
+                ///paymentActivityView.onPaymentCaptureFailure();
             }
 
             @Override
             public void onComplete() {
-
+                paymentActivityView.hidePaymentCaptureProgressUI();
             }
         });
 

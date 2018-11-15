@@ -24,8 +24,12 @@ public interface PaymentViewContract {
     }
 
     interface PaymentActivityView extends BaseView {
-        void onPaymentCaptured();
+        void onPaymentCaptured(FOrder fOrder);
 
-        void onPaymentCaptureFailure();
+        void showPaymentCaptureProgressUI();
+
+        void hidePaymentCaptureProgressUI();
+
+        void onPaymentCaptureFailure(FOrder fOrder);
     }
 }

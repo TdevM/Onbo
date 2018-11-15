@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".modules.payment.fragments.CashPickupFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appbar_layout_edit_account_details"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+
+        <LinearLayout
+            android:id="@+id/ll_t1_success_"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/size_16_dp"
+            android:layout_weight="6"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_16_dp"
+                    android:layout_marginTop="@dimen/size_16_dp"
+                    android:layout_marginEnd="@dimen/size_16_dp"
+                    android:text="@string/oops_payment_failed"
+                    android:textAlignment="center"
+                    android:textColor="@color/primary_dark_app"
+                    android:textSize="24sp" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_16_dp"
+                    android:layout_marginEnd="@dimen/size_16_dp"
+                    android:text="Waiter will be collecting cash shortly."
+                    android:textColor="@color/sub_heading_color"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <ImageView
+                    android:id="@+id/iv_animate_t1_success"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/default_space_48"
+                    android:contentDescription="@string/image_design_random"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_order_payment_error" />
+
+
+            </android.support.constraint.ConstraintLayout>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_order_id_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/default_space_32"
+                android:layout_marginTop="24dp"
+                android:text="ORDER NO"
+                android:textColor="@color/sub_heading_color"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_order_table_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_order_id_show"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="false"
+                android:layout_marginStart="@dimen/default_space_32"
+                android:layout_marginTop="@dimen/size_16_dp"
+                android:text="TABLE"
+                android:textColor="@color/sub_heading_color"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_t1_order_success_order_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_order_id_show"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="@dimen/default_space_32"
+                android:textColor="@color/heading_color"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_t1_order_success_table_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_t1_order_success_order_id"
+                android:layout_alignBaseline="@+id/tv_order_table_no"
+                android:layout_alignStart="@+id/tv_t1_order_success_order_id"
+                android:layout_alignParentTop="false"
+                android:textColor="@color/heading_color"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_order_table_no"
+                android:layout_alignParentBottom="false"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size_16_dp"
+                android:text="@string/thank_you_for_your_order"
+                android:textColor="@color/heading_color"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_order_payment_failure_t1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="0dp"
+                android:background="@drawable/gradient_6"
+                android:text="@string/retry"
+                android:textColor="@color/white" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

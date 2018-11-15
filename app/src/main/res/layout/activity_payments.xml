@@ -9,12 +9,49 @@
     tools:context="tdevm.app_ui.modules.payment.PaymentActivity">
 
     <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/frame_layout_payment_capture_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ProgressBar
+                android:id="@+id/progressBar_capture_payment"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/progressBar_capture_payment"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size_16_dp"
+                android:text="@string/please_wait_processing_payment"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView30"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size_8_dp"
+                android:text="@string/please_do_not_press_back_button_or_close_the_app"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/frame_layout_payments"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-    </FrameLayout>
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

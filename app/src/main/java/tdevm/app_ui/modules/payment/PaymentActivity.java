@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.razorpay.Checkout;
@@ -13,12 +15,17 @@ import com.razorpay.PaymentResultListener;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.modules.payment.fragments.CashPickupFragment;
 import tdevm.app_ui.modules.payment.fragments.CheckoutFragment;
+import tdevm.app_ui.modules.payment.fragments.PaymentFailedFragment;
 import tdevm.app_ui.modules.payment.fragments.PaymentFragment;
+import tdevm.app_ui.modules.payment.fragments.PaymentSuccessFragment;
+import tdevm.app_ui.root.RootActivity;
 
 public class PaymentActivity extends AppCompatActivity implements PaymentResultListener, PaymentViewContract.PaymentActivityView {
 
@@ -31,6 +38,9 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     private Boolean paymentPending;
     private FOrder fOrder;
 
+    @BindView(R.id.frame_layout_payment_capture_progress)
+    FrameLayout frameLayoutPaymentCaptureProgress;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -42,6 +52,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         super.onCreate(savedInstanceState);
         resolveDaggerDependencies();
         setContentView(R.layout.activity_payments);
+        ButterKnife.bind(this);
         Checkout.preload(getApplicationContext());
         handlePaymentView();
     }
@@ -49,14 +60,20 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     @Override
     public void onPaymentSuccess(String s) {
         Log.d(TAG, "Payment Authorized Successfully" + s);
-        if (orderId != null) {
-            paymentActivityPresenter.captureOrderPayment(s, orderId);
+        try {
+            if (orderId != null) {
+                paymentActivityPresenter.captureOrderPayment(s, orderId);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
+
     }
 
     @Override
     public void onPaymentError(int i, String s) {
         Log.d(TAG, "Payment Failed");
+        showPaymentError(fOrder);
     }
 
 
@@ -137,6 +154,12 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 
     }
 
+    public void goToHome() {
+        Intent intent = new Intent(PaymentActivity.this, RootActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -156,13 +179,49 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         }
     }
 
-    @Override
-    public void onPaymentCaptured() {
-        Toast.makeText(this, "Voila! Your payment was successful", Toast.LENGTH_SHORT).show();
+    public void showPaymentSuccess(FOrder fOrder) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        PaymentSuccessFragment fragment = new PaymentSuccessFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("ORDER", fOrder);
+        bundle.putString("F_ORDER_ID", fOrder.getOrder_id());
+        bundle.putString("ORDER_ID", fOrder.getT_order_id());
+        fragment.setArguments(bundle);
+        transaction.replace(R.id.frame_layout_payments, fragment);
+        transaction.commit();
+    }
+
+    public void showPaymentError(FOrder fOrder) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        PaymentFailedFragment fragment = new PaymentFailedFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("ORDER", fOrder);
+        bundle.putString("F_ORDER_ID", fOrder.getOrder_id());
+        bundle.putString("ORDER_ID", fOrder.getT_order_id());
+        fragment.setArguments(bundle);
+        transaction.replace(R.id.frame_layout_payments, fragment);
+        transaction.commit();
     }
 
     @Override
-    public void onPaymentCaptureFailure() {
-        Toast.makeText(this, ":( Payment failed.", Toast.LENGTH_SHORT).show();
+    public void onPaymentCaptured(FOrder fOrder) {
+        showPaymentSuccess(fOrder);
+        //Toast.makeText(this, "Voila! Your payment was successful", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showPaymentCaptureProgressUI() {
+        frameLayoutPaymentCaptureProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hidePaymentCaptureProgressUI() {
+        frameLayoutPaymentCaptureProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onPaymentCaptureFailure(FOrder fOrder) {
+        showPaymentError(fOrder);
+        // Toast.makeText(this, ":( Payment failed.", Toast.LENGTH_SHORT).show();
     }
 }
