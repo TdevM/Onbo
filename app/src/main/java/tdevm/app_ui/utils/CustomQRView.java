@@ -40,7 +40,7 @@ public class CustomQRView extends AppCompatActivity implements
         // if the device does not have flashlight in its camera,
         // then remove the switch flashlight button...
         if (!hasFlash()) {
-            switchFlashlightButton.setVisibility(View.GONE);
+           // switchFlashlightButton.setVisibility(View.GONE);
             flashLightButtonOn.setVisibility(View.GONE);
         }
 

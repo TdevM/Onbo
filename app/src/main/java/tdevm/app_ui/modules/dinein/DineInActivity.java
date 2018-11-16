@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -38,6 +39,10 @@ public class DineInActivity extends AppCompatActivity implements
     DineInActivityPresenter presenter;
 
     FragmentTransaction fragmentTransaction;
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     @BindView(R.id.toolbar_dine_in_activity)
     Toolbar toolbar;
