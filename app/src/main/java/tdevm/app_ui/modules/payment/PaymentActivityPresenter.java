@@ -62,7 +62,7 @@ public class PaymentActivityPresenter extends BasePresenter implements PaymentPr
 
             @Override
             public void onError(Throwable e) {
-                ///paymentActivityView.onPaymentCaptureFailure();
+                //paymentActivityView.onPaymentCaptureFailure();
             }
 
             @Override

@@ -143,6 +143,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/size_16_dp"
+                android:layout_marginEnd="@dimen/size_16_dp"
                 android:layout_marginBottom="@dimen/default_width_64"
                 android:text="Walk up to the cash counter to make your payment"
                 android:textColor="@color/heading_color"

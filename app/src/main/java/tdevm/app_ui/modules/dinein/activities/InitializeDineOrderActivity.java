@@ -50,8 +50,6 @@ public class InitializeDineOrderActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        placeTempOrderPresenter.attachView(this);
-        placeTempOrderPresenter.checkCurrentOrderDetails();
         Log.d(TAG, "Temp Order onResume");
     }
 
@@ -61,6 +59,9 @@ public class InitializeDineOrderActivity extends AppCompatActivity
         resolveDaggerDependencies();
         setContentView(R.layout.activity_place_temp_order);
         ButterKnife.bind(this);
+        placeTempOrderPresenter.attachView(this);
+        placeTempOrderPresenter.checkCurrentOrderDetails();
+
         restaurant = getIntent().getParcelableExtra("RESTAURANT");
         Log.d(TAG, placeTempOrderPresenter.convertCartTOJSON().toString());
         Log.d(TAG, "Temp Order onCreate");

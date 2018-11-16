@@ -141,7 +141,8 @@ public class OrderPaymentTypeFragment extends Fragment implements NonDineViewCon
             if (selectedPaymentMode.equals(MODE_CASH)) {
                 paymentTypePresenter.createCashNDOrder();
             } else if (selectedPaymentMode.equals(MODE_DIGITAL)) {
-                activity.showDigitalPaymentOptions();
+                //activity.showDigitalPaymentOptions();
+                paymentTypePresenter.createPaidNDOrder();
             }
         }
     }
@@ -166,6 +167,11 @@ public class OrderPaymentTypeFragment extends Fragment implements NonDineViewCon
     @Override
     public void onNDCashOrderCreated(FOrder fOrder) {
         activity.onNDCashOrderCreated(fOrder);
+    }
+
+    @Override
+    public void onNDPaidOrderCreated(FOrder fOrder) {
+        activity.onPaidOrderCreated(fOrder);
     }
 
     @Override

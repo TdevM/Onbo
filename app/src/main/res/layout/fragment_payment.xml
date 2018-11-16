@@ -140,7 +140,7 @@
         android:layout_height="100dp"
         android:layout_above="@+id/btn_pay_dine_order"
         android:layout_alignParentStart="true"
-        android:scaleType="fitEnd"
+        android:scaleType="fitCenter"
         android:src="@drawable/payment_bgxxhdpi" />
 
 </RelativeLayout>

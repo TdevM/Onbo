@@ -58,11 +58,12 @@ public class InitNonDineOrderPresenter extends BasePresenter implements NonDineP
     public void capturePaymentForOrder(String payment_id, String orderId) {
 
         PaymentCapture capture = new PaymentCapture(orderId, payment_id, preferenceUtils.getScannedRestaurantId());
-        Observable<Response<FOrder>> observable = apiService.captureNonDineOrderPayment("Bearer "+ preferenceUtils.getAuthLoginToken(), capture);
+        Observable<Response<FOrder>> observable = apiService.captureNonDineOrderPayment("Bearer " + preferenceUtils.getAuthLoginToken(), capture);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
+                nonDineOrderView.showPaymentCaptureProgressUI();
             }
 
             @Override
@@ -84,14 +85,11 @@ public class InitNonDineOrderPresenter extends BasePresenter implements NonDineP
 
             @Override
             public void onComplete() {
-
+                nonDineOrderView.hidePaymentCaptureProgressUI();
             }
         });
 
     }
-
-
-
 
 
     public void clearCart() {

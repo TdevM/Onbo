@@ -1,50 +1,42 @@
-package tdevm.app_ui.modules.payment.fragments;
+package tdevm.app_ui.modules.nondine.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
-import tdevm.app_ui.modules.payment.IOnBackPressed;
+import tdevm.app_ui.modules.nondine.activities.InitNonDineOrderActivity;
 import tdevm.app_ui.modules.payment.PaymentActivity;
 
 
-public class PaymentFailedFragment extends Fragment implements IOnBackPressed {
+public class PaymentFailedFragmentNonDine extends Fragment {
 
-
-    public static final String TAG = PaymentFailedFragment.class.getSimpleName();
 
     @OnClick(R.id.btn_order_payment_failure_t1)
     void paymentFailed() {
-        if (fOrder != null) {
-            activity.showMakePayment(fOrder);
-        }
+        activity.showOrderPaymentType();
     }
 
-    PaymentActivity activity;
+    InitNonDineOrderActivity activity;
 
     Unbinder unbinder;
 
     private FOrder fOrder;
 
-    public PaymentFailedFragment() {
+    public PaymentFailedFragmentNonDine() {
         // Required empty public constructor
     }
 
 
-    public static PaymentFailedFragment newInstance() {
-        PaymentFailedFragment fragment = new PaymentFailedFragment();
+    public static PaymentFailedFragmentNonDine newInstance() {
+        PaymentFailedFragmentNonDine fragment = new PaymentFailedFragmentNonDine();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -63,7 +55,7 @@ public class PaymentFailedFragment extends Fragment implements IOnBackPressed {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        activity = (PaymentActivity) getActivity();
+        activity = (InitNonDineOrderActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_payment_failed, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -86,12 +78,5 @@ public class PaymentFailedFragment extends Fragment implements IOnBackPressed {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @Override
-    public boolean onBackPressed() {
-        Log.d(TAG, "Payment failed on back pressed");
-
-        return true;
     }
 }

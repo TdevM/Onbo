@@ -1,11 +1,13 @@
 package tdevm.app_ui.modules.nondine.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.razorpay.Checkout;
@@ -26,6 +28,12 @@ import tdevm.app_ui.modules.nondine.fragments.DigitalPaymentOptionsFragment;
 import tdevm.app_ui.modules.nondine.fragments.NDOrderCashFragment;
 import tdevm.app_ui.modules.nondine.fragments.NonDineCheckoutFragment;
 import tdevm.app_ui.modules.nondine.fragments.OrderPaymentTypeFragment;
+import tdevm.app_ui.modules.nondine.fragments.PaymentFailedFragmentNonDine;
+import tdevm.app_ui.modules.nondine.fragments.PaymentSuccessFragmentNonDine;
+import tdevm.app_ui.modules.payment.PaymentActivity;
+import tdevm.app_ui.modules.payment.fragments.PaymentFailedFragment;
+import tdevm.app_ui.modules.payment.fragments.PaymentSuccessFragment;
+import tdevm.app_ui.root.RootActivity;
 
 public class InitNonDineOrderActivity extends AppCompatActivity implements NonDineViewContract.InitNonDineOrderView,
         PaymentResultListener {
@@ -36,8 +44,9 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
     InitNonDineOrderPresenter presenter;
 
 
-    @BindView(R.id.pb_non_dine_init)
-    ProgressBar progressBar;
+    @BindView(R.id.frame_layout_payment_capture_progress)
+    FrameLayout paymentCaptureProgress;
+
 
     @Override
     protected void onResume() {
@@ -57,12 +66,12 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
 
     @Override
     public void showProgressUI() {
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgressUI() {
-        progressBar.setVisibility(View.GONE);
+        //progressBar.setVisibility(View.GONE);
     }
 
     public void showOrderSummary() {
@@ -100,6 +109,18 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout_place_non_dine_order, NDOrderCashFragment.newInstance(fOrder));
         transaction.commit();
+        presenter.clearCart();
+    }
+
+    public void onPaidOrderCreated(FOrder fOrder) {
+        startPayment(fOrder);
+
+    }
+
+    public void goToHome() {
+        Intent intent = new Intent(InitNonDineOrderActivity.this, RootActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 
@@ -111,8 +132,8 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
         if (fOrder != null) {
             try {
                 JSONObject options = new JSONObject();
-                options.put("name", "tdevm's palace");
-                options.put("description", "Order ID" + fOrder.getOrder_id());
+                options.put("name", fOrder.getRestaurant().getRestaurant_name());
+                options.put("description", "Order ID # " + fOrder.getOrder_id());
                 options.put("currency", "INR");
                 options.put("amount", fOrder.getGrand_total());
                 checkout.open(activity, options);
@@ -125,27 +146,46 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
 
     @Override
     public void onPaymentSuccess(String s) {
-        if(fOrderDigital!=null){
+        if (fOrderDigital != null) {
             presenter.capturePaymentForOrder(s, fOrderDigital.getOrder_id());
+            presenter.clearCart();
         }
     }
 
     @Override
     public void onPaymentError(int i, String s) {
         // Authorization failed
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        PaymentFailedFragmentNonDine fragment = new PaymentFailedFragmentNonDine();
+        transaction.replace(R.id.frame_layout_place_non_dine_order, fragment);
+        transaction.commitAllowingStateLoss();
+
     }
 
     @Override
     public void onPaymentCaptured() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        OrderSuccessFragment fragment = new OrderSuccessFragment();
+        PaymentSuccessFragmentNonDine fragment = new PaymentSuccessFragmentNonDine();
         transaction.replace(R.id.frame_layout_place_non_dine_order, fragment);
         transaction.commit();
-        presenter.clearCart();
+
     }
 
     @Override
     public void onPaymentCaptureFailure() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        PaymentFailedFragment fragment = new PaymentFailedFragment();
+        transaction.replace(R.id.frame_layout_place_non_dine_order, fragment);
+        transaction.commit();
+    }
 
+    @Override
+    public void showPaymentCaptureProgressUI() {
+        paymentCaptureProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hidePaymentCaptureProgressUI() {
+        paymentCaptureProgress.setVisibility(View.GONE);
     }
 }

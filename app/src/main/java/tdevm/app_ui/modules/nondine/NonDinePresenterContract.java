@@ -36,6 +36,8 @@ public interface NonDinePresenterContract {
 
         void detachView();
 
+        void createPaidNDOrder();
+
         void createCashNDOrder();
 
     }
@@ -55,7 +57,7 @@ public interface NonDinePresenterContract {
         void createPaidNDOrder();
     }
 
-    interface NonDineActivityPresenter  extends BasePresenterMVP<NonDineViewContract.NonDineActivityView>{
+    interface NonDineActivityPresenter extends BasePresenterMVP<NonDineViewContract.NonDineActivityView> {
 
     }
 

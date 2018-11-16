@@ -35,6 +35,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     PaymentActivityPresenter paymentActivityPresenter;
 
     private String orderId;
+    private String tOrderId;
     private Boolean paymentPending;
     private FOrder fOrder;
 
@@ -61,8 +62,8 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     public void onPaymentSuccess(String s) {
         Log.d(TAG, "Payment Authorized Successfully" + s);
         try {
-            if (orderId != null) {
-                paymentActivityPresenter.captureOrderPayment(s, orderId);
+            if (fOrder != null) {
+                paymentActivityPresenter.captureOrderPayment(s, fOrder.getOrder_id());
             }
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -73,10 +74,10 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     @Override
     public void onPaymentError(int i, String s) {
         Log.d(TAG, "Payment Failed");
-        Log.d(TAG,"VALUE OF F_ORDER"+ fOrder);
+        Log.d(TAG, "VALUE OF F_ORDER" + fOrder);
         try {
             showPaymentError(fOrder);
-        }catch (Exception c){
+        } catch (Exception c) {
             c.printStackTrace();
         }
 
@@ -139,10 +140,10 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                 Log.d(TAG, "F_ORDER_ID: " + fOrder.getOrder_id());
 
             } else {
-                orderId = intent.getStringExtra("ORDER_ID");
+                tOrderId = intent.getStringExtra("ORDER_ID");
                 Log.d(TAG, "PAYMENT Pending" + String.valueOf(paymentPending));
-                Log.d(TAG, "ORDER_ID_RECEIVED FROM Activity: " + orderId);
-                showCheckout(orderId);
+                Log.d(TAG, "T_ORDER_ID_RECEIVED FROM Activity: " + orderId);
+                showCheckout(tOrderId);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,6 +164,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 
     public void goToHome() {
         Intent intent = new Intent(PaymentActivity.this, RootActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }

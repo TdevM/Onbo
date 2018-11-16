@@ -1,18 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".modules.nondine.activities.InitNonDineOrderActivity">
 
-    <ProgressBar
-        android:id="@+id/pb_non_dine_init"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="invisible" />
+    <FrameLayout
+        android:id="@+id/frame_layout_payment_capture_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ProgressBar
+                android:id="@+id/progressBar_capture_payment"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/progressBar_capture_payment"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size_16_dp"
+                android:text="@string/please_wait_processing_payment"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView30"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size_8_dp"
+                android:text="@string/please_do_not_press_back_button_or_close_the_app"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+    </FrameLayout>
+
+
 
     <FrameLayout
         android:id="@+id/frame_layout_place_non_dine_order"
@@ -21,4 +56,4 @@
 
     </FrameLayout>
 
-</RelativeLayout>
+</LinearLayout>

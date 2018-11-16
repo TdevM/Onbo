@@ -16,7 +16,7 @@ import tdevm.app_ui.modules.nondine.NonDineViewContract;
 import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
-public class OrderPaymentTypePresenter extends BasePresenter implements NonDinePresenterContract.OrderPaymentTypePresenter{
+public class OrderPaymentTypePresenter extends BasePresenter implements NonDinePresenterContract.OrderPaymentTypePresenter {
 
 
     public static final String TAG = OrderPaymentTypePresenter.class.getSimpleName();
@@ -51,22 +51,23 @@ public class OrderPaymentTypePresenter extends BasePresenter implements NonDineP
 
     @Override
     public void createCashNDOrder() {
-        NonDineOrder order = new NonDineOrder(preferenceUtils.getScannedRestaurantId(),"This is a hardcoded text",cart.convertCartTOJSON().toString());
-        Observable<Response<FOrder>> createNDCashOrder =  apiService.createUnpaidNonDineOrder("Bearer "+ preferenceUtils.getAuthLoginToken(),order);
+        NonDineOrder order = new NonDineOrder(preferenceUtils.getScannedRestaurantId(), "This is a hardcoded text", cart.convertCartTOJSON().toString());
+        Observable<Response<FOrder>> createNDCashOrder = apiService.createUnpaidNonDineOrder("Bearer " + preferenceUtils.getAuthLoginToken(), order);
         subscribe(createNDCashOrder, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
+                paymentTypeView.showProgressUI();
             }
 
             @Override
             public void onNext(Response<FOrder> fOrderResponse) {
                 paymentTypeView.showProgressUI();
-                if(fOrderResponse.isSuccessful()){
-                    if(fOrderResponse.body()!=null){
+                if (fOrderResponse.isSuccessful()) {
+                    if (fOrderResponse.body() != null) {
                         paymentTypeView.onNDCashOrderCreated(fOrderResponse.body());
                     }
-                }else {
+                } else {
                     paymentTypeView.onOrderCreationFailure();
                 }
             }
@@ -82,4 +83,40 @@ public class OrderPaymentTypePresenter extends BasePresenter implements NonDineP
             }
         });
     }
+
+    @Override
+    public void createPaidNDOrder() {
+        NonDineOrder order = new NonDineOrder(preferenceUtils.getScannedRestaurantId(), "This is a hardcoded text", cart.convertCartTOJSON().toString());
+        Observable<Response<FOrder>> createNDCashOrder = apiService.createPaidNonDineOrder("Bearer " + preferenceUtils.getAuthLoginToken(), order);
+        subscribe(createNDCashOrder, new Observer<Response<FOrder>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+                paymentTypeView.showProgressUI();
+            }
+
+            @Override
+            public void onNext(Response<FOrder> fOrderResponse) {
+
+                if (fOrderResponse.code() == 200) {
+                    if (fOrderResponse.body() != null) {
+                        paymentTypeView.onNDPaidOrderCreated(fOrderResponse.body());
+                    }
+                } else {
+                    paymentTypeView.onOrderCreationFailure();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                paymentTypeView.onOrderCreationFailure();
+            }
+
+            @Override
+            public void onComplete() {
+                //paymentTypeView.hideProgressUI();
+            }
+        });
+    }
 }
+

@@ -53,6 +53,7 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.modules.dinein.DineInActivity;
+import tdevm.app_ui.modules.nondine.NonDineActivity;
 import tdevm.app_ui.modules.nondine.activities.NonDineRestaurantDetailsActivity;
 import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CustomQRView;
@@ -344,7 +345,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
     @Override
     public void redirectNonDineActivity(Restaurant restaurant) {
-        Intent intent = new Intent(RestaurantMenuEntryActivity.this, NonDineRestaurantDetailsActivity.class);
+        Intent intent = new Intent(RestaurantMenuEntryActivity.this, NonDineActivity.class);
         intent.putExtra("RESTAURANT", restaurant);
         startActivity(intent);
         finish();
