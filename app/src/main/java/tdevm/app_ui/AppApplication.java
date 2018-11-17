@@ -2,8 +2,10 @@ package tdevm.app_ui;
 
 import android.support.multidex.MultiDexApplication;
 
+import com.crashlytics.android.Crashlytics;
 import com.onesignal.OneSignal;
 
+import io.fabric.sdk.android.Fabric;
 import tdevm.app_ui.di.components.APIComponent;
 import tdevm.app_ui.di.components.ApplicationComponent;
 import tdevm.app_ui.di.components.DaggerAPIComponent;
@@ -25,6 +27,7 @@ public class AppApplication extends MultiDexApplication {
         initializeApplicationComponent();
         initializeAPIComponent();
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            // This process is dedicated to LeakCanary for heap analysis.
 //            // You should not init your app in this process.
