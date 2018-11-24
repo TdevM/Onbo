@@ -54,7 +54,6 @@
 
             <TextView
                 android:id="@+id/textView12"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -122,6 +121,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_16_dp"
+                    app:passwordToggleContentDescription="Show Password"
+                    app:passwordToggleDrawable="@drawable/ic_remove_red_eye_black_24dp"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/primary_default_app"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
 

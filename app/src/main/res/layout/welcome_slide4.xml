@@ -65,10 +65,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/size_16_dp"
+            android:layout_marginTop="@dimen/default_space_32"
             android:text="@string/dine_into_thousand"
             android:textColor="@color/primary_dark_app"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_intro_2_2"
@@ -80,7 +81,8 @@
             android:layout_marginTop="@dimen/size_8_dp"
             android:text="@string/intro_text_4_2"
             android:textAlignment="center"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone" />
 
 
     </RelativeLayout>

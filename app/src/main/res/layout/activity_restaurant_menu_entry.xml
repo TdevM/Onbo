@@ -267,7 +267,7 @@
 
 
                 <Button
-                    android:id="@+id/btn_fetch_location_retry"
+                    android:id="@+id/btn_fetch_location_retry_start_anyway"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -275,7 +275,7 @@
                     android:layout_gravity="bottom"
                     android:layout_marginStart="0dp"
                     android:background="@drawable/gradient_6"
-                    android:text="@string/retry"
+                    android:text="@string/start_anyway"
                     android:textAlignment="center"
                     android:textColor="@color/white" />
 

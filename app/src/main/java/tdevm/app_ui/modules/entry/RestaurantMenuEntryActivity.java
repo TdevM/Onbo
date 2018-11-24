@@ -104,7 +104,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
         initializeScanning();
     }
 
-    @OnClick(R.id.btn_fetch_location_retry)
+    @OnClick(R.id.btn_fetch_location_retry_start_anyway)
     void run(){
         initializeScanning();
     }

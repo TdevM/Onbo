@@ -142,7 +142,7 @@
                             android:id="@+id/et_sign_up_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/name"
+                            android:hint="@string/your_full_name"
                             android:inputType="textPersonName"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
@@ -159,7 +159,7 @@
                             android:id="@+id/et_sign_up_email"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="@string/email"
+                            android:hint="@string/your_email_"
                             android:inputType="textEmailAddress"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
@@ -180,7 +180,7 @@
                             android:id="@+id/et_sign_up_password"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="@string/password"
+                            android:hint="@string/set_a_new_password"
                             android:inputType="textPassword"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>

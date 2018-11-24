@@ -64,16 +64,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/size_16_dp"
+            android:layout_marginTop="@dimen/default_space_32"
             android:text="@string/self_ordering_is_here"
             android:textColor="@color/primary_dark_app"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_intro_2_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_intro_1_head"
+            android:visibility="gone"
             android:layout_alignParentStart="false"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/size_8_dp"
@@ -87,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_intro_2_2"
             android:layout_alignParentStart="false"
+            android:visibility="gone"
             android:layout_centerHorizontal="true"
 
             android:maxLines="1"

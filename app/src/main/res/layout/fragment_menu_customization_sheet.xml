@@ -7,24 +7,29 @@
     tools:context=".modules.dinein.bottomsheets.section_r_view.MenuItemCustomizationSheet">
 
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_header_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/list_item_spacing_half"
         android:paddingTop="@dimen/list_item_spacing_half"
+        android:paddingBottom="@dimen/list_item_spacing_half"
         tools:context=".modules.dinein.bottomsheets.section_r_view.MenuItemCustomizationSheet" />
 
 
-    <Button
-        android:id="@+id/btn_variant_add_to_cart"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gradient_6"
-        android:textColor="@color/white"
-        android:text="@string/add_to_cart" />
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_variant_add_to_cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_6"
+            android:text="@string/add_to_cart"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
 
 </LinearLayout>

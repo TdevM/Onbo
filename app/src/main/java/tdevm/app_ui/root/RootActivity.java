@@ -29,6 +29,7 @@ import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
 import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
 import tdevm.app_ui.root.activities.RestaurantDetailActivity;
+import tdevm.app_ui.root.activities.RestaurantDetailActivity2;
 import tdevm.app_ui.root.fragments.AccountsFragment;
 import tdevm.app_ui.root.fragments.RestaurantListFragment;
 import tdevm.app_ui.utils.BadgeDrawable;
@@ -114,7 +115,7 @@ public class RootActivity extends AppCompatActivity implements NavigationHomeVie
 
     @Override
     public void showRestaurantDetailsActivity(Restaurant restaurant) {
-        Intent intent = new Intent(this, RestaurantDetailActivity.class);
+        Intent intent = new Intent(this, RestaurantDetailActivity2.class);
         intent.putExtra("RESTAURANT", restaurant);
         startActivity(intent);
     }

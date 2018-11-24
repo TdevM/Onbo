@@ -32,4 +32,9 @@ public interface PaymentViewContract {
 
         void onPaymentCaptureFailure(FOrder fOrder);
     }
+
+    interface CashPickupView extends BaseView {
+
+        void onFOrderFetched(FOrder fOrder);
+    }
 }

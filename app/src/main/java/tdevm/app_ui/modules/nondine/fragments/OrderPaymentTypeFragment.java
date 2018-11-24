@@ -149,12 +149,12 @@ public class OrderPaymentTypeFragment extends Fragment implements NonDineViewCon
 
 
     public void showCashSelected() {
-        checkBtnDigital.setVisibility(View.GONE);
+        checkBtnDigital.setVisibility(View.INVISIBLE);
         checkBtnCash.setVisibility(View.VISIBLE);
     }
 
     public void showDigitalSelected() {
-        checkBtnCash.setVisibility(View.GONE);
+        checkBtnCash.setVisibility(View.INVISIBLE);
         checkBtnDigital.setVisibility(View.VISIBLE);
     }
 

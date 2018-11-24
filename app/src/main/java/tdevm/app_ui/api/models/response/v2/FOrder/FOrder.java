@@ -35,7 +35,7 @@ public class FOrder implements Parcelable{
 
     private RestaurantTable restaurant_table;
 
-    private String txn_status;
+    private boolean txn_status;
 
     private String txn_id;
 
@@ -58,7 +58,7 @@ public class FOrder implements Parcelable{
         restaurant = in.readParcelable(Restaurant.class.getClassLoader());
         timestamp = in.readString();
         restaurant_table = in.readParcelable(RestaurantTable.class.getClassLoader());
-        txn_status = in.readString();
+        txn_status = in.readByte() != 0;
         txn_id = in.readString();
         order_source = in.readString();
         user_id = in.readString();
@@ -211,11 +211,11 @@ public class FOrder implements Parcelable{
         this.restaurant_table = restaurant_table;
     }
 
-    public String getTxn_status() {
+    public boolean getTxn_status() {
         return txn_status;
     }
 
-    public void setTxn_status(String txn_status) {
+    public void setTxn_status(boolean txn_status) {
         this.txn_status = txn_status;
     }
 
@@ -423,7 +423,7 @@ public class FOrder implements Parcelable{
         dest.writeParcelable(restaurant, flags);
         dest.writeString(timestamp);
         dest.writeParcelable(restaurant_table, flags);
-        dest.writeString(txn_status);
+        dest.writeByte((byte) (txn_status ? 1 : 0));
         dest.writeString(txn_id);
         dest.writeString(order_source);
         dest.writeString(user_id);

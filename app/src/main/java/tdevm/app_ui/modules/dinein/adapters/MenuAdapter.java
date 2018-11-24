@@ -120,6 +120,13 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.non_veg_symbol));
                     //holder.vegNonVegIndicator.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_non_veg_indicator));
                 }
+
+                if (object.getMenuItem().getCustomizable()) {
+                    holder.isCustomizable.setVisibility(View.VISIBLE);
+                } else {
+                    holder.isCustomizable.setVisibility(View.GONE);
+                }
+
                 Single<CartSelection> selection = cartHelper.getCartSelectionById(Long.parseLong(object.getMenuItem().getItemId()));
                 selection.subscribe(new DisposableSingleObserver<CartSelection>() {
                     @Override
@@ -182,6 +189,9 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @BindView(R.id.tv_si_item_description)
         TextView itemDescription;
+
+        @BindView(R.id.tv_si_item_is_customizable)
+        TextView isCustomizable;
 
         public RecycledGridViewHolder(View itemView) {
             super(itemView);

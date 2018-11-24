@@ -16,19 +16,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
+import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.FOrder.FOrder;
 import tdevm.app_ui.modules.payment.IOnBackPressed;
+import tdevm.app_ui.modules.payment.PaymentActivity;
+import tdevm.app_ui.modules.payment.PaymentViewContract;
 import tdevm.app_ui.utils.GeneralUtils;
 
 
-public class CashPickupFragment extends Fragment implements IOnBackPressed {
+public class CashPickupFragment extends Fragment implements IOnBackPressed, PaymentViewContract.CashPickupView {
 
 
     public static final String TAG = CashPickupFragment.class.getSimpleName();
@@ -42,13 +50,38 @@ public class CashPickupFragment extends Fragment implements IOnBackPressed {
     @BindView(R.id.tv_cash_pickup_order_amount)
     TextView cashPickupAmt;
 
+    @BindView(R.id.btn_check_payment_status_t1)
+    Button btnCheckButtonPaymentStatus;
+
+    @OnClick(R.id.btn_check_payment_status_t1)
+    void fetchPaymentStatus() {
+        pickupPresenter.fetchOrderPaymentStatus(fOrder);
+    }
+
+    @BindView(R.id.pb_t1_check_payment_status)
+    ProgressBar progressBarPaymentStatusT1;
+
+    @BindView(R.id.tv_payment_status_t1)
+    TextView paymentPendingStatus;
+
     @BindView(R.id.iv_animate_final_cash_pickup)
     ImageView imageViewCashPickup;
+
+    PaymentActivity paymentActivity;
 
     public CashPickupFragment() {
         // Required empty public constructor
     }
 
+
+    @Inject
+    CashPickupPresenter pickupPresenter;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        pickupPresenter.attachView(this);
+    }
 
     public static CashPickupFragment newInstance() {
         CashPickupFragment fragment = new CashPickupFragment();
@@ -65,7 +98,7 @@ public class CashPickupFragment extends Fragment implements IOnBackPressed {
             orderId = getArguments().getString("ORDER_ID");
             fOrderId = getArguments().getString("F_ORDER_ID");
             fOrder = getArguments().getParcelable("ORDER");
-            Log.d(TAG, "Got into PaymentFragment" + orderId + " " + fOrderId);
+            Log.d(TAG, "Got into Cash PaymentFragment" + orderId + " " + fOrderId);
 
         }
     }
@@ -75,6 +108,8 @@ public class CashPickupFragment extends Fragment implements IOnBackPressed {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cash_pickup, container, false);
+        resolveDaggerDependencies();
+        paymentActivity = (PaymentActivity) getActivity();
         ButterKnife.bind(this, view);
         //animate(imageViewCashPickup);
         if (fOrder != null) {
@@ -120,5 +155,39 @@ public class CashPickupFragment extends Fragment implements IOnBackPressed {
     public boolean onBackPressed() {
 
         return false;
+    }
+
+    @Override
+    public void onFOrderFetched(FOrder fOrder) {
+        if (fOrder.getTxn_status()) {
+            paymentPendingStatus.setVisibility(View.INVISIBLE);
+            paymentActivity.showPaymentSuccess(fOrder);
+
+        } else {
+            paymentPendingStatus.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void showProgressUI() {
+        progressBarPaymentStatusT1.setVisibility(View.VISIBLE);
+        btnCheckButtonPaymentStatus.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void hideProgressUI() {
+        btnCheckButtonPaymentStatus.setVisibility(View.VISIBLE);
+        progressBarPaymentStatusT1.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void resolveDaggerDependencies() {
+        ((AppApplication) getActivity().getApplication()).getApiComponent().inject(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        pickupPresenter.detachView();
     }
 }
