@@ -33,13 +33,13 @@ import tdevm.app_ui.modules.account.activities.ChangePasswordActivity;
 import tdevm.app_ui.modules.account.activities.EditAccountDetailsActivity;
 import tdevm.app_ui.modules.account.activities.FavouritesActivity;
 import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
-import tdevm.app_ui.root.RooActivityViewContract;
+import tdevm.app_ui.root.RootActivityViewContract;
 import tdevm.app_ui.root.RootActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccountsFragment extends Fragment implements RooActivityViewContract.AccountsFragmentView,
+public class AccountsFragment extends Fragment implements RootActivityViewContract.AccountsFragmentView,
         SwipeRefreshLayout.OnRefreshListener {
 
 

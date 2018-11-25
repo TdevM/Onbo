@@ -26,7 +26,7 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.root.RootActivity;
-import tdevm.app_ui.root.RooActivityViewContract;
+import tdevm.app_ui.root.RootActivityViewContract;
 import tdevm.app_ui.root.adapters.EqualSpacingItemDecoration;
 import tdevm.app_ui.root.adapters.RestaurantListAdapter;
 import tdevm.app_ui.root.callbacks.RestaurantItemClickListener;
@@ -35,7 +35,7 @@ import tdevm.app_ui.root.callbacks.RestaurantItemClickListener;
  * A simple {@link Fragment} subclass.
  */
 public class RestaurantListFragment extends Fragment
-        implements RooActivityViewContract.RestaurantsListView, RestaurantItemClickListener,
+        implements RootActivityViewContract.RestaurantsListView, RestaurantItemClickListener,
         SwipeRefreshLayout.OnRefreshListener {
 
 

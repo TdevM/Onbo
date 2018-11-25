@@ -1,6 +1,5 @@
 package tdevm.app_ui.root.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,17 +19,15 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
-import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
-import tdevm.app_ui.root.RooActivityViewContract;
+import tdevm.app_ui.root.RootActivityViewContract;
 import tdevm.app_ui.root.adapters.MenuAdapterRestaurantDetail;
 
-public class RestaurantDetailActivity extends AppCompatActivity implements RooActivityViewContract.RestaurantDetailView {
+public class RestaurantDetailActivity extends AppCompatActivity implements RootActivityViewContract.RestaurantDetailView {
 
 
     public static final String TAG = RestaurantDetailActivity.class.getSimpleName();

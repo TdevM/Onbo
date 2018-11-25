@@ -11,7 +11,7 @@ import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.response.UserApp;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.root.RootActivityPresenterContract;
-import tdevm.app_ui.root.RooActivityViewContract;
+import tdevm.app_ui.root.RootActivityViewContract;
 import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
@@ -21,7 +21,7 @@ import tdevm.app_ui.utils.CartHelper;
 
 public class AccountsFragmentPresenter extends BasePresenter implements RootActivityPresenterContract.AccountsPresenter {
 
-    private RooActivityViewContract.AccountsFragmentView fragmentView;
+    private RootActivityViewContract.AccountsFragmentView fragmentView;
 
     private PreferenceUtils preferenceUtils;
     private APIService apiService;
@@ -38,7 +38,7 @@ public class AccountsFragmentPresenter extends BasePresenter implements RootActi
 
 
     @Override
-    public void attachView(RooActivityViewContract.AccountsFragmentView view) {
+    public void attachView(RootActivityViewContract.AccountsFragmentView view) {
         this.fragmentView = view;
     }
 

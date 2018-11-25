@@ -18,7 +18,7 @@ import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
 import tdevm.app_ui.base.BasePresenter;
 import tdevm.app_ui.root.RootActivityPresenterContract;
-import tdevm.app_ui.root.RooActivityViewContract;
+import tdevm.app_ui.root.RootActivityViewContract;
 import tdevm.app_ui.utils.CartHelper;
 import tdevm.app_ui.utils.PreferenceUtils;
 
@@ -31,7 +31,7 @@ public class RestaurantDetailPresenter extends BasePresenter implements RootActi
     private PreferenceUtils preferenceUtils;
     private CompositeDisposable compositeDisposable;
 
-    private RooActivityViewContract.RestaurantDetailView detailActivity;
+    private RootActivityViewContract.RestaurantDetailView detailActivity;
 
     @Inject
     public RestaurantDetailPresenter(APIService apiService, CartHelper cartHelper, PreferenceUtils preferenceUtils) {
@@ -78,7 +78,7 @@ public class RestaurantDetailPresenter extends BasePresenter implements RootActi
     }
 
     @Override
-    public void attachView(RooActivityViewContract.RestaurantDetailView view) {
+    public void attachView(RootActivityViewContract.RestaurantDetailView view) {
         this.detailActivity = view;
     }
 

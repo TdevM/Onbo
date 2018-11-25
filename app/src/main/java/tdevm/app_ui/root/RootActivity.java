@@ -29,7 +29,7 @@ import tdevm.app_ui.root.fragments.AccountsFragment;
 import tdevm.app_ui.root.fragments.RestaurantListFragment;
 import tdevm.app_ui.utils.BadgeDrawable;
 
-public class RootActivity extends AppCompatActivity implements RooActivityViewContract.RootActivityView {
+public class RootActivity extends AppCompatActivity implements RootActivityViewContract.RootActivityView {
 
     public static final String TAG = RootActivity.class.getSimpleName();
     @Inject

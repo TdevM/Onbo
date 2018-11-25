@@ -9,8 +9,8 @@ import tdevm.app_ui.base.BasePresenterMVP;
 
 public interface RootActivityPresenterContract {
 
-    interface BottomNavigationHomePresenter extends BasePresenterMVP<RooActivityViewContract.RootActivityView> {
-        void attachView(RooActivityViewContract.RootActivityView view);
+    interface BottomNavigationHomePresenter extends BasePresenterMVP<RootActivityViewContract.RootActivityView> {
+        void attachView(RootActivityViewContract.RootActivityView view);
 
         void detachView();
 
@@ -18,10 +18,10 @@ public interface RootActivityPresenterContract {
 
     }
 
-    interface AccountsPresenter extends BasePresenterMVP<RooActivityViewContract.AccountsFragmentView> {
+    interface AccountsPresenter extends BasePresenterMVP<RootActivityViewContract.AccountsFragmentView> {
         void detachView();
 
-        void attachView(RooActivityViewContract.AccountsFragmentView view);
+        void attachView(RootActivityViewContract.AccountsFragmentView view);
 
         void fetchUser();
 
@@ -30,15 +30,15 @@ public interface RootActivityPresenterContract {
         void logOutUser();
     }
 
-    interface RestaurantListFragmentPresenter extends BasePresenterMVP<RooActivityViewContract.RestaurantsListView> {
+    interface RestaurantListFragmentPresenter extends BasePresenterMVP<RootActivityViewContract.RestaurantsListView> {
         void fetchRestaurants(String cityId);
 
         void detachView();
 
-        void attachView(RooActivityViewContract.RestaurantsListView view);
+        void attachView(RootActivityViewContract.RestaurantsListView view);
     }
 
-    interface RestaurantDetailPresenter extends BasePresenterMVP<RooActivityViewContract.RestaurantDetailView> {
+    interface RestaurantDetailPresenter extends BasePresenterMVP<RootActivityViewContract.RestaurantDetailView> {
         void fetchMenuItems(Restaurant restaurant);
     }
 }

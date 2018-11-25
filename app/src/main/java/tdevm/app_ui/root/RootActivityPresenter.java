@@ -27,7 +27,7 @@ public class RootActivityPresenter extends BasePresenter implements RootActivity
     private CartHelper cartHelper;
     private CompositeDisposable compositeDisposable;
 
-    private RooActivityViewContract.RootActivityView rootActivityView;
+    private RootActivityViewContract.RootActivityView rootActivityView;
 
     @Inject
     public RootActivityPresenter(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cartHelper) {
@@ -78,7 +78,7 @@ public class RootActivityPresenter extends BasePresenter implements RootActivity
 
 
     @Override
-    public void attachView(RooActivityViewContract.RootActivityView view) {
+    public void attachView(RootActivityViewContract.RootActivityView view) {
         rootActivityView = view;
     }
 
