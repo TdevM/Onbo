@@ -10,8 +10,8 @@ import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.response.UserApp;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.root.NavigationHomePresenterContract;
-import tdevm.app_ui.root.NavigationHomeViewContract;
+import tdevm.app_ui.root.RootActivityPresenterContract;
+import tdevm.app_ui.root.RooActivityViewContract;
 import tdevm.app_ui.utils.PreferenceUtils;
 import tdevm.app_ui.utils.CartHelper;
 
@@ -19,9 +19,9 @@ import tdevm.app_ui.utils.CartHelper;
  * Created by Tridev on 12-02-2018.
  */
 
-public class AccountsFragmentPresenter extends BasePresenter implements NavigationHomePresenterContract.AccountsPresenter {
+public class AccountsFragmentPresenter extends BasePresenter implements RootActivityPresenterContract.AccountsPresenter {
 
-    private NavigationHomeViewContract.AccountsFragmentView fragmentView;
+    private RooActivityViewContract.AccountsFragmentView fragmentView;
 
     private PreferenceUtils preferenceUtils;
     private APIService apiService;
@@ -38,7 +38,7 @@ public class AccountsFragmentPresenter extends BasePresenter implements Navigati
 
 
     @Override
-    public void attachView(NavigationHomeViewContract.AccountsFragmentView view) {
+    public void attachView(RooActivityViewContract.AccountsFragmentView view) {
         this.fragmentView = view;
     }
 

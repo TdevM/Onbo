@@ -13,7 +13,7 @@ import tdevm.app_ui.base.BaseView;
  * Created by Tridev on 18-10-2017.
  */
 
-public interface NavigationHomeViewContract {
+public interface RooActivityViewContract {
 
     interface RootActivityView extends BaseView {
         void showRestaurantDetailsActivity(Restaurant restaurant);

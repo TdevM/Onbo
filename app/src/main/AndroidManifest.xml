@@ -128,10 +128,6 @@
             android:name="io.fabric.ApiKey"
             android:value="9fca445136ad79b3f6e4d7c79709222868843f64" />
 
-        <activity
-            android:name=".root.activities.RestaurantDetailActivity2"
-            android:label="@string/title_activity_restaurant_detail2"
-            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

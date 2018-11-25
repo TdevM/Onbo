@@ -19,7 +19,7 @@ import tdevm.app_ui.utils.CartHelper;
  * Created by Tridev on 18-10-2017.
  */
 
-public class RootActivityPresenter extends BasePresenter implements NavigationHomePresenterContract.BottomNavigationHomePresenter {
+public class RootActivityPresenter extends BasePresenter implements RootActivityPresenterContract.BottomNavigationHomePresenter {
     public static final String TAG = RootActivityPresenter.class.getSimpleName();
 
     private APIService apiService;
@@ -27,7 +27,7 @@ public class RootActivityPresenter extends BasePresenter implements NavigationHo
     private CartHelper cartHelper;
     private CompositeDisposable compositeDisposable;
 
-    private NavigationHomeViewContract.RootActivityView rootActivityView;
+    private RooActivityViewContract.RootActivityView rootActivityView;
 
     @Inject
     public RootActivityPresenter(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cartHelper) {
@@ -78,7 +78,7 @@ public class RootActivityPresenter extends BasePresenter implements NavigationHo
 
 
     @Override
-    public void attachView(NavigationHomeViewContract.RootActivityView view) {
+    public void attachView(RooActivityViewContract.RootActivityView view) {
         rootActivityView = view;
     }
 

@@ -17,12 +17,12 @@ import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.root.NavigationHomePresenterContract;
-import tdevm.app_ui.root.NavigationHomeViewContract;
+import tdevm.app_ui.root.RootActivityPresenterContract;
+import tdevm.app_ui.root.RooActivityViewContract;
 import tdevm.app_ui.utils.CartHelper;
 import tdevm.app_ui.utils.PreferenceUtils;
 
-public class RestaurantDetailPresenter extends BasePresenter implements NavigationHomePresenterContract.RestaurantDetailPresenter {
+public class RestaurantDetailPresenter extends BasePresenter implements RootActivityPresenterContract.RestaurantDetailPresenter {
 
     public static final String TAG = RestaurantDetailPresenter.class.getSimpleName();
 
@@ -31,7 +31,7 @@ public class RestaurantDetailPresenter extends BasePresenter implements Navigati
     private PreferenceUtils preferenceUtils;
     private CompositeDisposable compositeDisposable;
 
-    private NavigationHomeViewContract.RestaurantDetailView detailActivity;
+    private RooActivityViewContract.RestaurantDetailView detailActivity;
 
     @Inject
     public RestaurantDetailPresenter(APIService apiService, CartHelper cartHelper, PreferenceUtils preferenceUtils) {
@@ -78,7 +78,7 @@ public class RestaurantDetailPresenter extends BasePresenter implements Navigati
     }
 
     @Override
-    public void attachView(NavigationHomeViewContract.RestaurantDetailView view) {
+    public void attachView(RooActivityViewContract.RestaurantDetailView view) {
         this.detailActivity = view;
     }
 

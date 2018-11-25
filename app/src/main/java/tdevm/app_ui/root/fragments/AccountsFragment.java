@@ -16,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ahmadrosid.svgloader.SvgLoader;
-import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import javax.inject.Inject;
@@ -35,13 +33,13 @@ import tdevm.app_ui.modules.account.activities.ChangePasswordActivity;
 import tdevm.app_ui.modules.account.activities.EditAccountDetailsActivity;
 import tdevm.app_ui.modules.account.activities.FavouritesActivity;
 import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
-import tdevm.app_ui.root.NavigationHomeViewContract;
+import tdevm.app_ui.root.RooActivityViewContract;
 import tdevm.app_ui.root.RootActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccountsFragment extends Fragment implements NavigationHomeViewContract.AccountsFragmentView,
+public class AccountsFragment extends Fragment implements RooActivityViewContract.AccountsFragmentView,
         SwipeRefreshLayout.OnRefreshListener {
 
 

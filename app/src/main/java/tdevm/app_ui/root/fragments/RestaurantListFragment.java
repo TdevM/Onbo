@@ -4,12 +4,10 @@ package tdevm.app_ui.root.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,20 +26,16 @@ import tdevm.app_ui.AppApplication;
 import tdevm.app_ui.R;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.root.RootActivity;
-import tdevm.app_ui.root.NavigationHomeViewContract;
+import tdevm.app_ui.root.RooActivityViewContract;
 import tdevm.app_ui.root.adapters.EqualSpacingItemDecoration;
-import tdevm.app_ui.root.adapters.ItemOffsetDecoration;
 import tdevm.app_ui.root.adapters.RestaurantListAdapter;
 import tdevm.app_ui.root.callbacks.RestaurantItemClickListener;
-import tdevm.app_ui.utils.SizeUtils;
-
-import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class RestaurantListFragment extends Fragment
-        implements NavigationHomeViewContract.RestaurantsListView, RestaurantItemClickListener,
+        implements RooActivityViewContract.RestaurantsListView, RestaurantItemClickListener,
         SwipeRefreshLayout.OnRefreshListener {
 
 

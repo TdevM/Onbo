@@ -7,10 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,10 +27,10 @@ import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.api.models.response.v2.menu.Cuisine;
 import tdevm.app_ui.api.models.response.v2.menu.CuisineMenuItems;
 import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
-import tdevm.app_ui.root.NavigationHomeViewContract;
+import tdevm.app_ui.root.RooActivityViewContract;
 import tdevm.app_ui.root.adapters.MenuAdapterRestaurantDetail;
 
-public class RestaurantDetailActivity extends AppCompatActivity implements NavigationHomeViewContract.RestaurantDetailView {
+public class RestaurantDetailActivity extends AppCompatActivity implements RooActivityViewContract.RestaurantDetailView {
 
 
     public static final String TAG = RestaurantDetailActivity.class.getSimpleName();
@@ -77,12 +74,12 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Navig
 //    ViewGroup linearLayout;
 
 
-    @OnClick(R.id.btn_res_detail_start_order)
-    void startScan(){
-        Intent intent = new Intent(this, RestaurantMenuEntryActivity.class);
-        startActivity(intent);
-        finish();
-    }
+//    @OnClick(R.id.btn_res_detail_start_order)
+//    void startScan(){
+//        Intent intent = new Intent(this, RestaurantMenuEntryActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 
     private Restaurant restaurant;
 
@@ -116,6 +113,7 @@ public class RestaurantDetailActivity extends AppCompatActivity implements Navig
         adapter = new MenuAdapterRestaurantDetail(this);
         manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(adapter);
         if (restaurant != null) {
             presenter.fetchMenuItems(restaurant);

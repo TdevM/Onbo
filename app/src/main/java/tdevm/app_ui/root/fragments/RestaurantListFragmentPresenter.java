@@ -14,17 +14,17 @@ import retrofit2.Response;
 import tdevm.app_ui.api.APIService;
 import tdevm.app_ui.api.models.response.v2.Restaurant;
 import tdevm.app_ui.base.BasePresenter;
-import tdevm.app_ui.root.NavigationHomePresenterContract;
-import tdevm.app_ui.root.NavigationHomeViewContract;
+import tdevm.app_ui.root.RootActivityPresenterContract;
+import tdevm.app_ui.root.RooActivityViewContract;
 import tdevm.app_ui.utils.PreferenceUtils;
 
-public class RestaurantListFragmentPresenter extends BasePresenter implements NavigationHomePresenterContract.RestaurantListFragmentPresenter {
+public class RestaurantListFragmentPresenter extends BasePresenter implements RootActivityPresenterContract.RestaurantListFragmentPresenter {
 
     public static final String TAG = RestaurantListFragmentPresenter.class.getSimpleName();
 
     private PreferenceUtils preferenceUtils;
     private APIService service;
-    private NavigationHomeViewContract.RestaurantsListView restaurantsListView;
+    private RooActivityViewContract.RestaurantsListView restaurantsListView;
     private CompositeDisposable compositeDisposable;
 
 
@@ -84,7 +84,7 @@ public class RestaurantListFragmentPresenter extends BasePresenter implements Na
     }
 
     @Override
-    public void attachView(NavigationHomeViewContract.RestaurantsListView view) {
+    public void attachView(RooActivityViewContract.RestaurantsListView view) {
         this.restaurantsListView = view;
     }
 }

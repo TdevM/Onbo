@@ -8,14 +8,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -29,12 +25,11 @@ import tdevm.app_ui.modules.auth.AuthenticationActivity;
 import tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity;
 import tdevm.app_ui.modules.orders.RestaurantOrdersActivity;
 import tdevm.app_ui.root.activities.RestaurantDetailActivity;
-import tdevm.app_ui.root.activities.RestaurantDetailActivity2;
 import tdevm.app_ui.root.fragments.AccountsFragment;
 import tdevm.app_ui.root.fragments.RestaurantListFragment;
 import tdevm.app_ui.utils.BadgeDrawable;
 
-public class RootActivity extends AppCompatActivity implements NavigationHomeViewContract.RootActivityView {
+public class RootActivity extends AppCompatActivity implements RooActivityViewContract.RootActivityView {
 
     public static final String TAG = RootActivity.class.getSimpleName();
     @Inject
@@ -115,7 +110,7 @@ public class RootActivity extends AppCompatActivity implements NavigationHomeVie
 
     @Override
     public void showRestaurantDetailsActivity(Restaurant restaurant) {
-        Intent intent = new Intent(this, RestaurantDetailActivity2.class);
+        Intent intent = new Intent(this, RestaurantDetailActivity.class);
         intent.putExtra("RESTAURANT", restaurant);
         startActivity(intent);
     }
