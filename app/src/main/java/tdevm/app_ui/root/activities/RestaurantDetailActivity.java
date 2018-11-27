@@ -119,19 +119,17 @@ public class RestaurantDetailActivity extends AppCompatActivity implements RootA
                     }
                     if (scrollRange + verticalOffset == 0) {
                         collapsingToolbarLayout.setTitle(restaurant.getRestaurant_name());
-                        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
                         isShow = true;
                     } else if (isShow) {
                         collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
-                        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
                         isShow = false;
 
                     }
                 }
             });
-
-            collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleWhite);
-            collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleColor);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+            //collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleWhite);
+            collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleWhite);
             restaurantName.setText(restaurant.getRestaurant_name());
             restaurantAddress.setText(restaurant.getAddress_complete());
             costForTwo.setText(String.format("%s for two", String.valueOf(restaurant.getAvg_cost_for_two())));
