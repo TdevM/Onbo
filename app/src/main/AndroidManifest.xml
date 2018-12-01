@@ -85,6 +85,7 @@
 
         <activity
             android:name=".root.activities.RestaurantDetailActivity"
+            android:theme="@style/AppTheme2.NoActionBar"
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.nondine.activities.InitNonDineOrderActivity"
