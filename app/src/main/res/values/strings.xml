@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">APP</string>
     <string name="title_activity_bottom_navigation">APP</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">Restaurants</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_booking">Book</string>
     <string name="title_scanner">Scan</string>

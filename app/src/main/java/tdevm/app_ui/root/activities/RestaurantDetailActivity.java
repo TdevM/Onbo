@@ -1,5 +1,6 @@
 package tdevm.app_ui.root.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -7,11 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -44,6 +47,9 @@ public class RestaurantDetailActivity extends AppCompatActivity implements RootA
 
     @BindView(R.id.recycler_view_restaurant_menu)
     RecyclerView recyclerView;
+
+    @BindView(R.id.shimmer_fragment_menu_restaurant)
+    ShimmerFrameLayout shimmerFrameLayout;
 
     @Inject
     RestaurantDetailPresenter presenter;
@@ -83,6 +89,10 @@ public class RestaurantDetailActivity extends AppCompatActivity implements RootA
     @Override
     protected void onResume() {
         presenter.attachView(this);
+
+        if (restaurant != null) {
+            presenter.fetchMenuItems(restaurant);
+        }
         super.onResume();
     }
 
@@ -105,7 +115,6 @@ public class RestaurantDetailActivity extends AppCompatActivity implements RootA
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(adapter);
         if (restaurant != null) {
-            presenter.fetchMenuItems(restaurant);
             appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
                 boolean isShow = true;
                 int scrollRange = -1;
@@ -169,12 +178,14 @@ public class RestaurantDetailActivity extends AppCompatActivity implements RootA
 
     @Override
     public void showProgressUI() {
+        shimmerFrameLayout.startShimmer();
 
     }
 
     @Override
     public void hideProgressUI() {
-
+        shimmerFrameLayout.setVisibility(View.GONE);
+        shimmerFrameLayout.setVisibility(View.GONE);
     }
 
     @Override

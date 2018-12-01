@@ -72,7 +72,7 @@ public class RootActivity extends AppCompatActivity implements RootActivityViewC
         setSupportActionBar(toolbarMain);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Home");
+            getSupportActionBar().setTitle("Onbo");
         }
         toolbarMain.setNavigationOnClickListener(view -> onBackPressed());
         navigation = findViewById(R.id.navigation);

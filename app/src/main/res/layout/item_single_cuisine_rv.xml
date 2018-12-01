@@ -9,17 +9,17 @@
         android:id="@+id/tv_cuisine_name_menu_v2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:textSize="20sp"
+        android:textColor="@color/heading_color"
         android:layout_margin="@dimen/size_16_dp"
-        android:text="Italian"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        android:text="Italian" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="@dimen/size_16_dp"
         android:layout_marginEnd="@dimen/size_16_dp"
-        android:background="@color/LightGrey"
+        android:background="@color/separator_line"
         android:visibility="visible" />
 
 

@@ -50,6 +50,7 @@ public class RestaurantDetailPresenter extends BasePresenter implements RootActi
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
+                detailActivity.showProgressUI();
             }
 
             @Override
@@ -72,7 +73,7 @@ public class RestaurantDetailPresenter extends BasePresenter implements RootActi
 
             @Override
             public void onComplete() {
-
+                detailActivity.hideProgressUI();
             }
         });
     }
