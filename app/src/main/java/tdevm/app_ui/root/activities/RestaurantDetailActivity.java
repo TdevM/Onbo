@@ -93,13 +93,11 @@ public class RestaurantDetailActivity extends AppCompatActivity implements RootA
         setContentView(R.layout.activity_restaurant_detail);
         ButterKnife.bind(this);
 
-
+        setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> {
             onBackPressed();
         });
 
-
-        setSupportActionBar(toolbar);
         restaurant = getIntent().getParcelableExtra("RESTAURANT");
         adapter = new MenuAdapterRestaurantDetail(this);
         manager = new LinearLayoutManager(this);
@@ -118,7 +116,7 @@ public class RestaurantDetailActivity extends AppCompatActivity implements RootA
                         scrollRange = appBarLayout.getTotalScrollRange();
                     }
                     if (scrollRange + verticalOffset == 0) {
-                        collapsingToolbarLayout.setTitle(restaurant.getRestaurant_name());
+                        //collapsingToolbarLayout.setTitle(restaurant.getRestaurant_name());
                         isShow = true;
                     } else if (isShow) {
                         collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
@@ -129,7 +127,7 @@ public class RestaurantDetailActivity extends AppCompatActivity implements RootA
             });
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
             //collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleWhite);
-            collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleWhite);
+            //collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleWhite);
             restaurantName.setText(restaurant.getRestaurant_name());
             restaurantAddress.setText(restaurant.getAddress_complete());
             costForTwo.setText(String.format("%s for two", String.valueOf(restaurant.getAvg_cost_for_two())));
