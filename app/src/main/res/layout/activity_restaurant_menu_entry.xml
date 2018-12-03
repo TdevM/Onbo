@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="tdevm.app_ui.modules.entry.RestaurantMenuEntryActivity">
+    tools:context="onbo.app.modules.entry.RestaurantMenuEntryActivity">
 
 
     <FrameLayout

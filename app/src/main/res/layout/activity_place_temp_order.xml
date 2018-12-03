@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="tdevm.app_ui.modules.dinein.DineInActivity">
+    tools:context="onbo.app.modules.dinein.DineInActivity">
 
 
     <ProgressBar

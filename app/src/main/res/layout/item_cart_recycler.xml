@@ -83,7 +83,7 @@
                 android:background="@color/white"
                 android:layout_weight="2">
 
-                <tdevm.app_ui.widgets.IncDecButton
+                <onbo.app.widgets.IncDecButton
                     android:id="@+id/cart_item_qty_widget"
                     android:layout_width="80dp"
                     android:layout_height="30dp"

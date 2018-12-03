@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="tdevm.app_ui.modules.orders.fragments.MyOrderDetailActivity">
+    tools:context="onbo.app.modules.orders.fragments.MyOrderDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_my_order_details"

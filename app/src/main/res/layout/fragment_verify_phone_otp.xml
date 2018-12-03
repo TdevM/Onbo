@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_7"
     android:orientation="vertical"
-    tools:context="tdevm.app_ui.modules.auth.AuthenticationActivity">
+    tools:context="onbo.app.modules.auth.AuthenticationActivity">
 
 
     <android.support.v4.widget.NestedScrollView

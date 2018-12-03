@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "311552995065",
-    "firebase_url": "https://android-app-ort.firebaseio.com",
-    "project_id": "android-app-ort",
-    "storage_bucket": "android-app-ort.appspot.com"
+    "project_number": "92273188609",
+    "firebase_url": "https://onbo-android-app.firebaseio.com",
+    "project_id": "onbo-android-app",
+    "storage_bucket": "onbo-android-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:311552995065:android:ce06f7208c0d8ac0",
+        "mobilesdk_app_id": "1:92273188609:android:17a9921158ec0b43",
         "android_client_info": {
-          "package_name": "tdevm.app_ui"
+          "package_name": "app.onbo.android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "311552995065-10ee5k6sn4i95nqh2aeo0l0eju8tjj94.apps.googleusercontent.com",
+          "client_id": "92273188609-on13ists1i84l6knd5oj5m74394d02b4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC3jEcjhoUF3XTCUdHQx-IvTBrWekcEJ5Q"
+          "current_key": "AIzaSyDXOE0hDRzYr3phRRyr7pCZDQRgrRLyauU"
         }
       ],
       "services": {

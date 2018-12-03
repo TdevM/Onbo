@@ -50,7 +50,7 @@
                     android:textSize="16sp" />
 
 
-                <tdevm.app_ui.widgets.IncDecButton
+                <onbo.app.widgets.IncDecButton
                     android:id="@+id/btn_id_item_dish_grid"
                     android:layout_width="80dp"
                     android:layout_height="30dp"
@@ -59,7 +59,7 @@
                     app:backGroundColor="@android:color/holo_blue_dark"
                     app:textSize="7sp">
 
-                </tdevm.app_ui.widgets.IncDecButton>
+                </onbo.app.widgets.IncDecButton>
 
 
                 <TextView

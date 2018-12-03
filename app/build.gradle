@@ -1,15 +1,5 @@
 apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 apply plugin: 'com.android.application'
-
-
-apply plugin: 'io.fabric'
-
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
-
-
-
 android {
     signingConfigs {
     }
@@ -17,7 +7,7 @@ android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
-        applicationId "tdevm.app_ui"
+        applicationId "app.onbo.android"
         minSdkVersion 19
         targetSdkVersion 28
         multiDexEnabled true
@@ -25,16 +15,16 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        manifestPlaceholders = [
+                onesignal_app_id: '687f6a6d-000d-4d48-a285-4cb6a865f131',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: 'REMOTE'
+        ]
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
-        manifestPlaceholders = [
-                onesignal_app_id               : '065e5522-4222-47a6-bc83-10f103881697',
-                // Project number pulled from dashboard, local value is ignored.
-                onesignal_google_project_number: 'REMOTE'
-        ]
     }
     buildTypes {
         release {
@@ -75,7 +65,6 @@ dependencies {
         exclude module: "support-v13"
     }
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.onesignal:OneSignal:3.10.0'
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0'
     implementation 'com.github.ar-android:AndroidSvgLoader:1.0.1'
     implementation 'com.xwray:groupie:2.1.0'
@@ -96,6 +85,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'com.facebook.shimmer:shimmer:0.3.0'
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
+    implementation 'com.onesignal:OneSignal:3.10.0'
+
     // If you want to use the GPU Filters
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
@@ -118,9 +109,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.1.0"
     annotationProcessor "com.uber.nullaway:nullaway:0.3.2"
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
-        transitive = true
-    }
+
 }
 
 apply plugin: 'com.google.gms.google-services'

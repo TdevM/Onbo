@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="tdevm.app_ui">
+    package="onbo.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -85,8 +85,8 @@
 
         <activity
             android:name=".root.activities.RestaurantDetailActivity"
-            android:theme="@style/AppTheme2.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme2.NoActionBar" />
         <activity
             android:name=".modules.nondine.activities.InitNonDineOrderActivity"
             android:screenOrientation="portrait" />
@@ -123,11 +123,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.auth.AuthTnCActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="9fca445136ad79b3f6e4d7c79709222868843f64" />
 
     </application>
 
