@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.appsee.Appsee;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
@@ -95,6 +96,7 @@ public class DineInActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dine_in_home);
+        Appsee.start();
         resolveDaggerDependencies();
         ButterKnife.bind(this);
         String running_order = "RUNNING_ORDER_FRAGMENT";

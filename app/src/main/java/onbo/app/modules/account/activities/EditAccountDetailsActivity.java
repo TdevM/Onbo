@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.appsee.Appsee;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,6 +75,7 @@ public class EditAccountDetailsActivity extends AppCompatActivity implements Acc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resolveDaggerDependencies();
+        Appsee.start();
         userApp = getIntent().getParcelableExtra("user_details");
         if (userApp != null) {
             setContentView(R.layout.activity_edit_account_details);

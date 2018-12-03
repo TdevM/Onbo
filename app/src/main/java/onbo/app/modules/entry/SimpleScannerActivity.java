@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.appsee.Appsee;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -17,6 +18,7 @@ public class SimpleScannerActivity extends AppCompatActivity implements ZXingSca
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
+        Appsee.start();
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         setContentView(mScannerView);                // Set the scanner view as the content view
     }

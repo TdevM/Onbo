@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.appsee.Appsee;
+
 import javax.inject.Inject;
 
 import onbo.app.AppApplication;
@@ -36,6 +38,7 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        Appsee.start();
         resolveDaggerDependencies();
         if (preferenceUtils.getIntroScreenDisplayed()) {
 

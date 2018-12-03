@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.appsee.Appsee;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -37,8 +39,10 @@ public class RestaurantOrdersActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         resolveDaggerDependencies();
         setContentView(R.layout.activity_restaurant_orders);
+        Appsee.start();
         ButterKnife.bind(this);
         toolbar.setTitle(R.string.my_orders);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
@@ -74,8 +78,8 @@ public class RestaurantOrdersActivity extends AppCompatActivity implements
     }
 
     public void showOrderDetails(FOrder fOrder) {
-        Intent intent = new Intent(this,MyOrderDetailActivity.class);
-        intent.putExtra("ORDER",fOrder);
+        Intent intent = new Intent(this, MyOrderDetailActivity.class);
+        intent.putExtra("ORDER", fOrder);
         startActivity(intent);
     }
 

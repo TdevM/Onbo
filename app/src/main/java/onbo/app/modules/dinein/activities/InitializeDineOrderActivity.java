@@ -14,6 +14,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
+import com.appsee.Appsee;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -56,6 +58,7 @@ public class InitializeDineOrderActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         resolveDaggerDependencies();
         setContentView(R.layout.activity_place_temp_order);
+        Appsee.start();
         ButterKnife.bind(this);
         placeTempOrderPresenter.attachView(this);
         placeTempOrderPresenter.checkCurrentOrderDetails();

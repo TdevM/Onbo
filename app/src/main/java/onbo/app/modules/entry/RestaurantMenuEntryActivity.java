@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appsee.Appsee;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -143,6 +144,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
         super.onCreate(savedInstanceState);
         Log.d(TAG, "ON_CREATE");
         setContentView(R.layout.activity_restaurant_menu_entry);
+        Appsee.start();
         ButterKnife.bind(this);
         resolveDaggerDependencies();
         createLocationCallback();

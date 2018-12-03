@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.appsee.Appsee;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -86,6 +88,7 @@ public class MyOrderDetailActivity extends AppCompatActivity implements Restaura
         super.onCreate(savedInstanceState);
         resolveDaggerDependencies();
         setContentView(R.layout.activity_my_order_details);
+        Appsee.start();
         ButterKnife.bind(this);
         toolbar.setTitle("Order Details");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);

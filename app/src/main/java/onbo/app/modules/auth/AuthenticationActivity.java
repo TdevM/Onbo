@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.appsee.Appsee;
+
 import onbo.app.R;
 
 import onbo.app.api.models.response.UserApp;
@@ -29,6 +31,7 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
+        Appsee.start();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.frame_layout_auth_activity);

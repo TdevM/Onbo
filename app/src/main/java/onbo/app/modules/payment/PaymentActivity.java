@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.appsee.Appsee;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
@@ -52,6 +53,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         super.onCreate(savedInstanceState);
         resolveDaggerDependencies();
         setContentView(R.layout.activity_payments);
+        Appsee.start();
         ButterKnife.bind(this);
         Checkout.preload(getApplicationContext());
         handlePaymentView();

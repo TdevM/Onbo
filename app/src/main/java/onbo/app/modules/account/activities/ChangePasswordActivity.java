@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.appsee.Appsee;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -78,7 +80,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Account
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_close_black_24dp);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
-
+        Appsee.start();
 
         oldPasswordEt.addTextChangedListener(new TextWatcher() {
             @Override

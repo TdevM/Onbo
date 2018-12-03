@@ -4,6 +4,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.appsee.Appsee;
+
 import butterknife.ButterKnife;
 import onbo.app.R;
 import onbo.app.modules.account.fragments.HNSActionList;
@@ -16,6 +18,7 @@ public class HelpSupportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_support);
+        Appsee.start();
         ButterKnife.bind(this);
         showHNSActionList();
     }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.widget.TextView;
 
+import com.appsee.Appsee;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -52,6 +54,7 @@ public class NonDineRestaurantDetailsActivity extends AppCompatActivity implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_non_dine_restaurant_details);
+        Appsee.start();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         resolveDaggerDependencies();
         ButterKnife.bind(this);

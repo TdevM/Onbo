@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.appsee.Appsee;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -68,6 +70,7 @@ public class RootActivity extends AppCompatActivity implements RootActivityViewC
         super.onCreate(savedInstanceState);
         resolveDaggerDependencies();
         setContentView(R.layout.activity_bottom_navigation);
+        Appsee.start();
         toolbarMain = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbarMain);
 

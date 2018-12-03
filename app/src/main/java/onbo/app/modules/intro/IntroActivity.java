@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.appsee.Appsee;
+
 import javax.inject.Inject;
 
 import onbo.app.AppApplication;
@@ -40,6 +42,7 @@ public class IntroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Appsee.start();
         resolveDaggerDependencies();
         // Checking for first time launch - before calling setContentView()
         if (preferenceUtils.getIntroScreenDisplayed()) {
