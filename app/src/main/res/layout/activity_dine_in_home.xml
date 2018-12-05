@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="onbo.app.modules.dinein.DineInActivity">
+    tools:context="app.onbo.modules.dinein.DineInActivity">
 
 
     <android.support.design.widget.AppBarLayout

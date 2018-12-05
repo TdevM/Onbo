@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="onbo.app.modules.auth.AuthenticationActivity">
+    tools:context="app.onbo.modules.auth.AuthenticationActivity">
 
     <FrameLayout
         android:id="@+id/frame_layout_auth_activity"

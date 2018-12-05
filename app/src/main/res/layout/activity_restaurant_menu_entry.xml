@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="onbo.app.modules.entry.RestaurantMenuEntryActivity">
+    tools:context="app.onbo.modules.entry.RestaurantMenuEntryActivity">
 
 
     <FrameLayout

@@ -4,7 +4,7 @@
     android:id="@+id/swipeToRefresh_account_fragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="onbo.app.root.fragments.AccountsFragment">
+    tools:context="app.onbo.root.fragments.AccountsFragment">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_7"
     android:orientation="vertical"
-    tools:context="onbo.app.modules.auth.AuthenticationActivity">
+    tools:context="app.onbo.modules.auth.AuthenticationActivity">
 
 
     <android.support.v4.widget.NestedScrollView
@@ -150,7 +150,8 @@
                 android:layout_marginTop="@dimen/size_16_dp"
                 android:layout_marginEnd="@dimen/size_16_dp"
                 android:text="@string/forgot_password"
-                android:textColor="@color/primary_default_app" />
+                android:textColor="@color/primary_default_app"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/imageView5"

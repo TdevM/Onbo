@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="onbo.app.modules.nondine.activities.NonDineRestaurantDetailsActivity">
+    tools:context="app.onbo.modules.nondine.activities.NonDineRestaurantDetailsActivity">
 
 
     <TextView
