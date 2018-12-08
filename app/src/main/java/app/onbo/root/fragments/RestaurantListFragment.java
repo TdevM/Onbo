@@ -1,6 +1,7 @@
 package app.onbo.root.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -19,9 +21,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import app.onbo.OnboApplication;
 import app.onbo.R;
 import app.onbo.api.models.response.v2.Restaurant;
@@ -30,6 +29,9 @@ import app.onbo.root.RootActivityViewContract;
 import app.onbo.root.adapters.EqualSpacingItemDecoration;
 import app.onbo.root.adapters.RestaurantListAdapter;
 import app.onbo.root.callbacks.RestaurantItemClickListener;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +58,15 @@ public class RestaurantListFragment extends Fragment
     RecyclerView.LayoutManager layoutManager;
     RootActivity activity;
 
+
+
+    @BindView(R.id.frame_layout_backend_error)
+    FrameLayout backendError;
+
+
+    @BindView(R.id.frame_layout_connection_broken)
+    FrameLayout noInternet;
+
     public RestaurantListFragment() {
         // Required empty public constructor
     }
@@ -74,6 +85,14 @@ public class RestaurantListFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
+
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        resolveDaggerDependencies();
         presenter.attachView(this);
     }
 
@@ -81,12 +100,14 @@ public class RestaurantListFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        resolveDaggerDependencies();
-        activity = (RootActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_restuarant_list, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        presenter.fetchRestaurants("118");
+        activity = (RootActivity) getActivity();
+
         layoutManager = new LinearLayoutManager(getContext());
         adapter = new RestaurantListAdapter(getContext());
-        unbinder = ButterKnife.bind(this, view);
+
         recyclerView.setLayoutManager(layoutManager);
         //DividerItemDecoration decoration = new DividerItemDecoration(getContext(), VERTICAL);
 
@@ -96,7 +117,7 @@ public class RestaurantListFragment extends Fragment
 
         recyclerView.setAdapter(adapter);
         adapter.setRestaurantItemClickedListener(this);
-        presenter.fetchRestaurants("118");
+
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
 
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -106,6 +127,8 @@ public class RestaurantListFragment extends Fragment
     @Override
     public void onRestaurantsFetched(List<Restaurant> restaurantList) {
         adapter.onRestaurantsFetched(restaurantList);
+        hideBackendError();
+        hideNoInternetError();
         swipeRefreshLayout.setRefreshing(false);
     }
 
@@ -113,6 +136,31 @@ public class RestaurantListFragment extends Fragment
     public void onRestaurantsFetchFailure() {
         Toast.makeText(getContext(), "Failed to fetch restaurants", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void showNoInternetError() {
+        swipeRefreshLayout.setRefreshing(false);
+        noInternet.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideNoInternetError() {
+        noInternet.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideBackendError() {
+        backendError.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void showBackendError() {
+        swipeRefreshLayout.setRefreshing(false);
+        backendError.setVisibility(View.VISIBLE);
+
+    }
+
     public int dpToPx(int dp) {
         DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
@@ -120,6 +168,7 @@ public class RestaurantListFragment extends Fragment
 
     @Override
     public void showProgressUI() {
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
         shimmerFrameLayout.startShimmer();
     }
 
@@ -147,6 +196,8 @@ public class RestaurantListFragment extends Fragment
         Log.d(TAG, "Clicked restaurant: " + restaurant.getRestaurant_name());
         activity.showRestaurantDetailsActivity(restaurant);
     }
+
+
 
 
 

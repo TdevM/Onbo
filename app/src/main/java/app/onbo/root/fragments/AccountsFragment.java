@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,14 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
     void click() {
         activity.logOutUser();
     }
+
+
+    @BindView(R.id.frame_layout_backend_error)
+    FrameLayout backendError;
+
+
+    @BindView(R.id.frame_layout_connection_broken)
+    FrameLayout noInternet;
 
 
     @BindView(R.id.shimmer_fragment_profile_section)
@@ -168,6 +177,8 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
     @Override
     public void onUserFetched(UserApp userApp) {
         swipeRefreshLayout.setRefreshing(false);
+        hideBackendError();
+        hideNoInternetError();
         userName.setText(userApp.getUserName());
         userEmail.setText(userApp.getUserEmail());
         userMobile.setText(userApp.getUserMobile());
@@ -212,6 +223,30 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
     @Override
     public void onLoggedOut() {
         Toast.makeText(getContext(), "Logged Out!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showNoInternetError() {
+        swipeRefreshLayout.setRefreshing(false);
+        noInternet.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideNoInternetError() {
+        noInternet.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideBackendError() {
+        backendError.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void showBackendError() {
+        swipeRefreshLayout.setRefreshing(false);
+        backendError.setVisibility(View.VISIBLE);
+
     }
 
     @Override

@@ -31,11 +31,19 @@ public interface RootActivityViewContract {
         void onUserFetchFailure();
         void allowEdit(UserApp userApp);
         void onLoggedOut();
+        void showNoInternetError();
+        void hideNoInternetError();
+        void hideBackendError();
+        void showBackendError();
     }
 
     interface RestaurantsListView extends BaseView {
         void onRestaurantsFetched(List<Restaurant> restaurantList);
         void onRestaurantsFetchFailure();
+        void showNoInternetError();
+        void showBackendError();
+        void hideNoInternetError();
+        void hideBackendError();
 
     }
 

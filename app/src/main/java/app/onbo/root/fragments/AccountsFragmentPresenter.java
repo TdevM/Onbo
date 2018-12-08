@@ -1,5 +1,10 @@
 package app.onbo.root.fragments;
 
+import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
@@ -26,13 +31,15 @@ public class AccountsFragmentPresenter extends BasePresenter implements RootActi
     private PreferenceUtils preferenceUtils;
     private APIService apiService;
     private CartHelper cartHelper;
+    private Application context;
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    public AccountsFragmentPresenter(PreferenceUtils preferenceUtils, APIService apiService, CartHelper cartHelper) {
+    public AccountsFragmentPresenter(PreferenceUtils preferenceUtils, APIService apiService, Application c, CartHelper cartHelper) {
         this.preferenceUtils = preferenceUtils;
         this.apiService = apiService;
         this.cartHelper = cartHelper;
+        this.context = c;
         this.compositeDisposable = new CompositeDisposable();
     }
 
@@ -44,35 +51,40 @@ public class AccountsFragmentPresenter extends BasePresenter implements RootActi
 
     @Override
     public void fetchUser() {
-        Observable<Response<UserApp>> appObservable = apiService.fetchUser("Bearer " + preferenceUtils.getAuthLoginToken());
-        subscribe(appObservable, new Observer<Response<UserApp>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                compositeDisposable.add(d);
-                fragmentView.showProgressUI();
-            }
 
-            @Override
-            public void onNext(Response<UserApp> userAppResponse) {
-                if (userAppResponse.isSuccessful()) {
-                    if (userAppResponse.body() != null) {
-                        fragmentView.onUserFetched(userAppResponse.body());
-                    }
-                } else {
-                    fragmentView.onUserFetchFailure();
+        if (isConnectedToInternet()) {
+            Observable<Response<UserApp>> appObservable = apiService.fetchUser("Bearer " + preferenceUtils.getAuthLoginToken());
+            subscribe(appObservable, new Observer<Response<UserApp>>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                    compositeDisposable.add(d);
+                    fragmentView.showProgressUI();
                 }
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                fragmentView.onUserFetchFailure();
-            }
+                @Override
+                public void onNext(Response<UserApp> userAppResponse) {
+                    if (userAppResponse.code() == 200) {
+                        if (userAppResponse.body() != null) {
+                            fragmentView.onUserFetched(userAppResponse.body());
+                        }
+                    } else {
+                        fragmentView.showBackendError();
+                    }
+                }
 
-            @Override
-            public void onComplete() {
-                fragmentView.hideProgressUI();
-            }
-        });
+                @Override
+                public void onError(Throwable e) {
+                    fragmentView.showBackendError();
+                }
+
+                @Override
+                public void onComplete() {
+                    fragmentView.hideProgressUI();
+                }
+            });
+        } else {
+            fragmentView.showNoInternetError();
+        }
     }
 
 
@@ -107,6 +119,21 @@ public class AccountsFragmentPresenter extends BasePresenter implements RootActi
             }
         });
     }
+
+    public boolean isConnectedToInternet() {
+        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null)
+                for (int i = 0; i < info.length; i++)
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                        return true;
+                    }
+
+        }
+        return false;
+    }
+
 
     @Override
     public void logOutUser() {
