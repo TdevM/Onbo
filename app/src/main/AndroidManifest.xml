@@ -38,10 +38,12 @@
         <activity
             android:name="app.onbo.root.RootActivity"
             android:label="@string/title_activity_bottom_navigation"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="app.onbo.modules.dinein.DineInActivity"
             android:label="@string/title_activity_dine_in_home"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="app.onbo.utils.CustomQRView"
@@ -52,6 +54,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="app.onbo.modules.dinein.activities.InitializeDineOrderActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
         <receiver android:name="app.onbo.utils.SMSListener">
@@ -74,9 +77,11 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name="app.onbo.modules.payment.PaymentActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="app.onbo.modules.entry.RestaurantMenuEntryActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="app.onbo.modules.entry.SimpleScannerActivity"
