@@ -45,7 +45,7 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
             if (preferenceUtils.getAuthLoginState()) {
                 presenter.checkCurrentOrderDetails();
             } else {
-              showAuthenticationSplash();
+                showAuthenticationSplash();
             }
 
         } else {
@@ -93,15 +93,18 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
         if (tOrder.getClosed()) {
             presenter.fetchClosedOrder(tOrder.getOrderId());
         } else if (!tOrder.getClosed()) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent i = new Intent(SplashActivity.this, DineInActivity.class);
-                    i.putExtra("RESTAURANT", restaurant);
-                    startActivity(i);
-                    finish();
-                }
-            }, SPLASH_TIME_OUT);
+            Intent i = new Intent(SplashActivity.this, DineInActivity.class);
+            i.putExtra("RESTAURANT", restaurant);
+            startActivity(i);
+            finish();
+
+
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//                }
+//            }, SPLASH_TIME_OUT);
         }
 
 
@@ -109,30 +112,40 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
 
     @Override
     public void onNoDineOrderRunning() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent i = new Intent(SplashActivity.this, RootActivity.class);
-                startActivity(i);
-                finish();
-            }
-        }, SPLASH_TIME_OUT);
+
+
+        Intent i = new Intent(SplashActivity.this, RootActivity.class);
+        startActivity(i);
+        finish();
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        }, SPLASH_TIME_OUT);
     }
 
-    public void showAuthenticationSplash(){
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent i = new Intent(SplashActivity.this, AuthenticationActivity.class);
-                startActivity(i);
-                finish();
-            }
-        }, SPLASH_TIME_OUT);
+    public void showAuthenticationSplash() {
+        Intent i = new Intent(SplashActivity.this, AuthenticationActivity.class);
+        startActivity(i);
+        finish();
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        }, SPLASH_TIME_OUT);
     }
 
     @Override
     public void onOrderFetchFailure() {
         Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRemoteConfigFetched() {
+
     }
 
     @Override

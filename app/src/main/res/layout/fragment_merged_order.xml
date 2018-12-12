@@ -77,6 +77,147 @@
     </FrameLayout>
 
 
+    <FrameLayout
+        android:id="@+id/frame_layout_connection_broken"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFF"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/default_width_64"
+                    android:contentDescription="@string/image_design_random"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_error_res" />
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="48dp"
+                    android:text="@string/no_internet"
+                    android:textColor="@color/primary_dark_app"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView6"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/connection_broken"
+                    android:textColor="@color/primary_dark_app"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/frame_layout_backend_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFF"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/default_width_64"
+                    android:contentDescription="@string/image_design_random"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_error_res" />
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="48dp"
+                    android:text="@string/something_went_wrong"
+                    android:textColor="@color/primary_dark_app"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView7"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/best_minds_working"
+                    android:textColor="@color/primary_dark_app"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_fragment_merged_order"
         android:layout_width="match_parent"

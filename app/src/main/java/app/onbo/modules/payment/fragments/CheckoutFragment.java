@@ -222,7 +222,7 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
         tableNo.setText(getContext().getString(R.string.show_number_pound_symbol, String.valueOf(mergedOrder.getRestaurantTable().getTable_number())));
         tempOrderId.setText(getContext().getString(R.string.show_number_pound_symbol, mergedOrder.getOrderId()));
 
-        tvDate.setText(GeneralUtils.parseTime(mergedOrder.getTimestamp()));
+        tvDate.setText(mergedOrder.getTimestamp());
         subTotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getSubtotal())));
         taxes.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getTaxes())));
         total.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getGrand_total())));

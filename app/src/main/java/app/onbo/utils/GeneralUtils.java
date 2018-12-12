@@ -17,15 +17,7 @@ public class GeneralUtils {
 
 
     public static String parseTime(String time) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-        Date date = null;
-        try {
-            date = dateFormat.parse(time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.println(date);
-        return date.toString();
+        return time;
     }
 
 

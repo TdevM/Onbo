@@ -64,7 +64,7 @@
                         android:layout_margin="@dimen/default_width_64"
                         android:contentDescription="@string/image_design_random"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/ic_no_internet" />
+                        app:srcCompat="@drawable/ic_error_res" />
 
                 </LinearLayout>
 
@@ -112,7 +112,7 @@
             android:id="@+id/frame_layout_backend_error"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -134,7 +134,7 @@
                         android:layout_margin="@dimen/default_width_64"
                         android:contentDescription="@string/image_design_random"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/ic_no_internet" />
+                        app:srcCompat="@drawable/ic_error_res" />
 
                 </LinearLayout>
 

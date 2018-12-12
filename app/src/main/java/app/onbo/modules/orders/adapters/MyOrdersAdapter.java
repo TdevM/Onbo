@@ -70,7 +70,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
         }
 
 
-        holder.orderTime.setText(GeneralUtils.parseTime(orderList.get(position).getTimestamp()));
+        holder.orderTime.setText(orderList.get(position).getTimestamp());
         holder.orderSlug.setText(generateSlug(orderList.get(position)));
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(10));

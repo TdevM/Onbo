@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -73,6 +74,14 @@ public class MenuItemsFragment extends Fragment
 
     CartBadgeListener cartBadgeListener;
 
+
+
+    @BindView(R.id.frame_layout_backend_error)
+    FrameLayout backendError;
+
+
+    @BindView(R.id.frame_layout_connection_broken)
+    FrameLayout noInternet;
 
     @BindView(R.id.swipe_refresh_menu_items_fragment)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -164,6 +173,31 @@ public class MenuItemsFragment extends Fragment
         super.onDestroy();
         menuItemsPresenter.detachView();
         cartHelper.onDestroy();
+    }
+
+
+    @Override
+    public void showNoInternetError() {
+
+        noInternet.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideNoInternetError() {
+        noInternet.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideBackendError() {
+        backendError.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void showBackendError() {
+
+        backendError.setVisibility(View.VISIBLE);
+
     }
 
     @Override

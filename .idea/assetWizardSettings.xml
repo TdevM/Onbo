@@ -29,8 +29,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_no_internet" />
-                            <entry key="sourceFile" value="C:\Users\Tridev\Downloads\no_internet.svg" />
+                            <entry key="outputName" value="ic_error_res" />
+                            <entry key="sourceFile" value="C:\Users\Tridev\Downloads\error_res.svg" />
                           </map>
                         </option>
                       </PersistentState>

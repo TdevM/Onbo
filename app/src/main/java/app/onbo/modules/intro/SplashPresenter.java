@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import app.onbo.api.models.RemoteConfig;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
@@ -88,6 +89,34 @@ public class SplashPresenter extends BasePresenter implements IntroPresenterCont
 
             }
         });
+    }
+
+    @Override
+    public void checkLocationVerifiedAccess() {
+        Observable<Response<RemoteConfig>> checkRemoteConfig = apiService.getRemoteConfig();
+        subscribe(checkRemoteConfig, new Observer<Response<RemoteConfig>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Response<RemoteConfig> remoteConfigResponse) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+
     }
 
     @Override

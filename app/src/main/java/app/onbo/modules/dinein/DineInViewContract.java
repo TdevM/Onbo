@@ -44,7 +44,10 @@ public interface DineInViewContract {
 
     interface SingleCuisineGridView extends BaseView {
         void onMenuItemsFetchedV2(List<CuisineMenuItems> cuisineMenuItems);
-
+        void showNoInternetError();
+        void hideNoInternetError();
+        void hideBackendError();
+        void showBackendError();
         void onMenuItemFetchFailure();
 
         void updateAdapter(int cartItemsCount);
@@ -58,7 +61,10 @@ public interface DineInViewContract {
         void onRunningOrderFetched(TOrder tOrder);
 
         void onMergedOrderFetched(MergedOrder mergedOrder);
-
+        void showNoInternetError();
+        void hideNoInternetError();
+        void hideBackendError();
+        void showBackendError();
         void showNoRunningOrder();
     }
 

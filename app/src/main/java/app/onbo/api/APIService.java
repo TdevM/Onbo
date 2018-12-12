@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import app.onbo.api.models.RemoteConfig;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -90,6 +91,11 @@ public interface APIService {
 
     @GET("m/menu")
     Observable<Response<List<CuisineMenuItems>>> fetchMenuItems(@Header("Authorization") String authToken, @QueryMap Map<String, String> options);
+
+
+    @GET("m/app_version")
+    Observable<Response<RemoteConfig>> getRemoteConfig();
+
 
 
     //Reviews

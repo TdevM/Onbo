@@ -37,7 +37,7 @@
                         android:layout_margin="@dimen/default_width_64"
                         android:contentDescription="@string/image_design_random"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/ic_no_internet" />
+                        app:srcCompat="@drawable/ic_error_res" />
 
                 </LinearLayout>
 
@@ -107,7 +107,7 @@
                         android:layout_margin="@dimen/default_width_64"
                         android:contentDescription="@string/image_design_random"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/ic_no_internet" />
+                        app:srcCompat="@drawable/ic_error_res" />
 
                 </LinearLayout>
 

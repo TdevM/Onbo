@@ -65,6 +65,14 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     @BindView(R.id.swipe_refresh_my_running_orders)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @BindView(R.id.frame_layout_backend_error)
+    FrameLayout backendError;
+
+
+    @BindView(R.id.frame_layout_connection_broken)
+    FrameLayout noInternet;
+
+
 
     MergedOrderAdapter mergedOrderAdapter;
     @Inject
@@ -128,6 +136,29 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
         shimmerFrameLayout.setVisibility(View.GONE);
     }
 
+
+    @Override
+    public void showNoInternetError() {
+        noInternet.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideNoInternetError() {
+        noInternet.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideBackendError() {
+        backendError.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void showBackendError() {
+        backendError.setVisibility(View.VISIBLE);
+
+    }
+
     @Override
     public void resolveDaggerDependencies() {
         ((OnboApplication) getActivity().getApplication()).getApiComponent().inject(this);
@@ -152,11 +183,12 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
         tableNo.setText(getContext().getString(R.string.show_number_pound_symbol, String.valueOf(mergedOrder.getRestaurantTable().getTable_number())));
         tempOrderId.setText(getContext().getString(R.string.show_number_pound_symbol, mergedOrder.getOrderId()));
 
-        tvDate.setText(GeneralUtils.parseTime(mergedOrder.getTimestamp()));
+        tvDate.setText(mergedOrder.getTimestamp());
         subTotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getSubtotal())));
         taxes.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getTaxes())));
         total.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getGrand_total())));
     }
+
 
     @Override
     public void showNoRunningOrder() {

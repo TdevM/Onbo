@@ -130,7 +130,7 @@ public class MyOrderDetailActivity extends AppCompatActivity implements Restaura
         }
         orderId.setText(this.getString(R.string.show_number_pound_symbol, fOrder.getOrder_id()));
 
-        tvDate.setText(GeneralUtils.parseTime(fOrder.getTimestamp()));
+        tvDate.setText(fOrder.getTimestamp());
         restaurantAddress.setText(fOrder.getRestaurant().getAddress_complete());
         subTotal.setText(this.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(fOrder.getSubtotal())));
         taxes.setText(this.getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(fOrder.getTaxes())));

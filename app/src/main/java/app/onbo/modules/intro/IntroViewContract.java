@@ -7,11 +7,17 @@ import app.onbo.base.BaseView;
 public interface IntroViewContract {
 
 
-    interface SplashView extends BaseView{
+    interface SplashView extends BaseView {
         void onDineOrderRunning(TOrder tOrder);
+
         void onNoDineOrderRunning();
+
         void onOrderFetchFailure();
+
+        void onRemoteConfigFetched();
+
         void onFOrderFetched(FOrder fOrder);
+
         void onFOrderFetchFailure();
     }
 }
