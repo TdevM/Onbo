@@ -98,13 +98,6 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
             startActivity(i);
             finish();
 
-
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                }
-//            }, SPLASH_TIME_OUT);
         }
 
 
@@ -112,30 +105,16 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
 
     @Override
     public void onNoDineOrderRunning() {
-
-
         Intent i = new Intent(SplashActivity.this, RootActivity.class);
         startActivity(i);
         finish();
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        }, SPLASH_TIME_OUT);
+
     }
 
     public void showAuthenticationSplash() {
         Intent i = new Intent(SplashActivity.this, AuthenticationActivity.class);
         startActivity(i);
         finish();
-//
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        }, SPLASH_TIME_OUT);
     }
 
     @Override
@@ -151,9 +130,10 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
     @Override
     public void onFOrderFetched(FOrder fOrder) {
         Intent i = new Intent(SplashActivity.this, PaymentActivity.class);
-        i.putExtra("PAYMENT_PENDING", true);
+        i.putExtra("F_ORDER_AVAILABLE", true);
         i.putExtra("F_ORDER", fOrder);
-        i.putExtra("ORDER_ID", fOrder.getOrder_id());
+        i.putExtra("F_ORDER_ID", fOrder.getOrder_id());
+        i.putExtra("T_ORDER_ID", fOrder.getT_order_id());
         startActivity(i);
         finish();
 

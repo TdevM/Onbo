@@ -46,6 +46,18 @@ public class MergedOrder {
     @Expose
     private RestaurantTable restaurantTable;
 
+    @SerializedName("closed")
+    @Expose
+    private Boolean closed;
+
+    public Boolean getClosed() {
+        return closed;
+    }
+
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
+    }
+
     @SerializedName("order_total")
     @Expose
     private OrderTotal orderTotal;

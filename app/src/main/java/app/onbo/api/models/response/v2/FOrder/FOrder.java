@@ -43,7 +43,7 @@ public class FOrder implements Parcelable{
 
     private String grand_total;
 
-    private String completed;
+    private Boolean completed;
 
 
     protected FOrder(Parcel in) {
@@ -61,7 +61,8 @@ public class FOrder implements Parcelable{
         order_source = in.readString();
         user_id = in.readString();
         grand_total = in.readString();
-        completed = in.readString();
+        byte tmpCompleted = in.readByte();
+        completed = tmpCompleted == 0 ? null : tmpCompleted == 1;
         status = in.readString();
         table_id = in.readString();
         subtotal = in.readString();
@@ -249,13 +250,7 @@ public class FOrder implements Parcelable{
         this.grand_total = grand_total;
     }
 
-    public String getCompleted() {
-        return completed;
-    }
 
-    public void setCompleted(String completed) {
-        this.completed = completed;
-    }
 
     public String getStatus() {
         return status;
@@ -426,7 +421,7 @@ public class FOrder implements Parcelable{
         dest.writeString(order_source);
         dest.writeString(user_id);
         dest.writeString(grand_total);
-        dest.writeString(completed);
+        dest.writeByte((byte) (completed == null ? 0 : completed ? 1 : 2));
         dest.writeString(status);
         dest.writeString(table_id);
         dest.writeString(subtotal);
@@ -441,5 +436,21 @@ public class FOrder implements Parcelable{
         dest.writeString(taxes);
         dest.writeString(order_type);
         dest.writeString(t_order_id);
+    }
+
+    public boolean isTxn_status() {
+        return txn_status;
+    }
+
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
+    }
+
+    public static Creator<FOrder> getCREATOR() {
+        return CREATOR;
     }
 }

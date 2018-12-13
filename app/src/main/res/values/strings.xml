@@ -324,7 +324,9 @@
     <string name="start_anyway">Start anyway</string>
     <string name="customizable">customizable</string>
     <string name="check_payment_status">Check payment status</string>
-    <string name="payment_pending">Payment Pending</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="pay_temp_order">Proceed to pay</string>
+    <string name="order_active">Active</string>
+    <string name="payment_pending">Payment Pending</string>
 
 </resources>

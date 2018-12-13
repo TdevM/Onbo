@@ -107,6 +107,42 @@ public class CheckoutPresenter extends BasePresenter implements PaymentPresenter
     }
 
     @Override
+    public void fetchClosedOrder(String tOrderId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
+        map.put("t_order_id", tOrderId);
+        Observable<retrofit2.Response<FOrder>> observable = service.fetchClosedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        subscribe(observable, new Observer<Response<FOrder>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+                view.showProgressUI();
+            }
+
+            @Override
+            public void onNext(Response<FOrder> fOrderResponse) {
+                if (fOrderResponse.code() == 200) {
+                    if (fOrderResponse.body() != null) {
+                        view.onFOrderFetched(fOrderResponse.body());
+                    }
+                } else {
+                    view.onFOrderFetchFailure();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                view.onFOrderFetchFailure();
+            }
+
+            @Override
+            public void onComplete() {
+                view.hideProgressUI();
+            }
+        });
+    }
+
+    @Override
     public void detachView() {
         if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
             compositeDisposable.dispose();

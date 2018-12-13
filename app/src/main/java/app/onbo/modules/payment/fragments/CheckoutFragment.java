@@ -157,8 +157,8 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
 
     private void closeRunningOrder() {
         new AlertDialog.Builder(paymentActivity)
-                .setTitle("Close Order")
-                .setMessage("Close order and proceed to pay?")
+                .setTitle("Finish order and proceed to pay?")
+                .setMessage("You won't be able to add anything to your order after this step. Are you sure you want to continue?")
                 .setPositiveButton("OK", (dialog, which) -> {
                     if (orderId != null) {
                         checkoutPresenter.closeRunningOrder(orderId);
@@ -209,22 +209,44 @@ public class CheckoutFragment extends Fragment implements PaymentViewContract.Ch
     }
 
     @Override
+    public void onFOrderFetched(FOrder fOrder) {
+        if (fOrder.getTxn_status() && fOrder.getCompleted()) {
+            paymentActivity.showMakePayment(fOrder);
+        } else {
+            paymentActivity.showPaymentSuccess(fOrder);
+        }
+    }
+
+    @Override
+    public void onFOrderFetchFailure() {
+
+    }
+
+    @Override
     public void onOrderClosedFailure() {
 
     }
 
     @Override
     public void onMergedOrderFetched(MergedOrder mergedOrder) {
-        mergedOrderAdapter.onMergedOrderFetched(mergedOrder);
-        fetchedOrder = mergedOrder;
-        Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
-        Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
-        tableNo.setText(getContext().getString(R.string.show_number_pound_symbol, String.valueOf(mergedOrder.getRestaurantTable().getTable_number())));
-        tempOrderId.setText(getContext().getString(R.string.show_number_pound_symbol, mergedOrder.getOrderId()));
+        if (!mergedOrder.getClosed()) {
+            mergedOrderAdapter.onMergedOrderFetched(mergedOrder);
+            fetchedOrder = mergedOrder;
+            Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
+            Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
+            tableNo.setText(getContext().getString(R.string.show_number_pound_symbol, String.valueOf(mergedOrder.getRestaurantTable().getTable_number())));
+            tempOrderId.setText(getContext().getString(R.string.show_number_pound_symbol, mergedOrder.getOrderId()));
 
-        tvDate.setText(mergedOrder.getTimestamp());
-        subTotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getSubtotal())));
-        taxes.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getTaxes())));
-        total.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getGrand_total())));
+            tvDate.setText(mergedOrder.getTimestamp());
+            subTotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getSubtotal())));
+            taxes.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getTaxes())));
+            total.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getGrand_total())));
+        } else {
+            if (mergedOrder.getClosed()) {
+                checkoutPresenter.fetchClosedOrder(mergedOrder.getOrderId());
+            }
+
+        }
+
     }
 }

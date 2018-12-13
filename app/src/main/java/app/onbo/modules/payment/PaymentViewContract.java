@@ -14,6 +14,10 @@ public interface PaymentViewContract {
 
         void hideCloseProgressUI();
 
+        void onFOrderFetched(FOrder fOrder);
+
+        void onFOrderFetchFailure();
+
         void onMergedOrderFetched(MergedOrder fOrder);
 
         void onOrderClosedFailure();
@@ -21,6 +25,10 @@ public interface PaymentViewContract {
 
     interface PaymentFragmentView extends BaseView {
         void onClosedOrderFetched(FOrder fOrder);
+
+        void onPaymentStatusFetched(FOrder fOrder);
+
+        void onPaymentStatusFetchedFailure();
     }
 
     interface PaymentActivityView extends BaseView {
@@ -28,7 +36,19 @@ public interface PaymentViewContract {
 
         void showPaymentCaptureProgressUI();
 
+        void showFetchingPayment();
+
+        void hideFetchingPayment();
+
         void hidePaymentCaptureProgressUI();
+
+        void onFOrderFetched(FOrder fOrder);
+
+        void onFOrderFetchFailure();
+
+        void onMergedOrderFetched(MergedOrder mergedOrder);
+
+        void onMergedOrderFailure();
 
         void onPaymentCaptureFailure(FOrder fOrder);
     }

@@ -205,8 +205,16 @@ public class DineInActivity extends AppCompatActivity implements
 
     public void startPaymentActivity(String orderId) {
         Intent intent = new Intent(DineInActivity.this, PaymentActivity.class);
-        intent.putExtra("ORDER_ID", orderId);
-        intent.putExtra("PAYMENT_PENDING", false);
+        intent.putExtra("F_ORDER_AVAILABLE", false);
+        intent.putExtra("T_ORDER_ID", orderId);
+        startActivity(intent);
+    }
+
+
+    public void startPaymentActivityShowMakePayment(String orderId) {
+        Intent intent = new Intent(DineInActivity.this, PaymentActivity.class);
+        intent.putExtra("F_ORDER_AVAILABLE", false);
+        intent.putExtra("T_ORDER_ID", orderId);
         startActivity(intent);
     }
 

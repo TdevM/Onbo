@@ -91,6 +91,7 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
+                authLoginView.showProgressUI();
             }
 
             @Override
@@ -132,6 +133,7 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
+                authLoginView.showProgressUI();
             }
 
             @Override
@@ -152,7 +154,7 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
 
             @Override
             public void onComplete() {
-
+                authLoginView.hideProgressUI();
             }
         });
     }

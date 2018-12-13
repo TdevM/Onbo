@@ -146,7 +146,7 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
                 }
 
             } else if (selectedPaymentMode.equals(MODE_DIGITAL)) {
-                startPayment();
+                presenter.checkPaymentStatus(orderId, fOrderId);
             }
         }
     }
@@ -165,6 +165,21 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
     @Override
     public void onClosedOrderFetched(FOrder order) {
         fOrder = order;
+    }
+
+    @Override
+    public void onPaymentStatusFetched(FOrder order) {
+        fOrder = order;
+        if (order.getTxn_status() && order.getCompleted()) {
+            activity.showPaymentSuccess(order);
+        } else {
+            startPayment();
+        }
+    }
+
+    @Override
+    public void onPaymentStatusFetchedFailure() {
+
     }
 
     public void startPayment() {

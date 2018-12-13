@@ -11,6 +11,8 @@ public interface PaymentPresenterContract {
 
         void detachView();
 
+        void fetchClosedOrder(String tOrderId);
+
         void attachView(PaymentViewContract.CheckoutFragmentView view);
     }
 
@@ -20,10 +22,14 @@ public interface PaymentPresenterContract {
         void attachView(PaymentViewContract.PaymentFragmentView view);
 
         void detachView();
+
+        void checkPaymentStatus(String tOrderId, String fOrderId);
     }
 
     interface PaymentActivityPresenterContract extends BasePresenterMVP<PaymentViewContract.PaymentActivityView> {
         void captureOrderPayment(String paymentId, String orderId);
+
+        void fetchClosedOrder(String tOrderId);
 
         void attachView(PaymentViewContract.PaymentActivityView view);
 

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -55,11 +56,25 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     @BindView(R.id.tv_merged_order_date)
     TextView tvDate;
 
+    @BindView(R.id.tv_merged_order_status)
+    TextView tvOrderStatus;
+
     @BindView(R.id.shimmer_fragment_merged_order)
     ShimmerFrameLayout shimmerFrameLayout;
 
     @BindView(R.id.frame_layout_merged_order_empty)
     FrameLayout mergedOrderEmpty;
+
+    @BindView(R.id.btn_close_order)
+    Button closeOrder;
+
+    @BindView(R.id.btn_pay_order)
+    Button payDineOrder;
+
+    @OnClick(R.id.btn_pay_order)
+    public void payOrder() {
+        startPaymentActivityMakePayment();
+    }
 
 
     @BindView(R.id.swipe_refresh_my_running_orders)
@@ -71,7 +86,6 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
 
     @BindView(R.id.frame_layout_connection_broken)
     FrameLayout noInternet;
-
 
 
     MergedOrderAdapter mergedOrderAdapter;
@@ -174,19 +188,44 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
 
     @Override
     public void onMergedOrderFetched(MergedOrder mergedOrder) {
-        mergedOrderAdapter.onMergedOrderFetched(mergedOrder);
-        mergedOrderEmpty.setVisibility(View.GONE);
-        swipeRefreshLayout.setRefreshing(false);
-        fetchedOrder = mergedOrder;
-        Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
-        Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
-        tableNo.setText(getContext().getString(R.string.show_number_pound_symbol, String.valueOf(mergedOrder.getRestaurantTable().getTable_number())));
-        tempOrderId.setText(getContext().getString(R.string.show_number_pound_symbol, mergedOrder.getOrderId()));
+        if (!mergedOrder.getClosed()) {
 
-        tvDate.setText(mergedOrder.getTimestamp());
-        subTotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getSubtotal())));
-        taxes.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getTaxes())));
-        total.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getGrand_total())));
+            mergedOrderAdapter.onMergedOrderFetched(mergedOrder);
+            mergedOrderEmpty.setVisibility(View.GONE);
+            swipeRefreshLayout.setRefreshing(false);
+            fetchedOrder = mergedOrder;
+            Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
+            Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
+            tableNo.setText(getContext().getString(R.string.show_number_pound_symbol, String.valueOf(mergedOrder.getRestaurantTable().getTable_number())));
+            tempOrderId.setText(getContext().getString(R.string.show_number_pound_symbol, mergedOrder.getOrderId()));
+            closeOrder.setVisibility(View.VISIBLE);
+            payDineOrder.setVisibility(View.GONE);
+            tvOrderStatus.setText(getString(R.string.order_active));
+            tvDate.setText(mergedOrder.getTimestamp());
+            subTotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getSubtotal())));
+            taxes.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getTaxes())));
+            total.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getGrand_total())));
+        } else {
+            if (mergedOrder.getClosed()) {
+                mergedOrderAdapter.onMergedOrderFetched(mergedOrder);
+                mergedOrderEmpty.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+                fetchedOrder = mergedOrder;
+                Log.d(TAG, "Order ID" + String.valueOf(mergedOrder.getOrderId()));
+                Log.d(TAG, "Table no" + String.valueOf(mergedOrder.getTableId()));
+                tableNo.setText(getContext().getString(R.string.show_number_pound_symbol, String.valueOf(mergedOrder.getRestaurantTable().getTable_number())));
+                tempOrderId.setText(getContext().getString(R.string.show_number_pound_symbol, mergedOrder.getOrderId()));
+                tvOrderStatus.setText(getString(R.string.payment_pending));
+                tvDate.setText(mergedOrder.getTimestamp());
+                closeOrder.setVisibility(View.GONE);
+                payDineOrder.setVisibility(View.VISIBLE);
+                subTotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getSubtotal())));
+                taxes.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getTaxes())));
+                total.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(mergedOrder.getOrderTotal().getGrand_total())));
+            }
+
+        }
+
     }
 
 
@@ -198,6 +237,12 @@ public class MergedOrderFragment extends Fragment implements DineInViewContract.
     public void startPaymentActivity() {
         if (fetchedOrder != null) {
             dineInActivity.startPaymentActivity(fetchedOrder.getOrderId());
+        }
+    }
+
+    public void startPaymentActivityMakePayment() {
+        if (fetchedOrder != null) {
+            dineInActivity.startPaymentActivityShowMakePayment(fetchedOrder.getOrderId());
         }
     }
 

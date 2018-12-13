@@ -3,8 +3,13 @@ package app.onbo.modules.payment;
 
 import android.util.Log;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
+import app.onbo.api.models.response.v2.merged.MergedOrder;
+import app.onbo.api.models.response.v2.t_orders.TOrder;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
@@ -72,6 +77,76 @@ public class PaymentActivityPresenter extends BasePresenter implements PaymentPr
         });
 
 
+    }
+
+
+    public void fetchMergedOrder(String tOrder) {
+        Map<String, String> map = new HashMap<>();
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
+        map.put("order_id", tOrder);
+        Observable<Response<MergedOrder>> observable = apiService.fetchMergedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        subscribe(observable, new Observer<Response<MergedOrder>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+                paymentActivityView.showFetchingPayment();
+            }
+
+            @Override
+            public void onNext(Response<MergedOrder> arrayListResponse) {
+                if (arrayListResponse.code() == 200) {
+                    paymentActivityView.onMergedOrderFetched(arrayListResponse.body());
+                } else if (arrayListResponse.code() == 404) {
+                    paymentActivityView.onMergedOrderFailure();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                paymentActivityView.onMergedOrderFailure();
+            }
+
+            @Override
+            public void onComplete() {
+                paymentActivityView.hideFetchingPayment();
+            }
+        });
+    }
+
+    @Override
+    public void fetchClosedOrder(String tOrderId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
+        map.put("t_order_id", tOrderId);
+        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        subscribe(observable, new Observer<Response<FOrder>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+                paymentActivityView.showFetchingPayment();
+            }
+
+            @Override
+            public void onNext(Response<FOrder> fOrderResponse) {
+                if (fOrderResponse.code() == 200) {
+                    if (fOrderResponse.body() != null) {
+                        paymentActivityView.onFOrderFetched(fOrderResponse.body());
+                    }
+                } else {
+                    paymentActivityView.onFOrderFetchFailure();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                paymentActivityView.onFOrderFetchFailure();
+            }
+
+            @Override
+            public void onComplete() {
+                paymentActivityView.hideFetchingPayment();
+            }
+        });
     }
 
     @Override

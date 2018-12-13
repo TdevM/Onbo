@@ -105,9 +105,10 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthIni
 
     public void showDinePaymentOptions(FOrder fOrder) {
         Intent i = new Intent(AuthenticationActivity.this, PaymentActivity.class);
-        i.putExtra("PAYMENT_PENDING", true);
+        i.putExtra("F_ORDER_AVAILABLE", true);
         i.putExtra("F_ORDER", fOrder);
-        i.putExtra("ORDER_ID", fOrder.getOrder_id());
+        i.putExtra("F_ORDER_ID", fOrder.getOrder_id());
+        i.putExtra("T_ORDER_ID", fOrder.getT_order_id());
         startActivity(i);
         finish();
     }

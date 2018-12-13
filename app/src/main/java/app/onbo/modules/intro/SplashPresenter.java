@@ -133,7 +133,7 @@ public class SplashPresenter extends BasePresenter implements IntroPresenterCont
 
             @Override
             public void onNext(Response<FOrder> fOrderResponse) {
-                if (fOrderResponse.isSuccessful()) {
+                if (fOrderResponse.code() == 200) {
                     if (fOrderResponse.body() != null) {
                         splashView.onFOrderFetched(fOrderResponse.body());
                     }

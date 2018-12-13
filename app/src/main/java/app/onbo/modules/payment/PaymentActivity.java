@@ -15,6 +15,7 @@ import com.razorpay.PaymentResultListener;
 
 import javax.inject.Inject;
 
+import app.onbo.api.models.response.v2.merged.MergedOrder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import app.onbo.OnboApplication;
@@ -34,18 +35,24 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     @Inject
     PaymentActivityPresenter paymentActivityPresenter;
 
-    private String orderId;
+    private String fOrderId;
     private String tOrderId;
-    private Boolean paymentPending;
+    private Boolean fOrderAvailable;
     private FOrder fOrder;
 
     @BindView(R.id.frame_layout_payment_capture_progress)
     FrameLayout frameLayoutPaymentCaptureProgress;
 
+
+    @BindView(R.id.frame_layout_check_payment_status)
+    FrameLayout frameLayoutCheckPaymentStatus;
+
+
     @Override
     protected void onResume() {
         super.onResume();
         paymentActivityPresenter.attachView(this);
+        handlePaymentView();
     }
 
     @Override
@@ -56,7 +63,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         Appsee.start();
         ButterKnife.bind(this);
         Checkout.preload(getApplicationContext());
-        handlePaymentView();
+
     }
 
     @Override
@@ -130,22 +137,26 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     public void handlePaymentView() {
         try {
             Intent intent = getIntent();
-            paymentPending = intent.getBooleanExtra("PAYMENT_PENDING", false);
-            if (paymentPending) {
-                orderId = intent.getStringExtra("ORDER_ID");
+            fOrderAvailable = intent.getBooleanExtra("F_ORDER_AVAILABLE", false);
+
+            if (fOrderAvailable) {
                 fOrder = intent.getParcelableExtra("F_ORDER");
-                if (fOrder != null) {
+                if (fOrder.getCompleted() && fOrder.getTxn_status()) {
+                    showPaymentSuccess(fOrder);
+                } else {
+                    Log.d(TAG, "PAYMENT Pending" + String.valueOf(true));
+                    Log.d(TAG, "F_ORDER_ID: " + fOrder.getOrder_id());
                     showMakePayment(fOrder);
                 }
-                Log.d(TAG, "PAYMENT Pending" + String.valueOf(paymentPending));
-                Log.d(TAG, "F_ORDER_ID: " + fOrder.getOrder_id());
 
             } else {
-                tOrderId = intent.getStringExtra("ORDER_ID");
-                Log.d(TAG, "PAYMENT Pending" + String.valueOf(paymentPending));
-                Log.d(TAG, "T_ORDER_ID_RECEIVED FROM Activity: " + orderId);
-                showCheckout(tOrderId);
+                tOrderId = intent.getStringExtra("T_ORDER_ID");
+                Log.d(TAG, "PAYMENT Pending" + String.valueOf(true));
+                Log.d(TAG, "T_ORDER_ID_RECEIVED FROM Activity: " + tOrderId);
+                paymentActivityPresenter.fetchMergedOrder(tOrderId);
+
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("getStringExtra_EX", e + "");
@@ -225,8 +236,47 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     }
 
     @Override
+    public void showFetchingPayment() {
+        frameLayoutCheckPaymentStatus.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void hideFetchingPayment() {
+        frameLayoutCheckPaymentStatus.setVisibility(View.GONE);
+    }
+
+    @Override
     public void hidePaymentCaptureProgressUI() {
         frameLayoutPaymentCaptureProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onFOrderFetched(FOrder fOrder) {
+        if (fOrder.getCompleted() && fOrder.getTxn_status()) {
+            showPaymentSuccess(fOrder);
+        } else {
+            showMakePayment(fOrder);
+        }
+    }
+
+    @Override
+    public void onFOrderFetchFailure() {
+
+    }
+
+    @Override
+    public void onMergedOrderFetched(MergedOrder mergedOrder) {
+        if (!mergedOrder.getClosed()) {
+            showCheckout(mergedOrder.getOrderId());
+        } else {
+            paymentActivityPresenter.fetchClosedOrder(mergedOrder.getOrderId());
+        }
+    }
+
+    @Override
+    public void onMergedOrderFailure() {
+
     }
 
     @Override

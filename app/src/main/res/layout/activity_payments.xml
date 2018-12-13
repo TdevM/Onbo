@@ -9,10 +9,10 @@
     tools:context="app.onbo.modules.payment.PaymentActivity">
 
     <FrameLayout
-        android:visibility="gone"
         android:id="@+id/frame_layout_payment_capture_progress"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -48,10 +48,36 @@
         </RelativeLayout>
     </FrameLayout>
 
+
+    <FrameLayout
+        android:id="@+id/frame_layout_check_payment_status"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ProgressBar
+                android:id="@+id/progressBar_check_payment_status"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
     <FrameLayout
         android:id="@+id/frame_layout_payments"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+
 
 
 </LinearLayout>

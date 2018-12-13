@@ -39,12 +39,12 @@ public class PaymentFragmentPresenter extends BasePresenter implements PaymentPr
     }
 
     @Override
-    public void fetchClosedOrder(String tOrderId, String fOrderId){
-        Map<String,String> map = new HashMap<>();
+    public void fetchClosedOrder(String tOrderId, String fOrderId) {
+        Map<String, String> map = new HashMap<>();
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("t_order_id", tOrderId);
-        map.put("order_id",fOrderId);
-        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer "+ preferenceUtils.getAuthLoginToken(),map);
+        map.put("order_id", fOrderId);
+        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -53,8 +53,8 @@ public class PaymentFragmentPresenter extends BasePresenter implements PaymentPr
 
             @Override
             public void onNext(Response<FOrder> fOrderResponse) {
-                if(fOrderResponse.isSuccessful()){
-                    if(fOrderResponse.body()!=null){
+                if (fOrderResponse.code() == 200) {
+                    if (fOrderResponse.body() != null) {
                         paymentFragmentView.onClosedOrderFetched(fOrderResponse.body());
                     }
                 }
@@ -78,5 +78,41 @@ public class PaymentFragmentPresenter extends BasePresenter implements PaymentPr
             compositeDisposable.dispose();
             compositeDisposable.clear();
         }
+    }
+
+
+    @Override
+    public void checkPaymentStatus(String tOrderId, String fOrderId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
+        map.put("t_order_id", tOrderId);
+        map.put("order_id", fOrderId);
+        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        subscribe(observable, new Observer<Response<FOrder>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(Response<FOrder> fOrderResponse) {
+                if (fOrderResponse.code() == 200) {
+                    if (fOrderResponse.body() != null) {
+                        paymentFragmentView.onPaymentStatusFetched(fOrderResponse.body());
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                paymentFragmentView.onPaymentStatusFetchedFailure();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
     }
 }
