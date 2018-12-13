@@ -19,7 +19,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name="app.onbo.OnboApplication"
+        android:name=".OnboApplication"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/onbo_icon"
@@ -36,55 +36,55 @@
             android:value="bbe36f48dac14a66898995933c769549" />
 
         <activity
-            android:name="app.onbo.root.RootActivity"
+            android:name=".root.RootActivity"
+            android:exported="false"
             android:label="@string/title_activity_bottom_navigation"
-            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.dinein.DineInActivity"
+            android:name=".modules.dinein.DineInActivity"
+            android:exported="false"
             android:label="@string/title_activity_dine_in_home"
-            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.utils.CustomQRView"
+            android:name=".utils.CustomQRView"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.auth.AuthenticationActivity"
+            android:name=".modules.auth.AuthenticationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="app.onbo.modules.dinein.activities.InitializeDineOrderActivity"
+            android:name=".modules.dinein.activities.InitializeDineOrderActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
-        <receiver android:name="app.onbo.utils.SMSListener">
+        <receiver android:name=".utils.SMSListener">
             <intent-filter android:priority="1000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name="app.onbo.modules.nondine.activities.NonDineRestaurantDetailsActivity"
+            android:name=".modules.nondine.activities.NonDineRestaurantDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.nondine.NonDineActivity"
+            android:name=".modules.nondine.NonDineActivity"
             android:label="@string/title_activity_non_dine"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.orders.RestaurantOrdersActivity"
+            android:name=".modules.orders.RestaurantOrdersActivity"
             android:label="@string/title_activity_restaurant_orders"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="app.onbo.modules.payment.PaymentActivity"
+            android:name=".modules.payment.PaymentActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.entry.RestaurantMenuEntryActivity"
+            android:name=".modules.entry.RestaurantMenuEntryActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.entry.SimpleScannerActivity"
+            android:name=".modules.entry.SimpleScannerActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -92,18 +92,19 @@
             android:value="rzp_live_Urey27vmU2QSYM" />
 
         <activity
-            android:name="app.onbo.root.activities.RestaurantDetailActivity"
+            android:name=".root.activities.RestaurantDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme2.NoActionBar" />
         <activity
-            android:name="app.onbo.modules.nondine.activities.InitNonDineOrderActivity"
+            android:name=".modules.nondine.activities.InitNonDineOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.intro.IntroActivity"
+            android:name=".modules.intro.IntroActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.intro.SplashActivity"
-            android:screenOrientation="portrait">
+            android:name=".modules.intro.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -112,28 +113,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="app.onbo.modules.account.activities.ChangePasswordActivity"
+            android:name=".modules.account.activities.ChangePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.account.activities.EditAccountDetailsActivity"
+            android:name=".modules.account.activities.EditAccountDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.account.activities.FavouritesActivity"
+            android:name=".modules.account.activities.FavouritesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.account.activities.HelpSupportActivity"
+            android:name=".modules.account.activities.HelpSupportActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.account.activities.AboutActivity"
+            android:name=".modules.account.activities.AboutActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.orders.fragments.MyOrderDetailActivity"
+            android:name=".modules.orders.fragments.MyOrderDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.onbo.modules.auth.AuthTnCActivity"
+            android:name=".modules.auth.AuthTnCActivity"
             android:screenOrientation="portrait" />
-
-
+        <activity android:name=".modules.entry.EntryActivityLocationDisabled"></activity>
     </application>
 
 </manifest>

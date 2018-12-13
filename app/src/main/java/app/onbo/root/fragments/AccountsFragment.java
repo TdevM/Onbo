@@ -3,6 +3,8 @@ package app.onbo.root.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -53,6 +55,9 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
     TextView userMobile;
     @BindView(R.id.tv_logged_user_name)
     TextView userName;
+
+    @BindView(R.id.tv_app_version)
+    TextView appVersion;
 
     RootActivity activity;
 
@@ -154,6 +159,15 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
         unbinder = ButterKnife.bind(this, view);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
+        try {
+            PackageInfo packageInfo = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0);
+            String versionName = packageInfo.versionName;
+            int versionCode = packageInfo.versionCode;
+            appVersion.setText(String.format("App Version \n %s (%d)", versionName, versionCode));
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
         return view;
     }
 

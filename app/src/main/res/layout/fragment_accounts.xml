@@ -551,6 +551,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btn_logout_user"
                     android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/size_16_dp"
+                    android:layout_marginBottom="@dimen/default_width_64"
                     android:gravity="center"
                     android:text="Version 1.0-beta1" />
 

@@ -9,6 +9,29 @@
 
 
     <FrameLayout
+        android:id="@+id/frame_layout_location_verified_access"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+
+    <FrameLayout
         android:id="@+id/fl_request_location"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -499,6 +522,177 @@
                     android:text="@string/retry"
                     android:textAlignment="center"
                     android:textColor="@color/white" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+
+    <FrameLayout
+        android:id="@+id/fl_show_qr_wrong2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:weightSum="10">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_space_32"
+                    android:layout_marginTop="@dimen/default_space_48"
+                    android:layout_marginEnd="@dimen/default_space_32"
+                    android:contentDescription="@string/image_design_random"
+                    android:src="@drawable/err_qrxxhdpi" />
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:background="@color/white">
+
+
+                <TextView
+                    android:id="@+id/tv_err_qr_heading2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/default_space_48"
+                    android:text="@string/oops"
+                    android:textColor="@color/primary_dark_app"
+                    android:textSize="@dimen/dimen_text_24" />
+
+
+                <TextView
+                    android:id="@+id/tv_err_qr_2122"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_err_qr_heading2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/size_8_dp"
+                    android:text="@string/this_qr_doesn_t_look_good"
+                    android:textColor="@color/primary_dark_app"
+                    android:textSize="@dimen/dimen_text_24" />
+
+                <TextView
+                    android:id="@+id/tv_show_qr_wrong2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_err_qr_2122"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="@dimen/size_16_dp"
+                    android:text="@string/failed_to_verify_qr_authenticity_please_retry"
+                    android:textAlignment="center"
+                    android:textColor="@color/sub_heading_color"
+                    android:visibility="visible" />
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fl_show_table_occupied2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:weightSum="10">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                android:background="@color/white">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_space_32"
+                    android:layout_marginTop="@dimen/default_space_48"
+                    android:layout_marginEnd="@dimen/default_space_32"
+                    android:src="@drawable/err_table_occupyxxhdpi" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:background="@color/white">
+
+
+                <TextView
+                    android:id="@+id/tv_err_table_22122"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/default_space_48"
+                    android:text="@string/oops"
+                    android:textColor="@color/primary_dark_app"
+                    android:textSize="@dimen/dimen_text_24" />
+
+
+                <TextView
+                    android:id="@+id/tv_table_error_main2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_err_table_22122"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/size_8_dp"
+                    android:text="@string/this_table_is_already_occupied"
+                    android:textColor="@color/primary_dark_app"
+                    android:textSize="@dimen/dimen_text_24" />
+
+                <TextView
+                    android:id="@+id/tv_table_occupied2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_table_error_main2"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/size_16_dp"
+                    android:text="@string/this_table_is_occupied_sorry_for_your_luck"
+                    android:textAlignment="center"
+                    android:textColor="@color/sub_heading_color"
+                    android:visibility="visible" />
+
 
             </RelativeLayout>
 

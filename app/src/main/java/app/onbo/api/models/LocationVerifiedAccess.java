@@ -4,7 +4,7 @@ public class LocationVerifiedAccess {
 
     private String enabled_version_number;
 
-    private String enabled;
+    private Boolean enabled;
 
     private String enabled_version_code;
 
@@ -18,13 +18,11 @@ public class LocationVerifiedAccess {
         this.enabled_version_number = enabled_version_number;
     }
 
-    public String getEnabled ()
-    {
+    public Boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled (String enabled)
-    {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 

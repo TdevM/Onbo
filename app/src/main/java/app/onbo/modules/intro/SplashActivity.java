@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity implements IntroViewContra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        //setContentView(R.layout.activity_splash);
         Appsee.start();
         resolveDaggerDependencies();
         if (preferenceUtils.getIntroScreenDisplayed()) {

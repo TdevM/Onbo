@@ -3,7 +3,7 @@ package app.onbo.api.models;
 public class RemoteConfig {
     private Android android;
 
-    private String ios;
+    private Object ios;
 
     public Android getAndroid() {
         return android;
@@ -13,11 +13,12 @@ public class RemoteConfig {
         this.android = android;
     }
 
-    public String getIos() {
+
+    public Object getIos() {
         return ios;
     }
 
-    public void setIos(String ios) {
+    public void setIos(Object ios) {
         this.ios = ios;
     }
 
