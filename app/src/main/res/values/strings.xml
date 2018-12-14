@@ -328,5 +328,6 @@
     <string name="pay_temp_order">Proceed to pay</string>
     <string name="order_active">Active</string>
     <string name="payment_pending">Payment Pending</string>
+    <string name="continue_doing_t1">Continue</string>
 
 </resources>

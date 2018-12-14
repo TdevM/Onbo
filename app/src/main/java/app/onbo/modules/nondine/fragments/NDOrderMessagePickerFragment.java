@@ -1,45 +1,50 @@
 package app.onbo.modules.nondine.fragments;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
+import app.onbo.R;
+import app.onbo.modules.nondine.activities.InitNonDineOrderActivity;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import app.onbo.R;
-import app.onbo.api.models.response.v2.FOrder.FOrder;
-import app.onbo.modules.nondine.activities.InitNonDineOrderActivity;
 
 
-public class PaymentFailedFragmentNonDine extends Fragment {
+public class NDOrderMessagePickerFragment extends Fragment {
 
 
-    String userMessage;
+    Unbinder unbinder;
 
-    @OnClick(R.id.btn_order_payment_failure_t1)
-    void paymentFailed() {
-        activity.showOrderPaymentType(userMessage);
+    @BindView(R.id.btn_nd_order_init)
+    Button btnInitNDOrder;
+
+    @BindView(R.id.et_nd_order_user_message)
+    EditText editTextUserMessage;
+
+
+    @OnClick(R.id.btn_nd_order_init)
+    void showNDPayment() {
+        activity.showOrderPaymentType(String.valueOf(editTextUserMessage.getText()));
     }
 
     InitNonDineOrderActivity activity;
 
-    Unbinder unbinder;
-
-    private FOrder fOrder;
-
-    public PaymentFailedFragmentNonDine() {
+    public NDOrderMessagePickerFragment() {
         // Required empty public constructor
     }
 
 
-    public static PaymentFailedFragmentNonDine newInstance(String userMessage) {
-        PaymentFailedFragmentNonDine fragment = new PaymentFailedFragmentNonDine();
+    public static NDOrderMessagePickerFragment newInstance() {
+        NDOrderMessagePickerFragment fragment = new NDOrderMessagePickerFragment();
         Bundle args = new Bundle();
-        args.putString("USER_MESSAGE", userMessage);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,17 +53,15 @@ public class PaymentFailedFragmentNonDine extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            fOrder = getArguments().getParcelable("ORDER");
-            userMessage = getArguments().getString("USER_MESSAGE");
+
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         activity = (InitNonDineOrderActivity) getActivity();
-        View view = inflater.inflate(R.layout.fragment_payment_failed, container, false);
+        View view = inflater.inflate(R.layout.fragment_ndorder_message_picker, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -76,9 +79,5 @@ public class PaymentFailedFragmentNonDine extends Fragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 }

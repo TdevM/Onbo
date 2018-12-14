@@ -47,6 +47,9 @@ public class OrderPaymentTypeFragment extends Fragment implements NonDineViewCon
     @BindView(R.id.check_btn_digital)
     ImageView checkBtnDigital;
 
+
+    String userMessage;
+
     @OnClick(R.id.iv_payment_option_cash)
     void updateTypeCash() {
         selectedPaymentMode = MODE_CASH;
@@ -72,9 +75,10 @@ public class OrderPaymentTypeFragment extends Fragment implements NonDineViewCon
         // Required empty public constructor
     }
 
-    public static OrderPaymentTypeFragment newInstance() {
+    public static OrderPaymentTypeFragment newInstance(String userMessage) {
         OrderPaymentTypeFragment fragment = new OrderPaymentTypeFragment();
         Bundle args = new Bundle();
+        args.putString("USER_MESSAGE", userMessage);
         fragment.setArguments(args);
         return fragment;
     }
@@ -136,11 +140,16 @@ public class OrderPaymentTypeFragment extends Fragment implements NonDineViewCon
 
     public void handleOrderPaymentType() {
         if (selectedPaymentMode != null) {
+            if (getArguments() != null) {
+                userMessage = getArguments().getString("USER_MESSAGE");
+            } else {
+                userMessage = "";
+            }
             if (selectedPaymentMode.equals(MODE_CASH)) {
-                paymentTypePresenter.createCashNDOrder();
+                paymentTypePresenter.createCashNDOrder(userMessage);
             } else if (selectedPaymentMode.equals(MODE_DIGITAL)) {
                 //activity.showDigitalPaymentOptions();
-                paymentTypePresenter.createPaidNDOrder();
+                paymentTypePresenter.createPaidNDOrder(userMessage);
             }
         }
     }

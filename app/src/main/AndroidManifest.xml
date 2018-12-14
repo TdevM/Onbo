@@ -47,10 +47,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".utils.CustomQRView"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.auth.AuthenticationActivity"
             android:screenOrientation="portrait"
+            android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".modules.dinein.activities.InitializeDineOrderActivity"
@@ -65,14 +67,17 @@
 
         <activity
             android:name=".modules.nondine.activities.NonDineRestaurantDetailsActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.nondine.NonDineActivity"
             android:label="@string/title_activity_non_dine"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.orders.RestaurantOrdersActivity"
             android:label="@string/title_activity_restaurant_orders"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
@@ -85,6 +90,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.entry.SimpleScannerActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -94,12 +100,16 @@
         <activity
             android:name=".root.activities.RestaurantDetailActivity"
             android:screenOrientation="portrait"
+            android:exported="false"
             android:theme="@style/AppTheme2.NoActionBar" />
         <activity
             android:name=".modules.nondine.activities.InitNonDineOrderActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.intro.IntroActivity"
+            android:theme="@style/SplashTheme"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.intro.SplashActivity"
@@ -114,26 +124,33 @@
         </activity>
         <activity
             android:name=".modules.account.activities.ChangePasswordActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.account.activities.EditAccountDetailsActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.account.activities.FavouritesActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.account.activities.HelpSupportActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.account.activities.AboutActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.orders.fragments.MyOrderDetailActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.auth.AuthTnCActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
-        <activity android:name=".modules.entry.EntryActivityLocationDisabled"></activity>
+
     </application>
 
 </manifest>

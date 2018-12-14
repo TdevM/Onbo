@@ -36,9 +36,9 @@ public interface NonDinePresenterContract {
 
         void detachView();
 
-        void createPaidNDOrder();
+        void createPaidNDOrder(String message);
 
-        void createCashNDOrder();
+        void createCashNDOrder(String message);
 
     }
 

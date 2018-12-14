@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import javax.inject.Inject;
 
+import app.onbo.modules.nondine.fragments.NDOrderMessagePickerFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import app.onbo.OnboApplication;
@@ -44,6 +45,8 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
     @BindView(R.id.frame_layout_payment_capture_progress)
     FrameLayout paymentCaptureProgress;
 
+
+    String userMessage;
 
     @Override
     protected void onResume() {
@@ -78,9 +81,16 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
         transaction.commit();
     }
 
-    public void showOrderPaymentType() {
+    public void showOrderPaymentType(String userMessage) {
+        this.userMessage = userMessage;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout_place_non_dine_order, OrderPaymentTypeFragment.newInstance());
+        transaction.replace(R.id.frame_layout_place_non_dine_order, OrderPaymentTypeFragment.newInstance(userMessage));
+        transaction.commit();
+    }
+
+    public void showGetNDOrderMessage() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout_place_non_dine_order, NDOrderMessagePickerFragment.newInstance());
         transaction.commit();
     }
 
@@ -154,7 +164,7 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
     public void onPaymentError(int i, String s) {
         // Authorization failed
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        PaymentFailedFragmentNonDine fragment = new PaymentFailedFragmentNonDine();
+        PaymentFailedFragmentNonDine fragment = PaymentFailedFragmentNonDine.newInstance(userMessage);
         transaction.replace(R.id.frame_layout_place_non_dine_order, fragment);
         transaction.commitAllowingStateLoss();
 

@@ -39,7 +39,7 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
 
     @OnClick(R.id.btn_proceed_payment_type)
     void showPaymentTypeFragment() {
-        activity.showOrderPaymentType();
+        activity.showGetNDOrderMessage();
     }
 
     InitNonDineOrderActivity activity;
@@ -91,7 +91,6 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -136,7 +135,7 @@ public class NonDineCheckoutFragment extends Fragment implements NonDineViewCont
     public void updateOrderCharges(Checkout checkout) {
         orderTotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(checkout.getOrderTotal().getGrandTotal())));
         subtotal.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(checkout.getOrderTotal().getSubtotal())));
-        taxes.setText(getContext().getString(R.string.rupee_symbol,GeneralUtils.parseStringDouble(checkout.getOrderTotal().getTaxes())));
+        taxes.setText(getContext().getString(R.string.rupee_symbol, GeneralUtils.parseStringDouble(checkout.getOrderTotal().getTaxes())));
     }
 
     @Override
