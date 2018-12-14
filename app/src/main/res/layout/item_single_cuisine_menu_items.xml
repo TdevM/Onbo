@@ -7,114 +7,104 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16_dp"
+        android:layout_marginTop="@dimen/size_16_dp"
+        android:layout_marginEnd="@dimen/size_16_dp"
+        android:background="@color/white"
+        android:orientation="vertical">
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:layout_marginStart="@dimen/size_16_dp"
-            android:layout_marginTop="@dimen/size_16_dp"
-            android:layout_marginEnd="@dimen/size_16_dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/iv_veg_non_veg_grid"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="@dimen/size_4_dp"
+                android:contentDescription="@string/veg_non_veg"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/tv_si_dish_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/iv_veg_non_veg_grid"
+                android:layout_marginStart="@dimen/size_8_dp"
+                android:layout_marginEnd="@dimen/size_8_dp"
+                android:layout_toStartOf="@+id/btn_id_item_dish_grid"
+                android:layout_toEndOf="@+id/iv_veg_non_veg_grid"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Tiraminsu"
+                android:textColor="@color/heading_color"
+                android:textSize="16sp" />
 
 
-            <RelativeLayout
+            <app.onbo.widgets.IncDecButton
+                android:id="@+id/btn_id_item_dish_grid"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="right"
+                app:backGroundColor="@android:color/holo_blue_dark"
+                app:textSize="7sp">
+
+            </app.onbo.widgets.IncDecButton>
+
+
+            <TextView
+                android:id="@+id/tv_si_dish_price"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_si_dish_name"
+                android:layout_alignStart="@+id/tv_si_dish_name"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentTop="false"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="500rs"
+                android:textColor="@color/heading_color"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/tv_si_item_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal">
+                android:layout_below="@id/tv_si_dish_price"
+                android:layout_alignStart="@+id/tv_si_dish_name"
+                android:layout_alignParentStart="false"
+                android:layout_marginTop="@dimen/size_4_dp"
+                android:layout_marginEnd="@dimen/size_88_dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="files are stored in the configuration folder for"
+                android:textAlignment="viewStart"
+                android:textSize="12sp" />
 
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/iv_veg_non_veg_grid"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginTop="@dimen/size_4_dp"
-                    android:contentDescription="@string/veg_non_veg"
-                    android:scaleType="fitXY"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_si_dish_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/iv_veg_non_veg_grid"
-                    android:layout_marginStart="@dimen/size_8_dp"
-                    android:layout_marginEnd="@dimen/size_8_dp"
-                    android:layout_toStartOf="@+id/btn_id_item_dish_grid"
-                    android:layout_toEndOf="@+id/iv_veg_non_veg_grid"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Tiraminsu"
-                    android:textColor="@color/heading_color"
-                    android:textSize="16sp" />
-
-
-                <app.onbo.widgets.IncDecButton
-                    android:id="@+id/btn_id_item_dish_grid"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_gravity="right"
-                    app:backGroundColor="@android:color/holo_blue_dark"
-                    app:textSize="7sp">
-
-                </app.onbo.widgets.IncDecButton>
-
-
-                <TextView
-                    android:id="@+id/tv_si_dish_price"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_si_dish_name"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="false"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="4dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="500rs"
-                    android:textColor="@color/heading_color"
-                    android:textSize="12sp" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
+            <TextView
+                android:id="@+id/tv_si_item_is_customizable"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:layout_marginTop="@dimen/size_4_dp">
+                android:layout_below="@id/tv_si_item_description"
+                android:layout_marginTop="@dimen/size_4_dp"
+                android:layout_alignStart="@+id/tv_si_dish_name"
+                android:layout_marginEnd="@dimen/size_88_dp"
+                android:text="@string/customizable"
+                android:textColor="#60B246"
+                android:textSize="10sp" />
 
-                <TextView
-                    android:id="@+id/tv_si_item_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginStart="@dimen/default_space_32"
-                    android:layout_marginEnd="@dimen/size_88_dp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="files are stored in the configuration folder for"
-                    android:textAlignment="viewStart"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv_si_item_is_customizable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#60B246"
-                    android:layout_marginTop="@dimen/size_4_dp"
-                    android:layout_marginStart="@dimen/default_space_32"
-                    android:layout_marginEnd="@dimen/size_88_dp"
-                    android:text="@string/customizable"
-                    android:textSize="10sp" />
+        </RelativeLayout>
 
 
-
-
-
-            </LinearLayout>
-        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

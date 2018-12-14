@@ -3,6 +3,7 @@ package app.onbo.modules.nondine;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 
 import com.appsee.Appsee;
@@ -25,6 +26,10 @@ public class NonDineActivity extends AppCompatActivity implements
         BottomNavigationBar.OnTabSelectedListener, CartBadgeListener,
         NonDineViewContract.NonDineActivityView {
 
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     @BindView(R.id.toolbar_non_dine_activity)
     Toolbar toolbar;

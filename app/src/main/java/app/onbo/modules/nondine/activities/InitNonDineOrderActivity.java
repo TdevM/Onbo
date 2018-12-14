@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -41,6 +42,10 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
     @Inject
     InitNonDineOrderPresenter presenter;
 
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     @BindView(R.id.frame_layout_payment_capture_progress)
     FrameLayout paymentCaptureProgress;
