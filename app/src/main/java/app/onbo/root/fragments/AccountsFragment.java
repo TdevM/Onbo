@@ -161,14 +161,7 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
         unbinder = ButterKnife.bind(this, view);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
-        try {
-            PackageInfo packageInfo = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0);
-            String versionName = packageInfo.versionName;
-            int versionCode = packageInfo.versionCode;
-            appVersion.setText(String.format("App Version \n %s (%d)", versionName, versionCode));
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+
 
         return view;
     }
