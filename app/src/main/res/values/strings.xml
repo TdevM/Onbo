@@ -329,5 +329,7 @@
     <string name="order_active">Active</string>
     <string name="payment_pending">Payment Pending</string>
     <string name="continue_doing_t1">Continue</string>
+    <string name="yay_your_order_is_sent_to_the_kitchen_n_sit_back_and_relax">Yay! your order has been sent to the kitchen \n Sit back and relax</string>
+    <string name="items_added_success">Items has been added to your order\nYou\'ll be notified when it is prepared</string>
 
 </resources>
