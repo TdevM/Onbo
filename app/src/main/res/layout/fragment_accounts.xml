@@ -70,7 +70,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="16dp"
                         android:text="@string/connection_broken"
-                        android:textColor="@color/primary_dark_app"
+                        android:textColor="@color/heading_color"
                         android:textSize="14sp" />
 
 
@@ -140,7 +140,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="16dp"
                         android:text="@string/best_minds_working"
-                        android:textColor="@color/primary_dark_app"
+                        android:textColor="@color/heading_color"
                         android:textSize="14sp" />
 
 
@@ -564,7 +564,7 @@
                             android:layout_centerInParent="false"
                             android:layout_centerVertical="true"
                             android:layout_margin="@dimen/size_16_dp"
-                            app:srcCompat="@android:drawable/ic_lock_power_off" />
+                            app:srcCompat="@drawable/ic_power_settings_new_black_24dp" />
 
                         <TextView
                             android:layout_width="wrap_content"

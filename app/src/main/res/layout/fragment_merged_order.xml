@@ -136,7 +136,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="16dp"
                     android:text="@string/connection_broken"
-                    android:textColor="@color/primary_dark_app"
+                    android:textColor="@color/heading_color"
                     android:textSize="14sp" />
 
 
@@ -206,7 +206,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="16dp"
                     android:text="@string/best_minds_working"
-                    android:textColor="@color/primary_dark_app"
+                    android:textColor="@color/heading_color"
                     android:textSize="14sp" />
 
 

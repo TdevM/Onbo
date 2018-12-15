@@ -224,7 +224,7 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
 
     private void logoutUser() {
         new AlertDialog.Builder(activity)
-                .setTitle("Logout?")
+                .setTitle("Logout")
                 .setMessage("Are you sure you want to Logout?")
                 .setPositiveButton("OK", (dialog, which) -> {
                     activity.logOutUser();
