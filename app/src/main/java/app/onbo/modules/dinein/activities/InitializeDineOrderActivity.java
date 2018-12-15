@@ -18,6 +18,7 @@ import com.appsee.Appsee;
 
 import javax.inject.Inject;
 
+import app.onbo.modules.dinein.fragments.ShowOrderClosedErrorFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Response;
@@ -109,6 +110,14 @@ public class InitializeDineOrderActivity extends AppCompatActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         InitializeOrderFragment fragment = new InitializeOrderFragment();
         fragment.setArguments(bundle);
+        transaction.replace(R.id.frame_layout_place_temp_order, fragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void showOrderAlreadyClosed() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ShowOrderClosedErrorFragment fragment = new ShowOrderClosedErrorFragment();
         transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();
     }

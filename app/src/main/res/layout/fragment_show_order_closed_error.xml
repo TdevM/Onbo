@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/size_16_dp"
-            android:layout_weight="6"
+            android:layout_weight="5"
             android:background="@color/white"
             android:orientation="vertical">
 
@@ -35,7 +35,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_16_dp"
                     android:layout_marginTop="@dimen/size_16_dp"
-                    android:text="@string/oops_payment_failed"
+                    android:layout_marginEnd="@dimen/size_16_dp"
+                    android:text="@string/oops_you_shouldn_t_be_here"
                     android:textAlignment="textStart"
                     android:textColor="@color/primary_dark_app"
                     android:textSize="24sp" />
@@ -62,25 +63,35 @@
                     android:id="@+id/iv_animate_t1_success"
                     android:layout_width="96dp"
                     android:layout_height="96dp"
-                    android:layout_centerInParent="false"
                     android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="false"
                     android:layout_marginTop="@dimen/default_space_48"
                     android:contentDescription="@string/image_design_random"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_order_payment_error" />
 
+
                 <TextView
-                    android:id="@+id/textView33"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_animate_t1_success"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentBottom="false"
+                    android:layout_below="@id/iv_animate_t1_success"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_marginTop="@dimen/default_space_32"
-                    android:text="@string/your_payment_has_been_declined" />
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/textView35"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_animate_t1_success"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="false"
+                    android:layout_centerInParent="false"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/default_space_32"
+                    android:text="@string/this_order_is_now_closed" />
 
 
             </RelativeLayout>
@@ -91,7 +102,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"
+            android:layout_weight="5"
             android:background="@color/white">
 
 
@@ -99,42 +110,42 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_order_table_no"
+                android:layout_below="@+id/textView31"
                 android:layout_alignParentBottom="false"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="@dimen/size_16_dp"
-                android:layout_marginTop="@dimen/size_16_dp"
-                android:layout_marginEnd="@dimen/size_16_dp"
-                android:layout_marginBottom="@dimen/size_16_dp"
-                android:text="Any amount deducted will be refunded within 7 working days"
+                android:layout_marginTop="@dimen/default_space_32"
+                android:text="@string/thank_you_for_your_order"
                 android:textColor="@color/heading_color"
                 android:textSize="16sp"
-                android:visibility="visible" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="@dimen/size_16_dp"
-                android:layout_marginTop="@dimen/size_16_dp"
-                android:layout_marginEnd="@dimen/size_16_dp"
-                android:layout_marginBottom="@dimen/size_16_dp"
-                android:text="We regret the inconvenience caused"
-                android:textColor="@color/heading_color"
-                android:textStyle="bold" />
-
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <Button
-                android:id="@+id/btn_order_payment_failure_t1"
+                android:id="@+id/btn_order_already_closed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="0dp"
                 android:background="@drawable/gradient_6"
-                android:text="@string/retry"
+                android:text="View Order Details"
                 android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentBottom="false"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="false"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/size_16_dp"
+                android:layout_marginTop="@dimen/size_16_dp"
+                android:text="Your order was closed and no items can be added to it. please proceed to pay for your order"
+                android:textAlignment="center"
+                android:textColor="@color/heading_color"
+                android:textSize="16sp" />
 
 
         </RelativeLayout>

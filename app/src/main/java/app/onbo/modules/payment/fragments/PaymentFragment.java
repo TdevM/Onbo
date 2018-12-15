@@ -104,7 +104,6 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
             orderId = getArguments().getString("ORDER_ID");
             fOrderId = getArguments().getString("F_ORDER_ID");
             fOrder = getArguments().getParcelable("ORDER");
-            ;
             Log.d(TAG, "Got into PaymentFragment" + orderId + " " + fOrderId);
 
         }

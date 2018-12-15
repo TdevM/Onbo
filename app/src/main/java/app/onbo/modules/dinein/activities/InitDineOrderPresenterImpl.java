@@ -56,7 +56,7 @@ public class InitDineOrderPresenterImpl extends BasePresenter implements DineInP
     }
 
 
-    public void clearCart(){
+    public void clearCart() {
         cart.clearCart();
     }
 
@@ -150,7 +150,7 @@ public class InitDineOrderPresenterImpl extends BasePresenter implements DineInP
         Map<String, String> map = new HashMap<>();
         //map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
 
-        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder("Bearer "+preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -161,11 +161,15 @@ public class InitDineOrderPresenterImpl extends BasePresenter implements DineInP
             @Override
             public void onNext(Response<TOrder> arrayListResponse) {
                 Log.d(TAG, "onNext RAN");
-                if (arrayListResponse.isSuccessful()) {
-                    if (arrayListResponse.code() == 200) {
-                        placeTempOrderView.showGetMessage(arrayListResponse);
-                        Log.d(TAG, "Add items to Order RAN");
+                if (arrayListResponse.code() == 200) {
+                    if (arrayListResponse.body() != null) {
+                        if (arrayListResponse.body().getClosed()) {
+                            placeTempOrderView.showOrderAlreadyClosed();
+                        } else {
+                            placeTempOrderView.showGetMessage(arrayListResponse);
+                        }
                     }
+                    Log.d(TAG, "Add items to Order RAN");
                 } else if (!arrayListResponse.isSuccessful() && arrayListResponse.code() == 404) {
                     //Create new Order
                     Log.d(TAG, "Create Order RAN");

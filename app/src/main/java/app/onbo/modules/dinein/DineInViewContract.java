@@ -74,6 +74,7 @@ public interface DineInViewContract {
         void onNewOrderCreated(TOrder tOrder);
         void showGetGuestMessage();
 
+        void showOrderAlreadyClosed();
     }
 
     interface DishReviewsSheetView extends BaseView {

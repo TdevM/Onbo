@@ -33,7 +33,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_16_dp"
-                    android:layout_marginEnd="@dimen/size_16_dp"
                     android:text="Order payment"
                     android:textAlignment="textStart"
                     android:textColor="@color/primary_dark_app"

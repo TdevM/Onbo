@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/size_16_dp"
-            android:layout_weight="6"
+            android:layout_weight="5"
             android:background="@color/white"
             android:orientation="vertical">
 
@@ -33,7 +33,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_16_dp"
-                    android:layout_marginEnd="@dimen/size_16_dp"
                     android:text="Order payment"
                     android:textColor="@color/primary_dark_app"
                     android:textSize="24sp" />
@@ -82,7 +81,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"
+            android:layout_weight="5"
             android:background="@color/white">
 
 
@@ -100,7 +99,10 @@
                 android:layout_alignParentBottom="false"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/size_16_dp"
-                android:text="@string/please_keep_cash_ready" />
+                android:text="@string/please_keep_cash_ready"
+                android:textAlignment="center"
+                android:textColor="@color/heading_color"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_cash_pickup_order_amount"
@@ -124,11 +126,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:textColor="@color/white"
-                android:background="@drawable/gradient_6"
                 android:layout_marginBottom="0dp"
+                android:background="@drawable/gradient_6"
+                android:text="@string/check_payment_status"
                 android:textAllCaps="false"
-                android:text="@string/check_payment_status" />
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/tv_payment_status_t1"

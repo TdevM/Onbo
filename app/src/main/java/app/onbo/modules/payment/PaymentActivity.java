@@ -51,17 +51,19 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     @Override
     protected void onResume() {
         super.onResume();
-        paymentActivityPresenter.attachView(this);
-        handlePaymentView();
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resolveDaggerDependencies();
+        paymentActivityPresenter.attachView(this);
         setContentView(R.layout.activity_payments);
-        Appsee.start();
         ButterKnife.bind(this);
+        handlePaymentView();
+        Appsee.start();
+
         Checkout.preload(getApplicationContext());
 
     }
