@@ -196,11 +196,11 @@
                             android:id="@+id/iv_user_profile_image"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginStart="@dimen/size_16_dp"
+                            android:layout_marginLeft="@dimen/size_16_dp"
                             android:layout_marginTop="@dimen/default_height_20"
-                            android:layout_marginEnd="15dp"
-                            android:layout_marginRight="15dp"
+                            android:layout_marginEnd="@dimen/size_16_dp"
+                            android:layout_marginRight="@dimen/size_16_dp"
                             android:layout_marginBottom="@dimen/default_height_20"
                             android:contentDescription="@string/user_profile_picture"
                             app:srcCompat="@drawable/ic_profile_pic_male_2fd3e8" />
@@ -230,6 +230,7 @@
                                     android:id="@+id/tv_logged_user_mobile"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/size_2_dp"
                                     android:text="@string/_919560447160"
                                     android:textColor="@color/sub_heading_color"
                                     android:textSize="12sp" />
@@ -238,6 +239,7 @@
                                     android:id="@+id/tv_logged_user_email"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/size_2_dp"
                                     android:text="@string/tridevtga_gmail_com"
                                     android:textColor="@color/sub_heading_color"
                                     android:textSize="12sp" />
@@ -246,6 +248,7 @@
                                     android:id="@+id/tv_edit_profile_details"
                                     android:layout_width="70dp"
                                     android:layout_height="20dp"
+                                    android:layout_marginTop="@dimen/size_2_dp"
                                     android:text="@string/edit_details"
                                     android:textAlignment="textStart"
                                     android:textAllCaps="false"
@@ -305,18 +308,21 @@
 
                         <ImageView
                             android:id="@+id/imageView19"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:layout_centerVertical="true"
-                            android:layout_margin="15dp"
+                            android:layout_marginStart="@dimen/size_16_dp"
+                            android:layout_marginTop="@dimen/size_16_dp"
+                            android:layout_marginEnd="@dimen/size_16_dp"
+                            android:layout_marginBottom="@dimen/size_16_dp"
                             app:srcCompat="@drawable/ic_receipt_black_24dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
+                            android:layout_alignParentStart="false"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="50dp"
+                            android:layout_toEndOf="@+id/imageView19"
                             android:gravity="center|start"
                             android:minLines="1"
                             android:text="@string/my_orders"
@@ -342,18 +348,18 @@
 
                         <ImageView
                             android:id="@+id/imageView20"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:layout_centerVertical="true"
-                            android:layout_margin="15dp"
+                            android:layout_margin="@dimen/size_16_dp"
                             app:srcCompat="@drawable/ic_favorite_black_24dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
+                            android:layout_alignParentStart="false"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="50dp"
+                            android:layout_toEndOf="@+id/imageView20"
                             android:gravity="center|start"
                             android:maxLines="1"
                             android:minLines="1"
@@ -381,19 +387,19 @@
 
                         <ImageView
                             android:id="@+id/imageView21"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:layout_centerVertical="true"
-                            android:layout_margin="15dp"
+                            android:layout_margin="@dimen/size_16_dp"
                             app:srcCompat="@drawable/ic_lock_black_24dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
+                            android:layout_alignParentStart="false"
                             android:layout_alignParentTop="false"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="50dp"
+                            android:layout_toEndOf="@+id/imageView21"
                             android:gravity="start"
                             android:maxLines="1"
                             android:minLines="1"
@@ -422,24 +428,24 @@
 
                         <ImageView
                             android:id="@+id/imageView22"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:layout_centerInParent="false"
                             android:layout_centerVertical="true"
-                            android:layout_margin="15dp"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="15dp"
-                            android:layout_marginBottom="15dp"
+                            android:layout_margin="@dimen/size_16_dp"
+                            android:layout_marginStart="@dimen/size_16_dp"
+                            android:layout_marginTop="@dimen/size_16_dp"
+                            android:layout_marginEnd="@dimen/size_16_dp"
+                            android:layout_marginBottom="@dimen/size_16_dp"
                             app:srcCompat="@drawable/ic_help_black_24dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
+                            android:layout_alignParentStart="false"
                             android:layout_alignParentTop="false"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="50dp"
+                            android:layout_toEndOf="@+id/imageView22"
                             android:maxLines="1"
                             android:text="@string/help_n_support"
                             android:textAlignment="viewStart"
@@ -512,9 +518,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
+                            android:layout_alignParentStart="false"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="50dp"
+                            android:layout_toEndOf="@+id/imageView24"
                             android:gravity="start"
                             android:minLines="1"
                             android:text="@string/about"
@@ -524,18 +530,12 @@
 
                         <ImageView
                             android:id="@+id/imageView24"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerInParent="true"
                             android:layout_centerVertical="true"
-                            android:layout_margin="15dp"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="15dp"
-                            android:layout_marginRight="15dp"
-                            android:layout_marginBottom="15dp"
+                            android:layout_margin="@dimen/size_16_dp"
                             app:srcCompat="@drawable/ic_info_black_24dp" />
                     </RelativeLayout>
 
@@ -549,8 +549,9 @@
                     android:layout_below="@+id/cardView_text_about_us"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="0dp"
+                    android:layout_marginBottom="@dimen/default_space_32"
                     app:cardCornerRadius="0dp"
-                    app:cardElevation="1dp">
+                    app:cardElevation="0dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -558,24 +559,20 @@
 
                         <ImageView
                             android:id="@+id/imageView25"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:layout_centerInParent="false"
                             android:layout_centerVertical="true"
-                            android:layout_margin="15dp"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="15dp"
-                            android:layout_marginBottom="15dp"
+                            android:layout_margin="@dimen/size_16_dp"
                             app:srcCompat="@android:drawable/ic_lock_power_off" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
+                            android:layout_alignParentStart="false"
                             android:layout_alignParentTop="false"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="50dp"
+                            android:layout_toEndOf="@+id/imageView25"
                             android:maxLines="1"
                             android:text="LOGOUT"
                             android:textAlignment="viewStart"

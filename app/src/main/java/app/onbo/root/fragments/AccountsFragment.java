@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,7 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
 
     @OnClick(R.id.btn_logout_user)
     void click() {
-        activity.logOutUser();
+
     }
 
 
@@ -96,10 +97,11 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
         startActivity(intent);
     }
 
-    @OnClick(R.id.btn_logout_user)
-    void onClick() {
-        presenter.logOutUser();
+    @OnClick(R.id.cardView_text_logout)
+    void logout() {
+        logoutUser();
     }
+
 
     @BindView(R.id.swipeToRefresh_account_fragment)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -225,6 +227,18 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
     @Override
     public void onUserFetchFailure() {
         Toast.makeText(getContext(), "Failed to fetch user", Toast.LENGTH_SHORT).show();
+    }
+
+    private void logoutUser() {
+        new AlertDialog.Builder(activity)
+                .setTitle("Logout?")
+                .setMessage("Are you sure you want to Logout?")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    activity.logOutUser();
+                    Log.d(TAG, "User logged out");
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> Log.d(TAG, "Aborting logout..."))
+                .show();
     }
 
     @Override
