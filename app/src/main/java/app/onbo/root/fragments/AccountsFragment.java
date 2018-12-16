@@ -154,10 +154,10 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d("AccountsFragment", "onCreateView() Called");
+        activity = (RootActivity) getActivity();
         resolveDaggerDependencies();
         View view;
         view = inflater.inflate(R.layout.fragment_accounts, container, false);
-        activity = (RootActivity) getActivity();
         unbinder = ButterKnife.bind(this, view);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_default_app);
@@ -213,7 +213,7 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
 
     @Override
     public void resolveDaggerDependencies() {
-        ((OnboApplication) getActivity().getApplication()).getApiComponent().inject(this);
+        ((OnboApplication) activity.getApplication()).getApiComponent().inject(this);
 
     }
 
@@ -226,11 +226,11 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
         new AlertDialog.Builder(activity)
                 .setTitle("Logout")
                 .setMessage("Are you sure you want to Logout?")
-                .setPositiveButton("OK", (dialog, which) -> {
+                .setPositiveButton("LOGOUT", (dialog, which) -> {
                     activity.logOutUser();
                     Log.d(TAG, "User logged out");
                 })
-                .setNegativeButton("Cancel", (dialog, which) -> Log.d(TAG, "Aborting logout..."))
+                .setNegativeButton("CANCEL", (dialog, which) -> Log.d(TAG, "Aborting logout..."))
                 .show();
     }
 

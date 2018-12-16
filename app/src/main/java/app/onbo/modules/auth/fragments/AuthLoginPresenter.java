@@ -2,6 +2,8 @@ package app.onbo.modules.auth.fragments;
 
 import android.util.Log;
 
+import com.onesignal.OneSignal;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,40 +28,41 @@ import app.onbo.utils.PreferenceUtils;
  * Created by Tridev on 12-10-2017.
  */
 //TODO Save encrypted token to shared prefs.
-public class AuthLoginPresenter extends BasePresenter implements AuthPresenterContract.AuthLoginPresenter{
+public class AuthLoginPresenter extends BasePresenter implements AuthPresenterContract.AuthLoginPresenter {
 
-    public static final String TAG = AuthInitPresenter.class.getSimpleName();
+    public static final String TAG = AuthLoginPresenter.class.getSimpleName();
     private APIService apiService;
     private AuthViewContract.AuthLoginView authLoginView;
     private PreferenceUtils preferenceUtils;
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    public AuthLoginPresenter(APIService apiService,PreferenceUtils preferenceUtils) {
+    public AuthLoginPresenter(APIService apiService, PreferenceUtils preferenceUtils) {
         this.compositeDisposable = new CompositeDisposable();
         this.apiService = apiService;
         this.preferenceUtils = preferenceUtils;
     }
 
-    public void loginUser(final Long phone, final String password){
-        Observable<Response<Object>> observable = apiService.loginUser(new User(password,phone));
+    public void loginUser(final Long phone, final String password) {
+        Observable<Response<Object>> observable = apiService.loginUser(new User(password, phone));
         subscribe(observable, new Observer<Response<Object>>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
                 authLoginView.showProgressUI();
                 compositeDisposable.add(d);
-                Log.d(TAG,"Subscribed");
+                Log.d(TAG, "Subscribed");
             }
 
             @Override
             public void onNext(@NonNull Response<Object> response) {
                 authLoginView.hideProgressUI();
-                if(response.code() ==401){
-                    Log.d(TAG,String.valueOf(response.code()));
+                if (response.code() == 401) {
+                    Log.d(TAG, String.valueOf(response.code()));
                     authLoginView.showLoginError();
-                }else if(response.code() ==200){
-                    Log.d(TAG,response.body().toString());
-                    preferenceUtils.saveAuthTransaction(response.headers().get("Authorization"),phone,true);
+                } else if (response.code() == 200) {
+                    Log.d(TAG, response.body().toString());
+                    preferenceUtils.saveAuthTransaction(response.headers().get("Authorization"), phone, true);
+                    OneSignal.sendTag("USER_MOBILE", String.valueOf(phone));
                     authLoginView.loginSuccess();
 
                 }
@@ -69,7 +72,7 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
             public void onError(@NonNull Throwable e) {
                 authLoginView.hideProgressUI();
                 authLoginView.showLoginError();
-                Log.d(TAG,"Error");
+                Log.d(TAG, "Error");
             }
 
             @Override
@@ -81,12 +84,11 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
     }
 
 
-
     @Override
     public void checkCurrentOrderDetails() {
         Log.d(TAG, "Checking order...");
         Map<String, String> map = new HashMap<>();
-        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder("Bearer "+preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -122,13 +124,12 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
     }
 
 
-
     @Override
-    public void fetchClosedOrder(String tOrderId){
-        Map<String,String> map = new HashMap<>();
+    public void fetchClosedOrder(String tOrderId) {
+        Map<String, String> map = new HashMap<>();
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("t_order_id", tOrderId);
-        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer "+preferenceUtils.getAuthLoginToken(),map);
+        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -138,11 +139,11 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
 
             @Override
             public void onNext(Response<FOrder> fOrderResponse) {
-                if(fOrderResponse.isSuccessful()){
-                    if(fOrderResponse.body()!=null){
+                if (fOrderResponse.isSuccessful()) {
+                    if (fOrderResponse.body() != null) {
                         authLoginView.onFOrderFetched(fOrderResponse.body());
                     }
-                }else {
+                } else {
                     authLoginView.onFOrderFetchFailure();
                 }
             }
@@ -161,7 +162,7 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
 
     @Override
     public void attachView(AuthViewContract.AuthLoginView view) {
-            authLoginView = view;
+        authLoginView = view;
     }
 
     @Override
