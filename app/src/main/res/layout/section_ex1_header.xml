@@ -2,9 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:paddingBottom="5dp"
-    android:paddingTop="5dp">
+    android:layout_height="wrap_content">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -12,21 +10,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_16_dp"
-        android:layout_marginTop="@dimen/size_16_dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/Black"
+        android:layout_marginTop="@dimen/size_8_dp"
+        android:layout_marginEnd="@dimen/size_16_dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/proxima_nova_medium"
+        android:textColor="@color/heading_color"
+        android:textSize="18sp"
         tools:text="Hello" />
 
 
-    <!--<TextView-->
-        <!--android:id="@+id/tvTitle"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_marginLeft="15dp"-->
-        <!--android:textColor="@color/Black"-->
-        <!--android:textStyle="bold"-->
-        <!--tools:text="Title test text" />-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tvTitle"
+        android:layout_marginStart="@dimen/size_16_dp"
+        android:layout_marginEnd="@dimen/size_16_dp"
+        android:background="@color/separator_line"
+        android:visibility="visible" />
 
 </RelativeLayout>

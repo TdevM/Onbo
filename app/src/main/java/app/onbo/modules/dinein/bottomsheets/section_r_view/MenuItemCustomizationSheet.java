@@ -1,26 +1,42 @@
 package app.onbo.modules.dinein.bottomsheets.section_r_view;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import app.onbo.R;
 import app.onbo.api.models.response.v2.menu.MenuAddOn;
 import app.onbo.api.models.response.v2.menu.MenuItem;
 import app.onbo.api.models.response.v2.menu.MenuVOption;
 import app.onbo.modules.dinein.callbacks.MenuItemOptionsSelected;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
+
+    Unbinder unbinder;
+
+    @BindView(R.id.toolbar_fragment_h_n_s_list)
+    Toolbar toolbar;
+
 
     private SectionedRecyclerViewAdapter sectionAdapter;
     private MenuItem menuItem;
@@ -50,9 +66,20 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        View view = inflater.inflate(R.layout.fragment_menu_customization_sheet, container, false);
-        button = view.findViewById(R.id.btn_variant_add_to_cart);
         menuItem = bundle.getParcelable("options");
+        View view = inflater.inflate(R.layout.fragment_menu_customization_sheet, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity != null) {
+            activity.setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+            toolbar.setNavigationOnClickListener(v -> dismissSheet());
+            toolbar.setTitle(menuItem.getItemName());
+        }
+
+
+        button = view.findViewById(R.id.btn_variant_add_to_cart);
+
         Log.d("TAG___________________", menuItem.getItemName());
         sectionAdapter = new SectionedRecyclerViewAdapter();
 
@@ -97,7 +124,7 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
         return view;
     }
 
-    public void dismissSheet(){
+    public void dismissSheet() {
         this.dismiss();
     }
 
@@ -114,10 +141,29 @@ public class MenuItemCustomizationSheet extends BottomSheetDialogFragment {
     }
 
     @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        BottomSheetDialog bottomSheetDialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
+        bottomSheetDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                BottomSheetDialog d = (BottomSheetDialog) dialog;
+                FrameLayout bottomSheet = d.findViewById(android.support.design.R.id.design_bottom_sheet);
+                BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_EXPANDED);
+                BottomSheetBehavior.from(bottomSheet).setHideable(true);
+            }
+        });
+        return bottomSheetDialog;
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         menuItemOptionsSelected = null;
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }
