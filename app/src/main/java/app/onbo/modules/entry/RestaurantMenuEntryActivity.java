@@ -40,7 +40,14 @@ import com.google.zxing.integration.android.IntentResult;
 
 import javax.inject.Inject;
 
+import app.onbo.OnboApplication;
+import app.onbo.R;
 import app.onbo.api.models.RemoteConfig;
+import app.onbo.api.models.response.v2.Restaurant;
+import app.onbo.modules.dinein.DineInActivity;
+import app.onbo.modules.nondine.NonDineActivity;
+import app.onbo.utils.CustomQRView;
+import app.onbo.utils.PreferenceUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,13 +57,6 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
-import app.onbo.OnboApplication;
-import app.onbo.R;
-import app.onbo.api.models.response.v2.Restaurant;
-import app.onbo.modules.dinein.DineInActivity;
-import app.onbo.modules.nondine.NonDineActivity;
-import app.onbo.utils.PreferenceUtils;
-import app.onbo.utils.CustomQRView;
 
 @RuntimePermissions
 public class RestaurantMenuEntryActivity extends AppCompatActivity implements MenuEntryViewContract.RestaurantMenuEntryView {
@@ -349,6 +349,7 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     public void redirectDineInActivity(Restaurant restaurant) {
         Intent intent = new Intent(RestaurantMenuEntryActivity.this, DineInActivity.class);
         intent.putExtra("RESTAURANT", restaurant);
+        intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
         startActivity(intent);
         finish();
     }

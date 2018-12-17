@@ -18,10 +18,6 @@ import com.appsee.Appsee;
 
 import javax.inject.Inject;
 
-import app.onbo.modules.dinein.fragments.ShowOrderClosedErrorFragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import retrofit2.Response;
 import app.onbo.OnboApplication;
 import app.onbo.R;
 import app.onbo.api.models.response.v2.Restaurant;
@@ -31,7 +27,11 @@ import app.onbo.modules.dinein.DineInViewContract;
 import app.onbo.modules.dinein.fragments.InitializeOrderFragment;
 import app.onbo.modules.dinein.fragments.ItemsAddedSuccessFragment;
 import app.onbo.modules.dinein.fragments.OrderSuccessFragment;
+import app.onbo.modules.dinein.fragments.ShowOrderClosedErrorFragment;
 import app.onbo.modules.orders.callback.CartBadgeListener;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Response;
 
 
 public class InitializeDineOrderActivity extends AppCompatActivity
@@ -39,6 +39,7 @@ public class InitializeDineOrderActivity extends AppCompatActivity
     public static final String TAG = InitializeDineOrderActivity.class.getSimpleName();
     public static final String ORDER_RUNNING_STATUS = "ORDER_RUNNING_STATUS";
     public static TOrder tOrder;
+    public static boolean ORDER_PLACED = false;
 
     @Inject
     InitDineOrderPresenterImpl placeTempOrderPresenter;
@@ -145,6 +146,7 @@ public class InitializeDineOrderActivity extends AppCompatActivity
         fragment.setArguments(bundle);
         transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();
+        ORDER_PLACED = true;
         placeTempOrderPresenter.clearCart();
     }
 
@@ -157,7 +159,10 @@ public class InitializeDineOrderActivity extends AppCompatActivity
         fragment.setArguments(bundle);
         transaction.replace(R.id.frame_layout_place_temp_order, fragment);
         transaction.commit();
+        ORDER_PLACED = true;
         placeTempOrderPresenter.clearCart();
+
+
     }
 
 
@@ -187,6 +192,20 @@ public class InitializeDineOrderActivity extends AppCompatActivity
 
     @Override
     public void onCartItemUpdated(int count) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (ORDER_PLACED) {
+            Intent returnIntent = new Intent();
+            Log.d(TAG, "ORDER WAS PLACED");
+            returnIntent.putExtra("ORDER_PLACED", true);
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
+        } else {
+            super.onBackPressed();
+        }
 
     }
 }

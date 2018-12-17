@@ -1,8 +1,10 @@
 package app.onbo.modules.dinein;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,22 +21,26 @@ import com.ashokvarma.bottomnavigation.TextBadgeItem;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import app.onbo.OnboApplication;
 import app.onbo.R;
 import app.onbo.api.models.response.v2.Restaurant;
+import app.onbo.modules.dinein.activities.InitializeDineOrderActivity;
+import app.onbo.modules.dinein.fragments.BellFragment;
+import app.onbo.modules.dinein.fragments.CartFragment;
 import app.onbo.modules.dinein.fragments.MenuItemsFragment;
+import app.onbo.modules.dinein.fragments.MergedOrderFragment;
 import app.onbo.modules.orders.callback.CartBadgeListener;
 import app.onbo.modules.payment.PaymentActivity;
-import app.onbo.modules.dinein.fragments.CartFragment;
-import app.onbo.modules.dinein.fragments.BellFragment;
-import app.onbo.modules.dinein.fragments.MergedOrderFragment;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class DineInActivity extends AppCompatActivity implements
         DineInViewContract.DineInActivity, CartBadgeListener, BottomNavigationBar.OnTabSelectedListener {
 
     public static final String TAG = DineInActivity.class.getSimpleName();
+
+    public static boolean ORDER_PLACED = false;
+    int REQUEST_CODE = 102;
 
     @Inject
     DineInActivityPresenter presenter;
@@ -163,7 +169,16 @@ public class DineInActivity extends AppCompatActivity implements
                 .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+                        if (!ORDER_PLACED) {
+                            finish();
+                        } else {
+                            Intent returnIntent = new Intent();
+                            returnIntent.putExtra("ORDER_PLACED", true);
+                            setResult(Activity.RESULT_OK, returnIntent);
+                            finish();
+                            Log.d(TAG, "Order was placed");
+                        }
+
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -193,6 +208,30 @@ public class DineInActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+    public void startDineOrderActivity(Restaurant restaurant) {
+        Intent intent = new Intent(this, InitializeDineOrderActivity.class);
+        intent.putExtra("RESTAURANT", restaurant);
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                Log.d(TAG,"OnActivity Called"+ data.getBooleanExtra("ORDER_PLACED",false));
+                boolean orderPlaced = data.getBooleanExtra("ORDER_PLACED", false);
+                if (orderPlaced) {
+                    ORDER_PLACED = true;
+                    Log.d(TAG,"ORDER WAS Placed");
+                } else {
+                    Log.d(TAG, "Order was not placed");
+                }
+
+            }
+
+        }
+    }
 
     @Override
     public void hideProgressUI() {

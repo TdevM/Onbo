@@ -1,5 +1,6 @@
 package app.onbo.root;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -10,6 +11,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -41,6 +43,9 @@ public class RootActivity extends AppCompatActivity implements RootActivityViewC
     FragmentTransaction fragmentTransaction;
     LayerDrawable icon;
     int unpaidOrdersCount = 0;
+    int REQUEST_CODE = 100;
+    public static boolean ORDER_PLACED = false;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -88,6 +93,18 @@ public class RootActivity extends AppCompatActivity implements RootActivityViewC
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                boolean orderPlaced = data.getBooleanExtra("ORDER_PLACED", false);
+                if (orderPlaced) {
+                    finish();
+                } else {
+                    Log.d(TAG, "Order was not placed");
+                }
+
+            }
+
+        }
 
     }
 
@@ -145,7 +162,7 @@ public class RootActivity extends AppCompatActivity implements RootActivityViewC
     @Override
     public void redirectEntryActivity() {
         Intent intent = new Intent(RootActivity.this, RestaurantMenuEntryActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override
@@ -159,9 +176,9 @@ public class RootActivity extends AppCompatActivity implements RootActivityViewC
     }
 
 
-    public void logOutUser(){
+    public void logOutUser() {
         rootActivityPresenter.logoutUser();
-        Intent intent = new Intent(RootActivity.this,AuthenticationActivity.class);
+        Intent intent = new Intent(RootActivity.this, AuthenticationActivity.class);
         startActivity(intent);
         finish();
     }

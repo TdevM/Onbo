@@ -20,10 +20,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import app.onbo.OnboApplication;
 import app.onbo.R;
 import app.onbo.api.cart.CartItem;
@@ -33,15 +29,18 @@ import app.onbo.api.models.response.v2.menu.MenuAddOn;
 import app.onbo.api.models.response.v2.menu.MenuVOption;
 import app.onbo.modules.dinein.DineInActivity;
 import app.onbo.modules.dinein.DineInViewContract;
-import app.onbo.modules.dinein.activities.InitializeDineOrderActivity;
 import app.onbo.modules.dinein.adapters.CartItemsRecyclerAdapter;
 import app.onbo.modules.dinein.callbacks.CartItemClickListener;
 import app.onbo.modules.nondine.NonDineActivity;
 import app.onbo.modules.nondine.activities.InitNonDineOrderActivity;
 import app.onbo.modules.orders.callback.CartBadgeListener;
+import app.onbo.utils.CartHelper;
 import app.onbo.utils.GeneralUtils;
 import app.onbo.utils.PreferenceUtils;
-import app.onbo.utils.CartHelper;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class CartFragment extends Fragment implements DineInViewContract.CartFragmentView, CartItemClickListener {
 
@@ -187,15 +186,16 @@ public class CartFragment extends Fragment implements DineInViewContract.CartFra
 
     @Override
     public void startNonDineOrderActivity() {
-        Intent intent = new Intent(getContext(), InitNonDineOrderActivity.class);
+        Intent intent = new Intent(nonDineActivity, InitNonDineOrderActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void startDineOrderActivity() {
-        Intent intent = new Intent(getContext(), InitializeDineOrderActivity.class);
-        intent.putExtra("RESTAURANT", restaurant);
-        startActivity(intent);
+        if (getArguments() != null) {
+            restaurant = getArguments().getParcelable("RESTAURANT");
+            activity.startDineOrderActivity(restaurant);
+        }
     }
 
 
