@@ -335,5 +335,6 @@
     <string name="your_payment_has_been_received">Your payment has been received</string>
     <string name="oops_you_shouldn_t_be_here">Oops! you shouldn\'t be here</string>
     <string name="this_order_is_now_closed">This order is now closed</string>
+    <string name="explore">Explore</string>
 
 </resources>

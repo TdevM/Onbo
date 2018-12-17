@@ -70,7 +70,7 @@
             android:layout_marginTop="@dimen/default_space_32"
             android:text="@string/say_bye_bye_to_those_old_days"
             android:textColor="@color/primary_dark_app"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView

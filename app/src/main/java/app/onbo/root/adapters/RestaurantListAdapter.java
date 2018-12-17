@@ -106,7 +106,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         @BindView(R.id.iv_restaurant_image)
         ImageView restaurantImageView;
 
-        @BindView(R.id.tv_restaurant_locality)
+        @BindView(R.id.tv_restaurant_locality_new)
         TextView restaurantLocality;
 
         @BindView(R.id.tv_restaurant_cuisine)

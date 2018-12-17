@@ -61,16 +61,11 @@
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/default_space_48"
                     android:contentDescription="@string/image_design_random"
+                    app:srcCompat="@drawable/ic_accept_cash_t1_2"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView25" />
                 <!--app:srcCompat="@drawable/animation_payment_screen" />-->
 
-                <ImageView
-                    android:id="@+id/imageView25"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/default_width_64"
-                    android:contentDescription="@string/image_design_random"
-                    app:srcCompat="@drawable/ic_accept_cash_t1" />
+
 
 
             </android.support.constraint.ConstraintLayout>

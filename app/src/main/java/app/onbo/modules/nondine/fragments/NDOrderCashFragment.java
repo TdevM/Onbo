@@ -44,8 +44,7 @@ public class NDOrderCashFragment extends Fragment implements NonDineViewContract
     TextView orderAmount;
 
 
-    @BindView(R.id.iv_animate_final_cash_pickup)
-    ImageView imageView;
+
 
 
     @Inject
@@ -129,24 +128,6 @@ public class NDOrderCashFragment extends Fragment implements NonDineViewContract
 
     }
 
-    public void animate(View view) {
-        ImageView v = (ImageView) view;
-        Drawable d = v.getDrawable();
-        AnimatedVectorDrawableCompat animatedVector = (AnimatedVectorDrawableCompat) d;
-        final Handler mainHandler = new Handler(Looper.getMainLooper());
-        animatedVector.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
-            @Override
-            public void onAnimationEnd(final Drawable drawable) {
-                mainHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        animatedVector.start();
-                    }
-                });
-            }
-        });
-        animatedVector.start();
-    }
 
     @Override
     public void resolveDaggerDependencies() {

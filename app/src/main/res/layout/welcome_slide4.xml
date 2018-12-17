@@ -19,37 +19,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/image_design_random"
-                android:src="@drawable/intro_light_1xxhdpi"
-                android:visibility="invisible" />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:visibility="gone"
-                android:contentDescription="@string/image_design_random"
-                android:src="@drawable/intro_light_1xxhdpi" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/image_design_random"
-                android:src="@drawable/intro_light_1xxhdpi"
-                android:visibility="invisible" />
 
         </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/image_design_random"
-            app:srcCompat="@drawable/intros_4xxhdpi" />
+            android:src="@drawable/ic_intros_4"
+            android:contentDescription="@string/image_design_random" />
 
     </LinearLayout>
 
@@ -67,7 +45,7 @@
             android:layout_marginTop="@dimen/default_space_32"
             android:text="@string/dine_into_thousand"
             android:textColor="@color/primary_dark_app"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView

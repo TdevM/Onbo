@@ -21,10 +21,10 @@ import app.onbo.R;
 public class HNSWebViewFragment extends Fragment {
 
 
-    public static final String TOS = "https://oneroot.technology/terms_of_service.html";
-    public static final String REFUND_POLICY = "https://oneroot.technology/refund_policy.html";
-    public static final String PRIVACY_POLICY = "https://oneroot.technology/privacy_policy.html";
-    public static final String CONTACT = "https://oneroot.technology/contact_us.html";
+    public static final String TOS = "https://onbo.app/terms.html";
+    public static final String REFUND_POLICY = "https://onbo.app/refund.html";
+    public static final String PRIVACY_POLICY = "https://onbo.app/privacy.html";
+    public static final String CONTACT = "https://onbo.app/contact.html";
 
     Unbinder unbinder;
 

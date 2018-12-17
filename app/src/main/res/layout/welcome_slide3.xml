@@ -24,7 +24,6 @@
                 android:layout_height="100dp"
                 android:layout_weight="1"
                 android:contentDescription="@string/image_design_random"
-                android:src="@drawable/intro_light_1xxhdpi"
                 android:visibility="invisible" />
 
             <ImageView
@@ -39,7 +38,6 @@
                 android:layout_height="100dp"
                 android:layout_weight="1"
                 android:contentDescription="@string/image_design_random"
-                android:src="@drawable/intro_light_1xxhdpi"
                 android:visibility="invisible" />
 
         </LinearLayout>
@@ -68,7 +66,7 @@
             android:layout_marginTop="@dimen/default_space_32"
             android:text="@string/order_from_your_table"
             android:textColor="@color/primary_dark_app"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
