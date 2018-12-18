@@ -26,7 +26,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_intros_4"
+            android:src="@drawable/intros_4xxhdpi_new"
             android:contentDescription="@string/image_design_random" />
 
     </LinearLayout>
@@ -44,6 +44,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/default_space_32"
             android:text="@string/dine_into_thousand"
+            android:textAlignment="center"
             android:textColor="@color/primary_dark_app"
             android:textSize="18sp"
             android:textStyle="bold" />

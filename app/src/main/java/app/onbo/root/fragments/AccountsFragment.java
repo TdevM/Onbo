@@ -3,8 +3,6 @@ package app.onbo.root.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,21 +22,21 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import app.onbo.OnboApplication;
 import app.onbo.R;
 import app.onbo.api.models.response.UserApp;
 import app.onbo.modules.account.activities.AboutActivity;
-import app.onbo.modules.account.activities.HelpSupportActivity;
 import app.onbo.modules.account.activities.ChangePasswordActivity;
 import app.onbo.modules.account.activities.EditAccountDetailsActivity;
 import app.onbo.modules.account.activities.FavouritesActivity;
+import app.onbo.modules.account.activities.HelpSupportActivity;
 import app.onbo.modules.orders.RestaurantOrdersActivity;
-import app.onbo.root.RootActivityViewContract;
 import app.onbo.root.RootActivity;
+import app.onbo.root.RootActivityViewContract;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +54,7 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
     TextView userMobile;
     @BindView(R.id.tv_logged_user_name)
     TextView userName;
+
 
     @BindView(R.id.tv_app_version)
     TextView appVersion;
@@ -191,6 +190,11 @@ public class AccountsFragment extends Fragment implements RootActivityViewContra
         userName.setText(userApp.getUserName());
         userEmail.setText(userApp.getUserEmail());
         userMobile.setText(userApp.getUserMobile());
+        if (userApp.getUserGender().equals("M")) {
+            userProfileImage.setImageResource(R.drawable.ic_profile_pic_male_2fd3e8);
+        } else if (userApp.getUserGender().equals("F")) {
+            userProfileImage.setImageResource(R.drawable.ic_profile_pic_female_3c17ab);
+        }
 //        SvgLoader.pluck()
 //                .with(getActivity())
 //                .setPlaceHolder(R.mipmap.ic_launcher, R.mipmap.ic_launcher)

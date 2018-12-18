@@ -202,8 +202,7 @@
                             android:layout_marginEnd="@dimen/size_16_dp"
                             android:layout_marginRight="@dimen/size_16_dp"
                             android:layout_marginBottom="@dimen/default_height_20"
-                            android:contentDescription="@string/user_profile_picture"
-                            app:srcCompat="@drawable/ic_profile_pic_male_2fd3e8" />
+                            android:contentDescription="@string/user_profile_picture" />
 
 
                         <RelativeLayout

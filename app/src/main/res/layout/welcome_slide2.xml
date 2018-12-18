@@ -66,6 +66,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/default_space_32"
             android:text="@string/self_ordering_is_here"
+            android:textAlignment="center"
             android:textColor="@color/primary_dark_app"
             android:textSize="18sp"
             android:textStyle="bold" />

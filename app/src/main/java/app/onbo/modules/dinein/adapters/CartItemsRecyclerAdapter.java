@@ -148,8 +148,8 @@ public class CartItemsRecyclerAdapter extends RecyclerView.Adapter<CartItemsRecy
             menuVOptionIterator = menuVOptions.listIterator();
             while (menuVOptionIterator.hasNext()) {
                 MenuVOption option = menuVOptionIterator.next();
-                sb.append(" ");
                 sb.append(option.getOptionName());
+                sb.append(" ");
             }
             if (menuAddOns != null) {
                 menuAddOnIterator = menuAddOns.listIterator();
