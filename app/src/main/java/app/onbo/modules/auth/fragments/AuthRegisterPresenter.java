@@ -2,20 +2,22 @@ package app.onbo.modules.auth.fragments;
 
 import android.util.Log;
 
+import com.onesignal.OneSignal;
+
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import retrofit2.Response;
 import app.onbo.api.APIService;
 import app.onbo.api.models.request.User;
 import app.onbo.base.BasePresenter;
 import app.onbo.modules.auth.AuthPresenterContract;
 import app.onbo.modules.auth.AuthViewContract;
 import app.onbo.utils.PreferenceUtils;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import retrofit2.Response;
 
 /**
  * Created by Tridev on 12-10-2017.
@@ -54,6 +56,7 @@ public class AuthRegisterPresenter extends BasePresenter implements AuthPresente
                 } else if (response.code() == 200) {
                     Log.d("RegisterPresenter", response.body().toString());
                     preferenceUtils.saveAuthTransaction(response.headers().get("Authorization"), user.getMobile(), true);
+                    OneSignal.sendTag("USER_MOBILE", String.valueOf(user.getMobile()));
                     authRegisterView.showRegistrationSuccess();
                 } else if (response.code() == 211) {
                     authRegisterView.emailInUseError();

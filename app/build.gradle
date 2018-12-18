@@ -5,6 +5,7 @@ apply plugin: 'io.fabric'
 ext.versionMajor = 0
 ext.versionMinor = 1
 ext.versionPatch = 0
+ext.versionBuild = 2
 ext.versionClassifier = null
 ext.isSnapshot = false
 ext.minimumSdkVersion =21
@@ -129,7 +130,7 @@ dependencies {
 
 
 private Integer generateVersionCode() {
-    return ext.minimumSdkVersion * 10000000 + ext.versionMajor * 10000 + ext.versionMinor * 100 + ext.versionPatch
+    return ext.minimumSdkVersion * 10000000 + ext.versionMajor * 10000 + ext.versionMinor * 100 + ext.versionPatch + ext.versionBuild
 }
 
 private String generateVersionName() {
@@ -141,7 +142,7 @@ private String generateVersionName() {
     if (ext.versionClassifier != null) {
         versionName += "-" + ext.versionClassifier
     }
-    return versionName
+    return versionName;
 }
 
 apply plugin: 'com.google.gms.google-services'

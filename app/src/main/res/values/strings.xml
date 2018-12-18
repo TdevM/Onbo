@@ -10,6 +10,8 @@
     <string name="rupee_symbol">₹ %1$s</string>
 
     <string name="rupee_symbol_to_pay">To pay   ₹ %1$s</string>
+    <string name="customization_sheet_cb_format">%1$s  ₹ %2$s</string>
+    <string name="customization_sheet_rg_format">%1$s  ₹ %2$s</string>
     <string name="show_number_pound_symbol"># %1$s</string>
     <string name="title_menu">Menu</string>
     <string name="title_cart">Cart</string>
