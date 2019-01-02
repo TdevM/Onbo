@@ -31,7 +31,7 @@ import app.onbo.modules.auth.AuthenticationActivity;
 import app.onbo.utils.SMSListener;
 
 //TODO 30 Seconds Resend
-public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract.AuthOTPView, SMSListener.SMSReceived {
+public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract.AuthOTPView {
 
     public static final String TAG = VerifyPhoneOTPFragment.class.getSimpleName();
     private static final String PHONE = "PHONE";
@@ -54,8 +54,8 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     @BindView(R.id.progressBar_otp_view)
     ProgressBar progressBarOTP;
 
-    SMSListener smsListener;
-    IntentFilter intentFilter;
+//    SMSListener smsListener;
+//    IntentFilter intentFilter;
 
     @OnClick(R.id.btn_otp_resend_otp)
     public void onButtonClick() {
@@ -91,16 +91,16 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     @Override
     public void onStart() {
         super.onStart();
-        SMSListener.setOnSMSReceivedListener(this);
+       // SMSListener.setOnSMSReceivedListener(this);
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        smsListener = new SMSListener();
-        intentFilter = new IntentFilter();
-        intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
+//        smsListener = new SMSListener();
+//        intentFilter = new IntentFilter();
+//        intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
         View view = inflater.inflate(R.layout.fragment_verify_phone_otp, container, false);
         unbinder = ButterKnife.bind(this, view);
         resolveDaggerDependencies();
@@ -136,14 +136,14 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
     public void onResume() {
         super.onResume();
         verifyPhoneOTPPresenter.attachView(this);
-        getActivity().registerReceiver(smsListener, intentFilter);
+       // getActivity().registerReceiver(smsListener, intentFilter);
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().unregisterReceiver(smsListener);
+       // getActivity().unregisterReceiver(smsListener);
         verifyPhoneOTPPresenter.detachView();
     }
 
@@ -195,9 +195,9 @@ public class VerifyPhoneOTPFragment extends Fragment implements AuthViewContract
         super.onDestroy();
     }
 
-    @Override
-    public void onSMSReceived(String sender, String body) {
-        //Toast.makeText(authenticationActivity, sender+" "+body, Toast.LENGTH_SHORT).show();
-        verifyPhoneOTPPresenter.parseSMS(sender, body, phoneNumber);
-    }
+//    @Override
+//    public void onSMSReceived(String sender, String body) {
+//        //Toast.makeText(authenticationActivity, sender+" "+body, Toast.LENGTH_SHORT).show();
+//        verifyPhoneOTPPresenter.parseSMS(sender, body, phoneNumber);
+//    }
 }

@@ -1,11 +1,8 @@
 package app.onbo.modules.auth.fragments;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -23,22 +20,16 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import permissions.dispatcher.NeedsPermission;
-import permissions.dispatcher.OnNeverAskAgain;
-import permissions.dispatcher.OnPermissionDenied;
-import permissions.dispatcher.OnShowRationale;
-import permissions.dispatcher.PermissionRequest;
-import permissions.dispatcher.RuntimePermissions;
 import app.onbo.OnboApplication;
 import app.onbo.R;
 import app.onbo.modules.auth.AuthViewContract;
 import app.onbo.modules.auth.AuthenticationActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
-@RuntimePermissions
+//@RuntimePermissions
 public class AuthInitFragment extends Fragment implements AuthViewContract.AuthInitView {
     public static final String TAG = AuthInitFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "param1";
@@ -77,11 +68,12 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
         } else if (!validatePhone(phoneNumberInit.getText().toString())) {
             phoneNumberInit.setError("Enter a valid 10 digit number");
         } else {
-            AuthInitFragmentPermissionsDispatcher.sendOTPDetectSMSWithPermissionCheck(this);
+            //AuthInitFragmentPermissionsDispatcher.sendOTPDetectSMSWithPermissionCheck(this);
+            sendOTPDetectSMS();
         }
     }
 
-    @NeedsPermission({Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS})
+    //@NeedsPermission({Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS})
     public void sendOTPDetectSMS() {
         authInitPresenter.sendOTP(Long.parseLong(phoneNumberInit.getText().toString()));
     }
@@ -166,11 +158,11 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        AuthInitFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
-    }
+//    @Override
+////    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+////        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+////        AuthInitFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+////    }
 
     @Override
     public void onAttach(Context context) {
@@ -208,25 +200,25 @@ public class AuthInitFragment extends Fragment implements AuthViewContract.AuthI
     }
 
 
-    @OnShowRationale({Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS})
-    void showRationaleForSMS(PermissionRequest request) {
-        new AlertDialog.Builder(getContext())
-                .setMessage("SEND SMS Permission Needed")
-                .setPositiveButton("OK", (dialog, button) -> request.proceed())
-                .setNegativeButton("CANCEL", (dialog, button) -> request.cancel())
-                .show();
-    }
+//    @OnShowRationale({Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS})
+//    void showRationaleForSMS(PermissionRequest request) {
+//        new AlertDialog.Builder(getContext())
+//                .setMessage("SEND SMS Permission Needed")
+//                .setPositiveButton("OK", (dialog, button) -> request.proceed())
+//                .setNegativeButton("CANCEL", (dialog, button) -> request.cancel())
+//                .show();
+//    }
 
     // Annotate a method which is invoked if the user doesn't grant the permissions
-    @OnPermissionDenied({Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS})
-    void showDeniedForPhoneCall() {
-        Toast.makeText(getActivity(), "Denied", Toast.LENGTH_SHORT).show();
-    }
-
-    // Annotates a method which is invoked if the user
-    // chose to have the device "never ask again" about a permission
-    @OnNeverAskAgain({Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS})
-    void showNeverAskForPhoneCall() {
-        Toast.makeText(getActivity(), "Never ask", Toast.LENGTH_SHORT).show();
-    }
+//    @OnPermissionDenied({Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS})
+//    void showDeniedForPhoneCall() {
+//        Toast.makeText(getActivity(), "Denied", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    // Annotates a method which is invoked if the user
+//    // chose to have the device "never ask again" about a permission
+//    @OnNeverAskAgain({Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS})
+//    void showNeverAskForPhoneCall() {
+//        Toast.makeText(getActivity(), "Never ask", Toast.LENGTH_SHORT).show();
+//    }
 }
