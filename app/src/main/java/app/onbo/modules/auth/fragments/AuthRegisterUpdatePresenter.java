@@ -66,7 +66,7 @@ public class AuthRegisterUpdatePresenter extends BasePresenter implements AuthPr
                     Log.d("RegisterPresenter", response.body().toString());
                 } else if (response.code() == 200) {
                     Log.d("RegisterPresenter", response.body().toString());
-                    preferenceUtils.saveAuthTransaction(response.headers().get("Authorization"), user.getMobile(), true);
+                    preferenceUtils.saveAuthTransaction(response.headers().get("Authorization"),"", user.getMobile(), true);
                     OneSignal.sendTag("USER_MOBILE", String.valueOf(user.getMobile()));
                     authRegisterView.showRegistrationSuccess();
                 } else if (response.code() == 211) {

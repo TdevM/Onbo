@@ -16,6 +16,9 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import app.onbo.api.APIService;
+import app.onbo.utils.AuthInterceptor;
+import app.onbo.utils.PreferenceUtils;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
@@ -25,7 +28,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@Module(includes = AppContextModule.class)
+@Module(includes = {AppContextModule.class})
 public class NetworkModule {
 
     public static final String SHARED_PREFS = "MyPrefs";
@@ -38,12 +41,12 @@ public class NetworkModule {
     @Provides
     @Singleton
     SharedPreferences providesSharedPreferences(Application application) {
-        return application.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
+        return application.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
     }
 
     @Singleton
     @Provides
-    public Gson providesGson(){
+    public Gson providesGson() {
         GsonBuilder builder = new GsonBuilder();
         return builder.create();
     }
@@ -57,7 +60,7 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    HttpLoggingInterceptor providesLoggingInterceptor(){
+    HttpLoggingInterceptor providesLoggingInterceptor() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return httpLoggingInterceptor;
@@ -76,21 +79,29 @@ public class NetworkModule {
 
     @Singleton
     @Provides
+    AuthInterceptor providesAuthInterceptor(Application application) {
+        return new AuthInterceptor(application);
+    }
+
+
+    @Singleton
+    @Provides
     @Named("ok-2")
-    OkHttpClient providesOkHttpClient2(Cache cache, HttpLoggingInterceptor httpLoggingInterceptor) {
+    OkHttpClient providesOkHttpClient2(Cache cache, HttpLoggingInterceptor httpLoggingInterceptor, AuthInterceptor authInterceptor) {
         return new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(authInterceptor)
                 .cache(cache)
                 .build();
     }
 
     @Singleton
     @Provides
-    public Cache providesOkHTTPCache(Application application){
+    public Cache providesOkHTTPCache(Application application) {
         int cacheSize = 10 * 1024 * 1024;
-        return new Cache(application.getCacheDir(),cacheSize);
+        return new Cache(application.getCacheDir(), cacheSize);
     }
 
     @Singleton

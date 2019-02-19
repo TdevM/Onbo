@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import app.onbo.api.models.response.v2.LoginResponse;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -44,8 +45,8 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
     }
 
     public void loginUser(final Long phone, final String password) {
-        Observable<Response<Object>> observable = apiService.loginUser(new User(password, phone));
-        subscribe(observable, new Observer<Response<Object>>() {
+        Observable<Response<LoginResponse>> observable = apiService.loginUser(new User(password, phone));
+        subscribe(observable, new Observer<Response<LoginResponse>>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
                 authLoginView.showProgressUI();
@@ -54,14 +55,14 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
             }
 
             @Override
-            public void onNext(@NonNull Response<Object> response) {
+            public void onNext(@NonNull Response<LoginResponse> response) {
                 authLoginView.hideProgressUI();
                 if (response.code() == 401) {
                     Log.d(TAG, String.valueOf(response.code()));
                     authLoginView.showLoginError();
                 } else if (response.code() == 200) {
                     Log.d(TAG, response.body().toString());
-                    preferenceUtils.saveAuthTransaction(response.headers().get("Authorization"), phone, true);
+                    preferenceUtils.saveAuthTransaction(response.body().getToken(),response.body().getRefreshToken(),phone,true);
                     OneSignal.sendTag("USER_MOBILE", String.valueOf(phone));
                     authLoginView.loginSuccess();
 

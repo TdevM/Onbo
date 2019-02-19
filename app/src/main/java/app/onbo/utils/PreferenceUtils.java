@@ -10,6 +10,7 @@ public class PreferenceUtils {
     private static final String AUTH_LOGIN_STATE = "AUTH_LOGIN_STATE ";
     private static final String AUTH_LOGIN_TOKEN = "AUTH_LOGIN_TOKEN";
     private static final String AUTH_LOGIN_PHONE = "AUTH_LOGIN_PHONE";
+    private static final String AUTH_REFRESH_TOKEN = "AUTH_REFRESH_TOKEN";
     private static final String INTRO_SCREEN_DISPLAYED = "INTRO_SCREEN_DISPLAYED";
 
     private static final String FETCHED_RESTAURANT_UUID = "FETCHED_RESTAURANT_UUID";
@@ -24,10 +25,11 @@ public class PreferenceUtils {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void saveAuthTransaction(String token, Long phone, Boolean state) {
+    public void saveAuthTransaction(String token, String refreshToken, Long phone, Boolean state) {
         sharedPreferences.putDataString(AUTH_LOGIN_TOKEN, token);
         sharedPreferences.putDataBool(AUTH_LOGIN_STATE, state);
         sharedPreferences.putDataLong(AUTH_LOGIN_PHONE, phone);
+        sharedPreferences.putDataString(AUTH_REFRESH_TOKEN, refreshToken);
     }
 
     public void saveNonDineQRTransaction(String restaurantID, String uuid, String restaurantMode) {
@@ -69,6 +71,10 @@ public class PreferenceUtils {
 
     public Long getAuthLoginPhone() {
         return sharedPreferences.getDataLong(AUTH_LOGIN_PHONE);
+    }
+
+    public String getAuthRefreshToken() {
+        return sharedPreferences.getDataString(AUTH_REFRESH_TOKEN);
     }
 
     public Boolean getIntroScreenDisplayed() {

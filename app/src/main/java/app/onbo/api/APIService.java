@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import app.onbo.api.models.RemoteConfig;
+import app.onbo.api.models.request.RefreshToken;
+import app.onbo.api.models.response.v2.LoginResponse;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -55,7 +59,7 @@ public interface APIService {
     Observable<Response<Object>> verifyMobileOTP(@Body OneTimePassword oneTimePassword);
 
     @POST("m/user/login")
-    Observable<Response<Object>> loginUser(@Body User user);
+    Observable<Response<LoginResponse>> loginUser(@Body User user);
 
     @GET("m/user/me")
     Observable<Response<UserApp>> fetchUser(@Header("Authorization") String authToken);
@@ -69,6 +73,9 @@ public interface APIService {
     @GET("m/user/pos")
     Observable<Response<UserApp>> fetchPOSUser(@QueryMap Map<String, String> options);
 
+
+    @POST("m/user/token")
+    Call<Object> exchangeAuthToken(@Body RefreshToken token);
 
     //Restaurant Data
     @GET("m/restaurant")
@@ -95,7 +102,6 @@ public interface APIService {
 
     @GET("m/app_version")
     Observable<Response<RemoteConfig>> getRemoteConfig();
-
 
 
     //Reviews
