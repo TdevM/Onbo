@@ -53,7 +53,7 @@ public class AccountsFragmentPresenter extends BasePresenter implements RootActi
     public void fetchUser() {
 
         if (isConnectedToInternet()) {
-            Observable<Response<UserApp>> appObservable = apiService.fetchUser("Bearer " + preferenceUtils.getAuthLoginToken());
+            Observable<Response<UserApp>> appObservable = apiService.fetchUser();
             subscribe(appObservable, new Observer<Response<UserApp>>() {
                 @Override
                 public void onSubscribe(Disposable d) {
@@ -90,7 +90,7 @@ public class AccountsFragmentPresenter extends BasePresenter implements RootActi
 
     @Override
     public void fetchUserEdit() {
-        Observable<Response<UserApp>> appObservable = apiService.fetchUser("Bearer " + preferenceUtils.getAuthLoginToken());
+        Observable<Response<UserApp>> appObservable = apiService.fetchUser();
         subscribe(appObservable, new Observer<Response<UserApp>>() {
             @Override
             public void onSubscribe(Disposable d) {

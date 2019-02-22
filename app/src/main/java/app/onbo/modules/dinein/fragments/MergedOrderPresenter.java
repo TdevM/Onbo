@@ -52,7 +52,7 @@ public class MergedOrderPresenter extends BasePresenter implements DineInPresent
         if (isConnectedToInternet()) {
             Map<String, String> map = new HashMap<>();
             map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
-            Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+            Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(map);
             subscribe(observable, new Observer<Response<TOrder>>() {
                 @Override
                 public void onSubscribe(Disposable d) {
@@ -93,7 +93,7 @@ public class MergedOrderPresenter extends BasePresenter implements DineInPresent
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("order_id", tOrder.getOrderId());
-        Observable<Response<MergedOrder>> observable = apiService.fetchMergedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<MergedOrder>> observable = apiService.fetchMergedOrder(map);
         subscribe(observable, new Observer<Response<MergedOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

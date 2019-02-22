@@ -19,6 +19,7 @@ import javax.inject.Singleton;
 import app.onbo.api.APIService;
 import app.onbo.utils.AuthInterceptor;
 import app.onbo.utils.PreferenceUtils;
+import app.onbo.utils.TokenRefresher;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
@@ -83,16 +84,25 @@ public class NetworkModule {
         return new AuthInterceptor(application);
     }
 
+    @Singleton
+    @Provides
+    TokenRefresher providesTokenRefresher(Application application) {
+        return new TokenRefresher(application);
+    }
+
+
+
 
     @Singleton
     @Provides
     @Named("ok-2")
-    OkHttpClient providesOkHttpClient2(Cache cache, HttpLoggingInterceptor httpLoggingInterceptor, AuthInterceptor authInterceptor) {
+    OkHttpClient providesOkHttpClient2(Cache cache, HttpLoggingInterceptor httpLoggingInterceptor, AuthInterceptor authInterceptor, TokenRefresher tokenRefresher) {
         return new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .addInterceptor(httpLoggingInterceptor)
                 .addInterceptor(authInterceptor)
+                .authenticator(tokenRefresher)
                 .cache(cache)
                 .build();
     }

@@ -64,6 +64,7 @@ public class AuthInitPresenter extends BasePresenter implements AuthPresenterCon
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG,"Error");
+                e.printStackTrace();
                 authInitView.hideProgressUI();
                 authInitView.showError();
             }

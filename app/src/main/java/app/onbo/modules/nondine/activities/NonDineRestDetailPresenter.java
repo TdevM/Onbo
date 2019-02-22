@@ -45,7 +45,7 @@ public class NonDineRestDetailPresenter extends BasePresenter implements NonDine
     public void fetchRestaurantDetails(){
         Map<String,String> map = new HashMap<>();
         map.put("restaurant_uuid", preferenceUtils.getScannedRestaurantUuid());
-        Observable<Response<Restaurant>> restaurant = apiService.fetchRestaurantDetails(map, "Bearer "+ preferenceUtils.getAuthLoginToken());
+        Observable<Response<Restaurant>> restaurant = apiService.fetchRestaurantDetails(map);
         subscribe(restaurant, new Observer<Response<Restaurant>>() {
             @Override
             public void onSubscribe(Disposable d) {

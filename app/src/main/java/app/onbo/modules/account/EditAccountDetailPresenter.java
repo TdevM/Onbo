@@ -46,7 +46,7 @@ public class EditAccountDetailPresenter extends BasePresenter implements Account
 
     @Override
     public void updateUser(UserApp userApp) {
-        Observable<Response<Object>> observable = apiService.updateUser("Bearer " + preferenceUtils.getAuthLoginToken(), userApp);
+        Observable<Response<Object>> observable = apiService.updateUser(userApp);
         subscribe(observable, new Observer<Response<Object>>() {
             @Override
             public void onSubscribe(Disposable disposable) {

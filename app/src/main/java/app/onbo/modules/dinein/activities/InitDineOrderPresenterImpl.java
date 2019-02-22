@@ -150,7 +150,7 @@ public class InitDineOrderPresenterImpl extends BasePresenter implements DineInP
         Map<String, String> map = new HashMap<>();
         //map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
 
-        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(map);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

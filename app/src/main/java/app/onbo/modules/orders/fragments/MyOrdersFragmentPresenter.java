@@ -39,7 +39,7 @@ public class MyOrdersFragmentPresenter extends BasePresenter implements Restaura
 
     @Override
     public void fetchMyOrders(){
-        Observable<Response<List<FOrder>>> observable = service.fetchMyOrders("Bearer "+ preferenceUtils.getAuthLoginToken());
+        Observable<Response<List<FOrder>>> observable = service.fetchMyOrders();
         subscribe(observable, new Observer<Response<List<FOrder>>>() {
             @Override
             public void onSubscribe(Disposable d) {

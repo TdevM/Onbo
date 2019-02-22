@@ -45,7 +45,7 @@ public class RestaurantDetailPresenter extends BasePresenter implements RootActi
     public void fetchMenuItems(Restaurant restaurant) {
         Map<String, String> map1 = new HashMap<>();
         map1.put("restaurant_id", restaurant.getRestaurant_id());
-        Observable<Response<List<CuisineMenuItems>>> cuisineItem = apiService.fetchMenuItems("Bearer " + preferenceUtils.getAuthLoginToken(), map1);
+        Observable<Response<List<CuisineMenuItems>>> cuisineItem = apiService.fetchMenuItems(map1);
         subscribe(cuisineItem, new Observer<Response<List<CuisineMenuItems>>>() {
             @Override
             public void onSubscribe(Disposable d) {

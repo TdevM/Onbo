@@ -54,7 +54,7 @@ public class DigitalPaymentOptionsPresenter extends BasePresenter implements Non
     @Override
     public void createPaidNDOrder() {
         NonDineOrder order = new NonDineOrder(preferenceUtils.getScannedRestaurantId(),"This is a hardcoded text",cartHelper.convertCartTOJSON().toString());
-        Observable<Response<FOrder>> createNDCashOrder =  apiService.createPaidNonDineOrder("Bearer "+ preferenceUtils.getAuthLoginToken(),order);
+        Observable<Response<FOrder>> createNDCashOrder =  apiService.createPaidNonDineOrder(order);
         subscribe(createNDCashOrder, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

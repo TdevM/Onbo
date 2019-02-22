@@ -57,7 +57,7 @@ public class SplashPresenter extends BasePresenter implements IntroPresenterCont
     public void checkCurrentOrderDetails() {
         Log.d(TAG, "Checking order...");
         Map<String, String> map = new HashMap<>();
-        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder("Bearer " + utils.getAuthLoginToken(), map);
+        Observable<Response<TOrder>> observable = apiService.fetchMyRunningOrder(map);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -124,7 +124,7 @@ public class SplashPresenter extends BasePresenter implements IntroPresenterCont
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_id", utils.getScannedRestaurantId());
         map.put("t_order_id", tOrderId);
-        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer " + utils.getAuthLoginToken(), map);
+        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder(map);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

@@ -58,7 +58,7 @@ public class CashPickupPresenter extends BasePresenter implements PaymentPresent
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("t_order_id", fOrder.getT_order_id());
         map.put("order_id", fOrder.getOrder_id());
-        Observable<Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<FOrder>> observable = apiService.fetchClosedOrder(map);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

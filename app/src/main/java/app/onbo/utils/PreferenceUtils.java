@@ -32,6 +32,10 @@ public class PreferenceUtils {
         sharedPreferences.putDataString(AUTH_REFRESH_TOKEN, refreshToken);
     }
 
+    public void updateAuthToken(String authToken) {
+        sharedPreferences.putDataString(AUTH_LOGIN_TOKEN, authToken);
+    }
+
     public void saveNonDineQRTransaction(String restaurantID, String uuid, String restaurantMode) {
         clearQRTransaction();
         sharedPreferences.putDataString(FETCHED_RESTAURANT_UUID, uuid);
@@ -112,5 +116,7 @@ public class PreferenceUtils {
     public String getFetchedRestaurantTableId() {
         return sharedPreferences.getDataString(FETCHED_RESTAURANT_TABLE_ID);
     }
+
+
 }
 

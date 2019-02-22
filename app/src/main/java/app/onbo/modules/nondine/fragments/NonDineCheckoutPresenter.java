@@ -44,7 +44,7 @@ public class NonDineCheckoutPresenter extends BasePresenter implements NonDinePr
     @Override
     public void checkoutOrderSummary() {
         NonDineOrder order = new NonDineOrder(preferenceUtils.getScannedRestaurantId(),cart.convertCartTOJSON().toString());
-        Observable<Response<Checkout>> checkout = apiService.checkoutOrder("Bearer "+ preferenceUtils.getAuthLoginToken(),order);
+        Observable<Response<Checkout>> checkout = apiService.checkoutOrder(order);
         subscribe(checkout, new Observer<Response<Checkout>>() {
             @Override
             public void onSubscribe(Disposable d) {

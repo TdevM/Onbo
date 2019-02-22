@@ -48,7 +48,7 @@ public class RestaurantListFragmentPresenter extends BasePresenter implements Ro
         if (isConnectedToInternet()) {
             Map<String, String> map = new HashMap<>();
             map.put("city_id", cityId);
-            Observable<Response<List<Restaurant>>> observable = service.fetchAllRestaurants(map, "Bearer " + preferenceUtils.getAuthLoginToken());
+            Observable<Response<List<Restaurant>>> observable = service.fetchAllRestaurants(map);
             subscribe(observable, new Observer<Response<List<Restaurant>>>() {
                 @Override
                 public void onSubscribe(Disposable d) {

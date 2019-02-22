@@ -15,9 +15,11 @@ import app.onbo.api.APIService;
 import app.onbo.api.models.DecodedToken;
 import app.onbo.api.models.request.RefreshToken;
 import app.onbo.modules.auth.AuthenticationActivity;
+import okhttp3.Authenticator;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.Route;
 
 public class AuthInterceptor implements Interceptor {
 
@@ -38,33 +40,24 @@ public class AuthInterceptor implements Interceptor {
 
     public static final String TAG = AuthInterceptor.class.getSimpleName();
 
+
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request request = chain.request();
-        okhttp3.Response response = chain.proceed(request);
         ((OnboApplication) application).getApiComponent().inject(this);
+        Request request = chain.request();
+        Log.d(TAG, "Auth Interceptor says hellO!");
+
         if (preferenceUtils.getAuthLoginState()) {
-            DecodedToken token = new DecodedToken(preferenceUtils.getAuthLoginToken());
-            Log.d(TAG, "TOKEN Parsed" + token.getDecoded().getUser_id());
-            Log.d(TAG, "Auth Interceptor says hellO!");
-            if (response.code() == 401) {
-                // Exchange Token failed
-                // User should be kicked out of the app
-                RefreshToken refreshToken = new RefreshToken(token.getUser_id(), preferenceUtils.getAuthRefreshToken());
+            request = request.newBuilder()
+                    .addHeader("Authorization", "Bearer " + preferenceUtils.getAuthLoginToken())
+                    .build();
 
-
-
-            } else if (response.code() == 402) {
-                // Obtain a new Token, Update sharedPrefs and resume the APP.
-
-                Toast.makeText(application.getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(application.getApplicationContext(), AuthenticationActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                application.startActivity(intent);
-            }
         }
 
+        return chain.proceed(request);
 
-        return response;
+
     }
+
+
 }

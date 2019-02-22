@@ -62,42 +62,42 @@ public interface APIService {
     Observable<Response<LoginResponse>> loginUser(@Body User user);
 
     @GET("m/user/me")
-    Observable<Response<UserApp>> fetchUser(@Header("Authorization") String authToken);
+    Observable<Response<UserApp>> fetchUser();
 
     @PATCH("m/user/password")
-    Observable<Response<Object>> changeUserPassword(@Header("Authorization") String authToken, @Body Password password);
+    Observable<Response<Object>> changeUserPassword(@Body Password password);
 
     @PATCH("m/user")
-    Observable<Response<Object>> updateUser(@Header("Authorization") String authToken, @Body UserApp user);
+    Observable<Response<Object>> updateUser(@Body UserApp user);
 
     @GET("m/user/pos")
     Observable<Response<UserApp>> fetchPOSUser(@QueryMap Map<String, String> options);
 
 
     @POST("m/user/token")
-    Call<Object> exchangeAuthToken(@Body RefreshToken token);
+    Call<LoginResponse> exchangeAuthToken(@Body RefreshToken token);
 
     //Restaurant Data
     @GET("m/restaurant")
-    Observable<Response<Restaurant>> fetchRestaurantDetails(@QueryMap Map<String, String> query, @Header("Authorization") String authToken);
+    Observable<Response<Restaurant>> fetchRestaurantDetails(@QueryMap Map<String, String> query);
 
     @GET("m/restaurant")
-    Observable<Response<List<Restaurant>>> fetchAllRestaurants(@QueryMap Map<String, String> query, @Header("Authorization") String authToken);
+    Observable<Response<List<Restaurant>>> fetchAllRestaurants(@QueryMap Map<String, String> query);
 
     @GET("m/restaurant/table_status")
-    Observable<Response<RestaurantTable>> verifyTableVacancy(@Header("Authorization") String authToken, @QueryMap Map<String, String> query);
+    Observable<Response<RestaurantTable>> verifyTableVacancy(@QueryMap Map<String, String> query);
 
     @GET("m/cuisines")
-    Observable<ArrayList<Cuisine>> fetchCuisines(@Header("Authorization") String authToken, @QueryMap Map<String, String> options);
+    Observable<ArrayList<Cuisine>> fetchCuisines(@QueryMap Map<String, String> options);
 
     @GET("m/menu_items")
-    Observable<ArrayList<MenuItem>> fetchAllMenuItems(@Header("Authorization") String authToken, @QueryMap Map<String, String> options);
+    Observable<ArrayList<MenuItem>> fetchAllMenuItems(@QueryMap Map<String, String> options);
 
     @GET("m/menu_items")
-    Observable<ArrayList<MenuItem>> fetchMenuItemsByCuisine(@Header("Authorization") String authToken, @QueryMap Map<String, String> options);
+    Observable<ArrayList<MenuItem>> fetchMenuItemsByCuisine(@QueryMap Map<String, String> options);
 
     @GET("m/menu")
-    Observable<Response<List<CuisineMenuItems>>> fetchMenuItems(@Header("Authorization") String authToken, @QueryMap Map<String, String> options);
+    Observable<Response<List<CuisineMenuItems>>> fetchMenuItems(@QueryMap Map<String, String> options);
 
 
     @GET("m/app_version")
@@ -106,58 +106,58 @@ public interface APIService {
 
     //Reviews
     @GET("m/menu_item/reviews")
-    Observable<Response<ArrayList<DishReviews>>> fetchDishReviewsById(@Header("Authorization") String authToken, @QueryMap Map<String, String> options);
+    Observable<Response<ArrayList<DishReviews>>> fetchDishReviewsById(@QueryMap Map<String, String> options);
 
     @POST("m/menu_item/reviews")
-    Observable<Response<Object>> addADishReview(@Header("Authorization") String authToken, @Body AddDishReview dishReview);
+    Observable<Response<Object>> addADishReview(@Body AddDishReview dishReview);
 
     @GET("m/restaurant/reviews")
-    Observable<Response<ArrayList<RestaurantReviews>>> fetchRestaurantReviewsById(@Header("Authorization") String authToken, @QueryMap Map<String, String> options);
+    Observable<Response<ArrayList<RestaurantReviews>>> fetchRestaurantReviewsById(@QueryMap Map<String, String> options);
 
     @POST("m/restaurant/reviews")
-    Observable<Response<Object>> addARestaurantReview(@Header("Authorization") String authToken, @Body AddRestaurantReview restaurantReview);
+    Observable<Response<Object>> addARestaurantReview(@Body AddRestaurantReview restaurantReview);
 
 
     //Running Orders
     @POST("m/t/orders")
-    Observable<Response<TOrder>> createNewTempOrder(@Header("Authorization") String token, @Body RestaurantOrder restaurantOrder);
+    Observable<Response<TOrder>> createNewTempOrder(@Body RestaurantOrder restaurantOrder);
 
     @POST("m/t/orders/kot")
-    Observable<Response<TOrder>> addItemsToTempOrder(@Header("Authorization") String token, @Body RestaurantOrder restaurantOrder);
+    Observable<Response<TOrder>> addItemsToTempOrder(@Body RestaurantOrder restaurantOrder);
 
     @GET("m/t/orders")
-    Observable<Response<TOrder>> fetchMyRunningOrder(@Header("Authorization") String token, @QueryMap Map<String, String> options);
+    Observable<Response<TOrder>> fetchMyRunningOrder(@QueryMap Map<String, String> options);
 
     @GET("m/t/orders/merge")
-    Observable<Response<MergedOrder>> fetchMergedOrder(@Header("Authorization") String token, @QueryMap Map<String, String> options);
+    Observable<Response<MergedOrder>> fetchMergedOrder(@QueryMap Map<String, String> options);
 
     @POST("m/t/orders/close")
-    Observable<Response<FOrder>> closeRunningOrder(@Header("Authorization") String token, @QueryMap Map<String, String> options);
+    Observable<Response<FOrder>> closeRunningOrder(@QueryMap Map<String, String> options);
 
     @POST("m/t/orders/pay")
-    Observable<Response<FOrder>> payOrder(@Header("Authorization") String token, @Body PaymentCapture capture);
+    Observable<Response<FOrder>> payOrder( @Body PaymentCapture capture);
 
     @GET("m/f/orders")
-    Observable<Response<FOrder>> fetchClosedOrder(@Header("Authorization") String token, @QueryMap Map<String, String> options);
+    Observable<Response<FOrder>> fetchClosedOrder(@QueryMap Map<String, String> options);
 
     //My Orders
     @GET("m/orders")
-    Observable<Response<List<FOrder>>> fetchMyOrders(@Header("Authorization") String token);
+    Observable<Response<List<FOrder>>> fetchMyOrders();
 
     //Type2 Orders (Non Dine)
     @POST("m/f/orders/checkout")
-    Observable<Response<Checkout>> checkoutOrder(@Header("Authorization") String token, @Body NonDineOrder nonDineOrder);
+    Observable<Response<Checkout>> checkoutOrder(@Body NonDineOrder nonDineOrder);
 
     @POST("m/f/orders/unpaid")
-    Observable<Response<FOrder>> createUnpaidNonDineOrder(@Header("Authorization") String token, @Body NonDineOrder nonDineOrder);
+    Observable<Response<FOrder>> createUnpaidNonDineOrder(@Body NonDineOrder nonDineOrder);
 
     @POST("m/f/orders")
-    Observable<Response<FOrder>> createPaidNonDineOrder(@Header("Authorization") String token, @Body NonDineOrder nonDineOrder);
+    Observable<Response<FOrder>> createPaidNonDineOrder(@Body NonDineOrder nonDineOrder);
 
     @POST("m/f/payment")
-    Observable<Response<FOrder>> captureNonDineOrderPayment(@Header("Authorization") String token, @Body PaymentCapture paymentCapture);
+    Observable<Response<FOrder>> captureNonDineOrderPayment(@Body PaymentCapture paymentCapture);
 
     @GET("m/f/orders/unpaid")
-    Observable<Response<List<FOrder>>> fetchUnpaidOrders(@Header("Authorization") String token);
+    Observable<Response<List<FOrder>>> fetchUnpaidOrders();
 
 }

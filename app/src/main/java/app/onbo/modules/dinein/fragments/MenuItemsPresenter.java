@@ -51,7 +51,7 @@ public class MenuItemsPresenter extends BasePresenter
 
     @Override
     public void fetchMenuItemsByCuisine(Map<String, String> map) {
-        Observable<ArrayList<MenuItem>> dishesOfCuisineObservable = apiService.fetchMenuItemsByCuisine("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        Observable<ArrayList<MenuItem>> dishesOfCuisineObservable = apiService.fetchMenuItemsByCuisine(map);
         subscribe(dishesOfCuisineObservable, new Observer<ArrayList<MenuItem>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -77,7 +77,7 @@ public class MenuItemsPresenter extends BasePresenter
 
     @Override
     public void fetchMenuItems(Map<String, String> map) {
-        Observable<Response<List<CuisineMenuItems>>> cuisineItem = apiService.fetchMenuItems("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<List<CuisineMenuItems>>> cuisineItem = apiService.fetchMenuItems(map);
         subscribe(cuisineItem, new Observer<Response<List<CuisineMenuItems>>>() {
             @Override
             public void onSubscribe(Disposable d) {

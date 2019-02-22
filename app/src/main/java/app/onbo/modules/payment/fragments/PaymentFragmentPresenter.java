@@ -44,7 +44,7 @@ public class PaymentFragmentPresenter extends BasePresenter implements PaymentPr
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("t_order_id", tOrderId);
         map.put("order_id", fOrderId);
-        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder(map);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -87,7 +87,7 @@ public class PaymentFragmentPresenter extends BasePresenter implements PaymentPr
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("t_order_id", tOrderId);
         map.put("order_id", fOrderId);
-        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder(map);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

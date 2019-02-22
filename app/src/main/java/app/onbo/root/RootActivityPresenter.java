@@ -48,7 +48,7 @@ public class RootActivityPresenter extends BasePresenter implements RootActivity
     }
 
     public void fetchUnpaidOrders() {
-        Observable<Response<List<FOrder>>> fetchUnpaidOrders = apiService.fetchUnpaidOrders("Bearer " + preferenceUtils.getAuthLoginToken());
+        Observable<Response<List<FOrder>>> fetchUnpaidOrders = apiService.fetchUnpaidOrders();
         subscribe(fetchUnpaidOrders, new Observer<Response<List<FOrder>>>() {
             @Override
             public void onSubscribe(Disposable d) {

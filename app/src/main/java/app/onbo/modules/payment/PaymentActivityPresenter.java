@@ -45,7 +45,7 @@ public class PaymentActivityPresenter extends BasePresenter implements PaymentPr
     @Override
     public void captureOrderPayment(String paymentId, String orderId) {
         PaymentCapture capture = new PaymentCapture(orderId, paymentId, preferenceUtils.getScannedRestaurantId());
-        Observable<Response<FOrder>> observable = apiService.payOrder("Bearer " + preferenceUtils.getAuthLoginToken(), capture);
+        Observable<Response<FOrder>> observable = apiService.payOrder(capture);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -84,7 +84,7 @@ public class PaymentActivityPresenter extends BasePresenter implements PaymentPr
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("order_id", tOrder);
-        Observable<Response<MergedOrder>> observable = apiService.fetchMergedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        Observable<Response<MergedOrder>> observable = apiService.fetchMergedOrder(map);
         subscribe(observable, new Observer<Response<MergedOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -118,7 +118,7 @@ public class PaymentActivityPresenter extends BasePresenter implements PaymentPr
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_id", preferenceUtils.getScannedRestaurantId());
         map.put("t_order_id", tOrderId);
-        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder("Bearer " + preferenceUtils.getAuthLoginToken(), map);
+        Observable<retrofit2.Response<FOrder>> observable = apiService.fetchClosedOrder(map);
         subscribe(observable, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

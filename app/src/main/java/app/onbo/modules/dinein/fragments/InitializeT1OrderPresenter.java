@@ -64,7 +64,7 @@ public class InitializeT1OrderPresenter extends BasePresenter implements DineInP
     @Override
     public void addItemsToOrder(String userMessage, TOrder tOrder) {
         RestaurantOrder order = new RestaurantOrder(preferenceUtils.getScannedRestaurantId(), tOrder.getOrderId(), userMessage, convertCartTOJSON().toString());
-        Observable<Response<TOrder>> observable = apiService.addItemsToTempOrder("Bearer " + preferenceUtils.getAuthLoginToken(), order);
+        Observable<Response<TOrder>> observable = apiService.addItemsToTempOrder(order);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -101,7 +101,7 @@ public class InitializeT1OrderPresenter extends BasePresenter implements DineInP
     @Override
     public void createNewOrder(int guest, String message) {
         RestaurantOrder order = new RestaurantOrder(preferenceUtils.getScannedRestaurantId(), preferenceUtils.getFetchedRestaurantTableId(), message, convertCartTOJSON().toString(), guest);
-        Observable<Response<TOrder>> observable = apiService.createNewTempOrder("Bearer " + preferenceUtils.getAuthLoginToken(), order);
+        Observable<Response<TOrder>> observable = apiService.createNewTempOrder(order);
         subscribe(observable, new Observer<Response<TOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {

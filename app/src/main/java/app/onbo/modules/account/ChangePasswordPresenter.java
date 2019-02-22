@@ -47,7 +47,7 @@ public class ChangePasswordPresenter extends BasePresenter implements AccountPre
 
     @Override
     public void changeUserPassword(Password password) {
-        Observable<Response<Object>> changePass = apiService.changeUserPassword("Bearer " + preferenceUtils.getAuthLoginToken(), password);
+        Observable<Response<Object>> changePass = apiService.changeUserPassword(password);
         subscribe(changePass, new Observer<Response<Object>>() {
             @Override
             public void onSubscribe(Disposable d) {

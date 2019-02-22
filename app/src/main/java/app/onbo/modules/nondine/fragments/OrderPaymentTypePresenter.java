@@ -52,7 +52,7 @@ public class OrderPaymentTypePresenter extends BasePresenter implements NonDineP
     @Override
     public void createCashNDOrder(String userMessage) {
         NonDineOrder order = new NonDineOrder(preferenceUtils.getScannedRestaurantId(), userMessage, cart.convertCartTOJSON().toString());
-        Observable<Response<FOrder>> createNDCashOrder = apiService.createUnpaidNonDineOrder("Bearer " + preferenceUtils.getAuthLoginToken(), order);
+        Observable<Response<FOrder>> createNDCashOrder = apiService.createUnpaidNonDineOrder(order);
         subscribe(createNDCashOrder, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -87,7 +87,7 @@ public class OrderPaymentTypePresenter extends BasePresenter implements NonDineP
     @Override
     public void createPaidNDOrder(String userMessage) {
         NonDineOrder order = new NonDineOrder(preferenceUtils.getScannedRestaurantId(), userMessage, cart.convertCartTOJSON().toString());
-        Observable<Response<FOrder>> createNDCashOrder = apiService.createPaidNonDineOrder("Bearer " + preferenceUtils.getAuthLoginToken(), order);
+        Observable<Response<FOrder>> createNDCashOrder = apiService.createPaidNonDineOrder(order);
         subscribe(createNDCashOrder, new Observer<Response<FOrder>>() {
             @Override
             public void onSubscribe(Disposable d) {
