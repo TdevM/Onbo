@@ -1,16 +1,20 @@
 package app.onbo.api.models;
 
-public class QRObjectRestaurant {
+import org.json.JSONObject;
+
+import java.util.Map;
+
+public class QRObject {
 
     String uuid;
     int entity;
-    QRDataRestaurant data;
+    Map<String,String> data;
 
 
-    public QRObjectRestaurant() {
+    public QRObject() {
     }
 
-    public QRObjectRestaurant(String uuid, int entity, QRDataRestaurant data) {
+    public QRObject(String uuid, int entity, Map<String,String> data) {
         this.uuid = uuid;
         this.entity = entity;
         this.data = data;
@@ -32,11 +36,11 @@ public class QRObjectRestaurant {
         this.entity = entity;
     }
 
-    public QRDataRestaurant getData() {
+    public Map<String, String> getData() {
         return data;
     }
 
-    public void setData(QRDataRestaurant data) {
+    public void setData(Map<String,String> data) {
         this.data = data;
     }
 }

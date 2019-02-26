@@ -5,12 +5,14 @@ import android.util.Log;
 
 import com.google.android.gms.location.LocationResult;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import app.onbo.api.models.QRDataRestaurant;
 import app.onbo.api.models.RemoteConfig;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -19,7 +21,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import app.onbo.api.APIService;
-import app.onbo.api.models.QRObjectRestaurant;
+import app.onbo.api.models.QRObject;
 import app.onbo.api.models.response.v2.Restaurant;
 import app.onbo.api.models.response.v2.RestaurantTable;
 import app.onbo.base.BasePresenter;
@@ -83,9 +85,36 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     @Override
     public void handleQRContent(String qrContent) {
         Gson gson = new Gson();
-        QRObjectRestaurant object = new QRObjectRestaurant();
+        QRObject object;
         try {
-            object = gson.fromJson(qrContent, QRObjectRestaurant.class);
+            object = gson.fromJson(qrContent, QRObject.class);
+            if (object != null) {
+                switch (object.getEntity()) {
+                    case 1:
+                        Log.d(TAG, "Restaurant Case");
+                        if (object.getData() != null) {
+                            if (object.getData().get("mode").equals(String.valueOf(1))) {
+                                verifyRestaurantTableVacant2(object, object.getData());
+                            } else if (object.getData().get("mode").equals(String.valueOf(2))) {
+                                fetchRestaurantDetails2(object, object.getData());
+                            }
+                        } else {
+                            throw new Error("Object is null");
+                        }
+                        break;
+                    case 3:
+                        Log.d(TAG, "Food Court Case");
+                        if (object.getData() != null) {
+                            fetchFoodCourt(object.getUuid());
+                        } else {
+                            throw new Error("Object is null");
+                        }
+                        break;
+                }
+
+            } else {
+                throw new Error("Object is null");
+            }
 
         } catch (Exception e) {
             view.showMalformedQRCode();
@@ -93,25 +122,46 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
             qrScannerShown = false;
         }
 
-        if (object != null)
-            if (object.getData() != null) {
-                if (object.getData().getMode() == 1) {
-                    verifyRestaurantTableVacant(object);
-                } else if ((object.getData().getMode()) == 2) {
-                    fetchRestaurantDetails(object);
-                }
-            } else {
-                view.showMalformedQRCode();
-                qrScannerShown = false;
-            }
     }
 
 
     public void handleQRContent2(String qrContent) {
         Gson gson = new Gson();
-        QRObjectRestaurant object = new QRObjectRestaurant();
+        QRObject object;
         try {
-            object = gson.fromJson(qrContent, QRObjectRestaurant.class);
+            object = gson.fromJson(qrContent, QRObject.class);
+            if (object != null) {
+                switch (object.getEntity()) {
+                    case 1:
+                        Log.d(TAG, "Restaurant Case");
+                        if (object.getData() != null) {
+                            //QRDataRestaurant qrDataRestaurant = (QRDataRestaurant) object.getData();
+                            Log.d(TAG, "TypeOf" + object.getData().getClass().getSimpleName());
+                            Log.d("Map", object.getData().toString());
+
+                            if (object.getData().get("mode").equals(String.valueOf(1))) {
+                                verifyRestaurantTableVacant2(object, object.getData());
+                            } else if (object.getData().get("mode").equals(String.valueOf(2))) {
+                                fetchRestaurantDetails2(object, object.getData());
+                            }
+                            Log.d(TAG, String.valueOf(object.getData()));
+                        } else {
+                            throw new Error("Object is null");
+                        }
+                        break;
+                    case 3:
+                        Log.d(TAG, "Food Court Case");
+                        if (object.getData() != null) {
+                            fetchFoodCourt(object.getUuid());
+                        } else {
+                            throw new Error("Object is null");
+                        }
+                        break;
+                }
+
+            } else {
+                throw new Error("Object is null");
+            }
 
         } catch (Exception e) {
             view.showMalformedQRCode2();
@@ -119,23 +169,12 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
             qrScannerShown = false;
         }
 
-        if (object != null)
-            if (object.getData() != null) {
-                if (object.getData().getMode() == 1) {
-                    verifyRestaurantTableVacant2(object);
-                } else if ((object.getData().getMode()) == 2) {
-                    fetchRestaurantDetails2(object);
-                }
-            } else {
-                view.showMalformedQRCode2();
-                qrScannerShown = false;
-            }
     }
 
-    public void fetchRestaurantDetails(QRObjectRestaurant qrObjectRestaurant) {
+    public void fetchRestaurantDetails(QRObject qrObject, QRDataRestaurant qrDataRestaurant) {
         view.showGettingMenu();
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_uuid", qrObjectRestaurant.getUuid());
+        map.put("restaurant_uuid", qrObject.getUuid());
         Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map);
         subscribe(observable, new Observer<Response<Restaurant>>() {
             @Override
@@ -150,7 +189,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
 
                         app.onbo.api.models.response.v2.Location location = restaurantResponse.body().getLocation();
                         if (calculateLocationDistance(location.getLocation_lat(), location.getLocation_long())) {
-                            onNonDineQRVerificationSuccess(qrObjectRestaurant, restaurantResponse.body());
+                            onNonDineQRVerificationSuccess(qrObject, restaurantResponse.body());
                             view.stopLocationUpdates();
                             qrScannerShown = false;
                         } else {
@@ -175,10 +214,10 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     }
 
 
-    public void fetchRestaurantDetails2(QRObjectRestaurant qrObjectRestaurant) {
+    public void fetchRestaurantDetails2(QRObject qrObject, Map<String,String> map1) {
         view.showGettingMenu();
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_uuid", qrObjectRestaurant.getUuid());
+        map.put("restaurant_uuid", qrObject.getUuid());
         Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map);
         subscribe(observable, new Observer<Response<Restaurant>>() {
             @Override
@@ -191,7 +230,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
                 if (restaurantResponse.isSuccessful()) {
                     if (restaurantResponse.body() != null) {
                         app.onbo.api.models.response.v2.Location location = restaurantResponse.body().getLocation();
-                        onNonDineQRVerificationSuccess(qrObjectRestaurant, restaurantResponse.body());
+                        onNonDineQRVerificationSuccess(qrObject, restaurantResponse.body());
                         qrScannerShown = false;
 
                     }
@@ -211,7 +250,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     }
 
 
-    public void onDineQRVerificationSuccess(QRObjectRestaurant qrObjectRestaurant, Restaurant restaurant, RestaurantTable table) {
+    public void onDineQRVerificationSuccess(QRObject qrObject, Restaurant restaurant, RestaurantTable table) {
         String tableShortId = restaurant.getRestaurant_uuid() + "_" + table.getTable_number();
         preferenceUtils.saveDineQRTransaction(restaurant.getRestaurant_id(), restaurant.getRestaurant_uuid(), table.getRestaurant_table_id(), tableShortId, MODE_DINE_IN);
         Log.d(TAG, "Saved Restaurant" + preferenceUtils.getScannedRestaurantUuid());
@@ -222,7 +261,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     }
 
 
-    public void onNonDineQRVerificationSuccess(QRObjectRestaurant qrObjectRestaurant, Restaurant restaurant) {
+    public void onNonDineQRVerificationSuccess(QRObject qrObject, Restaurant restaurant) {
         preferenceUtils.saveNonDineQRTransaction(restaurant.getRestaurant_id(), restaurant.getRestaurant_uuid(), MODE_NON_DINE);
         Log.d(TAG, "Saved Restaurant" + preferenceUtils.getScannedRestaurantUuid());
         Log.d(TAG, "Restaurant Mode" + preferenceUtils.getRestaurantMode());
@@ -232,10 +271,10 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     }
 
     @Override
-    public void verifyRestaurantTableVacant(QRObjectRestaurant qrObjectRestaurant) {
+    public void verifyRestaurantTableVacant(QRObject qrObject, QRDataRestaurant qrDataRestaurant) {
         Map<String, String> getRestData = new HashMap<>();
-        getRestData.put("short_id", qrObjectRestaurant.getUuid() + "_" + qrObjectRestaurant.getData().getTable());
-        getRestData.put("restaurant_uuid", qrObjectRestaurant.getUuid());
+        getRestData.put("short_id", qrObject.getUuid() + "_" + qrDataRestaurant.getTable());
+        getRestData.put("restaurant_uuid", qrObject.getUuid());
         Observable<Response<RestaurantTable>> observable = apiService.verifyTableVacancy(getRestData);
         subscribe(observable, new Observer<Response<RestaurantTable>>() {
             @Override
@@ -248,7 +287,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
                 if (restaurantTableResponse.code() == 200) {
                     if (restaurantTableResponse.body() != null) {
                         Log.d(TAG, restaurantTableResponse.body().getRestaurant_table_id());
-                        fetchRestaurantDetailsTable(qrObjectRestaurant, restaurantTableResponse.body());
+                        fetchRestaurantDetailsTable(qrObject, restaurantTableResponse.body());
                     }
                 } else if (restaurantTableResponse.code() == 400) {
                     //Log.d(TAG, restaurantTableResponse.body().toString());
@@ -269,10 +308,10 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
         });
     }
 
-    private void fetchRestaurantDetailsTable(QRObjectRestaurant qrObjectRestaurant, RestaurantTable restaurantTable) {
+    private void fetchRestaurantDetailsTable(QRObject qrObject, RestaurantTable restaurantTable) {
         view.showGettingMenu();
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_uuid", qrObjectRestaurant.getUuid());
+        map.put("restaurant_uuid", qrObject.getUuid());
         Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map);
         subscribe(observable, new Observer<Response<Restaurant>>() {
             @Override
@@ -289,7 +328,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
 
                         app.onbo.api.models.response.v2.Location location = restaurantResponse.body().getLocation();
                         if (calculateLocationDistance(location.getLocation_lat(), location.getLocation_long())) {
-                            onDineQRVerificationSuccess(qrObjectRestaurant, restaurantResponse.body(), restaurantTable);
+                            onDineQRVerificationSuccess(qrObject, restaurantResponse.body(), restaurantTable);
                             view.stopLocationUpdates();
                             qrScannerShown = false;
                         } else {
@@ -316,10 +355,10 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     }
 
 
-    public void verifyRestaurantTableVacant2(QRObjectRestaurant qrObjectRestaurant) {
+    public void verifyRestaurantTableVacant2(QRObject qrObject, Map<String, String> map) {
         Map<String, String> getRestData = new HashMap<>();
-        getRestData.put("short_id", qrObjectRestaurant.getUuid() + "_" + qrObjectRestaurant.getData().getTable());
-        getRestData.put("restaurant_uuid", qrObjectRestaurant.getUuid());
+        getRestData.put("short_id", qrObject.getUuid() + "_" + map.get("table"));
+        getRestData.put("restaurant_uuid", qrObject.getUuid());
         Observable<Response<RestaurantTable>> observable = apiService.verifyTableVacancy(getRestData);
         subscribe(observable, new Observer<Response<RestaurantTable>>() {
             @Override
@@ -332,7 +371,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
                 if (restaurantTableResponse.code() == 200) {
                     if (restaurantTableResponse.body() != null) {
                         Log.d(TAG, restaurantTableResponse.body().getRestaurant_table_id());
-                        fetchRestaurantDetailsTable2(qrObjectRestaurant, restaurantTableResponse.body());
+                        fetchRestaurantDetailsTable2(qrObject, restaurantTableResponse.body());
                     }
                 } else if (restaurantTableResponse.code() == 400) {
                     //Log.d(TAG, restaurantTableResponse.body().toString());
@@ -353,10 +392,10 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
         });
     }
 
-    private void fetchRestaurantDetailsTable2(QRObjectRestaurant qrObjectRestaurant, RestaurantTable restaurantTable) {
+    private void fetchRestaurantDetailsTable2(QRObject qrObject, RestaurantTable restaurantTable) {
         view.showGettingMenu();
         Map<String, String> map = new HashMap<>();
-        map.put("restaurant_uuid", qrObjectRestaurant.getUuid());
+        map.put("restaurant_uuid", qrObject.getUuid());
         Observable<Response<Restaurant>> observable = apiService.fetchRestaurantDetails(map);
         subscribe(observable, new Observer<Response<Restaurant>>() {
             @Override
@@ -372,7 +411,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
                     if (restaurantResponse.body() != null) {
 
                         app.onbo.api.models.response.v2.Location location = restaurantResponse.body().getLocation();
-                        onDineQRVerificationSuccess(qrObjectRestaurant, restaurantResponse.body(), restaurantTable);
+                        onDineQRVerificationSuccess(qrObject, restaurantResponse.body(), restaurantTable);
                         qrScannerShown = false;
                     }
                 }
@@ -456,6 +495,11 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
 
     public void setQrScannerShown(boolean v) {
         qrScannerShown = v;
+    }
+
+    @Override
+    public void fetchFoodCourt(String foodCourtUUID) {
+        Log.d(TAG, "Go fetch the Food Court");
     }
 
     @Override

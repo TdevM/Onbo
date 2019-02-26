@@ -6,6 +6,7 @@ import java.util.Map;
 
 import app.onbo.api.models.RemoteConfig;
 import app.onbo.api.models.request.RefreshToken;
+import app.onbo.api.models.response.v2.FoodCourt;
 import app.onbo.api.models.response.v2.LoginResponse;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -135,7 +136,7 @@ public interface APIService {
     Observable<Response<FOrder>> closeRunningOrder(@QueryMap Map<String, String> options);
 
     @POST("m/t/orders/pay")
-    Observable<Response<FOrder>> payOrder( @Body PaymentCapture capture);
+    Observable<Response<FOrder>> payOrder(@Body PaymentCapture capture);
 
     @GET("m/f/orders")
     Observable<Response<FOrder>> fetchClosedOrder(@QueryMap Map<String, String> options);
@@ -159,5 +160,10 @@ public interface APIService {
 
     @GET("m/f/orders/unpaid")
     Observable<Response<List<FOrder>>> fetchUnpaidOrders();
+
+
+    // FC
+    @GET("/fc")
+    Observable<Response<FoodCourt>> fetchFCByUUID(@QueryMap Map<String, String> options);
 
 }

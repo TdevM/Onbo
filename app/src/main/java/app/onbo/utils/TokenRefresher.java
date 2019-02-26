@@ -65,7 +65,7 @@ public class TokenRefresher implements Authenticator {
                         @Override
                         public void run() {
                             Toast.makeText(application.getApplicationContext(), "Your session is expired", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(application.getApplicationContext(), AuthenticationActivity.class);
+                            Intent intent = new Intent(application.getBaseContext(), AuthenticationActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             application.startActivity(intent);
                         }

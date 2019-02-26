@@ -2,27 +2,27 @@ package app.onbo.api.models;
 
 public class QRDataRestaurant {
 
-    int mode;
-    int table;
+    Integer mode;
+    Integer table;
 
-    public QRDataRestaurant(int mode, int table) {
+    public QRDataRestaurant(Integer mode, Integer table) {
         this.mode = mode;
         this.table = table;
     }
 
-    public int getMode() {
+    public Integer getMode() {
         return mode;
     }
 
-    public void setMode(int mode) {
+    public void setMode(Integer mode) {
         this.mode = mode;
     }
 
-    public int getTable() {
+    public Integer getTable() {
         return table;
     }
 
-    public void setTable(int table) {
+    public void setTable(Integer table) {
         this.table = table;
     }
 }
