@@ -163,7 +163,11 @@ public interface APIService {
 
 
     // FC
-    @GET("/fc")
+    @GET("fc")
     Observable<Response<FoodCourt>> fetchFCByUUID(@QueryMap Map<String, String> options);
+
+    // FC
+    @GET("fc/restaurant")
+    Observable<Response<FoodCourt>> fetchFCRestaurants(@QueryMap Map<String, String> options);
 
 }

@@ -43,8 +43,10 @@ import javax.inject.Inject;
 import app.onbo.OnboApplication;
 import app.onbo.R;
 import app.onbo.api.models.RemoteConfig;
+import app.onbo.api.models.response.v2.FoodCourt;
 import app.onbo.api.models.response.v2.Restaurant;
 import app.onbo.modules.dinein.DineInActivity;
+import app.onbo.modules.fc.FCActivity;
 import app.onbo.modules.nondine.NonDineActivity;
 import app.onbo.utils.CustomQRView;
 import app.onbo.utils.PreferenceUtils;
@@ -361,6 +363,14 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
         showWrongQr();
         //showFetchLocation();
         locationRequestMade = false;
+    }
+
+    @Override
+    public void showFCActivity(FoodCourt foodCourt) {
+        Intent intent = new Intent(RestaurantMenuEntryActivity.this, FCActivity.class);
+        intent.putExtra("FOOD_COURT", foodCourt);
+        startActivity(intent);
+        finish();
     }
 
     @Override

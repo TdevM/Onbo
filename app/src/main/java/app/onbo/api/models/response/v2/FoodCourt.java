@@ -1,33 +1,66 @@
 
 package app.onbo.api.models.response.v2;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class FoodCourt {
+public class FoodCourt implements Parcelable {
 
     @SerializedName("fc_id")
     @Expose
     private String fcId;
+
     @SerializedName("fc_name")
     @Expose
     private String fcName;
+
     @SerializedName("location_id")
     @Expose
     private String locationId;
+
     @SerializedName("address_complete")
     @Expose
     private String addressComplete;
+
+    @SerializedName("image_url")
+    @Expose
+    private String imageUrl;
+
     @SerializedName("fc_uuid")
     @Expose
     private String fcUuid;
-    @SerializedName("fc_restaurants")
-    @Expose
-    private List<FcRestaurant> fcRestaurants = null;
+
+
     @SerializedName("location")
     @Expose
     private Location location;
+
+    protected FoodCourt(Parcel in) {
+        fcId = in.readString();
+        fcName = in.readString();
+        locationId = in.readString();
+        addressComplete = in.readString();
+        imageUrl = in.readString();
+        fcUuid = in.readString();
+        location = in.readParcelable(Location.class.getClassLoader());
+    }
+
+    public static final Creator<FoodCourt> CREATOR = new Creator<FoodCourt>() {
+        @Override
+        public FoodCourt createFromParcel(Parcel in) {
+            return new FoodCourt(in);
+        }
+
+        @Override
+        public FoodCourt[] newArray(int size) {
+            return new FoodCourt[size];
+        }
+    };
 
     public String getFcId() {
         return fcId;
@@ -69,13 +102,6 @@ public class FoodCourt {
         this.fcUuid = fcUuid;
     }
 
-    public List<FcRestaurant> getFcRestaurants() {
-        return fcRestaurants;
-    }
-
-    public void setFcRestaurants(List<FcRestaurant> fcRestaurants) {
-        this.fcRestaurants = fcRestaurants;
-    }
 
     public Location getLocation() {
         return location;
@@ -85,4 +111,27 @@ public class FoodCourt {
         this.location = location;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(fcId);
+        dest.writeString(fcName);
+        dest.writeString(locationId);
+        dest.writeString(addressComplete);
+        dest.writeString(imageUrl);
+        dest.writeString(fcUuid);
+        dest.writeParcelable(location, flags);
+    }
 }

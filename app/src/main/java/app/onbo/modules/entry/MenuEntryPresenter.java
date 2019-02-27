@@ -1,5 +1,6 @@
 package app.onbo.modules.entry;
 
+import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
 
@@ -14,6 +15,8 @@ import javax.inject.Inject;
 
 import app.onbo.api.models.QRDataRestaurant;
 import app.onbo.api.models.RemoteConfig;
+import app.onbo.api.models.response.v2.FoodCourt;
+import app.onbo.modules.fc.FCActivity;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -214,7 +217,7 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
     }
 
 
-    public void fetchRestaurantDetails2(QRObject qrObject, Map<String,String> map1) {
+    public void fetchRestaurantDetails2(QRObject qrObject, Map<String, String> map1) {
         view.showGettingMenu();
         Map<String, String> map = new HashMap<>();
         map.put("restaurant_uuid", qrObject.getUuid());
@@ -499,6 +502,35 @@ public class MenuEntryPresenter extends BasePresenter implements MenuEntryPresen
 
     @Override
     public void fetchFoodCourt(String foodCourtUUID) {
+        Map<String, String> map = new HashMap<>();
+        map.put("fc_uuid", foodCourtUUID);
+        Observable<Response<FoodCourt>> observable = apiService.fetchFCByUUID(map);
+        subscribe(observable, new Observer<Response<FoodCourt>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+                view.showProgressUI();
+            }
+
+            @Override
+            public void onNext(Response<FoodCourt> foodCourtResponse) {
+                if (foodCourtResponse.code() == 200) {
+                    view.showFCActivity(foodCourtResponse.body());
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onComplete() {
+                view.hideProgressUI();
+            }
+        });
+
         Log.d(TAG, "Go fetch the Food Court");
     }
 

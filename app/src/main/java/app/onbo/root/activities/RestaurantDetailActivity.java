@@ -47,7 +47,7 @@ public class RestaurantDetailActivity extends AppCompatActivity implements RootA
     @BindView(R.id.recycler_view_restaurant_menu)
     RecyclerView recyclerView;
 
-    @BindView(R.id.shimmer_fragment_menu_restaurant)
+    @BindView(R.id.shimmer_fragment_fc_restaurant)
     ShimmerFrameLayout shimmerFrameLayout;
 
     @Inject

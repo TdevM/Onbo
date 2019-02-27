@@ -1,5 +1,6 @@
 package app.onbo.di.components;
 
+import app.onbo.modules.fc.FCActivity;
 import app.onbo.utils.AuthInterceptor;
 import app.onbo.utils.TokenRefresher;
 import dagger.Component;
@@ -85,4 +86,5 @@ public interface APIComponent {
     void inject(CashPickupFragment fragment);
     void inject(AuthInterceptor authInterceptor);
     void inject(TokenRefresher refresher);
+    void inject(FCActivity activity);
 }

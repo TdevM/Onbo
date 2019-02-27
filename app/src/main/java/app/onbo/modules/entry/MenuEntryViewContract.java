@@ -1,6 +1,7 @@
 package app.onbo.modules.entry;
 
 import app.onbo.api.models.RemoteConfig;
+import app.onbo.api.models.response.v2.FoodCourt;
 import app.onbo.api.models.response.v2.Restaurant;
 import app.onbo.base.BaseView;
 
@@ -28,6 +29,8 @@ public interface MenuEntryViewContract {
         void showTableOccupiedError();
 
         void showMalformedQRCode();
+
+        void showFCActivity(FoodCourt foodCourt);
 
 
         void showMalformedQRCode2();
