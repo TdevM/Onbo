@@ -44,6 +44,14 @@ public class PreferenceUtils {
         sharedPreferences.putDataString(FETCHED_RESTAURANT_TABLE_NO, "0");
     }
 
+    public void saveFCQRTransaction(String restaurantID, String uuid, String restaurantMode){
+        clearQRTransaction();
+        sharedPreferences.putDataString(FETCHED_RESTAURANT_UUID, uuid);
+        sharedPreferences.putDataString(RESTAURANT_MODE, restaurantMode);
+        sharedPreferences.putDataString(FETCHED_RESTAURANT_ID, restaurantID);
+        sharedPreferences.putDataString(FETCHED_RESTAURANT_TABLE_NO, "0");
+    }
+
 
     public void saveDineQRTransaction(String restaurantID, String uuid, String tableId, String tableShortID, String restaurantMode) {
         clearQRTransaction();

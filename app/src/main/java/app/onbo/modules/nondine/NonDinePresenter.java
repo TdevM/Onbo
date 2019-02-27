@@ -1,5 +1,7 @@
 package app.onbo.modules.nondine;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -10,6 +12,8 @@ import app.onbo.utils.PreferenceUtils;
 
 public class NonDinePresenter extends BasePresenter implements NonDinePresenterContract.NonDineActivityPresenter {
 
+
+    public static final String TAG = NonDinePresenter.class.getSimpleName();
 
     private APIService apiService;
     private CartHelper cartHelper;
@@ -37,6 +41,9 @@ public class NonDinePresenter extends BasePresenter implements NonDinePresenterC
     @Override
     public void attachView(NonDineViewContract.NonDineActivityView view) {
         this.nonDineActivityView = view;
+        Log.d(TAG,"T2 RES ID:" + preferenceUtils.getScannedRestaurantId());
+        Log.d(TAG,"T2 RES UUID:" +preferenceUtils.getScannedRestaurantUuid());
+        Log.d(TAG,"T2 RES MODE:" +preferenceUtils.getRestaurantMode());
     }
 
     @Override

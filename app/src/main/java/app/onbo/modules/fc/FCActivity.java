@@ -25,6 +25,7 @@ import app.onbo.R;
 import app.onbo.api.models.response.v2.FcRestaurant;
 import app.onbo.api.models.response.v2.FoodCourt;
 import app.onbo.api.models.response.v2.Restaurant;
+import app.onbo.modules.fc.activities.FCPremiseDetailActivity;
 import app.onbo.modules.fc.adapters.FCRestaurantListAdapter;
 import app.onbo.root.activities.RestaurantDetailActivity;
 import app.onbo.root.adapters.EqualSpacingItemDecoration;
@@ -160,7 +161,7 @@ public class FCActivity extends AppCompatActivity implements FCViewContract.FCAc
 
     @Override
     public void onRestaurantItemClicked(Restaurant restaurant) {
-        Intent intent = new Intent(this, RestaurantDetailActivity.class);
+        Intent intent = new Intent(this, FCPremiseDetailActivity.class);
         intent.putExtra("RESTAURANT", restaurant);
         startActivity(intent);
     }
