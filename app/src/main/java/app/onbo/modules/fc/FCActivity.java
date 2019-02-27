@@ -1,26 +1,38 @@
 package app.onbo.modules.fc;
 
+import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import app.onbo.OnboApplication;
 import app.onbo.R;
+import app.onbo.api.models.response.v2.FcRestaurant;
 import app.onbo.api.models.response.v2.FoodCourt;
+import app.onbo.api.models.response.v2.Restaurant;
+import app.onbo.modules.fc.adapters.FCRestaurantListAdapter;
+import app.onbo.root.activities.RestaurantDetailActivity;
+import app.onbo.root.adapters.EqualSpacingItemDecoration;
+import app.onbo.root.callbacks.RestaurantItemClickListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FCActivity extends AppCompatActivity implements FCViewContract.FCActivityView {
+public class FCActivity extends AppCompatActivity implements FCViewContract.FCActivityView, RestaurantItemClickListener {
 
 
     @BindView(R.id.rv_fc_list)
@@ -56,10 +68,12 @@ public class FCActivity extends AppCompatActivity implements FCViewContract.FCAc
 
     FoodCourt foodCourt;
 
+    FCRestaurantListAdapter adapter;
+
     @Override
     protected void onResume() {
         fcPresenter.attachView(this);
-        if(foodCourt!=null){
+        if (foodCourt != null) {
             fcPresenter.fetchFCRestaurants(foodCourt.getFcUuid());
         }
         super.onResume();
@@ -76,6 +90,14 @@ public class FCActivity extends AppCompatActivity implements FCViewContract.FCAc
         toolbar.setNavigationOnClickListener(v -> {
             onBackPressed();
         });
+        manager = new LinearLayoutManager(this);
+        adapter = new FCRestaurantListAdapter(this);
+        adapter.setRestaurantItemClickedListener(this);
+
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new EqualSpacingItemDecoration(dpToPx(12)));
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = true;
             int scrollRange = -1;
@@ -111,7 +133,7 @@ public class FCActivity extends AppCompatActivity implements FCViewContract.FCAc
 
     @Override
     public void hideProgressUI() {
-
+        shimmerFrameLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -121,8 +143,8 @@ public class FCActivity extends AppCompatActivity implements FCViewContract.FCAc
     }
 
     @Override
-    public void onFCFetched(FoodCourt foodCourt) {
-
+    public void onFCFetched(List<FcRestaurant> fcRestaurantList) {
+        adapter.onRestaurantsFetched(fcRestaurantList);
     }
 
     @Override
@@ -134,5 +156,17 @@ public class FCActivity extends AppCompatActivity implements FCViewContract.FCAc
     protected void onDestroy() {
         super.onDestroy();
         fcPresenter.detachView();
+    }
+
+    @Override
+    public void onRestaurantItemClicked(Restaurant restaurant) {
+        Intent intent = new Intent(this, RestaurantDetailActivity.class);
+        intent.putExtra("RESTAURANT", restaurant);
+        startActivity(intent);
+    }
+
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 }

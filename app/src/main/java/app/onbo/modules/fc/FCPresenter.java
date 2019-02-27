@@ -1,11 +1,13 @@
 package app.onbo.modules.fc;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import app.onbo.api.APIService;
+import app.onbo.api.models.response.v2.FcRestaurant;
 import app.onbo.api.models.response.v2.FoodCourt;
 import app.onbo.base.BasePresenter;
 import io.reactivex.Observable;
@@ -46,8 +48,8 @@ public class FCPresenter extends BasePresenter implements FCPresenterContract.FC
     public void fetchFCRestaurants(String fcUUID) {
         Map<String, String> map = new HashMap<>();
         map.put("fc_uuid", fcUUID);
-        Observable<Response<FoodCourt>> observable = apiService.fetchFCRestaurants(map);
-        subscribe(observable, new Observer<Response<FoodCourt>>() {
+        Observable<Response<List<FcRestaurant>>> observable = apiService.fetchFCRestaurants(map);
+        subscribe(observable, new Observer<Response<List<FcRestaurant>>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 compositeDisposable.add(d);
@@ -55,7 +57,7 @@ public class FCPresenter extends BasePresenter implements FCPresenterContract.FC
             }
 
             @Override
-            public void onNext(Response<FoodCourt> foodCourtResponse) {
+            public void onNext(Response<List<FcRestaurant>> foodCourtResponse) {
                 if (foodCourtResponse.code() == 200) {
                     view.onFCFetched(foodCourtResponse.body());
                 } else {

@@ -184,7 +184,6 @@ public class RestaurantDetailActivity extends AppCompatActivity implements RootA
     @Override
     public void hideProgressUI() {
         shimmerFrameLayout.setVisibility(View.GONE);
-        shimmerFrameLayout.setVisibility(View.GONE);
     }
 
     @Override

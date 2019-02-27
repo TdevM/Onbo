@@ -6,6 +6,7 @@ import java.util.Map;
 
 import app.onbo.api.models.RemoteConfig;
 import app.onbo.api.models.request.RefreshToken;
+import app.onbo.api.models.response.v2.FcRestaurant;
 import app.onbo.api.models.response.v2.FoodCourt;
 import app.onbo.api.models.response.v2.LoginResponse;
 import io.reactivex.Observable;
@@ -168,6 +169,6 @@ public interface APIService {
 
     // FC
     @GET("fc/restaurant")
-    Observable<Response<FoodCourt>> fetchFCRestaurants(@QueryMap Map<String, String> options);
+    Observable<Response<List<FcRestaurant>>> fetchFCRestaurants(@QueryMap Map<String, String> options);
 
 }

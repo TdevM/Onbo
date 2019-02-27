@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import app.onbo.R;
+import app.onbo.api.models.response.v2.FcRestaurant;
 import app.onbo.api.models.response.v2.Restaurant;
 import app.onbo.api.models.response.v2.menu.Cuisine;
 import app.onbo.root.callbacks.RestaurantItemClickListener;
@@ -28,14 +29,14 @@ import butterknife.ButterKnife;
 
 public class FCRestaurantListAdapter extends RecyclerView.Adapter<FCRestaurantListAdapter.RestaurantListViewHolder> {
 
-    private List<Restaurant> restaurants;
+    private List<FcRestaurant> fcRestaurants;
     private Context context;
     private RestaurantItemClickListener listener;
 
 
     public FCRestaurantListAdapter(Context context) {
         this.context = context;
-        restaurants = new ArrayList<>();
+        fcRestaurants = new ArrayList<>();
     }
 
 
@@ -47,14 +48,14 @@ public class FCRestaurantListAdapter extends RecyclerView.Adapter<FCRestaurantLi
     @Override
     public RestaurantListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_rv_restaurant_list, parent, false);
+                .inflate(R.layout.item_rv_restaurant_list_fc, parent, false);
         return new RestaurantListViewHolder(view);
     }
 
 
-    public void onRestaurantsFetched(List<Restaurant> restaurantList) {
-        this.restaurants.clear();
-        this.restaurants.addAll(restaurantList);
+    public void onRestaurantsFetched(List<FcRestaurant> fcRestaurants) {
+        this.fcRestaurants.clear();
+        this.fcRestaurants.addAll(fcRestaurants);
         notifyDataSetChanged();
     }
 
@@ -63,36 +64,27 @@ public class FCRestaurantListAdapter extends RecyclerView.Adapter<FCRestaurantLi
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(16));
         Glide.with(context)
-                .load(restaurants.get(position).getImage())
+                .load(fcRestaurants.get(position).getRestaurant().getImage())
                 .apply(requestOptions)
                 .into(holder.restaurantImageView);
-        holder.restaurantName.setText(restaurants.get(position).getRestaurant_name());
-        holder.restaurantLocality.setText(restaurants.get(position).getLocation().getLocation_locality());
-        holder.costForTwo.setText(String.format("%s for two", String.valueOf(restaurants.get(position).getAvg_cost_for_two())));
-        if (restaurants.get(position).getRating() != null) {
-            Double d = Double.parseDouble(restaurants.get(position).getRating().getRestaurant_avg_rating());
-            double roundOff = Math.round(d * 100.0) / 100.0;
-            holder.starRating.setText(String.valueOf(roundOff));
+        holder.restaurantName.setText(fcRestaurants.get(position).getRestaurant().getRestaurant_name());
+        holder.restaurantLocality.setText(fcRestaurants.get(position).getRestaurant().getAddress_complete());
+        holder.costForTwo.setText(String.format("%s for two", String.valueOf(fcRestaurants.get(position).getRestaurant().getAvg_cost_for_two())));
+
+        if (fcRestaurants.get(position).getRestaurant().getCuisines() != null) {
+            holder.restaurantCuisines.setText(generateCuisineSlug(fcRestaurants.get(position).getRestaurant().getCuisines()));
         }
-        if (restaurants.get(position).getQr_active()) {
-            holder.qrEnabled.setText("QR Active");
-        } else {
-            holder.qrEnabled.setText("QR Inactive");
-        }
-        if (restaurants.get(position).getCuisines() != null) {
-            holder.restaurantCuisines.setText(generateCuisineSlug(restaurants.get(position).getCuisines()));
-        }
-        if (restaurants.get(position).getRestaurant_mode() != null) {
-            if (restaurants.get(position).getRestaurant_mode().equals("FOOD_COURT")) {
+        if (fcRestaurants.get(position).getRestaurant().getRestaurant_mode() != null) {
+            if (fcRestaurants.get(position).getRestaurant().getRestaurant_mode().equals("FOOD_COURT")) {
                 holder.selfOrdering.setText(context.getString(R.string.food_court));
             }
         }
-        holder.bind(restaurants.get(position), listener);
+        holder.bind(fcRestaurants.get(position).getRestaurant(), listener);
     }
 
     @Override
     public int getItemCount() {
-        return restaurants.size();
+        return fcRestaurants.size();
     }
 
     public class RestaurantListViewHolder extends RecyclerView.ViewHolder {
