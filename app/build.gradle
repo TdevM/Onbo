@@ -5,7 +5,7 @@ apply plugin: 'io.fabric'
 ext.versionMajor = 0
 ext.versionMinor = 1
 ext.versionPatch = 0
-ext.versionBuild = 3
+ext.versionBuild = 4
 ext.versionClassifier = null
 ext.isSnapshot = false
 ext.minimumSdkVersion = 21
