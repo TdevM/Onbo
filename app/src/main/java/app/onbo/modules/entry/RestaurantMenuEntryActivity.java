@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -77,6 +78,22 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
     private boolean LOCATION_VERIFIED_ACCESS_ENABLED;
 
 
+    @OnClick(R.id.card_view_scan_to_order)
+    void showQRToOrder(){
+        LOCATION_VERIFIED_ACCESS_ENABLED = false;
+            new IntentIntegrator(RestaurantMenuEntryActivity.this).
+                    setOrientationLocked(false).
+                    setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES).
+                    setCaptureActivity(CustomQRView.class).
+                    initiateScan();
+            QR_SCANNER_SHOWN = true;
+    }
+
+    @OnClick(R.id.card_view_pick_up_my_order)
+    void showFCListToOrder(){
+        Toast.makeText(this, "Aayega", Toast.LENGTH_SHORT).show();
+    }
+
     @BindView(R.id.fl_request_location)
     FrameLayout requestLocation;
 
@@ -92,6 +109,9 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
     @BindView(R.id.frame_layout_location_verified_access)
     FrameLayout checkLocationVerifiedAccess;
+
+    @BindView(R.id.frame_layout_pickup_order_view)
+    FrameLayout showPickupOrderView;
 
     @BindView(R.id.fl_show_qr_wrong)
     FrameLayout wrongQR;
@@ -509,14 +529,8 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
             LOCATION_VERIFIED_ACCESS_ENABLED = true;
         } else {
             checkLocationVerifiedAccess.setVisibility(View.VISIBLE);
-            LOCATION_VERIFIED_ACCESS_ENABLED = false;
-            new IntentIntegrator(RestaurantMenuEntryActivity.this).
-                    setOrientationLocked(false).
-                    setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES).
-                    setCaptureActivity(CustomQRView.class).
-                    initiateScan();
-            QR_SCANNER_SHOWN = true;
-
+            checkLocationVerifiedAccess.setVisibility(View.GONE);
+            showPickupOrderView.setVisibility(View.VISIBLE);
         }
     }
 

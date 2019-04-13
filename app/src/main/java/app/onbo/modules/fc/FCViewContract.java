@@ -20,4 +20,8 @@ public interface FCViewContract {
         void onMenuItemsFetchFailure();
         void redirectNonDineActivity(Restaurant restaurant);
     }
+
+    interface FCListActivity extends BaseView{
+        void onFCListFetched();
+    }
 }

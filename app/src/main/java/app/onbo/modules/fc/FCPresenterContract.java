@@ -26,4 +26,14 @@ public interface FCPresenterContract {
 
     }
 
+    interface FCListPresenterContract extends BasePresenterMVP<FCViewContract.FCListActivity>{
+        @Override
+        void attachView(FCViewContract.FCListActivity view);
+
+        void fetchFCList();
+
+        @Override
+        void detachView();
+    }
+
 }

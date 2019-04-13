@@ -167,6 +167,9 @@ public interface APIService {
     @GET("fc")
     Observable<Response<FoodCourt>> fetchFCByUUID(@QueryMap Map<String, String> options);
 
+    @GET("fc/all")
+    Observable<Response<List<FoodCourt>>> fetchAllFoodCourts();
+
     // FC
     @GET("fc/restaurant")
     Observable<Response<List<FcRestaurant>>> fetchFCRestaurants(@QueryMap Map<String, String> options);

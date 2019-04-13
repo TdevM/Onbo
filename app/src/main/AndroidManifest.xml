@@ -24,11 +24,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".modules.fc.activities.FCPremiseDetailActivity"
+        <activity android:name=".modules.fc.FCListActivity"></activity>
+        <activity
+            android:name=".modules.fc.activities.FCPremiseDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme2.NoActionBar" />
-
         <activity
             android:name=".modules.fc.FCActivity"
             android:exported="false"
