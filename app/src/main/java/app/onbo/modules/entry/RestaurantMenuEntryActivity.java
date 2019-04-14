@@ -48,6 +48,7 @@ import app.onbo.api.models.response.v2.FoodCourt;
 import app.onbo.api.models.response.v2.Restaurant;
 import app.onbo.modules.dinein.DineInActivity;
 import app.onbo.modules.fc.FCActivity;
+import app.onbo.modules.fc.FCListActivity;
 import app.onbo.modules.nondine.NonDineActivity;
 import app.onbo.utils.CustomQRView;
 import app.onbo.utils.PreferenceUtils;
@@ -91,7 +92,9 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
 
     @OnClick(R.id.card_view_pick_up_my_order)
     void showFCListToOrder(){
-        Toast.makeText(this, "Aayega", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(RestaurantMenuEntryActivity.this, FCListActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @BindView(R.id.fl_request_location)
@@ -332,6 +335,8 @@ public class RestaurantMenuEntryActivity extends AppCompatActivity implements Me
                 if (result.getContents() == null) {
                     finish();
                 } else {
+                    showPickupOrderView.setVisibility(View.GONE);
+                    checkLocationVerifiedAccess.setVisibility(View.VISIBLE);
                     presenter.handleQRContent2(result.getContents());
                 }
 

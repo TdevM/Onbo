@@ -13,6 +13,9 @@ public class PreferenceUtils {
     private static final String AUTH_REFRESH_TOKEN = "AUTH_REFRESH_TOKEN";
     private static final String INTRO_SCREEN_DISPLAYED = "INTRO_SCREEN_DISPLAYED";
 
+    private static final String AUTH_USER_EMAIL = "AUTH_USER_EMAIL";
+    private static final String AUTH_USER_PHONE = "AUTH_USER_PHONE";
+
     private static final String FETCHED_RESTAURANT_UUID = "FETCHED_RESTAURANT_UUID";
     private static final String FETCHED_RESTAURANT_ID = "FETCHED_RESTAURANT_ID";
     private static final String FETCHED_RESTAURANT_TABLE_NO = "FETCHED_RESTAURANT_TABLE_NO";
@@ -30,6 +33,11 @@ public class PreferenceUtils {
         sharedPreferences.putDataBool(AUTH_LOGIN_STATE, state);
         sharedPreferences.putDataLong(AUTH_LOGIN_PHONE, phone);
         sharedPreferences.putDataString(AUTH_REFRESH_TOKEN, refreshToken);
+    }
+
+    public void saveUserData(String email, String phone){
+        sharedPreferences.putDataString(AUTH_USER_EMAIL, email);
+        sharedPreferences.putDataString(AUTH_USER_PHONE, phone);
     }
 
     public void updateAuthToken(String authToken) {
@@ -75,6 +83,13 @@ public class PreferenceUtils {
         sharedPreferences.remove(AUTH_LOGIN_TOKEN);
         sharedPreferences.remove(AUTH_LOGIN_STATE);
         sharedPreferences.remove(AUTH_LOGIN_PHONE);
+        clearUserData();
+        clearQRTransaction();
+    }
+
+    public void clearUserData(){
+        sharedPreferences.remove(AUTH_USER_PHONE);
+        sharedPreferences.remove(AUTH_USER_EMAIL);
     }
 
     public Boolean getAuthLoginState() {
@@ -87,6 +102,14 @@ public class PreferenceUtils {
 
     public String getAuthRefreshToken() {
         return sharedPreferences.getDataString(AUTH_REFRESH_TOKEN);
+    }
+
+    public String getAuthUserEmail(){
+        return sharedPreferences.getDataString(AUTH_USER_EMAIL);
+    }
+
+    public String getAuthUserPhone(){
+        return sharedPreferences.getDataString(AUTH_USER_PHONE);
     }
 
     public Boolean getIntroScreenDisplayed() {

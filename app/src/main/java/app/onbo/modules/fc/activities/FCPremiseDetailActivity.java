@@ -65,6 +65,7 @@ public class FCPremiseDetailActivity extends AppCompatActivity implements FCView
         Restaurant restaurant = getIntent().getParcelableExtra("RESTAURANT");
         if (restaurant != null)
             presenter.saveFCQRTransaction(restaurant);
+            presenter.clearCart();
     }
 
 

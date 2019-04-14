@@ -17,6 +17,7 @@ import app.onbo.modules.fc.FCViewContract;
 import app.onbo.root.RootActivityViewContract;
 import app.onbo.utils.CartHelper;
 import app.onbo.utils.PreferenceUtils;
+import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
@@ -30,6 +31,7 @@ public class FCPremisePresenter extends BasePresenter implements FCPresenterCont
     private static final String MODE_NON_DINE = "MODE_NON_DINE";
 
     private APIService apiService;
+    private CartHelper cartHelper;
 
     private CompositeDisposable compositeDisposable;
     private PreferenceUtils preferenceUtils;
@@ -37,8 +39,9 @@ public class FCPremisePresenter extends BasePresenter implements FCPresenterCont
     private FCViewContract.FCPremiseDetailView detailActivity;
 
     @Inject
-    public FCPremisePresenter(APIService apiService, PreferenceUtils preferenceUtils) {
+    public FCPremisePresenter(APIService apiService, PreferenceUtils preferenceUtils, CartHelper cartHelper) {
         this.apiService = apiService;
+        this.cartHelper = cartHelper;
         this.preferenceUtils = preferenceUtils;
         this.compositeDisposable = new CompositeDisposable();
     }
@@ -86,6 +89,10 @@ public class FCPremisePresenter extends BasePresenter implements FCPresenterCont
         detailActivity.redirectNonDineActivity(restaurant);
     }
 
+    @Override
+    public void clearCart(){
+        cartHelper.clearCart();
+    }
 
     @Override
     public void attachView(FCViewContract.FCPremiseDetailView view) {

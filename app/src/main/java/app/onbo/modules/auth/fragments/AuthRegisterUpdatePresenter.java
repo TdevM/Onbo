@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import app.onbo.api.APIService;
 import app.onbo.api.models.request.User;
+import app.onbo.api.models.response.UserApp;
 import app.onbo.base.BasePresenter;
 import app.onbo.modules.auth.AuthPresenterContract;
 import app.onbo.modules.auth.AuthViewContract;
@@ -67,8 +68,7 @@ public class AuthRegisterUpdatePresenter extends BasePresenter implements AuthPr
                 } else if (response.code() == 200) {
                     Log.d("RegisterPresenter", response.body().toString());
                     preferenceUtils.saveAuthTransaction(response.headers().get("Authorization"),"", user.getMobile(), true);
-                    OneSignal.sendTag("USER_MOBILE", String.valueOf(user.getMobile()));
-                    authRegisterView.showRegistrationSuccess();
+                    fetchUser();
                 } else if (response.code() == 211) {
                     authRegisterView.emailInUseError();
                 }
@@ -83,6 +83,37 @@ public class AuthRegisterUpdatePresenter extends BasePresenter implements AuthPr
             @Override
             public void onComplete() {
                 authRegisterView.hideProgressUI();
+            }
+        });
+    }
+
+
+    public void fetchUser() {
+        Observable<Response<UserApp>> appObservable = apiService.fetchUser();
+        subscribe(appObservable, new Observer<Response<UserApp>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(Response<UserApp> userAppResponse) {
+                if (userAppResponse.code() == 200) {
+                    if (userAppResponse.body() != null) {
+                        OneSignal.sendTag("USER_MOBILE", String.valueOf(userAppResponse.body().getUserMobile()));
+                        preferenceUtils.saveUserData(userAppResponse.body().getUserEmail(),userAppResponse.body().getUserMobile());
+                        authRegisterView.showRegistrationSuccess();
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onComplete() {
             }
         });
     }

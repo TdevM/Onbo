@@ -2,6 +2,8 @@ package app.onbo.modules.fc;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import app.onbo.api.APIService;
 import app.onbo.api.models.response.v2.FoodCourt;
 import app.onbo.base.BasePresenter;
@@ -23,8 +25,9 @@ public class FCListPresenter extends BasePresenter implements FCPresenterContrac
 
     private CompositeDisposable compositeDisposable;
 
-    FCViewContract.FCListActivity fcListActivity;
+    private FCViewContract.FCListActivity fcListActivity;
 
+    @Inject
     public FCListPresenter(APIService apiService) {
         this.apiService = apiService;
         this.compositeDisposable = new CompositeDisposable();
@@ -42,12 +45,15 @@ public class FCListPresenter extends BasePresenter implements FCPresenterContrac
         subscribe(responseObservable, new Observer<Response<List<FoodCourt>>>() {
             @Override
             public void onSubscribe(Disposable d) {
+                fcListActivity.showProgressUI();
                 compositeDisposable.add(d);
             }
 
             @Override
             public void onNext(Response<List<FoodCourt>> listResponse) {
-
+                if(listResponse.code() ==200){
+                    fcListActivity.onFCListFetched(listResponse.body());
+                }
             }
 
             @Override
@@ -57,7 +63,7 @@ public class FCListPresenter extends BasePresenter implements FCPresenterContrac
 
             @Override
             public void onComplete() {
-
+                fcListActivity.hideProgressUI();
             }
         });
 
@@ -65,6 +71,9 @@ public class FCListPresenter extends BasePresenter implements FCPresenterContrac
 
     @Override
     public void detachView() {
-
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable.clear();
+        }
     }
 }

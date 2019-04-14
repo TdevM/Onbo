@@ -1,6 +1,7 @@
 package app.onbo.di.components;
 
 import app.onbo.modules.fc.FCActivity;
+import app.onbo.modules.fc.FCListActivity;
 import app.onbo.modules.fc.activities.FCPremiseDetailActivity;
 import app.onbo.utils.AuthInterceptor;
 import app.onbo.utils.TokenRefresher;
@@ -89,4 +90,5 @@ public interface APIComponent {
     void inject(TokenRefresher refresher);
     void inject(FCActivity activity);
     void inject(FCPremiseDetailActivity activity);
+    void inject(FCListActivity activity);
 }

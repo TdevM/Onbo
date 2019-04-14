@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import app.onbo.api.models.response.UserApp;
 import app.onbo.api.models.response.v2.LoginResponse;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -63,9 +64,7 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
                 } else if (response.code() == 200) {
                     Log.d(TAG, response.body().toString());
                     preferenceUtils.saveAuthTransaction(response.body().getToken(), response.body().getRefreshToken(), phone, true);
-                    OneSignal.sendTag("USER_MOBILE", String.valueOf(phone));
-                    authLoginView.loginSuccess();
-
+                    fetchUser();
                 }
             }
 
@@ -159,6 +158,36 @@ public class AuthLoginPresenter extends BasePresenter implements AuthPresenterCo
                 authLoginView.hideProgressUI();
             }
         });
+    }
+
+    public void fetchUser() {
+            Observable<Response<UserApp>> appObservable = apiService.fetchUser();
+            subscribe(appObservable, new Observer<Response<UserApp>>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                    compositeDisposable.add(d);
+                }
+
+                @Override
+                public void onNext(Response<UserApp> userAppResponse) {
+                    if (userAppResponse.code() == 200) {
+                        if (userAppResponse.body() != null) {
+                            OneSignal.sendTag("USER_MOBILE", String.valueOf(userAppResponse.body().getUserMobile()));
+                            preferenceUtils.saveUserData(userAppResponse.body().getUserEmail(),userAppResponse.body().getUserMobile());
+                            authLoginView.loginSuccess();
+                        }
+                    } else {
+                    }
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                }
+
+                @Override
+                public void onComplete() {
+                }
+            });
     }
 
     @Override

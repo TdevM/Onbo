@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import javax.inject.Inject;
 
+import app.onbo.utils.PreferenceUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,6 +41,9 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
     private static String orderId;
     private static String fOrderId;
     private static FOrder fOrder;
+
+    @Inject
+    PreferenceUtils preferenceUtils;
 
     private static final String MODE_CASH = "MODE_CASH";
     private static final String MODE_DIGITAL = "MODE_DIGITAL";
@@ -191,6 +195,8 @@ public class PaymentFragment extends Fragment implements PaymentViewContract.Pay
                 options.put("name", fOrder.getRestaurant().getRestaurant_name());
                 options.put("description", "ORDER NO # " + fOrder.getOrder_id());
                 options.put("currency", "INR");
+                options.put("prefill.email", preferenceUtils.getAuthUserEmail());
+                options.put("prefill.contact", preferenceUtils.getAuthLoginPhone());
                 options.put("amount", fOrder.getGrand_total());
                 checkout.open(activity, options);
             } catch (Exception e) {

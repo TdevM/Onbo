@@ -22,6 +22,6 @@ public interface FCViewContract {
     }
 
     interface FCListActivity extends BaseView{
-        void onFCListFetched();
+        void onFCListFetched(List<FoodCourt> foodCourts);
     }
 }

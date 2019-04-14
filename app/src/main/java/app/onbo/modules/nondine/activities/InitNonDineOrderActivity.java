@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import javax.inject.Inject;
 
 import app.onbo.modules.nondine.fragments.NDOrderMessagePickerFragment;
+import app.onbo.utils.PreferenceUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import app.onbo.OnboApplication;
@@ -42,6 +43,8 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
     @Inject
     InitNonDineOrderPresenter presenter;
 
+    @Inject
+    PreferenceUtils preferenceUtils;
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -148,6 +151,8 @@ public class InitNonDineOrderActivity extends AppCompatActivity implements NonDi
                 options.put("name", fOrder.getRestaurant().getRestaurant_name());
                 options.put("description", "Order ID # " + fOrder.getOrder_id());
                 options.put("currency", "INR");
+                options.put("prefill.email", preferenceUtils.getAuthUserEmail());
+                options.put("prefill.contact", preferenceUtils.getAuthLoginPhone());
                 options.put("amount", fOrder.getGrand_total());
                 checkout.open(activity, options);
             } catch (Exception e) {

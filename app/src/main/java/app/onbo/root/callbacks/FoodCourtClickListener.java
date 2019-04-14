@@ -1,4 +1,8 @@
 package app.onbo.root.callbacks;
 
-public class FoodCourtClickListener {
+import app.onbo.api.models.response.v2.FoodCourt;
+
+public interface FoodCourtClickListener {
+    void onFoodCourtItemClicked(FoodCourt foodCourt);
+
 }

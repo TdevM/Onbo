@@ -23,6 +23,7 @@ public interface FCPresenterContract {
         void detachView();
         void fetchMenuItems(Restaurant restaurant);
         void saveFCQRTransaction(Restaurant restaurant);
+        void clearCart();
 
     }
 
