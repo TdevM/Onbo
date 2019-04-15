@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_scanner"
         android:icon="@drawable/qrcode_scan"
-        android:title="@string/title_scanner" />
+        android:title="@string/order_text" />
     <item
         android:id="@+id/navigation_account"
         android:icon="@drawable/ic_mood_black_24dp"

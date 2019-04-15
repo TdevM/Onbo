@@ -344,5 +344,6 @@
     <string name="place_your_order">Place your order</string>
     <string name="i_m_at_the_restaurant">I\'m at the restaurant</string>
     <string name="i_m_away_from_the_restaurant">I\'m away from the restaurant</string>
+    <string name="order_text">Order</string>
 
 </resources>

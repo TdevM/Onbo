@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.appsee.Appsee;
+import com.razorpay.Checkout;
 
 import java.util.List;
 
@@ -178,6 +179,7 @@ public class RootActivity extends AppCompatActivity implements RootActivityViewC
 
     public void logOutUser() {
         rootActivityPresenter.logoutUser();
+        Checkout.clearUserData(this);
         Intent intent = new Intent(RootActivity.this, AuthenticationActivity.class);
         startActivity(intent);
         finish();
